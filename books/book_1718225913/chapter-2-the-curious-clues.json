@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2 - The Curious Clues",
+    "short_description": "House delves into the initial clues provided by the client, each more enigmatic than the last.",
+    "events": "House finds various seemingly unrelated clues.",
+    "people": "Dr. Gregory House, The Client",
+    "places": "House's apartment",
+    "from_prev_chapter": "House agrees to take on the case.",
+    "to_next_chapter": "House begins to connect the dots.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 20:58:33",
+    "lastUpdated": "2024-06-12 20:58:33",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 20:58:33"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8: The Launch",
+    "short_description": "Sarah's first major magi-tech product, a spell-enhancing device for everyday use, is launched to the public. It's an instant hit, making magic more accessible to the masses. Sarah becomes a celebrity in the magical world, but also starts to face the pressure of her newfound fame and responsibility.",
+    "events": "Product launch, public reaction, Sarah's rise to fame",
+    "people": "Sarah, corporate executives, media, general public",
+    "places": "Launch event venue, TV studios, magical households",
+    "from_prev_chapter": "Preparation for the launch of Sarah's magi-tech product",
+    "to_next_chapter": "Emerging concerns about the impact of magi-tech",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

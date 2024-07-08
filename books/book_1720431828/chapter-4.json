@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 4,
+    "name": "Chapter 4",
+    "short_description": "\u0130lk zorluklar ve \u015f\u00fcpheler",
+    "events": "Ahmet i\u015fin zorlu\u011fuyla y\u00fczle\u015fir ve kendinden \u015f\u00fcphe duymaya ba\u015flar.",
+    "people": "Ahmet, Usta Mehmet, di\u011fer \u00e7\u0131raklar",
+    "places": "Han, Ahmet'in evi",
+    "from_prev_chapter": "Ahmet ilk derslerini al\u0131r",
+    "to_next_chapter": "Beklenmedik bir m\u00fc\u015fteri gelecek",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Saat Kulesinin \u00c7an\u0131 - Yeni Bir G\u00fcn\u00fcn Zorlu Ba\u015flang\u0131c\u0131: Ahmet, sabah erkenden d\u00fckkana gelir ve zorlu bir g\u00fcn\u00fcn onu bekledi\u011fini hisseder."
+        },
+        {
+            "description": "Karma\u015f\u0131k Bir Saat - \u0130lk B\u00fcy\u00fck S\u0131nav: Usta Mehmet, Ahmet'e tamir edilmesi zor bir cep saati verir ve onun bu i\u015fi tek ba\u015f\u0131na yapmas\u0131n\u0131 ister."
+        },
+        {
+            "description": "Terleyen Eller - Artan Stres: Ahmet, saati s\u00f6kerken elleri titrer ve baz\u0131 k\u00fc\u00e7\u00fck par\u00e7alar\u0131 d\u00fc\u015f\u00fcr\u00fcr."
+        },
+        {
+            "description": "Di\u011fer \u00c7\u0131raklar\u0131n Bak\u0131\u015flar\u0131 - Rekabet ve Bask\u0131: D\u00fckkandaki di\u011fer \u00e7\u0131raklar, Ahmet'in zorland\u0131\u011f\u0131n\u0131 fark eder ve aralar\u0131nda f\u0131s\u0131lda\u015fmaya ba\u015flarlar."
+        },
+        {
+            "description": "Ustan\u0131n Sessizli\u011fi - Artan Endi\u015fe: Usta Mehmet, Ahmet'in \u00e7al\u0131\u015fmas\u0131n\u0131 uzaktan izler ama hi\u00e7bir yorum yapmaz, bu da Ahmet'in endi\u015fesini art\u0131r\u0131r."
+        },
+        {
+            "description": "K\u0131r\u0131lan Par\u00e7a - B\u00fcy\u00fck Hata: Ahmet, saatin \u00f6nemli bir par\u00e7as\u0131n\u0131 yanl\u0131\u015fl\u0131kla k\u0131rar ve pani\u011fe kap\u0131l\u0131r."
+        },
+        {
+            "description": "\u0130\u00e7sel \u00c7at\u0131\u015fma - Vazge\u00e7me D\u00fc\u015f\u00fcncesi: Ahmet, bu i\u015fi yapamayaca\u011f\u0131n\u0131 d\u00fc\u015f\u00fcn\u00fcr ve ustas\u0131na durumu anlat\u0131p vazge\u00e7meyi d\u00fc\u015f\u00fcn\u00fcr."
+        },
+        {
+            "description": "Ustan\u0131n Teselli S\u00f6zleri - Yeni Bir Umut: Usta Mehmet, Ahmet'in durumunu fark eder ve ona cesaret verici s\u00f6zler s\u00f6yler."
+        },
+        {
+            "description": "Yeni Bir Strateji - Sabr\u0131n G\u00fcc\u00fc: Ahmet, ustas\u0131n\u0131n tavsiyesiyle derin bir nefes al\u0131r ve i\u015fe daha sakin bir \u015fekilde yakla\u015fmaya karar verir."
+        },
+        {
+            "description": "G\u00fcn\u00fcn Sonu - Beklenmedik Bir Geli\u015fme: Ahmet tam d\u00fckkandan ayr\u0131lacakken, Usta Mehmet ona ertesi g\u00fcn gelece\u011fi s\u00f6ylenen \u00f6zel bir m\u00fc\u015fteriden bahseder."
+        }
+    ]
+}

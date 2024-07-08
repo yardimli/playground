@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 1,
+    "name": "Chapter 1: The Arrival",
+    "short_description": "The USS Enterprise-D picks up strange coding signals from an uncharted region of space. Captain Picard orders the ship to investigate. Upon arrival, they encounter the Codarians for the first time and learn about their complex, code-driven society.",
+    "events": "",
+    "people": "Captain Picard, Commander Riker, Data, Lieutenant Worf, Deanna Troi, Codarian ambassadors",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "N\/A",
+    "to_next_chapter": "The crew decides to send an away team to the Codarian ship to learn more about the signals and the society.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

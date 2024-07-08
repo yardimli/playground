@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15",
+    "short_description": "In the aftermath, humanity begins to rebuild and adapt to the new understanding of the moon's power. Emily reflects on her journey and the choices that led to the present.",
+    "events": "",
+    "people": "Emily, survivors, world leaders.",
+    "places": "Various locations around the world.",
+    "from_prev_chapter": "Humanity begins to deal with the aftermath and new understanding.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 10:42:37",
+    "lastUpdated": "2024-06-15 10:42:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 10:42:37"
+        }
+    ]
+}

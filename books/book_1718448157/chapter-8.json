@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8",
+    "short_description": "A global coalition forms to counter Adrian's actions. Emily gets closer to Adrian, gaining his trust while secretly feeding information to the coalition.",
+    "events": "",
+    "people": "Adrian, Emily, global leaders, coalition members.",
+    "places": "Coalition headquarters, Adrian's base of operations.",
+    "from_prev_chapter": "Coalition forms to stop Adrian.",
+    "to_next_chapter": "The coalition devises a plan to neutralize Adrian's power source.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 10:42:37",
+    "lastUpdated": "2024-06-15 10:42:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 10:42:37"
+        }
+    ]
+}

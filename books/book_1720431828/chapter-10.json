@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 1,
+    "name": "Chapter 10",
+    "short_description": "Yeni bir yol",
+    "events": "Ahmet, par\u00e7ay\u0131 kendisi yapmaya karar verir.",
+    "people": "Ahmet, Usta Mehmet",
+    "places": "Usta Mehmet'in d\u00fckkan\u0131",
+    "from_prev_chapter": "Engeller ve \u015f\u00fcphelerle kar\u015f\u0131la\u015f\u0131l\u0131r",
+    "to_next_chapter": "Ahmet zorlu bir s\u00fcre\u00e7e girecek",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Gizli Yolculuk - Ahmet'in Cesur Ad\u0131m\u0131: Ahmet, gizli bulu\u015fmaya gider ve par\u00e7an\u0131n yap\u0131m\u0131 hakk\u0131nda kritik bilgiler edinir."
+        },
+        {
+            "description": "\u0130\u00e7 Hesapla\u015fma - Karar\u0131n A\u011f\u0131rl\u0131\u011f\u0131: Ahmet, \u00f6\u011frendiklerini de\u011ferlendirir ve par\u00e7ay\u0131 kendisinin yapmas\u0131 gerekti\u011fine karar verir."
+        },
+        {
+            "description": "Gece Plan\u0131 - Sessiz Haz\u0131rl\u0131k: Ahmet, gece gizlice d\u00fckk\u00e2na girerek gerekli malzemeleri ve aletleri haz\u0131rlar."
+        },
+        {
+            "description": "Ustan\u0131n \u015e\u00fcphesi - Artan Gerilim: Usta Mehmet, Ahmet'in davran\u0131\u015flar\u0131ndaki de\u011fi\u015fikli\u011fi fark eder ve \u015f\u00fcphelenir."
+        },
+        {
+            "description": "\u0130lk Deneme - Zorlu Ba\u015flang\u0131\u00e7: Ahmet, par\u00e7ay\u0131 yapmak i\u00e7in ilk denemesini yapar, ancak ba\u015far\u0131s\u0131z olur."
+        },
+        {
+            "description": "Gizli Ara\u015ft\u0131rma - Bilgi Avc\u0131s\u0131: Ahmet, ba\u015far\u0131s\u0131zl\u0131\u011f\u0131n\u0131 telafi etmek i\u00e7in gizlice eski ustal\u0131k kitaplar\u0131n\u0131 ara\u015ft\u0131r\u0131r."
+        },
+        {
+            "description": "Ustan\u0131n Tuza\u011f\u0131 - S\u0131nav Zaman\u0131: Usta Mehmet, Ahmet'i test etmek i\u00e7in zorlu bir g\u00f6rev verir."
+        },
+        {
+            "description": "\u00c7\u0131rak Zek\u00e2s\u0131 - Yarat\u0131c\u0131 \u00c7\u00f6z\u00fcm: Ahmet, ustas\u0131n\u0131n verdi\u011fi g\u00f6revi beklenmedik bir \u015fekilde \u00e7\u00f6zer."
+        },
+        {
+            "description": "Gizli At\u00f6lye - Yeni Bir Deneme: Ahmet, \u00f6\u011frendiklerini kullanarak gizli bir at\u00f6lyede par\u00e7ay\u0131 yeniden yapmaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Ba\u015far\u0131n\u0131n E\u015fi\u011fi - Umut Verici Sonu\u00e7: Ahmet, par\u00e7ay\u0131 neredeyse tamamlar, ancak son ad\u0131mda beklenmedik bir engelle kar\u015f\u0131la\u015f\u0131r."
+        }
+    ]
+}

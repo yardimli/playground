@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8: Unravelling the Alibi",
+    "short_description": "House investigates the suspect's alibi and finds inconsistencies.",
+    "events": "",
+    "people": "Dr. Gregory House, House's team, the primary suspect.",
+    "places": "Princeton-Plainsboro Teaching Hospital, various locations for alibi verification.",
+    "from_prev_chapter": "The primary suspect denies involvement but reveals new information.",
+    "to_next_chapter": "House discovers a vital piece of evidence that changes the trajectory of the case.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

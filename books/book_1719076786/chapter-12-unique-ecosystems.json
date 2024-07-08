@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 3,
+    "name": "Chapter 12: Unique Ecosystems",
+    "short_description": "Will discovers the unique ecosystems that develop around volcanoes. He showcases rare plants and animals that have adapted to these harsh environments.",
+    "events": "Exploration of ecosystems, rare plant, and animal sightings.",
+    "people": "Will Smith, biologists.",
+    "places": "Volcanic regions with unique ecosystems.",
+    "from_prev_chapter": "Benefits of volcanic activity.",
+    "to_next_chapter": "Volcanoes on other planets.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 4,
+    "name": "Chapter 4",
+    "short_description": "Emily confronts Adrian, leading to a tense exchange where Adrian reveals the depth of his conviction. Emily realizes the magnitude of the situation and the potential danger.",
+    "events": "",
+    "people": "Emily Harper, Adrian Fox.",
+    "places": "Adrian's laboratory, a coffee shop.",
+    "from_prev_chapter": "Emily decides to confront Adrian directly.",
+    "to_next_chapter": "Emily decides to follow Adrian closely and report every step.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 10:42:37",
+    "lastUpdated": "2024-06-15 10:42:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 10:42:37"
+        }
+    ]
+}

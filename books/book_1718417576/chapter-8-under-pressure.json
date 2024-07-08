@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8: Under Pressure",
+    "short_description": "As the team works under tight deadlines, internal and external pressures mount. A rogue faction of Codarians opposes the alliance, causing disruptions. The team must deal with these threats while staying on course.",
+    "events": "",
+    "people": "Captain Picard, Commander Riker, Data, Codarian leaders, rogue Codarians",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "The plan is set in motion, and the team begins the complex task.",
+    "to_next_chapter": "Despite setbacks, progress is made, but the team realizes they'll need to accelerate their efforts to succeed.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

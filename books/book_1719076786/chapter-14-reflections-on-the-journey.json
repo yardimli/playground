@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 1,
+    "name": "Chapter 14: Reflections on the Journey",
+    "short_description": "As the journey nears its end, Will reflects on what he's learned about volcanoes, the people who study and live near them, and the incredible experiences he's had. He shares personal insights and memorable moments.",
+    "events": "Reflection on entire journey.",
+    "people": "Will Smith.",
+    "places": "Various places visited during the journey.",
+    "from_prev_chapter": "Volcanoes on other planets.",
+    "to_next_chapter": "Final thoughts and takeaways.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ]
+}

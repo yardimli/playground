@@ -1,0 +1,75 @@
+{
+    "row": "act-2",
+    "order": "2",
+    "name": "Chapter 9: The Sanctuary",
+    "short_description": "Weary from their experiences, the group finds a quiet, secluded part of the river to rest. They meet an old turtle who shares stories of the ocean, reigniting their hope.",
+    "events": "Finding a resting place, meeting the old turtle, stories about the ocean.",
+    "people": "Bubbles, Finley, Lola, Guppy, Old Turtle",
+    "places": "Secluded part of the river",
+    "from_prev_chapter": "The group is on edge from the predator attack.",
+    "to_next_chapter": "The group's hope is reignited.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Finding Sanctuary",
+            "long_title": "Discovering a Quiet, Secluded Part of the River",
+            "description": "Bubbles and his friends, weary from the previous predator attack, search for a safe place to rest. Eventually, they find a quiet, secluded part of the river, free from immediate danger."
+        },
+        {
+            "short_title": "The Old Turtle Appears",
+            "long_title": "Encounter with the Mysterious Old Turtle",
+            "description": "As the group settles in their newfound sanctuary, they encounter an old turtle who approaches them slowly. The turtle seems wise and carries an aura of knowledge."
+        },
+        {
+            "short_title": "Introduction and Curiosity",
+            "long_title": "Introducing Themselves and Curiosity about the Turtle",
+            "description": "Bubbles, Finley, Lola, and Guppy introduce themselves to the old turtle. They express curiosity about his life and how he ended up in the secluded part of the river."
+        },
+        {
+            "short_title": "Stories of the Ocean",
+            "long_title": "The Old Turtle Begins His Tales",
+            "description": "The old turtle begins sharing his stories about the ocean, describing its vastness, beauty, and the different creatures that inhabit it. The group listens intently, captivated by the turtle's tales."
+        },
+        {
+            "short_title": "Reigniting Hope",
+            "long_title": "Stories of the Ocean Rekindle the Group's Aspirations",
+            "description": "As the turtle continues his stories, the group's hope and determination to find a better place are rekindled. They start to believe in the possibility of freedom and a new beginning."
+        },
+        {
+            "short_title": "Comparing Experiences",
+            "long_title": "Sharing Their Own Adventures with the Turtle",
+            "description": "Bubbles and his friends begin to share their own adventures and experiences with the old turtle. They talk about the dangers they've faced and the bond they've formed through their journey."
+        },
+        {
+            "short_title": "Words of Wisdom",
+            "long_title": "The Old Turtle Imparts Wisdom and Encouragement",
+            "description": "The old turtle offers words of wisdom and encouragement to the group. He reminds them of the importance of resilience, hope, and friendship in overcoming obstacles."
+        },
+        {
+            "short_title": "A Glimpse of the Future",
+            "long_title": "Imagining a Life Beyond The River",
+            "description": "Inspired by the old turtle's stories and wisdom, the group starts to imagine what their lives could be like beyond the river. They visualize the ocean and the freedom it represents."
+        },
+        {
+            "short_title": "Rest and Recovery",
+            "long_title": "Taking Time to Rest and Regain Strength",
+            "description": "Feeling hopeful and inspired, the group decides to take some time to rest and recover their strength in the sanctuary. They feel a sense of safety and encouragement from the old turtle's presence."
+        },
+        {
+            "short_title": "A New Resolve",
+            "long_title": "Reaffirming Their Determination to Find Freedom",
+            "description": "As they rest, Bubbles and his friends reaffirm their determination to find freedom and a better life. They feel more united and resolved to continue their journey with renewed energy and hope."
+        }
+    ]
+}

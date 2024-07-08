@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 1,
+    "name": "Chapter 7: Action Plan",
+    "short_description": "Armed with the complete message, the Enterprise and Codarians develop an action plan to prevent the cosmic event. They must devise a strategy to re-code ancient astronomical algorithms to alter the course of the impending disaster.",
+    "events": "",
+    "people": "Captain Picard, Data, Codarian leaders",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "The crew prepares to take action based on the fully decoded message.",
+    "to_next_chapter": "The plan is set in motion, and the team begins the complex task of re-coding algorithms on a cosmic scale.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

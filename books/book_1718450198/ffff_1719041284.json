@@ -1,0 +1,40 @@
+{
+    "row": "act-2",
+    "order": "3",
+    "name": "ffff",
+    "short_description": "ffff",
+    "events": "",
+    "people": "",
+    "places": "",
+    "from_prev_chapter": "",
+    "to_next_chapter": "",
+    "backgroundColor": "#F28B82",
+    "textColor": "#000000",
+    "created": "2024-06-22 07:28:04",
+    "lastUpdated": "2024-06-22 07:28:09",
+    "comments": [],
+    "files": [],
+    "history": [
+        {
+            "action": "Created chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:28:04"
+        },
+        {
+            "action": "Moved chapter to act-1",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:28:04"
+        },
+        {
+            "action": "Moved chapter to act-2",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:28:09"
+        },
+        {
+            "action": "Archived the chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 08:57:46"
+        }
+    ],
+    "archived": true
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "B\u00f6l\u00fcm 2: Gizemli \u0130zler",
+    "short_description": "Ali, gezegeni ke\u015ffederken do\u011fa\u00fcst\u00fc belirtiler bulur. Bu belirtiler, Ali'yi daha da merakland\u0131r\u0131r.",
+    "events": "Do\u011fa\u00fcst\u00fc belirtilerin ke\u015ffi, Ali'nin meraklanmas\u0131.",
+    "people": "Ali",
+    "places": "Bilinmeyen gezegenin ormanl\u0131k alanlar\u0131.",
+    "from_prev_chapter": "Ali'nin gezegeni ke\u015ffetme karar\u0131.",
+    "to_next_chapter": "Ali'nin belirtileri daha derinlemesine inceleme karar\u0131.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali, bir \u00f6nceki g\u00fcn elde etti\u011fi bulgular\u0131n heyecan\u0131yla yeni bir ke\u015fif g\u00fcn\u00fcne ba\u015flar. Y\u00fcksek teknolojili cihazlar\u0131n\u0131 ve ara\u015ft\u0131rma ekipmanlar\u0131n\u0131 haz\u0131rlayarak gemiden \u00e7\u0131kar. Bug\u00fcn, bilinmeyen gezegenin ormanl\u0131k alanlar\u0131n\u0131 daha detayl\u0131 incelemeyi planlamaktad\u0131r."
+        },
+        {
+            "description": "Ali ormanl\u0131k alanda ilerlerken, \u00e7evresindeki bitki \u00f6rt\u00fcs\u00fcn\u00fcn yap\u0131s\u0131ndaki tuhafl\u0131klar\u0131 fark eder. Bitkiler, d\u00fcnya benzerlerine hi\u00e7 benzememekte ve sanki bilin\u00e7li bir \u015fekilde hareket ediyormu\u015f gibi g\u00f6r\u00fcnmektedir."
+        },
+        {
+            "description": "\u0130lerledik\u00e7e, Ali'nin scanner cihaz\u0131 tuhaf enerjisel dalgalanmalar alg\u0131lamaya ba\u015flar. Bu dalgalanmalar, Ali'nin daha \u00f6nce hi\u00e7 kar\u015f\u0131la\u015fmad\u0131\u011f\u0131 bir yap\u0131ya sahiptir ve onu daha da derinlere do\u011fru \u00e7eker."
+        },
+        {
+            "description": "Bir s\u00fcre sonra Ali, mistik bir auraya sahip olan bir alan ke\u015ffeder. Buradaki a\u011fa\u00e7lar daha yo\u011fun, bitki \u00f6rt\u00fcs\u00fc ise daha parlakt\u0131r. Ortam, adeta ba\u015fka bir d\u00fcnyaya aitmi\u015f gibi hissettirir."
+        },
+        {
+            "description": "Ali, bu auraya sahip alan\u0131n merkezine yakla\u015ft\u0131\u011f\u0131nda, havada garip \u0131\u015f\u0131lt\u0131lar ve f\u0131s\u0131ldamalar duymaya ba\u015flar. Bu f\u0131s\u0131ldamalar, sanki bir dilde konu\u015fuyormu\u015f gibi gelir ve Ali'nin zihninde yank\u0131lan\u0131r."
+        },
+        {
+            "description": "I\u015f\u0131lt\u0131 ve f\u0131s\u0131ldamalar\u0131n geldi\u011fi merkez noktada, Ali d\u00f6rt bir yan\u0131 saran b\u00fcy\u00fck ve parlak bir a\u011fac\u0131n \u00f6n\u00fcne gelir. Bu a\u011fa\u00e7, di\u011ferlerinden \u00e7ok daha farkl\u0131d\u0131r ve sanki i\u00e7sel bir g\u00fcce sahiptir."
+        },
+        {
+            "description": "Ali a\u011faca yakla\u015ft\u0131k\u00e7a, a\u011fac\u0131n k\u00f6klerinden \u00e7\u0131kan ince ve parlak iplik\u00e7iklerin havada s\u00fcz\u00fcld\u00fc\u011f\u00fcn\u00fc fark eder. Bu iplik\u00e7ikler, adeta bir enerji a\u011f\u0131 olu\u015fturur ve Ali'yi b\u00fcy\u00fcler."
+        },
+        {
+            "description": "Ali iplik\u00e7iklere dokunmaya \u00e7al\u0131\u015ft\u0131\u011f\u0131nda, bir enerji dalgas\u0131 bedeninden ge\u00e7er ve zihninde k\u0131sa ama yo\u011fun bir vizyon g\u00f6r\u00fcr. Bu vizyonda, gezegenin kadim varl\u0131klar\u0131yla ilgili par\u00e7alar yer almaktad\u0131r."
+        },
+        {
+            "description": "Vizyonun etkisi ge\u00e7ti\u011finde, Ali kendini hala a\u011fac\u0131n \u00f6n\u00fcnde bulur ama art\u0131k her \u015fey daha net gelmektedir. Bu a\u011fac\u0131n ve \u00e7evresindeki enerjinin, gezegenin s\u0131rlar\u0131na dair \u00f6nemli anahtarlar bar\u0131nd\u0131rd\u0131\u011f\u0131n\u0131 anlam\u0131\u015ft\u0131r."
+        },
+        {
+            "description": "Ali, bu mistik alandan ayr\u0131lmadan \u00f6nce gerekli notlar\u0131 ve \u00f6rnekleri toparlar. Geri d\u00f6nerken, t\u00fcm bu ya\u015fad\u0131klar\u0131yla ilgili daha fazla bilgi edinmek i\u00e7in kararl\u0131l\u0131kla ilerler. Ancak i\u00e7ten i\u00e7e, gezegenin derinliklerinde daha b\u00fcy\u00fck s\u0131rlar oldu\u011funu hisseder ve bir sonraki ad\u0131m\u0131nda neyle kar\u015f\u0131la\u015faca\u011f\u0131n\u0131 merak eder."
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 1,
+    "name": "Chapter 1",
+    "short_description": "Gen\u00e7 Ahmet'in Emin\u00f6n\u00fc'ndeki eski hana geli\u015fi",
+    "events": "Ahmet i\u015fsiz kal\u0131r ve dedesi onu eski dostuna \u00e7\u0131rak olarak g\u00f6nderir.",
+    "people": "Ahmet, dedesi, Usta Mehmet",
+    "places": "Emin\u00f6n\u00fc, eski han",
+    "from_prev_chapter": "",
+    "to_next_chapter": "Ahmet, han\u0131n gizemli atmosferini ke\u015ffedecek",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "\u0130\u015fsiz Kalan Ahmet - Ahmet, ekonomik kriz nedeniyle i\u015fini kaybeder ve ne yapaca\u011f\u0131n\u0131 bilemez."
+        },
+        {
+            "description": "Dedenin \u00d6nerisi - Ahmet'in dedesi, eski dostu Usta Mehmet'in yan\u0131nda \u00e7\u0131rakl\u0131k yapmas\u0131n\u0131 \u00f6nerir."
+        },
+        {
+            "description": "Emin\u00f6n\u00fc'ne Yolculuk - Ahmet, dedesinin tarifiyle Emin\u00f6n\u00fc'ndeki eski hana do\u011fru yola \u00e7\u0131kar."
+        },
+        {
+            "description": "Labirent Sokaklar - Ahmet, Emin\u00f6n\u00fc'n\u00fcn dar ve karma\u015f\u0131k sokaklar\u0131nda yolunu bulmaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Eski Han\u0131n Ke\u015ffi - Ahmet, sonunda tarihi han\u0131 bulur ve i\u00e7eri girer."
+        },
+        {
+            "description": "\u0130lk \u0130zlenimler - Ahmet, han\u0131n i\u00e7indeki eski d\u00fckk\u00e2nlar\u0131 ve ustalar\u0131 g\u00f6zlemler."
+        },
+        {
+            "description": "Usta Mehmet ile Tan\u0131\u015fma - Ahmet, dedesinin bahsetti\u011fi Usta Mehmet'in d\u00fckk\u00e2n\u0131n\u0131 bulur ve kendini tan\u0131t\u0131r."
+        },
+        {
+            "description": "Ge\u00e7mi\u015fin \u0130zleri - Usta Mehmet, d\u00fckk\u00e2n\u0131ndaki eski saatler ve kalemler hakk\u0131nda Ahmet'e bilgi verir."
+        },
+        {
+            "description": "\u00c7\u0131rakl\u0131k Teklifi - Usta Mehmet, Ahmet'e \u00e7\u0131rakl\u0131k teklifinde bulunur ve \u015fartlar\u0131 a\u00e7\u0131klar."
+        },
+        {
+            "description": "Yeni Bir Ba\u015flang\u0131\u00e7 - Ahmet, teklifi kabul eder ve ertesi g\u00fcn i\u015fe ba\u015flamak \u00fczere handan ayr\u0131l\u0131r."
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "B\u00f6l\u00fcm 15: Zafer ve Veda",
+    "short_description": "B\u00fcy\u00fck \u00e7at\u0131\u015fman\u0131n ard\u0131ndan Ali ve Aylin zafer kazan\u0131r. Ancak d\u00fcnyalar\u0131n\u0131 korumak u\u011fruna birbirlerinden ayr\u0131lmak zorunda kal\u0131rlar.",
+    "events": "Zafer an\u0131, duygusal veda.",
+    "people": "Ali, Aylin",
+    "places": "Bilinmeyen gezegenin \u00e7e\u015fitli b\u00f6lgeleri.",
+    "from_prev_chapter": "\u00c7at\u0131\u015fman\u0131n sonu\u00e7lar\u0131 ve final.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali ve Aylin\u2019in birlikte y\u00fcr\u00fctt\u00fc\u011f\u00fc strateji i\u015fe yarar ve d\u00fc\u015fman\u0131 alt etmeyi ba\u015far\u0131rlar. Sava\u015f\u0131n sona eri\u015fiyle ikili, uzay gemisinin kontrol odas\u0131nda zaferin tad\u0131n\u0131 \u00e7\u0131kar\u0131r. \u0130kisi de b\u00fcy\u00fck bir rahatlama hisse kap\u0131l\u0131r ve birbirlerine sar\u0131l\u0131rlar."
+        },
+        {
+            "description": "Zaferin kutlamalar\u0131 s\u0131ras\u0131nda Ali ve Aylin, gelecekteki olas\u0131 tehditlere kar\u015f\u0131 her zaman haz\u0131rl\u0131kl\u0131 olmalar\u0131 gerekti\u011fini konu\u015furlar. Aylin, Ali\u2019ye olan minnettarl\u0131\u011f\u0131n\u0131 bir kez daha dile getirir. An\u0131n tad\u0131n\u0131 \u00e7\u0131kar\u0131rken birbirlerine daha da yak\u0131n hissettikleri bir sohbet ger\u00e7ekle\u015fir."
+        },
+        {
+            "description": "Ali ve Aylin, sava\u015fta kaybettikleri arkada\u015flar\u0131n\u0131 anmak i\u00e7in bir t\u00f6ren d\u00fczenlerler. Bu t\u00f6ren s\u0131ras\u0131nda duygusal anlar ya\u015fan\u0131r ve ge\u00e7mi\u015fteki an\u0131lar g\u00f6z \u00f6n\u00fcne getirilir. Kaybettikleri yolda\u015flar\u0131n\u0131n an\u0131s\u0131na sayg\u0131 duru\u015funda bulunurlar."
+        },
+        {
+            "description": "Sava\u015f\u0131n ard\u0131ndan Ali, uzay gemisini yeniden d\u00fczenlemek ve onar\u0131m yapmak i\u00e7in \u00e7al\u0131\u015fmalara ba\u015flar. Aylin ise uzay gemisinin veri bankas\u0131n\u0131 inceleyerek \u00f6nemli bilgileri saklama alt\u0131na al\u0131r. \u0130kili, uzay gemisinin daha g\u00fc\u00e7l\u00fc hale gelmesi i\u00e7in ellerinden geleni yaparlar."
+        },
+        {
+            "description": "Ali, sava\u015f sonras\u0131n\u0131n etkilerini \u00fczerlerinden atmak i\u00e7in Aylin\u2019i bilinmeyen gezegenin y\u00fczeyine g\u00f6t\u00fcr\u00fcr. Birlikte do\u011fay\u0131 ke\u015ffederek k\u0131sa bir y\u00fcr\u00fcy\u00fc\u015f yaparlar. Bu s\u0131rada Aylin, Ali\u2019ye gezegene dair ilgin\u00e7 bilgiler verir."
+        },
+        {
+            "description": "\u0130kili, gezegenin y\u00fczeyinde ke\u015fifte bulunduktan sonra tekrar uzay gemisine d\u00f6nerler. Ali, geminin merkez kontrol odas\u0131nda gelecek rotalar\u0131n\u0131 belirlemek i\u00e7in \u00e7al\u0131\u015fmaya ba\u015flar. Aylin ise uzay gemisinin navigasyon sistemlerini g\u00fcnceller."
+        },
+        {
+            "description": "Ali, Aylin\u2019e gelecekteki g\u00f6revlerini ve hedeflerini anlatmaya ba\u015flar. Aylin, Ali\u2019nin planlar\u0131n\u0131 dinlerken ona destek olaca\u011f\u0131n\u0131 ifade eder. Gelece\u011fe dair umut dolu bir sohbet ederler ve birbirlerine olan g\u00fcvenlerini peki\u015ftirirler."
+        },
+        {
+            "description": "Ali ve Aylin, uzay gemisinin \u00e7e\u015fitli b\u00f6lgelerini dola\u015farak onar\u0131mlar\u0131n tamamlan\u0131p tamamlanmad\u0131\u011f\u0131n\u0131 kontrol ederler. Her \u015feyin yolunda oldu\u011funu g\u00f6rd\u00fcklerinde birbirlerine rahatlat\u0131c\u0131 birer g\u00fcl\u00fcmseme g\u00f6nderirler. Gelece\u011fe dair planlar yaparken an\u0131n tad\u0131n\u0131 \u00e7\u0131kar\u0131rlar."
+        },
+        {
+            "description": "Ali ve Aylin, zafer ve ke\u015fiflerle dolu bir g\u00fcn\u00fcn ard\u0131ndan uzay gemisinin g\u00f6zlem odas\u0131nda bir araya gelirler. Y\u0131ld\u0131zlar\u0131 izleyerek gelecekteki maceralar\u0131n\u0131 hayal ederler. Duygusal anlar ya\u015fayarak birbirlerine umut verirler."
+        },
+        {
+            "description": "Ali ve Aylin, birbirlerinden ayr\u0131lmalar\u0131 gerekti\u011fini anlatan bir mesaj al\u0131rlar. Aylin, Ali\u2019ye sar\u0131larak ona veda ederken g\u00f6zya\u015flar\u0131n\u0131 tutamaz. Ali de ona sar\u0131larak veda eder ve gelecekte tekrar g\u00f6r\u00fc\u015fme s\u00f6z\u00fcn\u00fc verirler. Ali uzay gemisini, bir sonraki hedefe do\u011fru y\u00f6nlendirir."
+        }
+    ]
+}

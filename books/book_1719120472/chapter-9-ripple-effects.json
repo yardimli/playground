@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 3,
+    "name": "Chapter 9: Ripple Effects",
+    "short_description": "As Sarah's magi-tech products become ubiquitous, unexpected consequences begin to surface. Traditional magical industries start to collapse, and there's a growing divide between magi-tech users and purists. Sarah starts to question the impact of her creations on magical society.",
+    "events": "Widespread adoption of magi-tech, societal changes, Sarah's doubts",
+    "people": "Sarah, affected magical workers, sociologists, government officials",
+    "places": "Various locations showing societal changes, Sarah's office",
+    "from_prev_chapter": "Emerging concerns about the impact of magi-tech",
+    "to_next_chapter": "Sarah's decision to address the negative impacts of magi-tech",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

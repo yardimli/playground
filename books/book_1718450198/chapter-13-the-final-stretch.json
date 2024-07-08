@@ -1,0 +1,75 @@
+{
+    "row": "act-3",
+    "order": 4,
+    "name": "Chapter 13: The Final Stretch",
+    "short_description": "The river widens, signaling that the ocean is near. The group encounters final challenges, including strong currents and new predators, testing their resolve one last time.",
+    "events": "Widening river, final challenges, testing resolve.",
+    "people": "Bubbles, Finley, Lola, Guppy",
+    "places": "Widening river",
+    "from_prev_chapter": "Reunited and determined, they continue their journey.",
+    "to_next_chapter": "The group is close to reaching the ocean.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Widening Horizon",
+            "long_title": "The River Widens and the Horizon Expands",
+            "description": "Bubbles, along with Finley, Lola, and Guppy, swim together as they notice the river widening. The expanding waterway signals that they are getting closer to the ocean. The group feels a sense of excitement and anticipation."
+        },
+        {
+            "short_title": "New Predators",
+            "long_title": "Encounter with New Predators",
+            "description": "As the river widens, new and unfamiliar predators appear. The group must stay vigilant and work together to avoid these dangers. The presence of these predators tests their teamwork and resolve."
+        },
+        {
+            "short_title": "Strong Currents",
+            "long_title": "Battling Against Strong Currents",
+            "description": "The group encounters strong and unpredictable currents. Bubbles and the others must use all their strength and skill to navigate these waters without getting separated or swept away."
+        },
+        {
+            "short_title": "Safe Havens",
+            "long_title": "Finding Brief Safe Havens",
+            "description": "Along their journey, the group finds brief moments of respite in calmer sections of the river. These pauses provide a much-needed break, allowing them to regroup and plan their next moves."
+        },
+        {
+            "short_title": "Encouraging Each Other",
+            "long_title": "Finding Strength in Encouragement",
+            "description": "During the tough times, Bubbles, Finley, Lola, and Guppy find strength in each other's encouragement. These words of support help them persevere and continue pressing forward despite the challenges."
+        },
+        {
+            "short_title": "A Narrow Escape",
+            "long_title": "Escaping a Dangerous Predator",
+            "description": "A particularly aggressive predator chases the group. Through quick thinking and teamwork, they manage a narrow escape, emphasizing the importance of staying together and being vigilant."
+        },
+        {
+            "short_title": "Tired but Determined",
+            "long_title": "Struggling with Fatigue but Keeping Their Eyes on the Goal",
+            "description": "Fatigue starts to set in as the group battles the last of the strong currents. Despite their tiredness, they remain determined to reach the ocean, drawing closer with each stroke."
+        },
+        {
+            "short_title": "Senses Heightened",
+            "long_title": "Heightened Senses as They Approach the Final Stretch",
+            "description": "As they near the end of their river journey, the group's senses become heightened. They are more aware of their surroundings, feeling every change in the water's temperature and every ripple of current."
+        },
+        {
+            "short_title": "Team Strategy",
+            "long_title": "Implementing Strategic Teamwork to Overcome Challenges",
+            "description": "The group's collective experience and teamwork come in handy as they devise strategies to tackle each new challenge. Their bond strengthens as they navigate the final stretch together."
+        },
+        {
+            "short_title": "Glimpse of Freedom",
+            "long_title": "Catching a Glimpse of the Ocean",
+            "description": "As the chapter comes to a close, the group catches their first glimpse of the distant ocean. Hope and excitement build within them, serving as a powerful motivator to push through the final challenges."
+        }
+    ]
+}

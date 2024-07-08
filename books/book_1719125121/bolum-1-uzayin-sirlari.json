@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 1,
+    "name": "B\u00f6l\u00fcm 1: Uzay\u0131n S\u0131rlar\u0131",
+    "short_description": "Astronot Ali, uzay g\u00f6revine ba\u015flar. Bilinmeyen bir gezegende ya\u015fam belirtileri bulur.",
+    "events": "Ali'nin uzay gemisinin ini\u015fi, gezegende ya\u015fam belirtileri bulunu\u015fu.",
+    "people": "Ali",
+    "places": "Uzay gemisi, bilinmeyen gezegen.",
+    "from_prev_chapter": "N\/A",
+    "to_next_chapter": "Ali'nin gezegeni ke\u015ffetme karar\u0131.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Uzay gemisi, bilinmeyen gezegenin y\u00fczeyine ba\u015far\u0131l\u0131 bir \u015fekilde ini\u015f yapar. Ali, geminin kap\u0131s\u0131n\u0131 a\u00e7t\u0131\u011f\u0131nda yeni bir d\u00fcnyan\u0131n kap\u0131lar\u0131n\u0131 aralar. Burada nas\u0131l ya\u015fam belirtileri bulaca\u011f\u0131 konusunda umutludur."
+        },
+        {
+            "description": "Ali, gemiden \u00e7\u0131kar \u00e7\u0131kmaz etrafa bakar ve gezegenin tuhaf ama b\u00fcy\u00fcleyici atmosferi kar\u015f\u0131s\u0131nda b\u00fcy\u00fclenir. G\u00f6ky\u00fcz\u00fc, yabanc\u0131 y\u0131ld\u0131zlarla doludur ve bitkiler d\u00fcnya d\u0131\u015f\u0131 bir par\u0131lt\u0131yla \u0131\u015f\u0131ldar."
+        },
+        {
+            "description": "\u0130lerlerken, Ali bilinmeyen bir bitki \u00f6rt\u00fcs\u00fcn\u00fcn ve garip kayalar\u0131n aras\u0131nda ya\u015fam belirtileri arar. Elindeki scanner cihaz\u0131, zaman zaman d\u00fc\u015f\u00fck d\u00fczeyde radyoaktif bir sinyal alg\u0131lar."
+        },
+        {
+            "description": "Ali, bir ma\u011faraya rastlar ve dikkatle i\u00e7eri girer. Ma\u011faran\u0131n i\u00e7i, tuhaf fosforlu yosunlarla kapl\u0131d\u0131r ve Ali, bu yosunlar\u0131n bir enerji kayna\u011f\u0131 olabilece\u011fini d\u00fc\u015f\u00fcn\u00fcr."
+        },
+        {
+            "description": "Ma\u011faran\u0131n derinliklerinde, Ali parlak bir \u0131\u015f\u0131k kayna\u011f\u0131 ke\u015ffeder. Bu \u0131\u015f\u0131k, yabanc\u0131 bir kristalin yans\u0131mas\u0131ndan gelmektedir. Kristalin \u00e7evresinde, daha \u00f6nce rastlamad\u0131\u011f\u0131 t\u00fcrde bir bitki \u00f6rt\u00fcs\u00fc bulunmaktad\u0131r."
+        },
+        {
+            "description": "Scanner cihaz\u0131, kristalin \u00e7evresindeki bitki \u00f6rt\u00fcs\u00fcnde organik bile\u015fikler bulundu\u011funu tespit eder. Bu, gezegende ya\u015fam olabilece\u011fine dair g\u00fc\u00e7l\u00fc bir i\u015faret olarak kabul edilir."
+        },
+        {
+            "description": "Ali, kristalin \u00f6rne\u011fini almak i\u00e7in yan\u0131na yakla\u015f\u0131r. Kristalin parlakl\u0131\u011f\u0131 artar ve Ali sanki k\u0131sa bir s\u00fcreli\u011fine bir vizyon g\u00f6r\u00fcr gibi olur. Bu vizyonda, ba\u015fka bir varl\u0131kla zihinsel bir ba\u011flant\u0131 kurdu\u011funu hisseder."
+        },
+        {
+            "description": "Ali, bu deneyim sonras\u0131 kristalden bir par\u00e7a al\u0131r ve daha fazla ara\u015ft\u0131rma yapmak i\u00e7in gemiye d\u00f6ner. Geri d\u00f6nmeden \u00f6nce, bitki \u00f6rt\u00fcs\u00fcnden de \u00f6rnekler al\u0131r."
+        },
+        {
+            "description": "Gemide, Ali \u00f6rnekleri analiz ederken tuhaf sonu\u00e7larla kar\u015f\u0131la\u015f\u0131r. Bitki \u00f6rt\u00fcs\u00fc ve kristal, d\u00fcnya d\u0131\u015f\u0131 ya\u015fam i\u00e7in yeni bir anlay\u0131\u015fa kap\u0131 aralar niteliktedir."
+        },
+        {
+            "description": "Ali, elde etti\u011fi sonu\u00e7lar\u0131 analiz ederken, gezegenin s\u0131rlar\u0131n\u0131 \u00e7\u00f6zmeye bir ad\u0131m daha yakla\u015ft\u0131\u011f\u0131n\u0131 hisseder. Ancak, bu s\u0131rlar\u0131n pe\u015finden giderken dikkatli olmas\u0131 gerekti\u011fini de anlar. Yeni s\u0131rlar\u0131n ve tehlikelerin fark\u0131nda olmadan, bir sonraki g\u00fcn gezegeni daha derinlemesine incelemeye karar verir."
+        }
+    ]
+}

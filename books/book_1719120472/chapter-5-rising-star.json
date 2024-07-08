@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 5,
+    "name": "Chapter 5: Rising Star",
+    "short_description": "Word of Sarah's innovation spreads through the Academy. She gains attention from both admirers and skeptics. A prestigious magical corporation offers her an internship, seeing the potential in her magi-tech creations.",
+    "events": "Spread of news about Sarah's invention, job offer",
+    "people": "Sarah, Academy leaders, corporate representatives",
+    "places": "Arcane Academy, corporate headquarters",
+    "from_prev_chapter": "Interest in Sarah's invention from Academy leaders",
+    "to_next_chapter": "Sarah's decision regarding the internship offer",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

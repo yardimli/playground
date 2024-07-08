@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 1,
+    "name": "Chapter 10: Volcanic Impact on Climate",
+    "short_description": "Will investigates how volcanic eruptions affect the global climate. He discusses past events like the Year Without a Summer and the science behind these phenomena.",
+    "events": "Discussion of climate impact, historical events.",
+    "people": "Will Smith, climatologists.",
+    "places": "Historical eruption sites.",
+    "from_prev_chapter": "Predictive technology for eruptions.",
+    "to_next_chapter": "Positive aspects of volcanic eruptions.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ]
+}

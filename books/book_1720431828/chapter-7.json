@@ -1,0 +1,55 @@
+{
+    "row": "act-2",
+    "order": 1,
+    "name": "Chapter 7",
+    "short_description": "B\u00fcy\u00fck s\u0131nav",
+    "events": "Ahmet, de\u011ferli bir antika kalemin tamiri i\u00e7in g\u00f6revlendirilir.",
+    "people": "Ahmet, Usta Mehmet, di\u011fer ustalar",
+    "places": "Han, Usta Mehmet'in d\u00fckkan\u0131",
+    "from_prev_chapter": "Ahmet yetene\u011fini ke\u015ffeder",
+    "to_next_chapter": "Ahmet zorlu bir g\u00f6revle kar\u015f\u0131la\u015facak",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "S\u0131nav\u0131n Haberi - Heyecan ve Endi\u015fe: Usta Mehmet, Ahmet'e yakla\u015fan b\u00fcy\u00fck s\u0131nav\u0131n detaylar\u0131n\u0131 a\u00e7\u0131klar ve ona g\u00fcvendi\u011fini belirtir."
+        },
+        {
+            "description": "Antika Kalem - Zorlu G\u00f6rev: Ahmet, de\u011ferli bir antika kalemin tamirini \u00fcstlenir ve bu i\u015fin s\u0131nav\u0131n\u0131n bir par\u00e7as\u0131 oldu\u011funu \u00f6\u011frenir."
+        },
+        {
+            "description": "Ara\u015ft\u0131rma S\u00fcreci - Bilgi Toplama: Ahmet, antika kalem hakk\u0131nda bilgi toplamak i\u00e7in di\u011fer ustalar\u0131 ziyaret eder ve kaynak ara\u015ft\u0131rmas\u0131 yapar."
+        },
+        {
+            "description": "Teknik Zorluklar - Yarat\u0131c\u0131 \u00c7\u00f6z\u00fcmler: Ahmet, kalemin karma\u015f\u0131k mekanizmas\u0131yla kar\u015f\u0131la\u015f\u0131r ve yeni teknikler denemeye karar verir."
+        },
+        {
+            "description": "Ustalarla \u0130sti\u015fare - Kolektif Bilgelik: Ahmet, zorland\u0131\u011f\u0131 noktalarda di\u011fer ustalar\u0131n tecr\u00fcbelerinden faydalan\u0131r ve farkl\u0131 bak\u0131\u015f a\u00e7\u0131lar\u0131 kazan\u0131r."
+        },
+        {
+            "description": "Gece \u00c7al\u0131\u015fmalar\u0131 - \u00d6zverili \u00c7aba: Ahmet, kalemin tamirini tamamlamak i\u00e7in geceleri de \u00e7al\u0131\u015fmaya ba\u015flar ve kendini i\u015fine adar."
+        },
+        {
+            "description": "Beklenmedik Engel - Moral Bozuklu\u011fu: Tamir s\u0131ras\u0131nda beklenmedik bir sorunla kar\u015f\u0131la\u015fan Ahmet, moral bozuklu\u011fu ya\u015far ve kendinden \u015f\u00fcphe duymaya ba\u015flar."
+        },
+        {
+            "description": "Ustan\u0131n Deste\u011fi - Yeniden Motivasyon: Usta Mehmet, Ahmet'in zorland\u0131\u011f\u0131n\u0131 fark eder ve ona destek olarak yeniden motive eder."
+        },
+        {
+            "description": "Son D\u00fczeltmeler - M\u00fckemmeliyet\u00e7ilik: Ahmet, kalemin son detaylar\u0131n\u0131 \u00f6zenle tamamlar ve i\u015fini en iyi \u015fekilde yapmaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Teslim Zaman\u0131 - Gergin Bekleyi\u015f: Ahmet, tamamlad\u0131\u011f\u0131 kalemi ustas\u0131na teslim eder ve de\u011ferlendirme sonucunu heyecanla beklerken, bir sonraki g\u00f6revin ipu\u00e7lar\u0131n\u0131 al\u0131r."
+        }
+    ]
+}

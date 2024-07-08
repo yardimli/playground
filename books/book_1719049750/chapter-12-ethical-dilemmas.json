@@ -1,0 +1,75 @@
+{
+    "row": "act-3",
+    "order": 3,
+    "name": "Chapter 12: Ethical Dilemmas",
+    "short_description": "Sarah faces ethical dilemmas as the implications of magi tech become apparent. She must decide between furthering her innovations and considering the potential consequences on society.",
+    "events": "Internal conflict, debates",
+    "people": "Sarah Davis, her allies, ethical advisors",
+    "places": "Academy grounds, meeting rooms",
+    "from_prev_chapter": "Sarah presents to influential leaders.",
+    "to_next_chapter": "Sarah makes a decision about the future of magi tech.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Contemplating Consequences",
+            "long_title": "Sarah Reflects on the Potential Impact of Magi Tech",
+            "description": "Sarah recognizes the manifold impacts her inventions might have on society, prompting a deep introspection about the ethical ramifications of her work."
+        },
+        {
+            "short_title": "Seeking Counsel",
+            "long_title": "Sarah Meets with Ethical Advisors at the Academy",
+            "description": "To gain insight, Sarah arranges a meeting with ethical advisors at the Academy to understand the full breadth of the potential consequences of magi tech."
+        },
+        {
+            "short_title": "Heated Debate",
+            "long_title": "Ethical Advisors Present Conflicting Views",
+            "description": "During the meeting, ethical advisors engage in a heated debate, presenting both the potential benefits and devastating consequences magi tech could impose on society."
+        },
+        {
+            "short_title": "Allies Weigh In",
+            "long_title": "Sarah\u2019s Allies Share Their Perspectives",
+            "description": "Sarah\u2019s closest allies share their perspectives, each offering a unique viewpoint on how to navigate the intricate balance between innovation and ethical considerations."
+        },
+        {
+            "short_title": "Personal Doubts",
+            "long_title": "Sarah Finds Herself Questioning Her Own Motivations",
+            "description": "Amidst the differing opinions, Sarah begins to question her own motivations and whether her pursuit of innovation is truly for the greater good."
+        },
+        {
+            "short_title": "Case Studies",
+            "long_title": "Review of Historical Cases with Similar Ethical Dilemmas",
+            "description": "Ethical advisors present historical case studies where advancements led to ethical dilemmas, providing Sarah with precedents that further complicate her decision-making process."
+        },
+        {
+            "short_title": "Proposed Moratorium",
+            "long_title": "Suggestion to Halt Magi Tech Development Temporarily",
+            "description": "One of the ethical advisors proposes a temporary moratorium on magi tech development, suggesting further study and consideration before proceeding."
+        },
+        {
+            "short_title": "Future Vision",
+            "long_title": "Imagining a Future with Magi Tech",
+            "description": "Sarah envisions a future where magi tech is fully integrated into society, weighing the fantastical benefits against potential societal disruptions."
+        },
+        {
+            "short_title": "The Cost of Progress",
+            "long_title": "Acknowledging the Sacrifices and Risks Involved",
+            "description": "Realizing that progress often comes with sacrifices, Sarah is forced to weigh the potential risks and costs associated with her innovations."
+        },
+        {
+            "short_title": "A Painful Decision",
+            "long_title": "Sarah Decides on the Future Path of Magi Tech",
+            "description": "After much deliberation and taking into account all arguments, Sarah makes a pivotal decision about the future of magi tech, setting the stage for the events in the next chapter."
+        }
+    ]
+}

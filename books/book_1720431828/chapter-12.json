@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 3,
+    "name": "Chapter 12",
+    "short_description": "Ba\u015far\u0131 ve takdir",
+    "events": "Ahmet par\u00e7ay\u0131 ba\u015far\u0131yla tamamlar ve takdir toplar.",
+    "people": "Ahmet, Usta Mehmet, di\u011fer ustalar, m\u00fc\u015fteri",
+    "places": "Han, Usta Mehmet'in d\u00fckkan\u0131",
+    "from_prev_chapter": "Ahmet yo\u011fun bir \u00e7al\u0131\u015fma s\u00fcrecine girer",
+    "to_next_chapter": "Yeni bir meydan okuma gelecek",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Gizli Zafer - Beklenen An: Usta Mehmet d\u00fckk\u00e2na gelir ve Ahmet'in tamamlad\u0131\u011f\u0131 par\u00e7ay\u0131 fark eder."
+        },
+        {
+            "description": "Ustan\u0131n Tepkisi - \u015ea\u015fk\u0131nl\u0131k ve Gurur: Usta Mehmet, Ahmet'in ba\u015far\u0131s\u0131 kar\u015f\u0131s\u0131nda hem \u015fa\u015f\u0131r\u0131r hem de gururlan\u0131r."
+        },
+        {
+            "description": "S\u0131rlar\u0131n A\u00e7\u0131\u011fa \u00c7\u0131kmas\u0131 - Gece \u00c7al\u0131\u015fmalar\u0131: Ahmet, gizli \u00e7al\u0131\u015fmalar\u0131n\u0131 ve \u00f6\u011frenme s\u00fcrecini Usta Mehmet'e anlat\u0131r."
+        },
+        {
+            "description": "Takdir Toplama - Ustalar\u0131n Onay\u0131: Di\u011fer ustalar da Ahmet'in ba\u015far\u0131s\u0131n\u0131 duyar ve onu tebrik ederler."
+        },
+        {
+            "description": "M\u00fc\u015fterinin Geli\u015fi - Nihai Test: \u00d6nemli bir m\u00fc\u015fteri d\u00fckk\u00e2na gelir ve Ahmet'in yapt\u0131\u011f\u0131 par\u00e7ay\u0131 inceler."
+        },
+        {
+            "description": "Be\u011feni ve Sipari\u015f - Eme\u011fin Kar\u015f\u0131l\u0131\u011f\u0131: M\u00fc\u015fteri, par\u00e7ay\u0131 \u00e7ok be\u011fenir ve yeni sipari\u015fler verir."
+        },
+        {
+            "description": "Yeni Sorumluluklar - \u00c7\u0131rakl\u0131ktan Ustal\u0131\u011fa: Usta Mehmet, Ahmet'e daha fazla sorumluluk vermeye ba\u015flar."
+        },
+        {
+            "description": "Gelene\u011fin Devam\u0131 - Bilgi Aktar\u0131m\u0131: Ahmet, \u00f6\u011frendi\u011fi yeni teknikleri di\u011fer \u00e7\u0131raklarla payla\u015fmaya ba\u015flar."
+        },
+        {
+            "description": "Handa Yeni Bir Soluk - De\u011fi\u015fimin Ba\u015flang\u0131c\u0131: Ahmet'in ba\u015far\u0131s\u0131, handaki di\u011fer d\u00fckk\u00e2nlara da ilham verir."
+        },
+        {
+            "description": "Gelece\u011fe Bak\u0131\u015f - Yeni Ufuklar: Usta Mehmet ve Ahmet, d\u00fckk\u00e2n\u0131n gelece\u011fi hakk\u0131nda planlar yapmaya ba\u015flarlar."
+        }
+    ]
+}

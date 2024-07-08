@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6: Life Around Volcanoes",
+    "short_description": "Will explores how communities live and thrive in the shadow of volcanoes. He visits villages built on volcanic soil and discusses the benefits and challenges faced by these communities.",
+    "events": "Visit to villages, discussion of volcanic soil benefits.",
+    "people": "Will Smith, local villagers.",
+    "places": "Villages near volcanoes.",
+    "from_prev_chapter": "Myths and legends about volcanoes.",
+    "to_next_chapter": "Transition to more in-depth exploration of volcanic activities.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Seamless Transition to Life Around Volcanoes",
+            "long_title": "From Myths to Reality: Transition to Life Around Volcanoes",
+            "description": "Will completes his discussion on myths and legends of volcanoes by hinting at how these stories affect the lives of people living near volcanoes. He smoothly transitions into exploring real-life scenarios"
+        },
+        {
+            "short_title": "Village Arrival",
+            "long_title": "Arrival at a Village Built on Volcanic Soil",
+            "description": "Will arrives at a village located near a volcano. He is greeted by the local villagers and sets the scene for his exploration of life in such a unique environment."
+        },
+        {
+            "short_title": "Community Welcome",
+            "long_title": "A Warm Welcome from the Village Community",
+            "description": "The villagers welcome Will with open arms, sharing their traditions, culture, and way of life. Will captures the warmth and hospitality of the community."
+        },
+        {
+            "short_title": "Benefits of Volcanic Soil",
+            "long_title": "Thriving on Volcanic Soil: Benefits for Agriculture",
+            "description": "Will delves into the benefits of volcanic soil for agriculture, speaking with local farmers about the fertility of the land and how it supports their crops."
+        },
+        {
+            "short_title": "Challenging Living Conditions",
+            "long_title": "Facing the Challenges: Living in the Shadow of a Volcano",
+            "description": "Will discusses the challenges faced by the villagers, such as the risk of eruptions and the impact of volcanic activity on daily life. He interviews locals to share their stories of resilience."
+        },
+        {
+            "short_title": "Adaptation and Resilience",
+            "long_title": "How Communities Adapt and Stay Resilient",
+            "description": "Focus on how the community adapts to the volcanic environment, highlighting their resilience and innovative ways of coping with natural threats."
+        },
+        {
+            "short_title": "Local Legends and Beliefs",
+            "long_title": "Local Legends: Beliefs About the Volcano",
+            "description": "Will explores local legends and beliefs about the volcano, showing how myths are intertwined with the everyday lives of the villagers. He discusses the respect and reverence the community has for the volcano."
+        },
+        {
+            "short_title": "Interview with Village Elder",
+            "long_title": "Wisdom from the Past: Interview with a Village Elder",
+            "description": "Interview with a respected village elder who shares tales from the past, including significant volcanic events and their impact on the community. The elder also provides wisdom and advice for future generations."
+        },
+        {
+            "short_title": "Village Feast",
+            "long_title": "A Feast in the Village: Celebrating Life",
+            "description": "Will participates in a village feast, celebrating the community's spirit and resilience. He enjoys traditional foods made from crops grown in the fertile volcanic soil."
+        },
+        {
+            "short_title": "Teasing the Next Exploration",
+            "long_title": "A Tease of What's to Come: Flora, Fauna, and Human Life",
+            "description": "Will wraps up the chapter by teasing his next exploration, where he will delve deeper into the flora, fauna, and human life that thrive around volcanoes. This beat sets the stage for the next chapter, creating anticipation for readers."
+        }
+    ]
+}

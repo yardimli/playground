@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 3,
+    "name": "Chapter 9: The Turning Point",
+    "short_description": "A critical piece of evidence changes the direction of the investigation.",
+    "events": "",
+    "people": "Dr. Gregory House, Wilson, House's team.",
+    "places": "Princeton-Plainsboro Teaching Hospital, House's office.",
+    "from_prev_chapter": "House discovers a vital piece of evidence that changes the trajectory of the case.",
+    "to_next_chapter": "House refocuses the investigation based on new insights.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

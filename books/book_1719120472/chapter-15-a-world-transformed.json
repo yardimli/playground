@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15: A World Transformed",
+    "short_description": "Sarah activates the harmonizing device, risking everything. The magical world is transformed as technology and magic find a perfect balance. In the process, Sarah finds that she can now bridge both worlds, allowing her to live in and contribute to both realities. The story ends with Sarah starting a new magi-tech academy that welcomes students from both worlds, ushering in an era of unprecedented magical and technological advancement.",
+    "events": "Activation of the device, world transformation, establishment of the new academy",
+    "people": "Sarah, citizens of both worlds, new academy students",
+    "places": "Transformed magical world, Sarah's original world, new magi-tech academy",
+    "from_prev_chapter": "Activation of the harmonizing device and its consequences",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

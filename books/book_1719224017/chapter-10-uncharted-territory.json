@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 1,
+    "name": "Chapter 10: Uncharted Territory",
+    "short_description": "Tamara receives an unexpected job offer that would advance her career but require moving. Clara encourages her while grappling with the idea of being left behind.",
+    "events": "Tamara gets a job offer, Clara pushes her to accept, they discuss the implications for their living arrangement.",
+    "people": "Tamara: excited but torn. Clara: supportive but anxious.",
+    "places": "Tamara's apartment, hospital administration office.",
+    "from_prev_chapter": "Tamara and Clara's bond strengthens as they face adversity together, setting the stage for bigger challenges ahead.",
+    "to_next_chapter": "Tamara makes a decision about the job offer, leading to a new set of challenges for both women.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-24 10:13:37",
+    "lastUpdated": "2024-06-24 10:13:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-24 10:13:37"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Tamara reads the email, revealing a prestigious job offer from a renowned hospital in another city. The offer promises career advancement and a significant salary increase. Tamara's initial excitement is tempered by the realization that accepting would mean leaving Clara behind. The apartment, once a sanctuary, now feels like a crossroads of life-changing decisions."
+        },
+        {
+            "description": "Tamara shares the news with Clara, her voice a mix of excitement and uncertainty. Clara's face lights up with genuine happiness for Tamara, but a flicker of sadness passes through her eyes. The living room becomes an emotional arena as they discuss the offer's implications, with Clara insisting that Tamara shouldn't let her presence hold her back."
+        },
+        {
+            "description": "Seeking clarity, Tamara visits the hospital administration office to discuss her current situation and the potential for advancement within her present job. The sterile office becomes a negotiation ground as Tamara carefully probes for opportunities, weighing them against the new offer. She leaves with a clearer picture but more conflicted than ever."
+        },
+        {
+            "description": "Back at the apartment, Tamara finds Clara poring over real estate listings in the city of the new job offer. Clara's enthusiasm is both touching and overwhelming for Tamara. The kitchen table becomes a war room of sorts, with pros and cons lists scattered amongst apartment ads, highlighting the gravity of the decision at hand."
+        },
+        {
+            "description": "Tamara spends a restless night contemplating her options. Her bedroom, usually a place of rest, becomes a crucible of indecision. She imagines various scenarios - career success tinged with guilt, staying put with a sense of missed opportunity. By dawn, she's exhausted but no closer to a decision."
+        },
+        {
+            "description": "The next day, Clara surprises Tamara by inviting some of Tamara's closest friends for dinner. The apartment transforms into a cozy support group as friends offer advice and encouragement. Clara orchestrates the evening to help Tamara gain perspective, showcasing her selfless support despite her own fears of being left alone."
+        },
+        {
+            "description": "Tamara decides to visit the city where the new job is located. The trip becomes a fact-finding mission as she explores neighborhoods, visits the hospital, and imagines her potential new life. Each new sight and experience adds weight to her decision, making the choice even more complex."
+        },
+        {
+            "description": "Upon returning, Tamara finds Clara has prepared a scrapbook of their time together. As they flip through the pages in the living room, both women are overcome with emotion. The scrapbook serves as a poignant reminder of their bond and the impact they've had on each other's lives, adding another layer to Tamara's difficult decision."
+        },
+        {
+            "description": "With the deadline approaching, Tamara seeks advice from her mentor at the hospital. Their conversation in the mentor's office becomes a pivotal moment as Tamara gains clarity on her career goals and personal values. She leaves with a newfound sense of purpose, her steps more confident as she navigates the hospital corridors."
+        },
+        {
+            "description": "Tamara returns home, her decision made. She finds Clara in the kitchen, preparing comfort food as if sensing the weight of the moment. As Tamara begins to speak, Clara's expression shifts from anticipation to a complex mix of joy and sorrow. The chapter ends with Tamara's words hanging in the air, setting the stage for the major changes to come in both their lives."
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "row": "act-2",
+    "order": 3,
+    "name": "Chapter 9: Gaining Allies",
+    "short_description": "Sarah finds supporters among students and progressive faculty members who believe in the potential of magi tech. Together, they form a group to further develop and protect their innovations.",
+    "events": "Forming alliances, group meetings",
+    "people": "Sarah Davis, supportive students and faculty",
+    "places": "Academy grounds, secret meeting spots",
+    "from_prev_chapter": "Sarah faces opposition and conflict.",
+    "to_next_chapter": "Sarah and her allies work on new magi tech projects.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Gathering Support",
+            "long_title": "Sarah Seeks Out Like-minded Allies",
+            "description": "After facing opposition, Sarah reaches out to students and faculty members who might support her vision of magi tech. She carefully selects individuals who are progressive and open-minded."
+        },
+        {
+            "short_title": "Private Discussions",
+            "long_title": "Secret Meetings with Supporters",
+            "description": "Sarah arranges private meetings with the supportive members. These secret gatherings are held in obscure corners of the academy grounds to avoid unwanted attention."
+        },
+        {
+            "short_title": "Defining Goals",
+            "long_title": "Establishing Common Objectives",
+            "description": "During the meetings, the group defines their shared objectives and the potential benefits of integrating magic with technology. They outline the initial projects they want to focus on."
+        },
+        {
+            "short_title": "Specialized Roles",
+            "long_title": "Assigning Roles Based on Strengths",
+            "description": "Sarah identifies the strengths and skills of each member and assigns specific roles and tasks. Some members focus on research, while others handle project planning and experimentation."
+        },
+        {
+            "short_title": "Material Sourcing",
+            "long_title": "Procuring Materials for Experiments",
+            "description": "The group members brainstorm and gather the necessary materials for their magi tech projects. They must be discreet to avoid drawing the attention of the academy's traditionalists."
+        },
+        {
+            "short_title": "First Prototype",
+            "long_title": "Building the First Magi Tech Prototype",
+            "description": "With the materials procured, the group builds their first magi tech prototype. Combining Sarah's engineering knowledge with magic proves challenging but fruitful."
+        },
+        {
+            "short_title": "Testing Phase",
+            "long_title": "Testing and Refining the Prototype",
+            "description": "The group begins a thorough testing phase of their prototype. They aim to refine its functionality and ensure that it works safely and effectively."
+        },
+        {
+            "short_title": "Gaining Confidence",
+            "long_title": "Building Trust and Confidence within the Group",
+            "description": "As the project progresses, the group members gain confidence in their abilities and in each other. The success of the prototype strengthens their resolve."
+        },
+        {
+            "short_title": "Expanding Influence",
+            "long_title": "Seeking More Allies and Expanding the Group",
+            "description": "With initial successes under their belt, Sarah and her allies start reaching out to more students and faculty who might be interested in their work. They aim to broaden their support base."
+        },
+        {
+            "short_title": "Preparing for Challenges",
+            "long_title": "Anticipating and Preparing for Opposition",
+            "description": "Aware that their work could attract opposition, the group prepares strategies to protect their innovations and themselves. They discuss how to address any potential threats or conflicts."
+        }
+    ]
+}

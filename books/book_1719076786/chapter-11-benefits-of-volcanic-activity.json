@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 2,
+    "name": "Chapter 11: Benefits of Volcanic Activity",
+    "short_description": "Highlighting the positive side, Will explores the benefits of volcanic activity, including fertile soils, geothermal energy, and the creation of new land. He visits places that have thrived thanks to volcanoes.",
+    "events": "Visit to fertile regions, geothermal plants.",
+    "people": "Will Smith, local farmers, energy experts.",
+    "places": "Regions benefiting from volcanic activity.",
+    "from_prev_chapter": "Impact of eruptions on climate.",
+    "to_next_chapter": "Unique ecosystems around volcanoes.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 2,
+    "name": "Chapter 11",
+    "short_description": "\u00c7\u0131rakl\u0131ktan ustal\u0131\u011fa",
+    "events": "Ahmet gece g\u00fcnd\u00fcz \u00e7al\u0131\u015farak par\u00e7ay\u0131 yapmaya \u00e7al\u0131\u015f\u0131r.",
+    "people": "Ahmet, Usta Mehmet, di\u011fer ustalar",
+    "places": "Han, Usta Mehmet'in d\u00fckkan\u0131",
+    "from_prev_chapter": "Ahmet yeni bir yol se\u00e7er",
+    "to_next_chapter": "Sonu\u00e7 belli olacak",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Son Engel - Beklenmedik Zorluk: Ahmet, par\u00e7ay\u0131 tamamlamak \u00fczereyken kar\u015f\u0131la\u015ft\u0131\u011f\u0131 engeli a\u015fmak i\u00e7in \u00e7\u00f6z\u00fcm arar."
+        },
+        {
+            "description": "Gece Mesaisi - Karanl\u0131kta \u00c7al\u0131\u015fma: Ahmet, gizlice d\u00fckk\u00e2na girerek geceleri \u00e7al\u0131\u015fmaya ba\u015flar."
+        },
+        {
+            "description": "Ustan\u0131n \u015e\u00fcphesi - Artan Merak: Usta Mehmet, Ahmet'in yorgunlu\u011funu ve gizli davran\u0131\u015flar\u0131n\u0131 fark eder."
+        },
+        {
+            "description": "Yeni Teknik - \u0130novasyon Zaman\u0131: Ahmet, eski ustal\u0131k kitaplar\u0131ndan \u00f6\u011frendi\u011fi bir tekni\u011fi uygulamaya karar verir."
+        },
+        {
+            "description": "Ba\u015far\u0131s\u0131zl\u0131k Korkusu - \u0130\u00e7 \u00c7at\u0131\u015fma: Ahmet, ba\u015far\u0131s\u0131z olma korkusuyla m\u00fccadele ederken motivasyonunu korumaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Gizli Yard\u0131m - Beklenmedik Destek: Di\u011fer ustalardan biri, Ahmet'in \u00e7abalar\u0131n\u0131 fark eder ve gizlice ona yard\u0131m eder."
+        },
+        {
+            "description": "Kritik An - D\u00f6n\u00fcm Noktas\u0131: Ahmet, par\u00e7an\u0131n kilit noktas\u0131n\u0131 tamamlamak \u00fczereyken beklenmedik bir sorunla kar\u015f\u0131la\u015f\u0131r."
+        },
+        {
+            "description": "Ustan\u0131n Testi - Gizli S\u0131nav: Usta Mehmet, Ahmet'i test etmek i\u00e7in ona zor bir g\u00f6rev verir."
+        },
+        {
+            "description": "Son Hamle - Cesur Ad\u0131m: Ahmet, t\u00fcm bilgi ve tecr\u00fcbesini kullanarak par\u00e7ay\u0131 tamamlamak i\u00e7in son hamlesini yapar."
+        },
+        {
+            "description": "Gizli Ba\u015far\u0131 - Sessiz Zafer: Ahmet, par\u00e7ay\u0131 ba\u015far\u0131yla tamamlar ve onu gizlice d\u00fckk\u00e2ndaki yerine koyar, Usta Mehmet'in tepkisini merakla bekler."
+        }
+    ]
+}

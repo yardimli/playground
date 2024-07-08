@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": "2",
+    "name": "Chapter 3: The Execution",
+    "short_description": "The day of the escape arrives. Bubbles and his friends execute their plan. Things go awry when the store owner nearly catches them, but they manage to escape into a nearby pond.",
+    "events": "Escape attempt, near capture, successful escape into the pond.",
+    "people": "Bubbles, Finley, Lola, Guppy, Store Owner",
+    "places": "Pet store, nearby pond",
+    "from_prev_chapter": "They have a plan to escape.",
+    "to_next_chapter": "They experience their first taste of freedom.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Final Preparations",
+            "long_title": "Bubbles and Friends Make Final Preparations for the Escape",
+            "description": "Bubbles, Finley, Lola, and Guppy review their plan one last time, ensuring that everyone knows their role and the sequence of actions."
+        },
+        {
+            "short_title": "Nervous Anticipation",
+            "long_title": "The Tension Builds as the Fish Anticipate the Escape",
+            "description": "The fish experience a mix of excitement and anxiety as they wait for the right moment to execute their escape. They watch the store owner closely, waiting for their opportunity."
+        },
+        {
+            "short_title": "The Signal",
+            "long_title": "The Moment to Act Arrives with the Given Signal",
+            "description": "Bubbles gives the signal to begin the escape plan as the store owner steps into the back room. The fish spring into action."
+        },
+        {
+            "short_title": "Breaking Free",
+            "long_title": "The Fish Break Out of Their Tank and Head for the Door",
+            "description": "The fish use their combined strength to push open the slightly ajar tank lid, spilling onto the counter. They struggle but manage to flop their way towards the door."
+        },
+        {
+            "short_title": "Close Call",
+            "long_title": "A Near Miss as the Store Owner Almost Spots the Escaping Fish",
+            "description": "The store owner returns to the front of the store and nearly catches sight of the escaping fish. The fish freeze, hoping not to be seen."
+        },
+        {
+            "short_title": "A Dash for Freedom",
+            "long_title": "Bubbles Leads the Charge Through the Store\u2019s Front Door",
+            "description": "With a quick burst of energy and coordination, Bubbles and friends wriggle their way through the store entrance, finally reaching the open air."
+        },
+        {
+            "short_title": "Unexpected Obstacle",
+            "long_title": "The Group Faces an Unexpected Obstacle Outside the Store",
+            "description": "Outside the store, the fish encounter a busy sidewalk. They must navigate human feet and other obstacles in their path to reach the nearby pond."
+        },
+        {
+            "short_title": "Teamwork",
+            "long_title": "The Fish Work Together to Overcome the Obstacles",
+            "description": "Using teamwork and encouragement, the fish help each other move across the sidewalk, avoiding danger and urging each other on."
+        },
+        {
+            "short_title": "Final Push",
+            "long_title": "The Pond Comes into View as the Fish Make a Final Push",
+            "description": "Exhausted but determined, the fish spot the pond and make a desperate final effort to reach the safety of the water."
+        },
+        {
+            "short_title": "Sweet Escape",
+            "long_title": "Bubbles and Friends Finally Reach the Pond and Taste Freedom",
+            "description": "Bubbles and the others plunge into the cool, refreshing water of the pond. They revel in their newfound freedom and celebrate their success."
+        }
+    ]
+}

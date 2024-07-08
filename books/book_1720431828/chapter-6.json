@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6",
+    "short_description": "Gizli yetenek",
+    "events": "Ahmet, kendinde sakl\u0131 kalm\u0131\u015f bir yetene\u011fi ke\u015ffeder.",
+    "people": "Ahmet, Usta Mehmet",
+    "places": "Usta Mehmet'in d\u00fckkan\u0131",
+    "from_prev_chapter": "\u00d6zel bir m\u00fc\u015fteri gelir",
+    "to_next_chapter": "Ahmet'in yetenekleri s\u0131nanacak",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ustan\u0131n \u00d6vg\u00fcs\u00fc - Beklenmedik Takdir: Usta Mehmet, Ahmet'in koleksiyoncuyla olan diyalo\u011funu \u00f6ver ve onda gizli bir yetenek oldu\u011funu s\u00f6yler."
+        },
+        {
+            "description": "\u0130\u00e7 Sorgulama - Yeni Bir Bak\u0131\u015f A\u00e7\u0131s\u0131: Ahmet, ustas\u0131n\u0131n s\u00f6zlerini d\u00fc\u015f\u00fcn\u00fcr ve kendi yeteneklerini sorgulamaya ba\u015flar."
+        },
+        {
+            "description": "Eski Bir Saat - Gizli Bir Meydan Okuma: Usta Mehmet, Ahmet'e tamir edilmesi zor bir saati verir ve ondan \u00e7\u00f6z\u00fcm bulmas\u0131n\u0131 ister."
+        },
+        {
+            "description": "Zorlu Analiz - \u00c7\u0131ra\u011f\u0131n Cesareti: Ahmet, saati incelemeye ba\u015flar ve al\u0131\u015f\u0131lmad\u0131k bir yakla\u015f\u0131mla sorunu te\u015fhis etmeye \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "S\u00fcrpriz Ke\u015fif - Beklenmedik \u00c7\u00f6z\u00fcm: Ahmet, saat mekanizmas\u0131nda gizli bir detay\u0131 fark eder ve ustas\u0131n\u0131 \u015fa\u015f\u0131rtan bir \u00e7\u00f6z\u00fcm \u00f6nerir."
+        },
+        {
+            "description": "Ustan\u0131n \u015ea\u015fk\u0131nl\u0131\u011f\u0131 - Yeni Bir Bak\u0131\u015f: Usta Mehmet, Ahmet'in \u00e7\u00f6z\u00fcm\u00fcn\u00fc hayretle kar\u015f\u0131lar ve onun farkl\u0131 d\u00fc\u015f\u00fcnme yetene\u011fini takdir eder."
+        },
+        {
+            "description": "\u00d6zg\u00fcven Art\u0131\u015f\u0131 - \u0130\u00e7sel D\u00f6n\u00fc\u015f\u00fcm: Ahmet, kendi yeteneklerinin fark\u0131na var\u0131r ve kendine olan g\u00fcveni artar."
+        },
+        {
+            "description": "Yeni G\u00f6revler - Artan Sorumluluklar: Usta Mehmet, Ahmet'e daha karma\u015f\u0131k tamir i\u015fleri vermeye ba\u015flar ve onun geli\u015fimini g\u00f6zlemler."
+        },
+        {
+            "description": "M\u00fc\u015fteri \u0130li\u015fkileri - Sosyal Beceriler: Ahmet, d\u00fckkana gelen m\u00fc\u015fterilerle daha fazla ileti\u015fim kurar ve onlar\u0131n ihtiya\u00e7lar\u0131n\u0131 anlamaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Gelecek Planlar\u0131 - B\u00fcy\u00fck Beklentiler: Usta Mehmet, Ahmet'e yakla\u015fan b\u00fcy\u00fck bir s\u0131nav hakk\u0131nda ipucu verir ve onu haz\u0131rlanmaya te\u015fvik eder."
+        }
+    ]
+}

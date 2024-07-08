@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 4,
+    "name": "Chapter 13: The Motive Uncovered",
+    "short_description": "House uncovers the motive behind the disappearance of the heirloom.",
+    "events": "",
+    "people": "Dr. Gregory House, Wilson, House's team, the culprit.",
+    "places": "Princeton-Plainsboro Teaching Hospital, House's office.",
+    "from_prev_chapter": "House pieces together the timeline and the culprit's motive.",
+    "to_next_chapter": "House is ready to reveal the truth to the heir and their family.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

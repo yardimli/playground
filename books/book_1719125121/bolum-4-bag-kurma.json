@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 4,
+    "name": "B\u00f6l\u00fcm 4: Ba\u011f Kurma",
+    "short_description": "Ali ve Aylin, birbirlerini tan\u0131maya ba\u015flar. K\u00fclt\u00fcrlerini ve d\u00fcnyalar\u0131n\u0131 payla\u015f\u0131rlar.",
+    "events": "Ali ile Aylin'in sohbetleri, k\u00fclt\u00fcr al\u0131\u015fveri\u015fi.",
+    "people": "Ali, Aylin",
+    "places": "Peri d\u00fcnyas\u0131, Ali'nin gemisi.",
+    "from_prev_chapter": "Ali ve Aylin'in birbirlerini tan\u0131ma s\u00fcre\u00e7leri.",
+    "to_next_chapter": "Ali'nin gezegendeki gizemleri \u00e7\u00f6zme karar\u0131.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali, peri d\u00fcnyas\u0131n\u0131n derinliklerinde ya\u015fad\u0131\u011f\u0131 ke\u015fiflerden sonra, Aylin ile vedala\u015f\u0131r. Ancak, geri d\u00f6nmeden \u00f6nce Aylin ona rehberlik etmeye devam edece\u011fini s\u00f6yler. Ali, gemisine geri d\u00f6ner."
+        },
+        {
+            "description": "Ali, gemisine d\u00f6nd\u00fc\u011f\u00fcnde, burada ge\u00e7irdi\u011fi s\u00fcre boyunca Aylin'in ona \u00f6\u011frettiklerini d\u00fc\u015f\u00fcn\u00fcr. Ali, Aylin ile aralar\u0131ndaki ba\u011f\u0131 kuvvetlendirmek i\u00e7in d\u00f6n\u00fc\u015f\u00fcml\u00fc olarak peri d\u00fcnyas\u0131 ve gemisi aras\u0131nda gidip gelmeye karar verir."
+        },
+        {
+            "description": "Ali, sonraki kar\u015f\u0131la\u015fmalar\u0131nda Aylin'e uzay seyahatleri s\u0131ras\u0131nda ya\u015fad\u0131\u011f\u0131 deneyimleri anlat\u0131r. Aylin, Ali'nin hikayelerini b\u00fcy\u00fclenmi\u015f bir \u015fekilde dinler ve bu hikayelerin kendi d\u00fcnyas\u0131na nas\u0131l etki edebilece\u011fi \u00fczerinde d\u00fc\u015f\u00fcn\u00fcr."
+        },
+        {
+            "description": "Aylin, Ali'ye perilerin tarihini ve k\u00fclt\u00fcrel rit\u00fcellerini anlat\u0131r. Ali, perilerin ge\u00e7mi\u015fi hakk\u0131nda daha fazla bilgi edindik\u00e7e, onlar\u0131 daha yak\u0131ndan tan\u0131maya ba\u015flar. Bu s\u0131rada, Aylin'in hem rehberi hem de dostu oldu\u011funu daha da hissetmeye ba\u015flar."
+        },
+        {
+            "description": "Ali, Aylin ile telepatik ileti\u015fim kurman\u0131n gizemlerini daha derinden ke\u015ffetmeye ba\u015flar. \u0130ki farkl\u0131 d\u00fcnyada ya\u015famalar\u0131na ra\u011fmen aralar\u0131ndaki ba\u011f\u0131n g\u00fc\u00e7lendi\u011fini hisseder. Bu telepatik ba\u011f \u00fczerinden birbirlerine daha fazla g\u00fcven duymaya ba\u015flarlar."
+        },
+        {
+            "description": "Ali, perilerin renkli ve b\u00fcy\u00fcleyici d\u00fcnyas\u0131nda ge\u00e7irdi\u011fi zaman diliminde, Aylin'in rehberli\u011finde ola\u011fan\u00fcst\u00fc deneyimler ya\u015far. Orman\u0131n derinliklerindeki gizli mek\u00e2nlar\u0131 ve kadim s\u0131rlar\u0131 ke\u015ffeder. Burada \u00f6\u011frendikleri, onun d\u00fcnya g\u00f6r\u00fc\u015f\u00fcn\u00fc de\u011fi\u015ftirir."
+        },
+        {
+            "description": "Ali ve Aylin, farkl\u0131 gezegenlerin ve galaktik medeniyetlerin k\u00fclt\u00fcrleri \u00fczerine derin sohbetlere dalarlar. Ali, insanl\u0131\u011f\u0131n bilim ve teknoloji alan\u0131nda yapt\u0131klar\u0131 ilerlemeleri payla\u015f\u0131rken, Aylin de sihirli ve mistik rit\u00fcelleri anlat\u0131r."
+        },
+        {
+            "description": "Ali, Aylin'e insanlar\u0131n duygusal d\u00fcnyas\u0131 hakk\u0131nda bilgi verirken, Aylin de perilerin duygu ve d\u00fc\u015f\u00fcnce d\u00fcnyas\u0131n\u0131 a\u00e7ar. \u0130kisi de birbirlerinin perspektiflerinden yeni \u015feyler \u00f6\u011frenir ve bu deneyimler aralar\u0131ndaki ba\u011f\u0131 kuvvetlendirir."
+        },
+        {
+            "description": "Ali, uzay gemisinde yapt\u0131\u011f\u0131 bir ara\u015ft\u0131rma s\u0131ras\u0131nda peri d\u00fcnyas\u0131 hakk\u0131nda yeni bilgiler ke\u015ffeder. Bu bilgileri Aylin ile payla\u015f\u0131r ve perilerin gizemlerini \u00e7\u00f6zme konusunda daha fazla istekli hale gelir."
+        },
+        {
+            "description": "Ali ve Aylin, birbirlerine olan g\u00fcvenleri ve ba\u011flar\u0131 sayesinde farkl\u0131 d\u00fcnya ve k\u00fclt\u00fcrlerden gelmelerine ra\u011fmen a\u015fklar\u0131n\u0131n g\u00fc\u00e7lendi\u011fini hissederler. Ancak Ali, perilerin d\u00fcnyas\u0131nda baz\u0131 bilinmeyen tehlikeler oldu\u011funu fark eder ve bu tehlikelere kar\u015f\u0131 nas\u0131l \u00f6nlem alabileceklerini d\u00fc\u015f\u00fcn\u00fcr."
+        }
+    ]
+}

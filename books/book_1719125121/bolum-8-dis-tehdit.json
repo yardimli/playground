@@ -1,0 +1,55 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "B\u00f6l\u00fcm 8: D\u0131\u015f Tehdit",
+    "short_description": "Ali'nin d\u00fcnyas\u0131ndan gelen bir sinyal, d\u0131\u015f tehditlerin yakla\u015fmakta oldu\u011funu g\u00f6sterir. Ali, Aylin'i koruma karar\u0131 al\u0131r.",
+    "events": "D\u0131\u015f tehdit sinyalinin al\u0131nmas\u0131, Ali'nin endi\u015feleri.",
+    "people": "Ali, Aylin",
+    "places": "Uzay gemisi, bilinmeyen gezegen.",
+    "from_prev_chapter": "D\u0131\u015f tehditlerin ortaya \u00e7\u0131k\u0131\u015f\u0131.",
+    "to_next_chapter": "Ali ve Aylin'in tehditlere kar\u015f\u0131 haz\u0131rl\u0131k yapmas\u0131.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali uzay gemisinde oturmu\u015f, d\u00fcnyas\u0131ndan gelen acil sinyali dinlemektedir. Sinyal, bilinmeyen bir d\u00fc\u015fman\u0131n yakla\u015ft\u0131\u011f\u0131n\u0131 g\u00f6sterir. Ali, tehditin ne oldu\u011funu \u00e7\u00f6zmeye \u00e7al\u0131\u015f\u0131r ve Aylin'in g\u00fcvenli\u011fi konusunda endi\u015felenir."
+        },
+        {
+            "description": "Aylin, Ali'nin endi\u015feli tavr\u0131n\u0131 fark eder ve yan\u0131na gelir. Ali, sinyalin ne anlama geldi\u011fini anlat\u0131r ve birlikte bir \u00e7\u00f6z\u00fcm bulmalar\u0131 gerekti\u011fini s\u00f6yler. Aylin, Ali'yi sakinle\u015ftirmeye ve destek olmaya \u00e7al\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin, tehditin kayna\u011f\u0131n\u0131 ve ne kadar ciddi oldu\u011funu belirlemek i\u00e7in peri d\u00fcnyas\u0131ndan baz\u0131 bilge ki\u015filere dan\u0131\u015fmaya karar verirler. Bu ki\u015filerle g\u00f6r\u00fc\u015fmek i\u00e7in yola \u00e7\u0131karlar."
+        },
+        {
+            "description": "Peri bilge ki\u015fileriyle yap\u0131lan g\u00f6r\u00fc\u015fmede, bu tehditin daha \u00f6nce de peri d\u00fcnyas\u0131n\u0131 zor durumda b\u0131rakan bir varl\u0131ktan geldi\u011fi anla\u015f\u0131l\u0131r. Bu bilgi, Ali'nin endi\u015felerini art\u0131r\u0131r ve daha h\u0131zl\u0131 hareket etmeleri gerekti\u011fine karar verirler."
+        },
+        {
+            "description": "Ali ve Aylin, uzay gemisine d\u00f6nerler ve tehditin kayna\u011f\u0131n\u0131 daha iyi anlamak i\u00e7in geminin sens\u00f6r sistemlerini kullanmaya ba\u015flarlar. Bu s\u0131rada, Aylin peri g\u00fc\u00e7lerini kullanarak yard\u0131mc\u0131 olur."
+        },
+        {
+            "description": "Ali geminin sens\u00f6rlerinden gelen verileri analiz ederken, d\u00fc\u015fman gemisinin tam olarak nerede oldu\u011funu ve ne kadar h\u0131zl\u0131 yakla\u015ft\u0131\u011f\u0131n\u0131 belirler. Zamanlar\u0131 k\u0131s\u0131tl\u0131d\u0131r ve hemen harekete ge\u00e7meleri gerekti\u011fini anlarlar."
+        },
+        {
+            "description": "Ali ve Aylin, peri d\u00fcnyas\u0131n\u0131n liderleri ile acil bir video konferans d\u00fczenlerler. Liderlere tehdit hakk\u0131nda bilgi verirler ve birlikte bir savunma stratejisi olu\u015fturmak i\u00e7in onlardan yard\u0131m isterler."
+        },
+        {
+            "description": "Peri d\u00fcnyas\u0131n\u0131n liderlerinin sundu\u011fu bilgiler ve stratejiler do\u011frultusunda, Ali ve Aylin uzay gemisinde baz\u0131 savunma ve sava\u015f haz\u0131rl\u0131klar\u0131 yaparlar. Her ikisi de olas\u0131 bir \u00e7at\u0131\u015fmaya haz\u0131r hale gelir."
+        },
+        {
+            "description": "Savunma haz\u0131rl\u0131klar\u0131 devam ederken, Ali ve Aylin birbirleriyle derinlemesine konu\u015farak cesaret ve g\u00fc\u00e7 bulurlar. Bu anlar, aralar\u0131ndaki ba\u011f\u0131 daha da peki\u015ftirir ve birlikte bu zorlu\u011fun \u00fcstesinden geleceklerine dair g\u00fcvenlerini art\u0131r\u0131r."
+        },
+        {
+            "description": "Tehdit giderek yakla\u015ft\u0131\u011f\u0131nda, Ali ve Aylin son haz\u0131rl\u0131klar\u0131n\u0131 tamamlarlar. Peri d\u00fcnyas\u0131n\u0131n liderleri ile tekrar ileti\u015fime ge\u00e7erler ve planlar\u0131n\u0131 g\u00f6zden ge\u00e7irirler. Yakla\u015fan tehlike ile y\u00fczle\u015fmeye haz\u0131r bir \u015fekilde beklerler. Bir sonraki b\u00f6l\u00fcmde, yakla\u015fan tehditlere kar\u015f\u0131 haz\u0131rl\u0131k yapmalar\u0131 gerekecektir."
+        }
+    ]
+}

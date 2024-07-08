@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 1,
+    "name": "Chapter 14: The Aftermath",
+    "short_description": "The plan succeeds, and the cosmic event is averted. The crew and Codarians reflect on their collaboration, addressing the aftermath and healing any lingering rifts.",
+    "events": "",
+    "people": "Captain Picard, Codarian leaders, Enterprise crew",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "The initial results come in, determining if the disaster has been averted.",
+    "to_next_chapter": "The Enterprise prepares to depart, leaving a path open for future collaboration with the Codarians.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

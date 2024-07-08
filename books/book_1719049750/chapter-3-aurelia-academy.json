@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": 3,
+    "name": "Chapter 3: Aurelia Academy",
+    "short_description": "Sarah meets a group of friendly locals who take her to Aurelia Academy, a prestigious magical school. She decides to enroll to learn the basics of magic as a means of survival.",
+    "events": "Meeting locals, enrolling in magical school",
+    "people": "Sarah Davis, friendly locals, Aurelia Academy staff",
+    "places": "Magical forest, Aurelia Academy",
+    "from_prev_chapter": "Sarah meets locals who explain the basics of the world.",
+    "to_next_chapter": "Sarah begins her studies at Aurelia Academy.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Arrival at the Magical Forest",
+            "long_title": "Get Acquainted with the Enchanting Environs of the Magical Forest",
+            "description": "After being guided by the locals, Sarah finds herself at the edge of a mystical, enchanting forest. She sees flora and fauna that defy the laws of physics she knows, awakening her curiosity and wonder."
+        },
+        {
+            "short_title": "Meeting the Explorers",
+            "long_title": "Sarah Meets the Friendly Locals Who Will Guide Her Journey",
+            "description": "Sarah encounters a group of friendly locals who are eager to help. They are curious about her and share crucial information about the new world, hinting at the existence of Aurelia Academy."
+        },
+        {
+            "short_title": "Introduction to Aurelia Academy",
+            "long_title": "The Locals Share Legends and Facts about Aurelia Academy",
+            "description": "The locals describe Aurelia Academy as the pinnacle of magical education in the land. They detail its history, famous alumni, and the various forms of magic taught there."
+        },
+        {
+            "short_title": "Unexpected Contemplation",
+            "long_title": "Sarah Ponders Her Choices and Future in This New World",
+            "description": "Sarah is torn between her yearning to return home and the opportunity to learn magic. She realizes that understanding magic might be crucial for her survival and possible return."
+        },
+        {
+            "short_title": "En Route to the Academy",
+            "long_title": "The Journey to Aurelia Academy Begins",
+            "description": "The group sets off toward the academy, encountering various magical creatures and obstacles along the way. These deepen Sarah's understanding of how different this world is from Earth."
+        },
+        {
+            "short_title": "First Glimpse of Aurelia Academy",
+            "long_title": "Witness the Grand Entrance of Aurelia Academy",
+            "description": "As they break through the dense forest, the majestic spires and vast grounds of Aurelia Academy come into view, filling Sarah with awe and anticipation."
+        },
+        {
+            "short_title": "Meeting the Gatekeeper",
+            "long_title": "A Memorable First Interaction with the Academy's Gatekeeper",
+            "description": "The group is greeted by a quirky and enigmatic gatekeeper, who quizzes Sarah on her intentions and tests her basic magical abilities before allowing entry."
+        },
+        {
+            "short_title": "Orientation Session",
+            "long_title": "Introduction to the Academy\u2019s Rules, Regulations, and Campus Layout",
+            "description": "Upon entry, the group is joined by other new students for an official orientation session. Campus rules, housing arrangements, and an introduction to the magical curriculum are all covered."
+        },
+        {
+            "short_title": "Enrollment Formalities",
+            "long_title": "Sarah Completes the Official Enrollment Process",
+            "description": "Sarah and the locals visit the main administrative building where she fills out the necessary paperwork, undergoes a magical assessment, and receives her official student identification."
+        },
+        {
+            "short_title": "Settling In",
+            "long_title": "Sarah Settles into Her New Home Away from Home",
+            "description": "Sarah is assigned her dormitory and meets her roommate. They bond over shared curiosities and nervousness, setting the stage for future adventures together."
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15: Resolution and Reflection",
+    "short_description": "The mystery is resolved, and House reflects on the case.",
+    "events": "",
+    "people": "Dr. Gregory House, Wilson, House's team, the heir.",
+    "places": "Princeton-Plainsboro Teaching Hospital, House's home.",
+    "from_prev_chapter": "The heir and their family react to the revelation.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

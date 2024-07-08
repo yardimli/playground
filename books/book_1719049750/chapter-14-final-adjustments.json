@@ -1,0 +1,75 @@
+{
+    "row": "act-4",
+    "order": 1,
+    "name": "Chapter 14: Final Adjustments",
+    "short_description": "Sarah makes final adjustments to her magi tech plans and ensures the council is prepared to oversee its ethical use. She reflects on her journey and the impact she has made.",
+    "events": "Final preparations, reflections",
+    "people": "Sarah Davis, her allies, council members",
+    "places": "Academy grounds, workshops",
+    "from_prev_chapter": "Sarah forms a council to oversee magi tech.",
+    "to_next_chapter": "Sarah prepares for a significant change.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Morning Preparations",
+            "long_title": "Sarah Gathers Her Tools for a Day of Final Adjustments",
+            "description": "Sarah starts her day by collecting her tools and blueprints from her workspace. She mentally reviews the checklists for the final adjustments needed on her magi tech plans."
+        },
+        {
+            "short_title": "First Inspection",
+            "long_title": "Sarah Conducts an Initial Inspection on Completed Magi Tech Devices",
+            "description": "Sarah visits the workshop to conduct a thorough inspection of the magi tech devices that are close to completion. She makes notes on the necessary tweaks and improvements that she needs to implement."
+        },
+        {
+            "short_title": "Council Briefing",
+            "long_title": "Sarah Briefs the Council on the Current Status and Next Steps",
+            "description": "Sarah gathers her allies and the council members for an update meeting. She briefs them on the progress, shares her concerns, and discusses the final adjustments and ethical guidelines necessary for overseeing magi tech."
+        },
+        {
+            "short_title": "Collaborative Efforts",
+            "long_title": "Team Collaboration to Address Final Tweaks",
+            "description": "Sarah collaborates with her allies and council members, dividing tasks and working together to ensure all final adjustments are made. The synergy between magic and engineering comes to the forefront during this collaboration."
+        },
+        {
+            "short_title": "Ethical Guidelines",
+            "long_title": "Discussing and Finalizing the Ethical Guidelines",
+            "description": "The council engages in a detailed discussion regarding the ethical guidelines for magi tech. Sarah ensures that everyone understands the importance of responsible usage and management of magi tech."
+        },
+        {
+            "short_title": "Final Testing",
+            "long_title": "Sarah Oversees the Final Testing of Magi Tech Devices",
+            "description": "Sarah supervises the final testing phase of the magi tech devices. She ensures that all systems are functioning as expected and documents the results to present to the council."
+        },
+        {
+            "short_title": "Unexpected Issue",
+            "long_title": "An Unexpected Issue Arises During the Testing Phase",
+            "description": "Just when everything seems to be in order, an unexpected issue arises with one of the magi tech devices. Sarah works swiftly with her team to diagnose and fix the problem."
+        },
+        {
+            "short_title": "Problem Resolution",
+            "long_title": "Successful Resolution of the Unexpected Issue",
+            "description": "Sarah and her team manage to successfully resolve the issue. This moment highlights the importance of combining their diverse expertise and problem-solving skills."
+        },
+        {
+            "short_title": "Personal Reflection",
+            "long_title": "Sarah Reflects on Her Journey and Its Impact",
+            "description": "Sarah takes a moment alone to reflect on her journey from a modern-day engineer to a revolutionary figure in a world of magic. She considers the profound impact her work has made on the society and herself."
+        },
+        {
+            "short_title": "Final Inspection",
+            "long_title": "Final Inspection and Preparations for the Next Steps",
+            "description": "Having made all the necessary adjustments and resolved issues, Sarah conducts a final inspection. She ensures everything is in place before presenting the completed magi tech devices to the council and prepares for the significant change that lies ahead."
+        }
+    ]
+}

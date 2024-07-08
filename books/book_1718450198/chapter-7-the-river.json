@@ -1,0 +1,75 @@
+{
+    "row": "act-2",
+    "order": "0",
+    "name": "Chapter 7: The River",
+    "short_description": "The group enters a large river. They are awe-struck by the vastness but also wary of the unknown. They encounter friendly and hostile river creatures, learning valuable survival skills.",
+    "events": "Entering the river, encounters with new creatures, learning survival skills.",
+    "people": "Bubbles, Finley, Lola, Guppy, River Creatures",
+    "places": "Large river",
+    "from_prev_chapter": "Renewed determination to continue the journey.",
+    "to_next_chapter": "They successfully navigate parts of the river.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Entering the River",
+            "long_title": "The Group Takes Their First Plunge into the Expansive River",
+            "description": "Bubbles and his friends take their first plunge into the large river, marveling at its vastness. They feel a mixture of excitement and apprehension as they leave the confined spaces they were used to."
+        },
+        {
+            "short_title": "First Impressions",
+            "long_title": "Awe and Caution Amongst the River's Beauty and Danger",
+            "description": "The group is awe-struck by the sheer beauty and expanse of the river but are also cautious of potential threats lurking in the depths."
+        },
+        {
+            "short_title": "Meeting Friendly Fish",
+            "long_title": "Encounter with Friendly River Fish Who Offer Guidance",
+            "description": "While exploring, they meet friendly river creatures who share essential survival tips and offer to guide them through part of the river."
+        },
+        {
+            "short_title": "Hostile Encounter",
+            "long_title": "A Run-In with Hostile River Creatures",
+            "description": "The group is ambushed by a group of territorial fish who see them as intruders. A quick skirmish ensues, testing their growing survival skills."
+        },
+        {
+            "short_title": "Learning to Hide",
+            "long_title": "Mastering the Art of Camouflage and Evasion",
+            "description": "After their encounter with hostile fish, the group learns how to blend into their surroundings to avoid detection by other potential threats."
+        },
+        {
+            "short_title": "Understanding Currents",
+            "long_title": "Gaining Knowledge of the River's Currents and Navigation",
+            "description": "A wise old turtle teaches the group about the river's currents and how to navigate them safely, which is crucial for their survival."
+        },
+        {
+            "short_title": "Building Trust",
+            "long_title": "Strengthening Friendships and Trust Within the Group",
+            "description": "Through various challenges, Bubbles and his friends build trust and strengthen their bonds, relying on each other for support and protection."
+        },
+        {
+            "short_title": "Gathering Resources",
+            "long_title": "Learning to Find Food and Shelter in the River",
+            "description": "The group learns how to identify safe food and suitable shelter spots in the river, ensuring their continued survival."
+        },
+        {
+            "short_title": "Facing Fears",
+            "long_title": "Confronting and Overcoming Fears of the Unknown",
+            "description": "Each member confronts their own fears about the dangers of the river, gaining confidence and courage through shared experiences."
+        },
+        {
+            "short_title": "Preparing for Next Steps",
+            "long_title": "Strategizing for the Journey Ahead",
+            "description": "As they prepare to navigate further parts of the river, the group gathers all the knowledge and skills they've learned, readying themselves for the challenges ahead."
+        }
+    ]
+}

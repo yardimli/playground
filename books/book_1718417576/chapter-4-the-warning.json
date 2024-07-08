@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 4,
+    "name": "Chapter 4: The Warning",
+    "short_description": "Data works relentlessly to decode the hidden message and manages to uncover a dire warning about an impending cosmic event. Captain Picard faces the challenge of gaining the Codarians' trust to act on this warning.",
+    "events": "",
+    "people": "Data, Captain Picard, Codarian leaders",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "Data deciphers part of the hidden message.",
+    "to_next_chapter": "The crew needs to convince the Codarians to work with them to prevent the cosmic event.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

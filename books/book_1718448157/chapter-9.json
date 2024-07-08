@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 3,
+    "name": "Chapter 9",
+    "short_description": "The coalition devises a plan to neutralize Adrian's power source. Emily grapples with her role, torn between her duty as a journalist and her growing empathy for Adrian.",
+    "events": "",
+    "people": "Emily, coalition members, Adrian.",
+    "places": "Coalition headquarters, moon base.",
+    "from_prev_chapter": "The coalition devises a plan to neutralize Adrian's power source.",
+    "to_next_chapter": "Emily faces a moral dilemma.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 10:42:37",
+    "lastUpdated": "2024-06-15 10:42:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 10:42:37"
+        }
+    ]
+}

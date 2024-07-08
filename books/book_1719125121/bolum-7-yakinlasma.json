@@ -1,0 +1,55 @@
+{
+    "row": "act-2",
+    "order": 1,
+    "name": "B\u00f6l\u00fcm 7: Yak\u0131nla\u015fma",
+    "short_description": "Ali ve Aylin, hem fiziksel hem de duygusal olarak birbirlerine yak\u0131nla\u015f\u0131r. A\u015fklar\u0131 derinle\u015fir.",
+    "events": "Romantik anlar, Aylin'in ge\u00e7mi\u015fini anlat\u0131\u015f\u0131.",
+    "people": "Ali, Aylin",
+    "places": "Peri d\u00fcnyas\u0131n\u0131n sakl\u0131 k\u00f6\u015feleri.",
+    "from_prev_chapter": "Ali ve Aylin'in aralar\u0131ndaki ba\u011f\u0131n g\u00fc\u00e7lenmesi.",
+    "to_next_chapter": "D\u0131\u015f tehditlerin ortaya \u00e7\u0131k\u0131\u015f\u0131.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali ve Aylin, gezegenin huzura kavu\u015fmas\u0131n\u0131n ard\u0131ndan peri d\u00fcnyas\u0131n\u0131n sakl\u0131 k\u00f6\u015felerinde gezinirler. Bu sakin ve huzurlu anlar, ikilinin aras\u0131ndaki duygusal ba\u011f\u0131 g\u00fc\u00e7lendirir. Her ad\u0131mda, birbirlerinin g\u00f6zlerine bakarak derin bir ba\u011fl\u0131l\u0131k hissederler."
+        },
+        {
+            "description": "Bir me\u015fe a\u011fac\u0131n\u0131n alt\u0131nda otururken, Ali Aylin'e d\u00fcnyadaki ya\u015fam\u0131ndan ve astronot olma hayallerinden bahseder. \u0130kilinin payla\u015ft\u0131\u011f\u0131 bu ki\u015fisel anlar, aralar\u0131ndaki samimiyeti art\u0131r\u0131r."
+        },
+        {
+            "description": "Aylin, Ali'ye peri d\u00fcnyas\u0131n\u0131n gizemli ve b\u00fcy\u00fcl\u00fc hikayelerini anlat\u0131r. Bu hikayeler, Ali'nin peri d\u00fcnyas\u0131 hakk\u0131nda yeni bilgiler \u00f6\u011frenmesine ve Aylin'e olan hayranl\u0131\u011f\u0131n\u0131n artmas\u0131na sebep olur."
+        },
+        {
+            "description": "Bir ak\u015fam yemekte, Ali ve Aylin birbirlerine a\u00e7\u0131l\u0131rlar ve ya\u015fad\u0131klar\u0131 zorluklar\u0131 payla\u015f\u0131rlar. Ali, d\u00fcnyadaki ailesini ve onlara olan \u00f6zlemini anlat\u0131rken, Aylin de peri d\u00fcnyas\u0131n\u0131n kar\u015f\u0131la\u015ft\u0131\u011f\u0131 zorluklar\u0131 payla\u015f\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin, peri \u015felalelerinin yan\u0131nda romantik bir g\u00fcn ge\u00e7irirler. \u015eelalenin serin sular\u0131, ikilinin hem fiziksel olarak yak\u0131nla\u015fmas\u0131n\u0131 sa\u011flar hem de duygusal ba\u011flar\u0131n\u0131 derinle\u015ftirir."
+        },
+        {
+            "description": "Aylin, Ali'ye ge\u00e7mi\u015fte ya\u015fad\u0131\u011f\u0131 bir olaydan ve bu olay\u0131n hayat\u0131n\u0131 nas\u0131l de\u011fi\u015ftirdi\u011finden bahseder. Ali, Aylin'in ya\u015fad\u0131\u011f\u0131 zorluklar\u0131 anlar ve ona daha da yak\u0131nla\u015f\u0131r."
+        },
+        {
+            "description": "Bir gece, y\u0131ld\u0131zlar\u0131n alt\u0131nda uzanarak gelecek hayallerinden bahsederler. Ali, Aylin'e birlikte ke\u015ffetmek istedikleri yerlere dair planlar\u0131n\u0131 anlat\u0131r ve Aylin de bu hayallere kat\u0131l\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin, peri d\u00fcnyas\u0131n\u0131n sakl\u0131 g\u00fczelliklerini ke\u015ffederken kar\u015f\u0131lar\u0131na \u00e7\u0131kan engelleri birlikte a\u015farlar. Bu macera, aralar\u0131ndaki g\u00fcveni ve sevgiyi peki\u015ftirir."
+        },
+        {
+            "description": "\u0130kili, peri halk\u0131n\u0131n d\u00fczenledi\u011fi bir \u015fenli\u011fe kat\u0131l\u0131r. Bu \u015fenlikte, birlikte dans ederler ve bu an, aralar\u0131ndaki ba\u011f\u0131n daha da kuvvetlenmesine neden olur."
+        },
+        {
+            "description": "Ali, Aylin'i koruma konusunda daha kararl\u0131 hale gelir. Peri d\u00fcnyas\u0131nda huzurlu anlar ge\u00e7irirken, Ali'nin d\u00fcnyas\u0131ndan gelen bir sinyal, d\u0131\u015f tehditlerin yakla\u015ft\u0131\u011f\u0131n\u0131 g\u00f6sterir. Ali, Aylin'i koruma karar\u0131 al\u0131r ve yeni macera ba\u015flar."
+        }
+    ]
+}

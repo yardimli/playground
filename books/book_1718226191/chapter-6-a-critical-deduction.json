@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6: A Critical Deduction",
+    "short_description": "House makes a breakthrough in the case.",
+    "events": "",
+    "people": "Dr. Gregory House, James Wilson, House's team.",
+    "places": "Princeton-Plainsboro Teaching Hospital, House's office.",
+    "from_prev_chapter": "House reviews the clues and makes a critical deduction.",
+    "to_next_chapter": "House is ready to confront the prime suspect.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

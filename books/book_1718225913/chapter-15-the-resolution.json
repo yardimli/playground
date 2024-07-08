@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15 - The Resolution",
+    "short_description": "House finally untangles the web of mysteries, leading to a satisfying conclusion.",
+    "events": "The true solution is revealed and justice is served.",
+    "people": "Dr. Gregory House, All involved characters",
+    "places": "Final revelation site",
+    "from_prev_chapter": "A twist changes the perceived solution.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 20:58:33",
+    "lastUpdated": "2024-06-12 20:58:33",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 20:58:33"
+        }
+    ]
+}

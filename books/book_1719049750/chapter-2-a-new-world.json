@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2: A New World",
+    "short_description": "Confused and disoriented, Sarah starts exploring the parallel world. She encounters mystical creatures and starts understanding that magic is real here.",
+    "events": "Exploration, first encounter with magic",
+    "people": "Sarah Davis, mystical creatures",
+    "places": "Parallel world outskirts, magical forest",
+    "from_prev_chapter": "Sarah explores her surroundings.",
+    "to_next_chapter": "Sarah meets locals who explain the basics of the world.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Waking Up in the Unknown",
+            "long_title": "Sarah Wakes Up Disoriented in the New Parallel World",
+            "description": "Sarah awakes in a strange new environment. Disoriented and confused, she tries to make sense of her surroundings and recalls the events that led to her arrival."
+        },
+        {
+            "short_title": "First Steps",
+            "long_title": "Sarah Tentatively Explores Her Immediate Surroundings",
+            "description": "Sarah takes her first steps in the new world, observing strange plants and unusual landscape features. Her engineering mind tries to rationalize what she's seeing."
+        },
+        {
+            "short_title": "Encounter with a Mystical Creature",
+            "long_title": "Sarah's First Encounter with a Mystical Creature",
+            "description": "Sarah encounters her first mystical creature, which appears both fascinating and terrifying. The creature is friendly but otherworldly, making her realize the gravity of her situation."
+        },
+        {
+            "short_title": "The Forest Beckons",
+            "long_title": "Sarah Enters the Magical Forest",
+            "description": "Drawn by the beauty and strangeness of the forest, Sarah ventures deeper into it, sensing an inexplicable pull. The forest seems alive, responding to her presence."
+        },
+        {
+            "short_title": "Mystical Ambiance",
+            "long_title": "Sarah Experiences the Magical Ambiance of the Forest",
+            "description": "Within the forest, Sarah encounters glowing plants, floating lights, and hears whispers in a language she doesn't understand. The magic of the place becomes undeniable."
+        },
+        {
+            "short_title": "The First Spark",
+            "long_title": "Sarah's First Magical Encounter",
+            "description": "Sarah accidentally triggers a magical event\u2014a spark of light appears from her hands as she touches a glowing tree. She is both shocked and amazed by this newfound ability."
+        },
+        {
+            "short_title": "Unfamiliar Skies",
+            "long_title": "Sarah Notices the Unusual Skies of the Parallel World",
+            "description": "Looking up, Sarah observes the sky, noticing unfamiliar constellations, a larger moon, and peculiar cloud formations, driving home the fact that she\u2019s far from home."
+        },
+        {
+            "short_title": "Strange Yet Familiar",
+            "long_title": "Sarah Finds Some Familiarity in the Strange World",
+            "description": "Amidst the otherworldly elements, Sarah discovers things somewhat akin to Earth\u2014certain types of plants, the basic behavior of animals, etc., providing a small sense of comfort."
+        },
+        {
+            "short_title": "Endless Curiosity",
+            "long_title": "Sarah's Engineering Curiosity Drives Her Exploration",
+            "description": "Driven by her engineering background, Sarah starts to take notes, diagrams, and sketches of what she observes, already thinking of the potential applications and implications."
+        },
+        {
+            "short_title": "New Resolve",
+            "long_title": "Sarah Finds Resolve to Understand and Master This New World",
+            "description": "As the day concludes, Sarah finds a quiet spot to rest. Contemplating her experiences, she resolves to understand this world better, convinced that her engineering skills combined with magic could make a difference."
+        }
+    ]
+}

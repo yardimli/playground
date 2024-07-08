@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 2,
+    "name": "Chapter 11: Back to the Drawing Board",
+    "short_description": "Shaken by the opposition, Sarah returns to her roots. She goes back to the Arcane Academy to research the fundamental laws of magic, hoping to find a way to create harmony between traditional magic and magi-tech. She makes a breakthrough discovery about the nature of magic itself.",
+    "events": "Sarah's return to academia, intense research, major discovery",
+    "people": "Sarah, Academy professors, research assistants",
+    "places": "Arcane Academy libraries, laboratories",
+    "from_prev_chapter": "Sarah's plan to find a solution to the magi-tech crisis",
+    "to_next_chapter": "Preparation to announce Sarah's new discovery",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

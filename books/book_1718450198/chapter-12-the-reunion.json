@@ -1,0 +1,75 @@
+{
+    "row": "act-3",
+    "order": 3,
+    "name": "Chapter 12: The Reunion",
+    "short_description": "After a tense search, the group is joyously reunited with Finley. This incident strengthens their bond and determination to reach the ocean together.",
+    "events": "Search for Finley, emotional reunion, strengthened bonds.",
+    "people": "Bubbles, Finley, Lola, Guppy",
+    "places": "Calm river area",
+    "from_prev_chapter": "The search for Finley begins.",
+    "to_next_chapter": "Reunited and determined, they continue their journey.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "The Desperate Search",
+            "long_title": "Bubbles Leads a Desperate Search for Finley",
+            "description": "Bubbles rallies the group to conduct a frantic search for Finley, urging everyone to stay hopeful and focused."
+        },
+        {
+            "short_title": "Clues Along the River",
+            "long_title": "Discovering Signs of Finley's Whereabouts",
+            "description": "As they search the calm river area, Lola spots some distinct markings that suggest Finley has passed through recently."
+        },
+        {
+            "short_title": "Following the Trail",
+            "long_title": "The Group Follows Finley's Trail",
+            "description": "Encouraged by the clues, Bubbles, Guppy, and Lola follow the trail eagerly, calling out for Finley as they move."
+        },
+        {
+            "short_title": "Whispers of Worry",
+            "long_title": "Group Members Share Their Concerns",
+            "description": "During a brief pause, the group shares their worries and doubts about finding Finley, revealing their deep bond and reliance on each other."
+        },
+        {
+            "short_title": "A Faint Echo",
+            "long_title": "Hearing a Faint Call in the Distance",
+            "description": "Just as despair begins to set in, Guppy hears a faint, familiar sound from further down the river and alerts the group."
+        },
+        {
+            "short_title": "Race to the Source",
+            "long_title": "The Group Races Towards the Sound",
+            "description": "The group speeds up, fueled by renewed hope, eager to find the source of the faint call they believe could be Finley."
+        },
+        {
+            "short_title": "The Emotional Reunion",
+            "long_title": "Bubbles, Lola, and Guppy Reunite with Finley",
+            "description": "With tears of joy, the group finally finds Finley, who is equally elated and relieved to see them."
+        },
+        {
+            "short_title": "Stories and Explanations",
+            "long_title": "Finley Shares His Ordeal with the Group",
+            "description": "Finley recounts his experience and the difficulties he faced while separated, bringing the group closer together."
+        },
+        {
+            "short_title": "Renewed Determination",
+            "long_title": "The Group Vows to Reach the Ocean Together",
+            "description": "The emotional reunion and Finley's tale fill the group with renewed determination and a stronger bond to reach their ultimate goal, the ocean."
+        },
+        {
+            "short_title": "Setting Off Again",
+            "long_title": "The Group Continues Their Journey with New Resolve",
+            "description": "With strengthened spirits, the group sets off once again, more united and determined than ever to reach the ocean."
+        }
+    ]
+}

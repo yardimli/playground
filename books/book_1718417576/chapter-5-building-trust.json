@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 5,
+    "name": "Chapter 5: Building Trust",
+    "short_description": "Captain Picard and his crew attempt to build trust with the Codarians by sharing knowledge and offering aid. They develop an alliance to combine their resources and knowledge to decode the full message and avert the disaster.",
+    "events": "",
+    "people": "Captain Picard, Commander Riker, Data, Codarian leaders",
+    "places": "USS Enterprise, Codarian ship",
+    "from_prev_chapter": "The crew needs to convince the Codarians to work with them to prevent the cosmic event.",
+    "to_next_chapter": "The combined efforts begin to make progress in decoding the message, uncovering more details about the impending event.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

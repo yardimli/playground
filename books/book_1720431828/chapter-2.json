@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2",
+    "short_description": "Han\u0131n ve ustalar\u0131n tan\u0131t\u0131lmas\u0131",
+    "events": "Ahmet han\u0131 gezer, di\u011fer ustalar\u0131 ve d\u00fckkanlar\u0131 tan\u0131r.",
+    "people": "Ahmet, Usta Mehmet, di\u011fer ustalar",
+    "places": "Eski han, k\u00fc\u00e7\u00fck d\u00fckkanlar",
+    "from_prev_chapter": "Ahmet hana gelir",
+    "to_next_chapter": "Ahmet ilk g\u00f6revini alacak",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-08 09:43:48",
+    "lastUpdated": "2024-07-08 09:43:48",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-08 09:43:48"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Sabah\u0131n \u0130lk I\u015f\u0131klar\u0131 - Ahmet heyecanla hana gelir: Ahmet, ertesi sabah erkenden kalk\u0131p hana gelir ve yeni hayat\u0131na ba\u015flamak i\u00e7in sab\u0131rs\u0131zlan\u0131r."
+        },
+        {
+            "description": "Han\u0131n Uyan\u0131\u015f\u0131 - D\u00fckkanlar birer birer a\u00e7\u0131l\u0131r: Ahmet, han\u0131n yava\u015f yava\u015f canlan\u0131\u015f\u0131n\u0131 ve ustalar\u0131n d\u00fckkanlar\u0131n\u0131 a\u00e7\u0131\u015f\u0131n\u0131 izler."
+        },
+        {
+            "description": "Usta Mehmet'in Ho\u015f Geldin Dersi - \u0130lk g\u00f6revler verilir: Usta Mehmet, Ahmet'e d\u00fckk\u00e2n\u0131 temizleme ve d\u00fczenleme g\u00f6revleri vererek i\u015fe ba\u015flat\u0131r."
+        },
+        {
+            "description": "Kom\u015fu D\u00fckkan Ke\u015ffi - Ahmet yan d\u00fckk\u00e2n\u0131 ziyaret eder: Ahmet, \u00f6\u011fle molas\u0131nda yan d\u00fckk\u00e2ndaki Kuyumcu Ali Usta ile tan\u0131\u015f\u0131r."
+        },
+        {
+            "description": "Saat\u00e7i H\u00fcseyin'in D\u00fcnyas\u0131 - T\u0131k tak sesleri aras\u0131nda: Ahmet, \u00fcst kattaki Saat\u00e7i H\u00fcseyin'in at\u00f6lyesini ziyaret eder ve farkl\u0131 saatleri inceler."
+        },
+        {
+            "description": "Hattat Kemal'in Kaligrafisi - Harflerin dans\u0131: Ahmet, Hattat Kemal'in d\u00fckk\u00e2n\u0131nda geleneksel T\u00fcrk hat sanat\u0131n\u0131n inceliklerini g\u00f6r\u00fcr."
+        },
+        {
+            "description": "Cilt\u00e7i Nuri'nin Kitap Sevdas\u0131 - Eski ciltlerin s\u0131rlar\u0131: Ahmet, Cilt\u00e7i Nuri'nin at\u00f6lyesinde antika kitaplar\u0131n restorasyonunu izler."
+        },
+        {
+            "description": "Han\u0131n Gizli K\u00f6\u015feleri - Unutulmu\u015f odalar ke\u015ffedilir: Ahmet, han\u0131n az bilinen b\u00f6l\u00fcmlerini gezerken tarih\u00ee atmosferi hisseder."
+        },
+        {
+            "description": "Ustalar\u0131n Sohbeti - \u00c7ay molas\u0131nda an\u0131lar payla\u015f\u0131l\u0131r: Ahmet, ak\u015fama do\u011fru ustalar\u0131n bir araya gelip eski g\u00fcnleri and\u0131\u011f\u0131 sohbete kat\u0131l\u0131r."
+        },
+        {
+            "description": "G\u00fcn\u00fcn Sonu - Yeni Ba\u015flang\u0131\u00e7lar\u0131n E\u015fi\u011fi: Ahmet, ilk g\u00fcn\u00fcn\u00fc tamamlar ve ertesi g\u00fcn ba\u015flayacak e\u011fitimi i\u00e7in heyecanlan\u0131r."
+        }
+    ]
+}

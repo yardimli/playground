@@ -1,0 +1,117 @@
+{
+    "row": "act-1",
+    "order": "0",
+    "name": "Chapter 1: The Cage",
+    "short_description": "Bubbles is introduced as a small fish living in a pet store tank. He observes the outside world and dreams of freedom. We meet his tank-mates: Finley the wise old goldfish, Lola the sassy betta fish, and Guppy the nervous guppy. Bubbles shares his dream of reaching the ocean.",
+    "events": "Introduction of main characters, Bubbles expresses his dream, first hint at escape plan.",
+    "people": "Bubbles, Finley, Lola, Guppy",
+    "places": "Pet store tank",
+    "from_prev_chapter": "N\/A",
+    "to_next_chapter": "Bubbles starts developing a plan to escape.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-22 07:23:46",
+    "comments": [],
+    "files": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:15:14"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:15:25"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:15:33"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:17:04"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:17:13"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:18:53"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:19:23"
+        },
+        {
+            "action": "Edited chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 07:23:46"
+        }
+    ],
+    "archived": false,
+    "beats": [
+        {
+            "short_title": "Introduction to Bubbles",
+            "long_title": "Introducing Bubbles, the Protagonist",
+            "description": "Bubbles is introduced as a small, curious fish living in a pet store tank. He spends his days observing the world outside his glass prison, longing for a life of freedom."
+        },
+        {
+            "short_title": "Meet the Tank-Mates",
+            "long_title": "Introducing Finley, Lola, and Guppy",
+            "description": "We meet Bubbles' tank-mates: Finley, the wise old goldfish with many stories; Lola, the colorful and sassy betta fish; and Guppy, the small and nervous guppy. Each character has a distinct personality and outlook on life in the tank."
+        },
+        {
+            "short_title": "Life in the Tank",
+            "long_title": "Daily Life in the Pet Store Tank",
+            "description": "The chapter describes the daily routine of the fish in the pet store tank: being fed by the shopkeeper, watching customers come and go, and interacting with each other."
+        },
+        {
+            "short_title": "Bubbles' Dreams",
+            "long_title": "Bubbles Shares His Dream of the Ocean",
+            "description": "Bubbles shares his dream of escaping the tank and reaching the ocean. This dream is met with various reactions from his tank-mates: encouragement from Finley, skepticism from Lola, and fear from Guppy."
+        },
+        {
+            "short_title": "A Talk with Finley",
+            "long_title": "Wise Words from Finley",
+            "description": "Finley shares his wisdom with Bubbles, telling him stories of the ocean and encouraging him to hold onto his dreams. Finley's stories inspire Bubbles and strengthen his resolve."
+        },
+        {
+            "short_title": "Lola's Sarcasm",
+            "long_title": "Lola's Sassy Remarks",
+            "description": "Lola, with her usual sass, mocks Bubbles' dream, calling it unrealistic. Despite her sarcastic remarks, Bubbles remains undeterred and determined to find a way out."
+        },
+        {
+            "short_title": "Guppy's Anxiety",
+            "long_title": "Guppy's Fear of Change",
+            "description": "Guppy expresses his fear of Bubbles' dream, worried that it might lead to danger or failure. Despite his nervousness, he looks up to Bubbles for his courage."
+        },
+        {
+            "short_title": "The Outside World",
+            "long_title": "Observing the World Beyond the Tank",
+            "description": "Bubbles spends time watching the outside world, noticing the movements of people, the layout of the store, and the potential pathways to freedom. He begins to formulate vague ideas about escape."
+        },
+        {
+            "short_title": "First Hint at Escape Plan",
+            "long_title": "A Glimmer of Hope",
+            "description": "Bubbles gets his first inkling of an escape plan when he notices the shopkeeper's routine and the specific times when the tank is cleaned or left unguarded. This sparks a sense of hope."
+        },
+        {
+            "short_title": "Commitment to the Dream",
+            "long_title": "Bubbles' Determination",
+            "description": "The chapter ends with Bubbles reaffirming his commitment to escaping the tank and reaching the ocean. He shares his determination with his tank-mates, setting the stage for the next chapter where he starts to develop a concrete plan."
+        }
+    ]
+}

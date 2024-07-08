@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15: New Horizons",
+    "short_description": "With the mission complete, the Enterprise bids farewell to the Codarians. Captain Picard and his crew embark on their next adventure, carrying with them newfound knowledge and allies.",
+    "events": "",
+    "people": "Captain Picard, Commander Riker, Data, Codarian leaders",
+    "places": "USS Enterprise",
+    "from_prev_chapter": "The Enterprise prepares to depart, leaving a path open for future collaboration with the Codarians.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 02:12:56",
+    "lastUpdated": "2024-06-15 02:12:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 02:12:56"
+        }
+    ]
+}

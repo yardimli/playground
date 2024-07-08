@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 5,
+    "name": "Chapter 5",
+    "short_description": "Adrian and his team make a breakthrough in their research, bringing them closer to achieving their goal. Meanwhile, opposing forces also step up their efforts to stop him.",
+    "events": "",
+    "people": "Adrian's team, rival scientists, government agents, Emily Harper.",
+    "places": "Adrian's laboratory, government facilities.",
+    "from_prev_chapter": "Emily decides to follow Adrian closely and report every step.",
+    "to_next_chapter": "Adrian's plan is ready for execution.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 10:42:37",
+    "lastUpdated": "2024-06-15 10:42:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 10:42:37"
+        }
+    ]
+}

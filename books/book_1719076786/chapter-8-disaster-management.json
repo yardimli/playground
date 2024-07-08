@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8: Disaster Management",
+    "short_description": "Diving into how societies handle volcanic disasters, Will examines evacuation plans, early warning systems, and the role of government agencies in disaster preparedness.",
+    "events": "Examination of disaster management systems.",
+    "people": "Will Smith, government officials, disaster management experts.",
+    "places": "Regions with active disaster management systems.",
+    "from_prev_chapter": "Visit to dangerous volcanoes.",
+    "to_next_chapter": "Success stories of predicting eruptions.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 17:19:46",
+    "lastUpdated": "2024-06-22 17:19:46",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 17:19:46"
+        }
+    ]
+}

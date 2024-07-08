@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 1,
+    "name": "Chapter 14: The Big Reveal",
+    "short_description": "House reveals the truth behind the vanishing heirloom to all involved.",
+    "events": "",
+    "people": "Dr. Gregory House, Wilson, House's team, the heir, the heir's family.",
+    "places": "The heir's mansion, Princeton-Plainsboro Teaching Hospital.",
+    "from_prev_chapter": "House is ready to reveal the truth to the heir and their family.",
+    "to_next_chapter": "The heir and their family react to the revelation.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-12 21:03:11",
+    "lastUpdated": "2024-06-12 21:03:11",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-12 21:03:11"
+        }
+    ]
+}

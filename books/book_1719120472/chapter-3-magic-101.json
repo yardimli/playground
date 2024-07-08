@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 3,
+    "name": "Chapter 3: Magic 101",
+    "short_description": "Sarah begins her magical education, struggling at first but soon realizing her engineering background gives her a unique perspective on spell-casting. She impresses her teachers with her analytical approach to magic.",
+    "events": "First magic lessons, Sarah's initial struggles and subsequent breakthroughs",
+    "people": "Sarah, magic professors, fellow students",
+    "places": "Arcane Academy classrooms and grounds",
+    "from_prev_chapter": "Sarah's enrollment in the Arcane Academy",
+    "to_next_chapter": "Sarah's growing confidence in her magical abilities",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

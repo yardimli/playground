@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2: Uneasy Beginnings",
+    "short_description": "Tamara and Clara navigate their new living arrangement. Tamara struggles with her decision while Clara tries to make herself useful.",
+    "events": "Tamara goes to work, Clara explores the apartment, they have an awkward dinner together.",
+    "people": "Tamara: conflicted and stressed. Clara: grateful but proud.",
+    "places": "Tamara's apartment, local grocery store.",
+    "from_prev_chapter": "Clara settles into Tamara's apartment, setting the stage for their developing relationship.",
+    "to_next_chapter": "The tension between Tamara and Clara grows, leading to a confrontation.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-24 10:13:37",
+    "lastUpdated": "2024-06-24 10:13:37",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-24 10:13:37"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Morning Awkwardness: Tamara emerges from her bedroom, finding Clara already awake and tidying the living room. The two exchange awkward greetings, both unsure of how to act in this new situation. Tamara, still grappling with her decision, begins to lay out some basic ground rules for their cohabitation, while Clara listens attentively, eager to show her gratitude but also maintain her dignity."
+        },
+        {
+            "description": "Rushed Departure: As Tamara hurriedly prepares for her shift, Clara offers to make her breakfast. Tamara declines, citing lack of time, but appreciates the gesture. Before leaving, Tamara gives Clara a spare key, surprising herself with this trust. She heads to work, her mind racing with concerns about leaving a stranger in her home."
+        },
+        {
+            "description": "Clara's Exploration: Left alone, Clara cautiously explores the apartment, taking in the details of Tamara's life. She notices photos of Tamara's family, medical textbooks, and small mementos. Clara feels a mix of gratitude and discomfort, aware of her intrusion into this private space. She decides to make herself useful by deep cleaning the apartment."
+        },
+        {
+            "description": "Tamara's Workplace Dilemma: At the hospital, Tamara struggles to focus on her work, her mind constantly drifting to thoughts of Clara in her apartment. A colleague notices her distraction and asks if everything's okay. Tamara hesitates, unsure how to explain her unusual situation, and opts for a vague response about having a houseguest."
+        },
+        {
+            "description": "Unexpected Initiative: Returning home, Tamara is surprised to find her apartment spotless and a simple dinner prepared. Clara greets her with a tentative smile, explaining she wanted to contribute. Tamara feels a mix of appreciation and unease, realizing the complexity of their arrangement."
+        },
+        {
+            "description": "Dinner Conversation: Over the meal, Tamara and Clara attempt small talk, revealing bits about their lives. Clara mentions her love for cooking, hinting at exotic dishes she's tried around the world. Tamara shares stories from the hospital, noticing Clara's genuine interest. Despite moments of connection, an underlying tension remains."
+        },
+        {
+            "description": "Financial Realities: After dinner, Tamara broaches the subject of Clara's financial situation and how long she plans to stay. Clara becomes evasive, clearly uncomfortable discussing her circumstances. Tamara, feeling the weight of responsibility, suggests helping Clara find social services or shelter options, which Clara reluctantly agrees to consider."
+        },
+        {
+            "description": "Late Night Reflections: Unable to sleep, Tamara sits in the kitchen, pondering her situation. She overhears Clara having a nightmare, calling out unfamiliar names. Tamara hesitates, unsure whether to offer comfort, and ultimately decides against it, feeling the boundaries of their relationship are still too uncertain."
+        },
+        {
+            "description": "Grocery Store Encounter: The next day, Tamara takes Clara grocery shopping. In the store, Clara's expertise in selecting exotic ingredients surprises Tamara. A chance encounter with one of Tamara's neighbors leads to an awkward introduction, forcing Tamara to confront the public aspect of her decision to help Clara."
+        },
+        {
+            "description": "Simmering Tensions: Back at the apartment, Clara insists on cooking a special meal to thank Tamara. As they prepare the ingredients, their different approaches clash. Tamara's frustration with the disruption to her routine bubbles to the surface, while Clara's pride in her culinary skills makes her defensive. The tension builds, setting the stage for a larger confrontation to come."
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6: The Debate",
+    "short_description": "Sarah's magi-tech innovations spark a heated debate within the magical community. Traditionalists argue against the merging of technology and magic, while progressives see it as the future. Sarah must defend her work and decides to push forward despite the controversy.",
+    "events": "Debate over magi-tech, Sarah's defense of her work",
+    "people": "Sarah, magical community leaders, supporters and opponents",
+    "places": "Grand assembly hall, media outlets",
+    "from_prev_chapter": "Sarah's decision regarding the internship offer",
+    "to_next_chapter": "Sarah's commitment to developing magi-tech further",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 05:27:52",
+    "lastUpdated": "2024-06-23 05:27:52",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 05:27:52"
+        }
+    ]
+}

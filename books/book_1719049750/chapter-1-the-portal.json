@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": 1,
+    "name": "Chapter 1: The Portal",
+    "short_description": "Sarah stumbles upon an ancient artifact in an abandoned building, and upon touching it, she is teleported to a parallel world.",
+    "events": "Discovery of artifact, teleportation",
+    "people": "Sarah Davis",
+    "places": "Earth, Parallel world outskirts",
+    "from_prev_chapter": "N\/A",
+    "to_next_chapter": "Sarah begins to explore her surroundings.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Introduction to Sarah",
+            "long_title": "Meet Sarah Davis, a modern-day engineer",
+            "description": "Introduce Sarah Davis, highlighting her background as a talented engineer. Show her at work, solving a technical problem, and revealing her innovative spirit."
+        },
+        {
+            "short_title": "Mysterious Building",
+            "long_title": "Discovery of an Abandoned Building",
+            "description": "Sarah, while exploring a neglected part of the city, finds an old, abandoned building that piques her curiosity. She decides to investigate further."
+        },
+        {
+            "short_title": "Ancient Artifact",
+            "long_title": "Sarah Discovers an Ancient Artifact",
+            "description": "Inside the abandoned building, Sarah stumbles upon a hidden room filled with strange and ancient artifacts. One artifact, in particular, catches her eye due to its intricate design and mysterious aura."
+        },
+        {
+            "short_title": "Unexpected Activation",
+            "long_title": "The Artifact is Activated",
+            "description": "As Sarah examines the artifact closely, she accidentally activates it by pressing a hidden switch. Glowing lights and arcane symbols begin to appear around the artifact."
+        },
+        {
+            "short_title": "The Portal Opens",
+            "long_title": "A Portal to Another World",
+            "description": "The artifact generates a swirling portal right in front of Sarah. She's both fascinated and terrified by the unexpected phenomenon, contemplating whether to step through."
+        },
+        {
+            "short_title": "Crossing the Threshold",
+            "long_title": "Sarah Steps Through the Portal",
+            "description": "Driven by curiosity and adventure, Sarah decides to step through the portal. Instantly, she is engulfed in a vortex of light and sound, losing her sense of direction."
+        },
+        {
+            "short_title": "Arrival in a Parallel World",
+            "long_title": "Sarah Arrives in a Strange New World",
+            "description": "Sarah finds herself in the outskirts of an unfamiliar world, vastly different from Earth. The environment is imbued with a magical essence, leaving Sarah in awe and confusion."
+        },
+        {
+            "short_title": "First Impressions",
+            "long_title": "Exploring the Parallel World Outskirts",
+            "description": "Sarah begins to explore her immediate surroundings, taking in the strange flora and fauna. She notes the blend of medieval and magical elements around her."
+        },
+        {
+            "short_title": "Searching for Answers",
+            "long_title": "Sarah Looks for Clues about Her Whereabouts",
+            "description": "Sarah starts searching for any signs of civilization or anything that might give her clues about where she is and how she might return home."
+        },
+        {
+            "short_title": "New Beginnings",
+            "long_title": "Preparing to Move Further In",
+            "description": "As Sarah gathers her courage and plans her next steps, she resolves to move further into this mysterious new world, setting the stage for her next chapter of exploration and discovery."
+        }
+    ]
+}

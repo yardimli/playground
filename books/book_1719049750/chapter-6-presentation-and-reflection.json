@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6: Presentation and Reflection",
+    "short_description": "Sarah presents her magi tech device to the faculty and students at Aurelia Academy. While there is initial skepticism, her invention eventually garners interest and admiration.",
+    "events": "Presentation, faculty and student reactions",
+    "people": "Sarah Davis, teachers, fellow students",
+    "places": "Auditorium, classrooms",
+    "from_prev_chapter": "Sarah creates her first magi tech device.",
+    "to_next_chapter": "Sarah continues her studies while refining and developing more magi tech.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-22 09:49:10",
+    "lastUpdated": "2024-06-22 09:49:10",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-22 09:49:10"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Setting the Stage",
+            "long_title": "Preparing for the Big Presentation in the Auditorium",
+            "description": "Sarah and her peers gather in the grand auditorium of Aurelia Academy, where she is preparing to unveil her groundbreaking magi tech device. The atmosphere is tense with anticipation, and Sarah feels a mix of excitement and anxiety."
+        },
+        {
+            "short_title": "Opening Remarks",
+            "long_title": "Introduction by the Headmaster and Setting Expectations",
+            "description": "The headmaster of Aurelia Academy takes the stage, welcoming everyone and introducing Sarah Davis. He provides a brief overview of what the presentation will entail, heightening the curiosity of the audience."
+        },
+        {
+            "short_title": "Sarah's Introduction",
+            "long_title": "Sarah Introduces Herself and Her Background",
+            "description": "Sarah takes the stage and introduces herself, giving a brief overview of her background as a modern-day engineer who has recently been teleported to this parallel world. She explains how her technical knowledge has influenced her magical studies."
+        },
+        {
+            "short_title": "Unveiling the Device",
+            "long_title": "Sarah Reveals Her Innovative Magi Tech Device",
+            "description": "Sarah unveils her magi tech device, explaining its components and how it combines engineering principles with magical elements. She highlights the potential benefits it can bring to society."
+        },
+        {
+            "short_title": "Initial Skepticism",
+            "long_title": "Audience Reaction to Sarah's Presentation",
+            "description": "The initial reaction from faculty and students is a mix of skepticism and curiosity. Some question the feasibility and effectiveness of her device, while others are intrigued by its potential."
+        },
+        {
+            "short_title": "Live Demonstration",
+            "long_title": "Sarah Demonstrates the Functionality of Her Device",
+            "description": "To address the skepticism, Sarah conducts a live demonstration of her magi tech device. The audience watches closely as the device operates seamlessly, showcasing its groundbreaking capabilities."
+        },
+        {
+            "short_title": "Turning Tides",
+            "long_title": "Changing Perceptions as the Device Proves Itself",
+            "description": "As the demonstration progresses, the skepticism begins to fade. Faculty and students start to see the value and potential of Sarah's invention, and admiration replaces doubt."
+        },
+        {
+            "short_title": "Q&A Session",
+            "long_title": "Engaging with the Audience to Address Questions and Concerns",
+            "description": "After the demonstration, Sarah opens the floor for questions. She engages with the audience, addressing their queries and concerns with confidence and clarity."
+        },
+        {
+            "short_title": "Reflection and Feedback",
+            "long_title": "Sarah Reflects on the Presentation and Receives Feedback",
+            "description": "Post-presentation, Sarah reflects on her experience and the feedback she received. She is both relieved and exhilarated by the positive response from the audience."
+        },
+        {
+            "short_title": "Looking Ahead",
+            "long_title": "Planning for Future Innovations and Development",
+            "description": "Encouraged by the success of her presentation, Sarah begins to plan her next steps. She is determined to refine her device and develop more innovative magi tech solutions, continuing her studies at Aurelia Academy with renewed vigor."
+        }
+    ]
+}

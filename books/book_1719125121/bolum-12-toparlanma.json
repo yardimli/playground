@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 3,
+    "name": "B\u00f6l\u00fcm 12: Toparlanma",
+    "short_description": "Ali ve Aylin, kay\u0131plar\u0131n ard\u0131ndan yeniden toparlan\u0131r. Birbirlerine destek olurlar ve g\u00fc\u00e7lerini toplarlar.",
+    "events": "Duygusal destek, iyile\u015fme s\u00fcreci.",
+    "people": "Ali, Aylin",
+    "places": "Peri d\u00fcnyas\u0131 ve \u00e7evresi.",
+    "from_prev_chapter": "Ali ve Aylin'in yeniden toparlanma s\u00fcreci.",
+    "to_next_chapter": "Yeni stratejiler belirlenir.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali ve Aylin, kay\u0131plar\u0131n a\u011f\u0131r y\u00fck\u00fcn\u00fc ta\u015f\u0131yarak birbirlerine sar\u0131l\u0131rlar. Sessiz bir \u015fekilde, birbirlerine olan sevgilerini ve desteklerini hissettirirler."
+        },
+        {
+            "description": "Peri d\u00fcnyas\u0131n\u0131n sakin ve huzurlu ortam\u0131nda, Ali ve Aylin derin nefesler alarak birer terapi gibi zaman\u0131 ge\u00e7irirler. \u0130kisi de sessizce d\u00fc\u015flerin ve bilinmezliklerin i\u00e7inde kaybolur."
+        },
+        {
+            "description": "Aylin, Ali'ye duygusal olarak g\u00fc\u00e7l\u00fc g\u00f6r\u00fcnmeye \u00e7al\u0131\u015f\u0131rken, i\u00e7ten i\u00e7e b\u00fcy\u00fck bir h\u00fcz\u00fcn ya\u015famaktad\u0131r. Ali, Aylin'in bu \u00e7abas\u0131n\u0131 fark eder ve ona daha da yakla\u015farak destek olur."
+        },
+        {
+            "description": "Ali, g\u00fc\u00e7 toplamak i\u00e7in kendine bir g\u00f6rev belirler. Peri d\u00fcnyas\u0131nda nadir bulunan bir bitkiyi aramaya ba\u015flar. Bu bitki, iyile\u015fme s\u00fcrecine katk\u0131da bulunacakt\u0131r."
+        },
+        {
+            "description": "Aylin, Ali'nin bu \u00e7abas\u0131n\u0131 takdir eder ve ona yard\u0131mc\u0131 olmak i\u00e7in yan\u0131na kat\u0131l\u0131r. Birlikte peri d\u00fcnyas\u0131n\u0131n gizemli ormanlar\u0131nda maceraya at\u0131l\u0131rlar."
+        },
+        {
+            "description": "Ormanda gezinirken, Ali ve Aylin ge\u00e7mi\u015fte ya\u015fad\u0131klar\u0131 an\u0131lar\u0131 payla\u015f\u0131r ve kay\u0131plar\u0131n ac\u0131s\u0131n\u0131 hafifletirler. Bu payla\u015f\u0131mlar, onlar\u0131 duygusal olarak daha da yak\u0131nla\u015ft\u0131r\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin, arad\u0131klar\u0131 bitkiyi bulur ve bu ba\u015far\u0131, ikisinin de morallerini y\u00fckseltir. Bitkinin iyile\u015ftirici etkisi \u00fczerine konu\u015furlar ve umutlar\u0131 tazelenir."
+        },
+        {
+            "description": "Birlikte geri d\u00f6nerek, bitkinin sa\u011flad\u0131\u011f\u0131 iyile\u015ftirici \u00f6zelliklerden faydalan\u0131rlar. Hem fiziksel hem de duygusal olarak g\u00fc\u00e7lenmeye ba\u015flarlar."
+        },
+        {
+            "description": "Ali, Aylin'in yan\u0131ndayken kendini daha g\u00fc\u00e7l\u00fc ve huzurlu hisseder. Aylin ise Ali'nin varl\u0131\u011f\u0131n\u0131n ona nas\u0131l g\u00fcven verdi\u011fini fark eder. Birbirlerinin yan\u0131nda olman\u0131n \u00f6nemini anlarlar."
+        },
+        {
+            "description": "\u0130yile\u015fme s\u00fcrecinin sonunda, Ali ve Aylin gelece\u011fe dair umutlu planlar yaparlar. Yeni stratejiler belirlemek ve kar\u015f\u0131lar\u0131na \u00e7\u0131kacak zorluklarla ba\u015fa \u00e7\u0131kmak i\u00e7in haz\u0131rl\u0131klara ba\u015flarlar."
+        }
+    ]
+}

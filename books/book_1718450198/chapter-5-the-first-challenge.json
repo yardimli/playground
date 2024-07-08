@@ -1,0 +1,75 @@
+{
+    "row": "act-1",
+    "order": "4",
+    "name": "Chapter 5: The First Challenge",
+    "short_description": "The journey to the ocean begins. The group encounters their first challenge: navigating through a series of narrow streams. They must work together to overcome the obstacles.",
+    "events": "Beginning of the journey, navigating streams, teamwork.",
+    "people": "Bubbles, Finley, Lola, Guppy",
+    "places": "Narrow streams",
+    "from_prev_chapter": "Decision to continue the journey.",
+    "to_next_chapter": "They overcome the first challenge and feel hopeful.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-15 11:16:38",
+    "lastUpdated": "2024-06-15 11:16:38",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create card",
+            "user": "Admin",
+            "timestamp": "2024-06-15 11:16:38"
+        }
+    ],
+    "beats": [
+        {
+            "short_title": "Beginning the Journey",
+            "long_title": "Setting Out on Their Grand Adventure",
+            "description": "Bubbles and his friends make the final preparations and say their goodbyes before leaving the safety of their tank. They are filled with a mix of excitement and anxiety."
+        },
+        {
+            "short_title": "Entering the Streams",
+            "long_title": "Venturing into the Unknown Waters",
+            "description": "The group reaches the mouth of the narrow streams. The water is fast-flowing, and the path ahead looks treacherous, but there\u2019s no turning back now."
+        },
+        {
+            "short_title": "First Obstacle",
+            "long_title": "Encountering Rocks and Twigs",
+            "description": "As they move forward, they come across several rocks and twigs obstructing their path. They realize that their journey will be harder than anticipated."
+        },
+        {
+            "short_title": "Team Discussion",
+            "long_title": "Strategizing to Navigate the Obstacles",
+            "description": "Bubbles calls for a group meeting to discuss how they can navigate through the rocks and twigs without getting injured."
+        },
+        {
+            "short_title": "Finley's Idea",
+            "long_title": "Coming Up with a Creative Solution",
+            "description": "Finley suggests using the current to their advantage by riding the waves and maneuvering around the obstacles. The group decides to give it a try."
+        },
+        {
+            "short_title": "Execution Begins",
+            "long_title": "Putting Finley's Plan into Motion",
+            "description": "They start to implement Finley's plan, riding the currents and carefully navigating around the obstacles. The initial progress boosts their confidence."
+        },
+        {
+            "short_title": "Midway Crisis",
+            "long_title": "Facing an Unexpected Whirlpool",
+            "description": "Just as they start gaining momentum, they encounter a small whirlpool. The swirling waters threaten to separate them, causing panic among the group."
+        },
+        {
+            "short_title": "Lola's Bravery",
+            "long_title": "Lola Takes the Lead to Save the Group",
+            "description": "Lola bravely takes the lead, using her agility to find a way out of the whirlpool. Her quick thinking inspires the others to follow her movements closely."
+        },
+        {
+            "short_title": "Emerging from Crisis",
+            "long_title": "Escaping the Whirlpool Together",
+            "description": "Following Lola's lead, the group works together to escape the whirlpool. Their coordinated efforts bring them safely to calmer waters."
+        },
+        {
+            "short_title": "Reflections and Bonding",
+            "long_title": "Reflecting on Their First Challenge",
+            "description": "Having overcome their first challenge, the group takes a moment to rest and reflect on their teamwork and bravery. Their bond grows stronger, and they feel a renewed sense of hope."
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "B\u00f6l\u00fcm 6: Ortak M\u00fccadele",
+    "short_description": "Ali ve Aylin, gezegendeki tehlikelere kar\u015f\u0131 birlikte m\u00fccadele eder. Bu s\u00fcre\u00e7te birbirlerine daha da yak\u0131nla\u015f\u0131rlar.",
+    "events": "M\u00fccadeleler, Ali ve Aylin'in yak\u0131nla\u015fmas\u0131.",
+    "people": "Ali, Aylin",
+    "places": "Bilinmeyen gezegenin \u00e7e\u015fitli b\u00f6lgeleri.",
+    "from_prev_chapter": "Ali ve Aylin'in tehlikelere kar\u015f\u0131 birlikte hareket etme karar\u0131.",
+    "to_next_chapter": "Ali ve Aylin'in aralar\u0131ndaki ba\u011f\u0131n g\u00fc\u00e7lenmesi.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-06-23 06:45:21",
+    "lastUpdated": "2024-06-23 06:45:21",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-06-23 06:45:21"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Ali ve Aylin, peri d\u00fcnyas\u0131nda ald\u0131klar\u0131 \u00f6nlemler sayesinde ge\u00e7ici bir rahatlama hissi ya\u015farlar. Ancak, tehlikelerin tamamen ge\u00e7medi\u011fini fark ederler."
+        },
+        {
+            "description": "Tehlikelere kar\u015f\u0131 daha g\u00fc\u00e7l\u00fc ve etkili bir strateji belirlemek i\u00e7in detayl\u0131 bir plan yapmaya ba\u015flarlar. Bu plan\u0131n merkezinde Ali'nin insan bilgisi ve Aylin'in peri yetenekleri yer al\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin, gezegenin farkl\u0131 b\u00f6lgelerine giderek d\u00fc\u015fmanlar\u0131 belirlemeye ve onlar\u0131 etkisiz hale getirmeye \u00e7al\u0131\u015f\u0131rlar. Bu s\u00fcre\u00e7te hem fiziksel hem de duygusal olarak yak\u0131nla\u015fmalar ba\u015flar."
+        },
+        {
+            "description": "\u0130lk \u00e7at\u0131\u015fma s\u0131ras\u0131nda, Ali ve Aylin beklenmedik bir d\u00fc\u015fmanla kar\u015f\u0131la\u015f\u0131rlar ve birlikte \u00e7al\u0131\u015farak bu d\u00fc\u015fman\u0131 alt ederler. Bu olay, aralar\u0131ndaki ba\u011fl\u0131l\u0131\u011f\u0131 g\u00fc\u00e7lendirir."
+        },
+        {
+            "description": "M\u00fccadele s\u0131ras\u0131nda, Aylin b\u00fcy\u00fc yeteneklerini kullanarak tehlikeyi bertaraf ederken, Ali de teknolojik cihazlar\u0131yla ona destek olur. Bu i\u015fbirli\u011fi, ikilinin birbirine duydu\u011fu g\u00fcveni art\u0131r\u0131r."
+        },
+        {
+            "description": "Ali ve Aylin'in m\u00fccadelesi devam ederken, gezegenin farkl\u0131 yerlerinde sakl\u0131 kalan yeni tehlikelerle kar\u015f\u0131la\u015f\u0131rlar. Bu tehlikeler, onlar\u0131 birbirine daha da yak\u0131nla\u015ft\u0131r\u0131r."
+        },
+        {
+            "description": "Bir gece, y\u0131ld\u0131zl\u0131 bir g\u00f6ky\u00fcz\u00fc alt\u0131nda kamp kurarlar ve birbirlerine umut dolu hikayeler anlat\u0131rlar. Bu an, aralar\u0131ndaki duygusal ba\u011f\u0131 daha da derinle\u015ftirir."
+        },
+        {
+            "description": "Ali ve Aylin, son b\u00fcy\u00fck bir tehlikeyle y\u00fczle\u015firler ve bu m\u00fccadelede birbirlerine tamamen g\u00fcvenirler. Beraberce, d\u00fc\u015fman\u0131 alt ederler ve gezegeni korurlar."
+        },
+        {
+            "description": "Tehlikenin ard\u0131ndan, peri d\u00fcnyas\u0131 sakinle\u015fir. Ali ve Aylin, peri halk\u0131n\u0131n minnettarl\u0131\u011f\u0131yla kar\u015f\u0131la\u015f\u0131r ve bu onlar\u0131n duygusal yak\u0131nl\u0131\u011f\u0131n\u0131 peki\u015ftirir."
+        },
+        {
+            "description": "Gezegenin huzura kavu\u015fmas\u0131n\u0131n ard\u0131ndan, Ali ve Aylin ikili olarak vakit ge\u00e7irmeye f\u0131rsat bulurlar. Birlikte zaman ge\u00e7irirken, a\u015fklar\u0131 daha da derinle\u015fmeye ba\u015flar ve yeni bir maceraya yelken a\u00e7arlar."
+        }
+    ]
+}
