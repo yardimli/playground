@@ -1,0 +1,29 @@
+{
+  "name": "generate_beats",
+  "description": "Generates a list of beats for the given chapter. Follow the given instructions.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "beats": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "3-4 sentence long detailed description of the beat"
+            }
+          },
+          "required": [
+            "description"
+          ]
+        }
+      }
+    },
+    "required": [
+      "beats"
+    ]
+  }
+}
+
+

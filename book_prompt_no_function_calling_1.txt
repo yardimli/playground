@@ -1,0 +1,56 @@
+Create a story outline in the format "Save The Cat" with the structure like
+
+Act 1 - The Beginning:
+Chapter 1:
+Chapter 2:
+Chapter 3:
+Chapter 4:
+Chapter 5:
+Chapter 6:
+
+
+Act 2A - The Middle (Part 1):
+Chapter 7:
+Chapter 8:
+Chapter 9:
+
+
+Act 2B - The Middle (Part 2):
+Chapter 10:
+Chapter 11:
+Chapter 12:
+Chapter 13:
+
+
+Act 3 - The End:
+Chapter 14:
+Chapter 15:
+
+
+The subject of the book is:
+#subject#
+it is written in #language#.
+
+
+Output should be in JSON format as follows:
+{
+"title": "book title goes here",
+"blurb": "book blurb goes here",
+"back_cover_text": "back cover text goes here",
+"acts": [
+{
+"name": "Act name",
+"chapters": [
+{
+"name": "Chapter 1",
+"short_description": "short description goes here",
+"events": "events that happen in this chapter",
+"people": "people involved in this chapter",
+"places": "places where the events take place",
+"from_prev_chapter": "what happened in the previous chapter",
+"to_next_chapter": "what will happen in the next chapter"
+}
+]
+}
+]
+}

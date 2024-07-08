@@ -1,0 +1,11 @@
+Book Title: ##book_title##
+Book Description: ##book_description##
+
+Chapter: ##chapter_name##
+Chapter Description: ##chapter_description##
+
+Previous Beat: ##prev_beat##
+Current Beat: ##current_beat##
+Next Beat: ##next_beat##
+
+Write the full text for the current beat, considering the context of the previous and next beats. The text should be detailed and engaging, bringing the scene to life while advancing the story.

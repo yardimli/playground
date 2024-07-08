@@ -1,0 +1,30 @@
+Create a story outline in the format "Save The Cat" with the structure like
+
+Act 1 - The Beginning:
+Chapter 1:
+Chapter 2:
+Chapter 3:
+Chapter 4:
+Chapter 5:
+Chapter 6:
+
+Act 2A - The Middle (Part 1):
+Chapter 7:
+Chapter 8:
+Chapter 9:
+
+Act 2B - The Middle (Part 2):
+Chapter 10:
+Chapter 11:
+Chapter 12:
+Chapter 13:
+
+Act 3 - The End:
+Chapter 14:
+Chapter 15:
+
+The subject of the book is:
+#subject#
+Language is: #language#.
+Output following the schema, it should contain the following fields:
+title, blurb, back_cover_text and acts.
