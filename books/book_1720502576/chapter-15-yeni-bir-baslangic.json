@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 2,
+    "name": "Chapter 15: Yeni Bir Başlangıç",
+    "short_description": "Mağara sisteminden çıkan ekip, yaşadıkları maceranın etkisiyle değişmiştir. Kemal, geçmişin bilgeliğini geleceğe aktarmanın önemini kavrar ve anılarını yazmaya başlar. Ahmet, hırsını kontrol etmeyi öğrenir ve ustasının dükkanını devralmaya karar verir. Zeynep ise geleneksel saatçilik ile modern teknolojiyi birleştiren yeni bir proje başlatır. Üçü, düzenli olarak bir araya gelip saatin parçalarını kontrol ederler ve zamanın dengesi için çalışmaya devam ederler. Roman, zamanın sadece ölçülen değil, yaşanan ve paylaşılan bir kavram olduğu mesajıyla sona erer.",
+    "events": "Karakterlerin yeni kararları, düzenli kontrol toplantıları.",
+    "people": "Kemal Usta, Ahmet, Zeynep.",
+    "places": "İstanbul, Kemal'in dükkanı, Zeynep'in atölyesi.",
+    "from_prev_chapter": "Yeni sorumluluklar ve geleceğe bakış.",
+    "to_next_chapter": "N\/A",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

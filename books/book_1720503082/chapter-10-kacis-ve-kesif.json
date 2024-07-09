@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 1,
+    "name": "Chapter 10: Kaçış ve Keşif",
+    "short_description": "Sophie ve Ahmet, peşlerindeki gizemli kişilerden kaçarken, tesadüfen büyükbabanın eski bir mektubu saklanan bir yer keşfederler. Mektupta, değerli bir saatin yerini gösteren şifreli bir mesaj vardır. Bu keşif, onları heyecanlı bir hazine avına sürükler.",
+    "events": "Gizemli takipçilerden kaçış, gizli mektubun bulunması, şifreli mesajın keşfi.",
+    "people": "Sophie, Ahmet, gizemli takipçiler",
+    "places": "İstanbul'un arka sokakları, gizli saklama yeri",
+    "from_prev_chapter": "Tehlikeli araştırma sırasında karşılaşılan tehdit.",
+    "to_next_chapter": "Şifreli mesajın çözülmesi ve hazine avının başlaması.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Gizli Geçitten Çıkış \/ Yeni Bir Maceraya Adım: Sophie ve Ahmet, gizli geçitten çıkarak kendilerini eski bir binanın mahzeninde bulurlar."
+        },
+        {
+            "description": "Karanlıkta İpucu Arayışı \/ Geçmişin İzleri: İkili, cep telefonlarının ışığıyla çevreyi incelerken, duvarda eski bir fotoğraf dikkatlerini çeker."
+        },
+        {
+            "description": "Sürpriz Keşif \/ Büyükbabanın Gizemi: Fotoğrafın arkasında, Sophie'nin büyükbabasına ait olduğu anlaşılan eski bir mektup bulurlar."
+        },
+        {
+            "description": "Mektubun Sırrı \/ Geçmişten Gelen Mesaj: Mektubu açtıklarında, içinde şifreli bir mesaj ve bir saat çizimi görürler."
+        },
+        {
+            "description": "Ani Gürültü \/ Tehlike Kapıda: Üst kattan gelen sesler, takipçilerin hala peşlerinde olduğunu hatırlatır."
+        },
+        {
+            "description": "Hızlı Karar \/ Kaç ya da Saklan: Sophie ve Ahmet, mektubu alıp binadan çıkmaya mı yoksa saklanmaya mı karar vermeye çalışırlar."
+        },
+        {
+            "description": "Gizli Çıkış \/ Umulmadık Kurtuluş: Mahzende gizli bir kapı keşfederler ve hızla oradan kaçarlar."
+        },
+        {
+            "description": "Dar Sokaklar \/ Nefes Nefese Kaçış: İkili, İstanbul'un labirent gibi sokaklarında koşarak izlerini kaybettirmeye çalışır."
+        },
+        {
+            "description": "Güvenli Nokta \/ Soluklanma Anı: Sonunda güvenli bir yere ulaşıp durduklarında, ellerindeki mektubu daha dikkatli incelemeye başlarlar."
+        },
+        {
+            "description": "Şifrenin Gizemi \/ Yeni Bir Yolculuğun Başlangıcı: Mektuptaki şifreli mesajı çözmek için Kemal'in yardımına ihtiyaçları olduğuna karar verirler ve onu aramaya koyulurlar."
+        }
+    ]
+}

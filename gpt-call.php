@@ -37,7 +37,7 @@
 				"[%s] [%s] %s \n",
 				$date->format('Y-m-d H:i:s'),
 				$level,
-				is_array($message) ? json_encode($message, JSON_PRETTY_PRINT) : $message
+				is_array($message) ? json_encode($message, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ) : $message
 			);
 			file_put_contents($this->filePath, $formattedMessage, FILE_APPEND);
 		}
@@ -111,16 +111,15 @@
 				$gpt_base_url = $_ENV['ANTHROPIC_BASE'];
 				$gpt_api_key = $_ENV['ANTHROPIC_KEY'];
 				$gpt_model = $_ENV['ANTHROPIC_MODEL'];
-			} else
-				if ($use_gpt === 'open-router') {
-					$gpt_base_url = $_ENV['OPEN_ROUTER_BASE'];
-					$gpt_api_key = $_ENV['OPEN_ROUTER_KEY'];
-					$gpt_model = $_ENV['OPEN_ROUTER_MODEL'];
-				} else {
-					$gpt_base_url = $_ENV['OPEN_AI_BASE'];
-					$gpt_api_key = $_ENV['OPEN_AI_KEY'];
-					$gpt_model = $_ENV['OPEN_AI_MODEL'];
-				}
+			} else if ($use_gpt === 'open-router') {
+				$gpt_base_url = $_ENV['OPEN_ROUTER_BASE'];
+				$gpt_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$gpt_model = $_ENV['OPEN_ROUTER_MODEL'];
+			} else {
+				$gpt_base_url = $_ENV['OPEN_AI_BASE'];
+				$gpt_api_key = $_ENV['OPEN_AI_KEY'];
+				$gpt_model = $_ENV['OPEN_AI_MODEL'];
+			}
 
 			$chat_messages = [];
 			if ($use_gpt === 'anthropic') {
@@ -141,7 +140,7 @@
 
 
 			$temperature = 1;
-			$max_tokens = 3680;
+			$max_tokens = 4000;
 
 			$tool_name = 'auto';
 //			if ($use_gpt === 'anthropic') {
@@ -203,11 +202,11 @@
 			curl_close($ch);
 			session_start();
 
-			$this->logger->info('==================Log complete=====================');
+			$this->logger->info('==================Log complete 1 =====================');
 			$complete = trim($complete, " \n\r\t\v\0");
 			$this->logger->info($complete);
 
-			$validateJson = GptFunctions::validateJson($complete);
+			$validateJson = $this->validateJson($complete);
 			if ($validateJson == "Valid JSON") {
 				$this->logger->info('==================Log JSON complete=====================');
 				$complete_rst = json_decode($complete, true);
@@ -224,7 +223,7 @@
 				} else {
 					$content = $complete_rst['choices'][0]['message']['tool_calls'][0]['function'];
 					$arguments = $content['arguments'];
-					$validateJson = GptFunctions::validateJson($arguments);
+					$validateJson = $this->validateJson($arguments);
 					if ($validateJson == "Valid JSON") {
 						$this->logger->info('==================Log JSON arguments=====================');
 						$arguments_rst = json_decode($arguments, true);
@@ -241,6 +240,12 @@
 		}
 
 		public function extractJsonString($input) {
+
+			//replace \n\n with <br><br>
+			$input = str_replace("\",\n\n\"", "\",\n\"", $input);
+
+			$input = str_replace("\n\n", "[NEW-PARA-0]", $input);
+
 			// Find the first position of '{' or '['
 			$startPos = strpos($input, '{');
 			if ($startPos === false) {
@@ -260,6 +265,8 @@
 
 			// Extract the JSON substring
 			$jsonString = substr($input, $startPos, $endPos - $startPos + 1);
+
+			$jsonString = str_replace("[NEW-PARA-0]", "\\n\\n", $jsonString);
 
 			return $jsonString;
 		}
@@ -360,13 +367,13 @@
 				$this->logger->info(curl_getinfo($ch));
 			}
 			curl_close($ch);
-			session_start();
 
-			$this->logger->info('==================Log complete=====================');
+			$this->logger->info('==================Log complete 2 =====================');
 			$complete = trim($complete, " \n\r\t\v\0");
 			$this->logger->info($complete);
 
 			$complete_rst = json_decode($complete, true);
+			$this->logger->info($complete_rst);
 
 			if (!$return_json) {
 				$content = $complete_rst['content'][0]['text'];
@@ -375,17 +382,69 @@
 			}
 
 			$content = $complete_rst['choices'][0]['message']['content'];
+
+
+			//------ Check if JSON is complete or not with a prompt to continue ------------
+			//-----------------------------------------------------------------------------
+			$verify_completed_prompt = 'if the JSON is complete output DONE otherwise continue finishing the JSON, do not add any explenations just continue from where it was interrupted.';
+
+			$chat_messages[] = [
+				'role' => 'assistant',
+				'content' => $content
+			];
+			$chat_messages[] = [
+				'role' => 'user',
+				'content' => $verify_completed_prompt
+			];
+
+			$data['messages'] = $chat_messages;
+			$post_json = json_encode($data);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $gpt_base_url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$complete2 = curl_exec($ch);
+			if (curl_errno($ch)) {
+				$this->logger->info('CURL Error:');
+				$this->logger->info(curl_getinfo($ch));
+			}
+			curl_close($ch);
+			session_start();
+
+			$this->logger->info('==================Log complete 3 =====================');
+			$complete2 = trim($complete2, " \n\r\t\v\0");
+			$this->logger->info($complete2);
+
+			$complete2_rst = json_decode($complete2, true);
+			$this->logger->info($complete2_rst);
+
+			$content2 = $complete2_rst['choices'][0]['message']['content'];
+
+			//------------------------------------------------------------
+
+			$content = $content . $content2;
+
 			$content_json_string = $this->extractJsonString($content);
-			$validateJson = GptFunctions::validateJson($content_json_string);
-			if ($validateJson == "Valid JSON") {
+
+			$this->logger->info('==================extractJsonString==========');
+			$this->logger->info(gettype($content_json_string));
+			$this->logger->info($content_json_string);
+
+			$validate_result = $this->validateJson($content_json_string);
+
+			if ($validate_result == "Valid JSON") {
 				$this->logger->info('==================Log JSON arguments=====================');
 				$content_rst = json_decode($content_json_string, true);
 				$this->logger->info($content_rst);
 				return $content_rst;
 			} else {
-				$this->logger->info('==================Log JSON error=====================');
-				$this->logger->info($validateJson);
-				$this->logger->info('==================Log JSON error on CONTENT==========');
+				$this->logger->info('==================Log JSON error : '.$validate_result.'=====================');
+				$this->logger->info('==================CONTENT==========');
+				$this->logger->info(gettype($content));
 				$this->logger->info($content);
 			}
 		}
@@ -412,7 +471,7 @@
 				'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
 				'language' => $language,
 			];
-			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT));
+			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 
 			$acts = $book['acts'];
 			$chapters_summary = [];
@@ -447,7 +506,7 @@
 					];
 
 					$chapter_file = $book_folder . '/' . $slug_name . '.json';
-					file_put_contents($chapter_file, json_encode($chapter_data, JSON_PRETTY_PRINT));
+					file_put_contents($chapter_file, json_encode($chapter_data, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 
 					//check if $chapters_summary is unique before adding
 					if (!in_array($act_id, array_column($chapters_summary, 'id'))) {
@@ -461,7 +520,7 @@
 
 			// Create chapters.json
 			$chapters_summary_file = $book_folder . '/chapters.json';
-			file_put_contents($chapters_summary_file, json_encode($chapters_summary, JSON_PRETTY_PRINT));
+			file_put_contents($chapters_summary_file, json_encode($chapters_summary, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 		}
 
 		private

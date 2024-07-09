@@ -2,7 +2,7 @@
 
 	$files_list = [
 		'gpt-call.php',
-		'index.php',
+		'book-details.php',
 		'js/custom.js',
 		'css/custom.css',
 		'book_prompt_anthropic_1.txt',

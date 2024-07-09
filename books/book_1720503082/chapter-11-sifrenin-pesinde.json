@@ -1,0 +1,55 @@
+{
+    "row": "act-3",
+    "order": 2,
+    "name": "Chapter 11: Şifrenin Peşinde",
+    "short_description": "Sophie ve Ahmet, Kemal'in yardımıyla şifreli mesajı çözmeye çalışırlar. Mesaj, İstanbul'un tarihi bir mekanına işaret etmektedir. Üçlü, ipuçlarını takip ederek bu mekana gider ve orada başka bir bulmacayla karşılaşırlar. Bu arada, gizemli takipçiler de onlara yaklaşmaktadır.",
+    "events": "Şifreli mesajın çözülmesi, tarihi mekana yolculuk, yeni bulmacayla karşılaşma.",
+    "people": "Sophie, Ahmet, Kemal, gizemli takipçiler",
+    "places": "Kemal'in dükkanı, İstanbul'un tarihi bir mekanı",
+    "from_prev_chapter": "Büyükbabanın mektubundaki şifreli mesaj.",
+    "to_next_chapter": "Yeni bulmacanın çözümü ve hazineye bir adım daha yaklaşma.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Kemal'e Ulaşma \/ Usta Saatçinin Dükkanı: Sophie ve Ahmet, nefes nefese Kemal'in dükkanına varır ve durumu anlatırlar."
+        },
+        {
+            "description": "Şifrenin İncelenmesi \/ Gizemli Sembollerin Analizi: Kemal, büyüteçle mektubu inceler ve şifrede kullanılan sembolleri tanır."
+        },
+        {
+            "description": "Saat Mekanizması \/ Kodun Çözülmesi: Şifrenin bir saat mekanizmasına dayalı olduğunu keşfederler ve çözmeye başlarlar."
+        },
+        {
+            "description": "Tarihi Mekan \/ İpucunun Götürdüğü Yer: Çözülen şifre, onları Sultanahmet Meydanı'ndaki eski bir çeşmeye yönlendirir."
+        },
+        {
+            "description": "Yolculuk Hazırlığı \/ Tedbirli Hareket: Üçlü, takip edilme ihtimaline karşı dikkatli bir şekilde yola çıkar."
+        },
+        {
+            "description": "Kalabalıkta Gizlenme \/ Meydana Varış: Turistler arasında kaybolarak çeşmeye ulaşırlar ve etrafı gözlemlerler."
+        },
+        {
+            "description": "Çeşmenin Sırrı \/ Yeni Bulmaca: Çeşmenin üzerindeki kabartmalarda başka bir şifre olduğunu fark ederler."
+        },
+        {
+            "description": "Ani Tehlike \/ Yaklaşan Ayak Sesleri: Gizemli takipçilerin yaklaştığını hissederler ve telaşla bulmacayı çözmeye çalışırlar."
+        },
+        {
+            "description": "Hızlı Düşünme \/ Zamanla Yarış: Kemal'in uzmanlığı sayesinde bulmacayı son anda çözerler."
+        },
+        {
+            "description": "Gizli Geçit \/ Beklenmedik Kaçış: Çözülen bulmaca, çeşmenin altındaki gizli bir geçidi açar ve üçlü hızla içeri girer."
+        }
+    ]
+}

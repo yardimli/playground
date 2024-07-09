@@ -10,7 +10,7 @@
       },
       "blurb": {
         "type": "string",
-        "description": "The blurb of the book"
+          "description": "The blurb of the book"
       },
       "back_cover_text": {
         "type": "string",
@@ -70,10 +70,7 @@
                 ]
               }
             }
-          },
-          "required": [
-            "acts"
-          ]
+          }
         },
         "description": "The acts in the book"
       }

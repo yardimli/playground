@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2: Ahmet'in Çıraklığı",
+    "short_description": "Kemal'in çırağı Ahmet, ustasının davranışlarındaki değişikliği fark eder. Dükkanı temizlerken Kemal'in notlarını bulur ve efsanevi saatle ilgili bilgileri öğrenir. Ahmet, bu maceraya dahil olmaya karar verir ve kendi araştırmasını yapmaya başlar.",
+    "events": "Ahmet'in efsanevi saat hakkında bilgi edinmesi, kendi araştırmasına başlaması.",
+    "people": "Ahmet, Kemal Usta.",
+    "places": "Antika saat dükkanı.",
+    "from_prev_chapter": "Kemal'in efsanevi saat hakkında edindiği bilgi ve araştırma kararı.",
+    "to_next_chapter": "Ahmet'in efsanevi saat macerasına dahil olma kararı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

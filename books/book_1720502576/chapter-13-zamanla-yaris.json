@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 4,
+    "name": "Chapter 13: Zamanla Yarış",
+    "short_description": "Rakip grupla yaşanan çatışma sırasında saat yanlışlıkla aktive olur ve kontrol dışı çalışmaya başlar. Oda zamanın farklı noktalarına sıçramaya başlar, geçmiş ve gelecekten görüntüler belirir. Herkes paniğe kapılır. Kemal, Ahmet ve Zeynep, güçlerini birleştirerek saati durdurmaya çalışırlar. Bu süreçte kendi kişisel çıkarlarını bir kenara bırakıp, insanlığın iyiliği için çalışmaları gerektiğini anlarlar.",
+    "events": "Saatin kontrolsüz aktivasyonu, zaman sıçramaları, ekibin birlikte çalışması.",
+    "people": "Kemal Usta, Ahmet, Zeynep, rakip grup üyeleri.",
+    "places": "Zaman sıçramaları yaşayan oda.",
+    "from_prev_chapter": "Çatışma ve saatin akıbeti.",
+    "to_next_chapter": "Saati durdurma çabası ve sonuçları.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 5,
+    "name": "Chapter 5: Eski Bir Haritanın Peşinde",
+    "short_description": "Ekip, antikacıdan aldıkları bilgiyle eski bir Osmanlı haritasının varlığını öğrenir. Bu harita, efsanevi saatin yerini göstermektedir. Haritayı bulmak için İstanbul'un tarihi kütüphanelerini ve arşivlerini araştırmaya başlarlar. Sonunda haritanın Topkapı Sarayı'nda olduğunu keşfederler.",
+    "events": "Eski Osmanlı haritasının varlığını öğrenmeleri, haritanın yerini keşfetmeleri.",
+    "people": "Kemal Usta, Ahmet, Zeynep, kütüphaneciler, arşiv görevlileri.",
+    "places": "İstanbul'un tarihi kütüphaneleri, arşivler.",
+    "from_prev_chapter": "Üç karakterin güçlerini birleştirme kararı.",
+    "to_next_chapter": "Haritanın Topkapı Sarayı'nda olduğu bilgisi.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

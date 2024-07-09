@@ -1,0 +1,23 @@
+{
+    "row": "act-3",
+    "order": 1,
+    "name": "Chapter 10: Rakiplerin Ortaya Çıkışı",
+    "short_description": "Ekip, mağara sisteminde ilerlerken, aynı saatin peşinde olan başka bir grubun varlığını fark eder. Bu grup, zamanı kontrol etmek isteyen güçlü bir organizasyonun temsilcileridir. İki grup arasında gerilim yaşanır ve bir çatışma çıkar. Ekip, rakiplerinden kaçmak ve saate ilk ulaşmak için daha hızlı hareket etmek zorunda kalır.",
+    "events": "Rakip grubun ortaya çıkışı, çatışma ve kaçış.",
+    "people": "Kemal Usta, Ahmet, Zeynep, rakip grup üyeleri.",
+    "places": "Mağara sisteminin derinlikleri.",
+    "from_prev_chapter": "Ekibin duygusal değişimi ve ileriye dönük motivasyonları.",
+    "to_next_chapter": "Artan tehlike ve saate ulaşma yarışı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

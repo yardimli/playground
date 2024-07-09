@@ -1,0 +1,55 @@
+{
+    "row": "act-2",
+    "order": 3,
+    "name": "Chapter 9: Tehlikeli Araştırma",
+    "short_description": "Sophie ve Ahmet, büyükbabanın gizli göreviyle ilgili daha fazla bilgi toplamak için İstanbul'un tehlikeli bölgelerine girerler. Eski bir antikacıdan önemli bilgiler alırlar, ancak bu bilgilerin peşinde olan başkaları da vardır. Kendilerini beklenmedik bir tehlikenin içinde bulurlar.",
+    "events": "Tehlikeli bölgelere giriş, antikacıdan bilgi alma, beklenmedik tehlikeyle karşılaşma.",
+    "people": "Sophie, Ahmet, antikacı, gizemli takipçiler",
+    "places": "İstanbul'un tehlikeli bölgeleri, eski bir antika dükkanı",
+    "from_prev_chapter": "Büyükbabanın gizli göreviyle ilgili ilk bilgiler.",
+    "to_next_chapter": "Tehlikeden kaçış ve elde edilen yeni bilgilerin değerlendirilmesi.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Karanlık Sokaklar \/ Yeni Maceraya Adım: Sophie ve Ahmet, Kemal'in uyarılarına rağmen İstanbul'un eski ve tehlikeli sokaklarına girerler."
+        },
+        {
+            "description": "Şüpheli Bakışlar \/ Yabancı Topraklarda: İkili, çevrelerindeki insanların şüpheli bakışları altında tedirgin bir şekilde ilerler."
+        },
+        {
+            "description": "Antika Dükkanı \/ Geçmişin İzleri: Eski bir antika dükkanını bulurlar ve içeri girerler, etraf tozlu ve gizemli eşyalarla doludur."
+        },
+        {
+            "description": "Yaşlı Antikacı \/ Bilgeliğin Sesi: Dükkandaki yaşlı antikacı, Sophie'nin büyükbabasını tanıdığını söyler ve onlara önemli bilgiler verir."
+        },
+        {
+            "description": "Gizli Bilgiler \/ Sırların Açığa Çıkışı: Antikacı, büyükbabanın savaş zamanında değerli saatler ve mücevherlerle ilgili gizli bir görevi olduğunu doğrular."
+        },
+        {
+            "description": "Şifreli Harita \/ Yeni İpucu: Antikacı, Sophie'ye büyükbabasının bıraktığı şifreli bir harita verir."
+        },
+        {
+            "description": "Ani Tehlike \/ Gölgelerin Dansı: Dükkandan çıkarken, peşlerinde gizemli kişilerin olduğunu fark ederler."
+        },
+        {
+            "description": "Hızlı Kaçış \/ Dar Sokaklarda Kovalamaca: Sophie ve Ahmet, kendilerini takip eden kişilerden kaçmaya başlarlar."
+        },
+        {
+            "description": "Gizli Geçit \/ Beklenmedik Kurtuluş: Kaçarken tesadüfen gizli bir geçit bulurlar ve içeri sığınırlar."
+        },
+        {
+            "description": "Güvenli Yer \/ Yeni Keşfin Eşiği: Geçidin onları güvenli bir yere çıkardığını fark ederler, ancak bu yerin büyükbabanın geçmişiyle bağlantılı olduğunu henüz bilmemektedirler."
+        }
+    ]
+}

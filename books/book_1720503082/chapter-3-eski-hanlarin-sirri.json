@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 3,
+    "name": "Chapter 3: Eski Hanların Sırrı",
+    "short_description": "Kemal, Ahmet'i yanına alarak eski hanlardaki diğer ustaları ziyaret eder. Zenith saatin tamiri için özel bir parça aramaktadırlar. Bu gezinti sırasında Ahmet, eski zanaatların zengin dünyasını keşfeder ve Sophie'ye İstanbul'u gezdirme hayalleri kurar.",
+    "events": "Eski hanların ziyareti, özel saat parçası arayışı, Ahmet'in zanaat dünyasını keşfi.",
+    "people": "Kemal, Ahmet, çeşitli zanaat ustaları",
+    "places": "Eminönü'nün eski hanları ve dükkanları",
+    "from_prev_chapter": "Antika Zenith saatin tamir ihtiyacı.",
+    "to_next_chapter": "Ahmet'in İstanbul'u Sophie'ye tanıtma planları.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Hazırlık ve Yola Çıkış: Kemal ve Ahmet, Zenith saat için özel parça aramak üzere dükkândan ayrılır."
+        },
+        {
+            "description": "Eminönü'ne Varış: İkili, tarihi hanların bulunduğu Eminönü'ne ulaşır ve arayışlarına başlar."
+        },
+        {
+            "description": "İlk Durak: Sandal Bedesteni: Kemal, eski bir dostunun dükkânında saat parçaları arar."
+        },
+        {
+            "description": "Ahmet'in Keşfi: Çırak, antika eşyaların büyüleyici dünyasıyla tanışır ve hayran kalır."
+        },
+        {
+            "description": "Ustalar Arası Sohbet: Kemal, diğer zanaatkârlarla eski günleri yâd eder ve Zenith saati anlatır."
+        },
+        {
+            "description": "Büyük Han Macerası: İkili, birkaç katlı büyük bir handa arayışlarını sürdürür."
+        },
+        {
+            "description": "Sürpriz Buluşma: Ahmet, Sophie'nin bahsettiği bir Fransız kuyumcuyu tesadüfen bulur."
+        },
+        {
+            "description": "Parçanın İzi: Kuyumcu, aradıkları parçanın olabileceği başka bir hanı işaret eder."
+        },
+        {
+            "description": "Son Umut: Kemal ve Ahmet, günün sonunda son bir dükkâna uğrar ve şanslarını dener."
+        },
+        {
+            "description": "Dönüş Yolunda Planlar: Ahmet, Sophie'yi şehirde gezdirme fikrini Kemal'e açar ve onay alır."
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 3,
+    "name": "Chapter 3: Zeynep'in Yeni Projesi",
+    "short_description": "Genç saat tamircisi Zeynep, yeni nesil akıllı saatler üzerinde çalışırken, eski bir Osmanlı saati hakkında bir blog yazısına rastlar. Bu saatin özel yetenekleri olduğunu öğrenir ve konu ilgisini çeker. Araştırma yapmaya ve bu saati bulmaya karar verir.",
+    "events": "Zeynep'in efsanevi saat hakkında bilgi edinmesi, araştırma kararı alması.",
+    "people": "Zeynep.",
+    "places": "Zeynep'in modern saat atölyesi.",
+    "from_prev_chapter": "Ahmet'in efsanevi saat macerasına dahil olma kararı.",
+    "to_next_chapter": "Zeynep'in efsanevi saati bulma kararı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

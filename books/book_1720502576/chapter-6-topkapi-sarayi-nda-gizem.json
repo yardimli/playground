@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 6,
+    "name": "Chapter 6: Topkapı Sarayı'nda Gizem",
+    "short_description": "Ekip, Topkapı Sarayı'na girer ve haritayı aramaya başlar. Ancak haritanın bulunduğu bölüm ziyarete kapalıdır. Zeynep'in teknolojik bilgisi ve Ahmet'in pratik zekas\n\nıyla gizlice bu bölüme girerler. Haritayı bulurlar, ancak tam o sırada saray güvenliği tarafından fark edilirler. Hızlı bir kaçış planı yapmak zorunda kalırlar.",
+    "events": "Topkapı Sarayı'na giriş, haritanın bulunması, güvenlik tarafından fark edilme.",
+    "people": "Kemal Usta, Ahmet, Zeynep, saray güvenlik görevlileri.",
+    "places": "Topkapı Sarayı, kapalı bölüm.",
+    "from_prev_chapter": "Haritanın Topkapı Sarayı'nda olduğu bilgisi.",
+    "to_next_chapter": "Haritanın ele geçirilmesi ve kaçış planı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

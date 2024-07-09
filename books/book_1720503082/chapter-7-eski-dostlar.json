@@ -1,0 +1,55 @@
+{
+    "row": "act-2",
+    "order": 1,
+    "name": "Chapter 7: Eski Dostlar",
+    "short_description": "Kemal, Sophie'nin büyükbabasını tanıyan eski bir arkadaşını hatırlar. Bu kişiyi bulmak için Ahmet ve Sophie ile birlikte İstanbul'un eski semtlerini dolaşırlar. Sonunda, Balat'ta yaşayan yaşlı bir saat ustasına ulaşırlar. Bu usta, Sophie'nin büyükbabasıyla ilgili şaşırtıcı hikayeler anlatır.",
+    "events": "Kemal'in eski arkadaşını hatırlaması, İstanbul'un eski semtlerinde arayış, Balat'taki yaşlı ustaya ulaşma.",
+    "people": "Kemal, Ahmet, Sophie, yaşlı saat ustası",
+    "places": "İstanbul'un eski semtleri, Balat",
+    "from_prev_chapter": "Sophie'nin büyükbabasının İstanbul geçmişi hakkındaki bilgiler.",
+    "to_next_chapter": "Yaşlı ustanın anlattığı hikayelerin yaratacağı yeni sorular ve ipuçları.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Eski Bir Anı \/ Kemal'in Hatırlaması: Kemal, Sophie'nin büyükbabasıyla yakın arkadaş olan eski bir saat ustasını hatırlar."
+        },
+        {
+            "description": "Arayış Başlıyor \/ Semtlerde Gezinti: Sophie, Ahmet ve Kemal, İstanbul'un eski semtlerinde saat ustasını aramaya başlarlar."
+        },
+        {
+            "description": "Tarihi Sokaklar \/ Geçmişin İzleri: Üçlü, Fener ve Balat gibi tarihi semtlerde dolaşırken, eski İstanbul'un atmosferini hissederler."
+        },
+        {
+            "description": "Umut Verici İpucu \/ Eski Bir Dükkân: Balat'ta eski bir saat dükkânının izine rastlarlar, ancak dükkân kapalıdır."
+        },
+        {
+            "description": "Komşu Desteği \/ Mahalle Sakinleri: Mahalle sakinlerinden biri, yaşlı saat ustasının adresini verir."
+        },
+        {
+            "description": "Heyecanlı Buluşma \/ Ustanın Evi: Sophie, Ahmet ve Kemal, yaşlı saat ustasının evine varırlar ve heyecanla kapıyı çalarlar."
+        },
+        {
+            "description": "Geçmişe Yolculuk \/ Ustanın Anıları: Yaşlı usta, Sophie'nin büyükbabasıyla geçirdiği zamanları anlatmaya başlar."
+        },
+        {
+            "description": "Sürpriz Detaylar \/ Gizli Hikâyeler: Usta, Sophie'nin büyükbabasının saat tamirciliğinin yanı sıra başka işlerle de uğraştığını ima eder."
+        },
+        {
+            "description": "Duygusal Anlar \/ Aile Bağları: Sophie, büyükbabasının geçmişiyle ilgili yeni detayları öğrendikçe duygusallaşır."
+        },
+        {
+            "description": "Gizemli İpucu \/ Saklı Gerçekler: Yaşlı usta, Sophie'ye büyükbabasının özel bir saati olduğundan bahseder, bu bilgi yeni bir gizemi ortaya çıkarır."
+        }
+    ]
+}

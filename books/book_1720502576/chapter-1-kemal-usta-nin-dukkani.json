@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 1,
+    "name": "Chapter 1: Kemal Usta'nın Dükkanı",
+    "short_description": "Yaşlı usta Kemal, İstanbul'un eski bir mahallesindeki antika saat dükkanında çalışırken, efsanevi Osmanlı saatinin varlığını öğrenir. Dükkana gelen bir müşteri, saatin son görüldüğü yeri anlatır. Kemal, bu bilgiyi not eder ve araştırmaya karar verir.",
+    "events": "Efsanevi saat hakkında bilgi edinilmesi, Kemal'in araştırmaya karar vermesi.",
+    "people": "Kemal Usta, gizemli müşteri.",
+    "places": "Antika saat dükkanı, İstanbul'un eski mahallesi.",
+    "from_prev_chapter": "N\/A",
+    "to_next_chapter": "Kemal'in efsanevi saat hakkında edindiği bilgi ve araştırma kararı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

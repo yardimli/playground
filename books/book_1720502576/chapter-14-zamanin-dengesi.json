@@ -1,0 +1,23 @@
+{
+    "row": "act-4",
+    "order": 1,
+    "name": "Chapter 14: Zamanın Dengesi",
+    "short_description": "Ekip, büyük bir mücadele sonunda saati kontrol altına almayı başarır. Ancak bu süreçte, saatin gücünün tamamen yok edilemeyeceğini, sadece dengelenebileceğini anlarlar. Kemal, Ahmet ve Zeynep, sahip oldukları farklı yetenekleri kullanarak saati üçe bölerler. Her biri saatin bir parçasını alır ve bu parçaları ayrı ayrı korumaya karar verirler. Bu sayede saatin gücü dengede tutulacak ve kötüye kullanılması engellenecektir.",
+    "events": "Saatin kontrol altına alınması, saatin üçe bölünmesi, koruma kararı.",
+    "people": "Kemal Usta, Ahmet, Zeynep.",
+    "places": "Efsanevi saatin bulunduğu oda.",
+    "from_prev_chapter": "Saati durdurma çabası ve sonuçları.",
+    "to_next_chapter": "Yeni sorumluluklar ve geleceğe bakış.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

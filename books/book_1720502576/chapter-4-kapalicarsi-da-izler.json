@@ -1,0 +1,23 @@
+{
+    "row": "act-1",
+    "order": 4,
+    "name": "Chapter 4: Kapalıçarşı'da İzler",
+    "short_description": "Kemal, Ahmet ve Zeynep'in yolları Kapalıçarşı'da kesişir. Üçü de bağımsız olarak efsanevi saatin izini sürmektedir. Bir antikacıda karşılaşırlar ve birbirlerinin amaçlarını öğrenirler. İlk başta rekabet etseler de, güçlerini birleştirmeye karar verirler.",
+    "events": "Üç karakterin karşılaşması, işbirliği kararı almaları.",
+    "people": "Kemal Usta, Ahmet, Zeynep, antikacı.",
+    "places": "Kapalıçarşı, antika dükkanı.",
+    "from_prev_chapter": "Zeynep'in efsanevi saati bulma kararı.",
+    "to_next_chapter": "Üç karakterin güçlerini birleştirme kararı.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}

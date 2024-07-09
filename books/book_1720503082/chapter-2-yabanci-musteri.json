@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 2,
+    "name": "Chapter 2: Yabancı Müşteri",
+    "short_description": "Telefondaki gizemli müşteri, Sophie adında genç bir Fransız kız, dükkana gelir. Büyükbabasından kalan antika bir Zenith saati tamir ettirmek istemektedir. Ahmet, Sophie'ye ilk görüşte aşık olur. Sophie, İstanbul'da kısa bir süre kalacağını söyler.",
+    "events": "Sophie'nin dükkana gelişi, antika Zenith saatin teslimi, Ahmet'in Sophie'ye aşık olması.",
+    "people": "Sophie (yabancı müşteri), Kemal, Ahmet",
+    "places": "Saat tamiri dükkanı",
+    "from_prev_chapter": "Gizemli telefon siparişinin sahibinin kim olduğu.",
+    "to_next_chapter": "Ahmet'in Sophie'ye olan ilgisinin gelişimi ve antika saatin tamir süreci.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Sabah Heyecanı: Kemal ve Ahmet, yabancı müşteriyi beklerken dükkânı hazırlar."
+        },
+        {
+            "description": "Sophie'nin Gelişi: Genç Fransız kız Sophie, elinde antika saatle dükkâna girer."
+        },
+        {
+            "description": "İlk İzlenimler: Ahmet, Sophie'yi görür görmez büyülenir ve heyecanlanır."
+        },
+        {
+            "description": "Zenith'in Hikâyesi: Sophie, büyükbabasından kalan saatin öyküsünü anlatır."
+        },
+        {
+            "description": "Ustanın İncelemesi: Kemal, Zenith saati dikkatle inceler ve durumunu değerlendirir."
+        },
+        {
+            "description": "Çırağın Çabası: Ahmet, Sophie'ye iyi görünmek için elinden geleni yapar."
+        },
+        {
+            "description": "İstanbul Sohbeti: Sophie, şehirle ilgili merakını dile getirir ve sorular sorar."
+        },
+        {
+            "description": "Tamir Süreci: Kemal, saatin tamiri için gereken işlemleri açıklar."
+        },
+        {
+            "description": "Vedalaşma: Sophie ayrılırken, Ahmet ona İstanbul'u gezdirme isteğini belirtir."
+        },
+        {
+            "description": "Gelecek Planları: Kemal ve Ahmet, saati tamir etmek için özel parça arayışına çıkmaya karar verir."
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "row": "act-1",
+    "order": 5,
+    "name": "Chapter 5: Saatin Sırrı",
+    "short_description": "Kemal, Zenith saati tamir ederken içinde gizli bir bölme keşfeder. Bölmede, Sophie'nin ailesine ait olduğu anlaşılan eski bir fotoğraf ve not bulunur. Bu keşif, Sophie'nin aile geçmişiyle ilgili yeni sorular ortaya çıkarır.",
+    "events": "Zenith saatteki gizli bölmenin keşfi, eski fotoğraf ve notun bulunması.",
+    "people": "Kemal, Ahmet, Sophie",
+    "places": "Saat tamiri dükkanı",
+    "from_prev_chapter": "Ahmet ve Sophie'nin yakınlaşması.",
+    "to_next_chapter": "Sophie'nin aile geçmişiyle ilgili gizem ve bunun yarattığı merak.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:31:22",
+    "lastUpdated": "2024-07-09 05:31:22",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:31:22"
+        }
+    ],
+    "beats": [
+        {
+            "description": "Acil Durum \/ Dükkâna Varış: Ahmet ve Sophie, Kemal'in acil çağrısı üzerine telaşla dükkâna ulaşır."
+        },
+        {
+            "description": "Kemal'in Keşfi \/ Gizli Bölme: Kemal, Zenith saatinde gizli bir bölme bulduğunu heyecanla açıklar."
+        },
+        {
+            "description": "Sürpriz İçerik \/ Eski Fotoğraf: Bölmeden çıkan eski bir fotoğraf, herkesi şaşırtır."
+        },
+        {
+            "description": "Aile Bağlantısı \/ Sophie'nin Tepkisi: Sophie, fotoğraftaki kişileri tanıyarak şoka uğrar."
+        },
+        {
+            "description": "Gizemli Not \/ İpuçları: Fotoğrafın yanında bulunan not, daha fazla gizem ekler."
+        },
+        {
+            "description": "Geçmişe Yolculuk \/ Anıların Canlanması: Sophie, ailesinden duyduğu hikâyeleri hatırlamaya başlar."
+        },
+        {
+            "description": "Merak ve Heyecan \/ Araştırma İsteği: Üçlü, bu beklenmedik keşfin anlamını çözmeye karar verir."
+        },
+        {
+            "description": "Saat Ustasının Bilgeliği \/ Kemal'in Yorumları: Kemal, saatlerin taşıdığı hikayelere dair düşüncelerini paylaşır."
+        },
+        {
+            "description": "Duygusal Bağ \/ Sophie'nin Kararı: Sophie, aile geçmişini derinlemesine araştırmaya karar verir."
+        },
+        {
+            "description": "Yeni Bir Macera \/ Ahmet'in Desteği: Ahmet, Sophie'ye araştırmasında yardım etmeyi teklif eder, yeni bir maceraya adım atarlar."
+        }
+    ]
+}

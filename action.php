@@ -79,7 +79,7 @@
 		//check the current page to prevent redirect loop
 		$current_page = basename($_SERVER['PHP_SELF']);
 		if ($current_page === 'login.php') {
-			header('Location: index.php');
+			header('Location: book-details.php');
 			exit();
 		}
 	} else
@@ -151,11 +151,38 @@
 				} else {
 					$model = $_ENV['OPEN_ROUTER_MODEL'] ?? 'open-router';
 					$prompt = file_get_contents('book_prompt_no_function_calling_1.txt');
-					$prompt = str_replace('#subject#', $blurb, $prompt);
-					$prompt = str_replace('#language#', $language, $prompt);
+					$prompt = str_replace('##subject##', $blurb, $prompt);
+					$prompt = str_replace('##language##', $language, $prompt);
 					$schema = [];
 
 					$results = $gptApp->gpt_no_stream($prompt, true, $language);
+
+					$book_title = $results['title'] ?? '';
+					$book_blurb = $results['blurb'] ?? '';
+					$book_back_cover_text = $results['back_cover_text'] ?? '';
+
+					if (empty($book_title) || empty($book_blurb) || empty($book_back_cover_text)) {
+						$results = [
+							'title' => $book_title,
+							'blurb' => $book_blurb,
+							'back_cover_text' => $book_back_cover_text,
+							'error' => 'Failed to generate book'
+						];
+					} else {
+
+						$prompt = file_get_contents('book_prompt_no_function_calling_2.txt');
+						$prompt = str_replace('##subject##', $blurb, $prompt);
+						$prompt = str_replace('##language##', $language, $prompt);
+						$prompt = str_replace('##book_title##', $book_title, $prompt);
+						$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
+						$prompt = str_replace('##book_back_cover_text##', $book_back_cover_text, $prompt);
+
+						$results = $gptApp->gpt_no_stream($prompt, true, $language);
+
+						$results['title'] = $book_title;
+						$results['blurb'] = $book_blurb;
+						$results['back_cover_text'] = $book_back_cover_text;
+					}
 				}
 
 				// Process the JSON and create the folder structure
@@ -448,7 +475,7 @@
 						$chapter = log_history($chapter, 'Unarchived the chapter', $user);
 					}
 
-					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT));
+					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 					echo json_encode(['success' => true]);
 				} else {
 					echo json_encode(['success' => false, 'message' => 'Chapter not found']);
@@ -466,7 +493,7 @@
 						}));
 						$chapter = log_history($chapter, 'Deleted comment', $user);
 
-						file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT));
+						file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 						echo json_encode(['success' => true]);
 					}
 				}
@@ -488,7 +515,7 @@
 						return $file['uploadFilename'] !== $delete_filename;
 					}));
 					$chapter = log_history($chapter, 'Deleted file ' . $delete_filename, $user);
-					file_put_contents($chapterfile_path, json_encode($chapter, JSON_PRETTY_PRINT));
+					file_put_contents($chapterfile_path, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 				}
 
 				echo json_encode(['success' => true]);
@@ -638,7 +665,7 @@
 						$isNew = false;
 					}
 
-					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT));
+					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 					echo json_encode([
 						'id' => $id,
 						'text' => $text,
@@ -720,7 +747,7 @@
 					$chapter = log_history($chapter, 'Edited chapter', $_SESSION['user']);
 				}
 
-				file_put_contents($chaptersDir . '/' . $chapterFilename, json_encode($chapter, JSON_PRETTY_PRINT));
+				file_put_contents($chaptersDir . '/' . $chapterFilename, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 
 				$chapter['chapterFilename'] = $chapterFilename;
 				echo json_encode($chapter);
@@ -743,7 +770,7 @@
 						$chapter['lastUpdated'] = date('Y-m-d H:i:s');
 						$chapter = log_history($chapter, 'Moved chapter to ' . $row, $user);
 					}
-					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT));
+					file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
 					echo json_encode($chapter);
 				}
 				break;
@@ -755,7 +782,7 @@
 					$chapterData = json_decode(file_get_contents($chapterFilePath), true);
 					$chapterData['beats'] = $beats;
 
-					if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT))) {
+					if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ))) {
 						echo json_encode(['success' => true]);
 					} else {
 						echo json_encode(['success' => false, 'message' => 'Failed to write to file']);
@@ -777,7 +804,7 @@
 					if ($user['username'] === $username && password_verify($password, $user['password'])) {
 						$_SESSION['user'] = $username;
 						$userFound = true;
-						header('Location: index.php');
+						header('Location: book-details.php');
 						exit();
 					}
 				}

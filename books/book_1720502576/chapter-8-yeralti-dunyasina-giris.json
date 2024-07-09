@@ -1,0 +1,23 @@
+{
+    "row": "act-2",
+    "order": 2,
+    "name": "Chapter 8: Yeraltı Dünyasına Giriş",
+    "short_description": "Ekip, haritadaki şifreyi çözer ve mağara sisteminin girişini bulur. İstanbul'un eski bir semtinde, terkedilmiş bir binanın bodrumundan mağaralara giriş yaparlar. Karanlık ve tehlikeli tünellerde ilerlerken, Osmanlı döneminden kalma tuzaklarla karşılaşırlar. Her biri kendi uzmanlık alanını kullanarak tuzakları aşmaya çalışır.",
+    "events": "Mağara sistemine giriş, eski tuzaklarla karşılaşma.",
+    "people": "Kemal Usta, Ahmet, Zeynep.",
+    "places": "İstanbul'un eski semti, yeraltı mağara sistemi.",
+    "from_prev_chapter": "Şifreli harita bilgileri ve çözme girişimi.",
+    "to_next_chapter": "Mağara sisteminde ilerleme ve karşılaşılan zorluklar.",
+    "backgroundColor": "#AECBFA",
+    "textColor": "#000000",
+    "created": "2024-07-09 05:22:56",
+    "lastUpdated": "2024-07-09 05:22:56",
+    "comments": [],
+    "history": [
+        {
+            "action": "Create chapter",
+            "user": "Admin",
+            "timestamp": "2024-07-09 05:22:56"
+        }
+    ]
+}
