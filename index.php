@@ -1,5 +1,5 @@
 <?php
-require_once 'action.php';
+require_once 'action-session.php';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@ require_once 'action.php';
 </head>
 <body>
 <header>
-	<form id="logoutForm" action="action.php" method="POST" class="d-none">
+	<form id="logoutForm" action="action-book.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 	<div class="container-fluid mt-2">
@@ -192,7 +192,7 @@ require_once 'action.php';
 				$('#confirmDeleteBook').click(function() {
 					if (bookToDelete) {
 						$.ajax({
-							url: 'action.php',
+							url: 'action-book.php',
 							type: 'POST',
 							data: {
 								action: 'delete_book',
@@ -231,7 +231,7 @@ require_once 'action.php';
 					formData.append('language', $('#language').val());
 					formData.append('action', 'write_book');
 
-					fetch('action.php', {
+					fetch('action-book.php', {
 						method: 'POST',
 						body: formData
 					})

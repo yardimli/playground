@@ -1,5 +1,5 @@
 <?php
-require_once 'action.php';
+require_once 'action-session.php';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@ require_once 'action.php';
 </head>
 <body>
 <header>
-	<form id="logoutForm" action="action.php" method="POST" class="d-none">
+	<form id="logoutForm" action="action-book.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 	<div class="container-fluid mt-2">

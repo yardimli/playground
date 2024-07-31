@@ -37,14 +37,14 @@
 				"[%s] [%s] %s \n",
 				$date->format('Y-m-d H:i:s'),
 				$level,
-				is_array($message) ? json_encode($message, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ) : $message
+				is_array($message) ? json_encode($message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $message
 			);
 			file_put_contents($this->filePath, $formattedMessage, FILE_APPEND);
 		}
 	}
 
 
-	class GptFunctions
+	class LlmFunctions
 	{
 		private $logger;
 
@@ -87,12 +87,12 @@
 
 		public function moderation($message)
 		{
-			$openai_api_key = $_ENV['OPEN_AI_API_KEY'];
+			$openai_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
 
 			$response = Http::withHeaders([
 				'Content-Type' => 'application/json',
 				'Authorization' => 'Bearer ' . $openai_api_key,
-			])->post($_ENV['OPEN_AI_API_BASE'] . '/moderations', [
+			])->post($_ENV['OPEN_AI_GPT4_BASE'] . '/moderations', [
 				'input' => $message,
 			]);
 
@@ -105,24 +105,36 @@
 			set_time_limit(300);
 			session_write_close();
 
-			$use_gpt = $_ENV['USE_GPT'] ?? 'openai';
+			$use_llm = $_ENV['USE_LLM'] ?? 'openai';
 
-			if ($use_gpt === 'anthropic') {
-				$gpt_base_url = $_ENV['ANTHROPIC_BASE'];
-				$gpt_api_key = $_ENV['ANTHROPIC_KEY'];
-				$gpt_model = $_ENV['ANTHROPIC_MODEL'];
-			} else if ($use_gpt === 'open-router') {
-				$gpt_base_url = $_ENV['OPEN_ROUTER_BASE'];
-				$gpt_api_key = $_ENV['OPEN_ROUTER_KEY'];
-				$gpt_model = $_ENV['OPEN_ROUTER_MODEL'];
-			} else {
-				$gpt_base_url = $_ENV['OPEN_AI_BASE'];
-				$gpt_api_key = $_ENV['OPEN_AI_KEY'];
-				$gpt_model = $_ENV['OPEN_AI_MODEL'];
+			if ($use_llm === 'anthropic-haiku') {
+				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
+				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
+				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
+
+			} else if ($use_llm === 'anthropic-sonet') {
+				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
+				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
+				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
+
+			} else if ($use_llm === 'open-router') {
+				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
+				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
+
+			} else if ($use_llm === 'open-ai-gpt-4o') {
+				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
+				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
+				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
+
+			} else if ($use_llm === 'open-ai-get-4o-mini') {
+				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
+				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
+				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
 			}
 
 			$chat_messages = [];
-			if ($use_gpt === 'anthropic') {
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => "You are an expert author advisor.\n" . $prompt
@@ -143,12 +155,12 @@
 			$max_tokens = 4000;
 
 			$tool_name = 'auto';
-//			if ($use_gpt === 'anthropic') {
+//			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 //				$tool_name = $schema['function']['name'];
 //			}
 
 			$data = array(
-				'model' => $gpt_model, // 'gpt-3.5-turbo', 'gpt-4',
+				'model' => $llm_model,
 				'messages' => $chat_messages,
 				'tools' => [$schema],
 				'tool_choice' => $tool_name,
@@ -162,7 +174,7 @@
 				'stop' => "" //"\n"
 			);
 
-			if ($use_gpt === 'anthropic') {
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				//remove tool_choice
 				unset($data['tool_choice']);
 				unset($data['frequency_penalty']);
@@ -176,7 +188,7 @@
 
 			$post_json = json_encode($data);
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $gpt_base_url);
+			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -184,13 +196,13 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 
 			$headers = array();
-			if ($use_gpt === 'anthropic') {
-				$headers[] = "x-api-key: " . $gpt_api_key;
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				$headers[] = "x-api-key: " . $llm_api_key;
 				$headers[] = 'anthropic-version: 2023-06-01';
 				$headers[] = 'content-type: application/json';
 			} else {
 				$headers[] = 'Content-Type: application/json';
-				$headers[] = "Authorization: Bearer " . $gpt_api_key;
+				$headers[] = "Authorization: Bearer " . $llm_api_key;
 			}
 
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -213,7 +225,7 @@
 				$this->logger->info($complete_rst);
 				$arguments_rst = [];
 
-				if ($use_gpt === 'anthropic') {
+				if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 					$contents = $complete_rst['content'];
 					foreach ($contents as $content) {
 						if ($content['type'] === 'tool_use') {
@@ -239,7 +251,8 @@
 			}
 		}
 
-		public function extractJsonString($input) {
+		public function extractJsonString($input)
+		{
 
 			//replace \n\n with <br><br>
 			$input = str_replace("\",\n\n\"", "\",\n\"", $input);
@@ -271,30 +284,41 @@
 			return $jsonString;
 		}
 
-		public function gpt_no_stream($prompt, $return_json = true, $language = 'english')
+		public function llm_no_stream($prompt, $return_json = true, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
 
-			$use_gpt = $_ENV['USE_GPT'] ?? 'openai';
+			$use_llm = $_ENV['USE_LLM'] ?? 'open-router';
 
-			if ($use_gpt === 'anthropic') {
-				$gpt_base_url = $_ENV['ANTHROPIC_BASE'];
-				$gpt_api_key = $_ENV['ANTHROPIC_KEY'];
-				$gpt_model = $_ENV['ANTHROPIC_MODEL'];
-			} else
-				if ($use_gpt === 'open-router') {
-					$gpt_base_url = $_ENV['OPEN_ROUTER_BASE'];
-					$gpt_api_key = $_ENV['OPEN_ROUTER_KEY'];
-					$gpt_model = $_ENV['OPEN_ROUTER_MODEL'];
-				} else {
-					$gpt_base_url = $_ENV['OPEN_AI_BASE'];
-					$gpt_api_key = $_ENV['OPEN_AI_KEY'];
-					$gpt_model = $_ENV['OPEN_AI_MODEL'];
-				}
+			if ($use_llm === 'anthropic-haiku') {
+				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
+				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
+				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
+
+			} else if ($use_llm === 'anthropic-sonet') {
+				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
+				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
+				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
+
+			} else if ($use_llm === 'open-router') {
+				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
+				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
+
+			} else if ($use_llm === 'open-ai-gpt-4o') {
+				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
+				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
+				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
+
+			} else if ($use_llm === 'open-ai-get-4o-mini') {
+				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
+				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
+				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
+			}
 
 			$chat_messages = [];
-			if ($use_gpt === 'anthropic') {
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => "You are an expert author advisor.\n" . $prompt
@@ -315,7 +339,7 @@
 			$max_tokens = 20000;
 
 			$data = array(
-				'model' => $gpt_model, // 'gpt-3.5-turbo', 'gpt-4',
+				'model' => $llm_model,
 				'messages' => $chat_messages,
 				'temperature' => $temperature,
 				'max_tokens' => $max_tokens,
@@ -327,15 +351,15 @@
 				'stop' => "" //"\n"
 			);
 
-			if ($use_gpt === 'openai') {
+			if ($use_llm === 'openai') {
 
-			} else if ($use_gpt === 'anthropic') {
-				$data['max_tokens'] = 4096;
+			} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				$data['max_tokens'] = 8000;
 				unset($data['frequency_penalty']);
 				unset($data['presence_penalty']);
 				unset($data['n']);
 				unset($data['stop']);
-			} else if ($use_gpt === 'open-router') {
+			} else if ($use_llm === 'open-router') {
 				unset($data['stop']);
 			}
 
@@ -344,7 +368,7 @@
 
 			$post_json = json_encode($data);
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $gpt_base_url);
+			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -352,13 +376,13 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 
 			$headers = array();
-			if ($use_gpt === 'anthropic') {
-				$headers[] = "x-api-key: " . $gpt_api_key;
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				$headers[] = "x-api-key: " . $llm_api_key;
 				$headers[] = 'anthropic-version: 2023-06-01';
 				$headers[] = 'content-type: application/json';
 			} else {
 				$headers[] = 'Content-Type: application/json';
-				$headers[] = "Authorization: Bearer " . $gpt_api_key;
+				$headers[] = "Authorization: Bearer " . $llm_api_key;
 			}
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			$complete = curl_exec($ch);
@@ -400,7 +424,7 @@
 			$data['messages'] = $chat_messages;
 			$post_json = json_encode($data);
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $gpt_base_url);
+			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -442,7 +466,7 @@
 				$this->logger->info($content_rst);
 				return $content_rst;
 			} else {
-				$this->logger->info('==================Log JSON error : '.$validate_result.'=====================');
+				$this->logger->info('==================Log JSON error : ' . $validate_result . '=====================');
 				$this->logger->info('==================CONTENT==========');
 				$this->logger->info(gettype($content));
 				$this->logger->info($content);
@@ -471,7 +495,7 @@
 				'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
 				'language' => $language,
 			];
-			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
+			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 			$acts = $book['acts'];
 			$chapters_summary = [];
@@ -506,7 +530,7 @@
 					];
 
 					$chapter_file = $book_folder . '/' . $slug_name . '.json';
-					file_put_contents($chapter_file, json_encode($chapter_data, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
+					file_put_contents($chapter_file, json_encode($chapter_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 					//check if $chapters_summary is unique before adding
 					if (!in_array($act_id, array_column($chapters_summary, 'id'))) {
@@ -520,7 +544,7 @@
 
 			// Create chapters.json
 			$chapters_summary_file = $book_folder . '/chapters.json';
-			file_put_contents($chapters_summary_file, json_encode($chapters_summary, JSON_PRETTY_PRINT  | JSON_UNESCAPED_UNICODE ));
+			file_put_contents($chapters_summary_file, json_encode($chapters_summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 		}
 
 		private

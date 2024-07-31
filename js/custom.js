@@ -5,7 +5,7 @@ function loadStories(showArchived = false) {
 	//empty the rows
 	$('.kanban-row-ul').empty();
 	
-	$.post('action.php', {action: 'load_stories', book: bookParam, showArchived: showArchived}, function (data) {
+	$.post('action-book.php', {action: 'load_stories', book: bookParam, showArchived: showArchived}, function (data) {
 		const stories = JSON.parse(data);
 		
 		// Group stories by row
@@ -134,7 +134,7 @@ function editComment(event, commentId, chapterFilename) {
 function deleteComment(event, commentId, chapterFilename) {
 	event.stopPropagation();
 	if (confirm('Are you sure you want to delete this comment?')) {
-		$.post('action.php', {
+		$.post('action-other-functions.php', {
 			action: 'delete_comment',
 			book: bookParam,
 			id: commentId,
@@ -155,7 +155,7 @@ function saveComment() {
 		id: $('#commentId').val(),
 		text: $('#commentText').val(),
 	};
-	$.post('action.php', commentData, function (response) {
+	$.post('action-other-functions.php', commentData, function (response) {
 		$('#commentModal').modal('hide');
 		$('#commentForm')[0].reset();
 		const comment = JSON.parse(response);
@@ -193,7 +193,7 @@ function saveChapter() {
 	}
 	
 	$.ajax({
-		url: 'action.php',
+		url: 'action-book.php',
 		type: 'POST',
 		data: formData,
 		processData: false, // Prevent jQuery from automatically transforming the data into a query string
@@ -229,7 +229,7 @@ function saveChapter() {
 function deleteUploadFile(event, uploadFilename, chapterFilename) {
 	event.stopPropagation();
 	if (confirm('Are you sure you want to delete this file?')) {
-		$.post('action.php', {
+		$.post('action-other-functions.php', {
 			action: 'delete_file',
 			book: bookParam,
 			uploadFilename: uploadFilename,
@@ -316,7 +316,7 @@ function addChapter() {
 }
 
 function updateChapterRow(chapterFilename, newRow, newOrder) {
-	$.post('action.php', {
+	$.post('action-book.php', {
 		action: 'update_chapter_row',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -382,7 +382,7 @@ function autoScroll() {
 
 function deleteChapter() {
 	const chapterFilename = $('#chapterFilename').val();
-	$.post('action.php', {
+	$.post('action-book.php', {
 		action: 'delete_chapter',
 		book: bookParam,
 		chapterFilename: chapterFilename
@@ -432,7 +432,7 @@ function createAllHistoryHtml(history) {
 }
 
 function showAllHistoryModal() {
-	$.post('action.php', {action: 'fetch_all_history', book: bookParam}, function (data) {
+	$.post('action-other-functions.php', {action: 'fetch_all_history', book: bookParam}, function (data) {
 		const histories = JSON.parse(data);
 		const allHistoryList = $('#allHistoryList');
 		allHistoryList.empty(); // Clear existing history
@@ -445,7 +445,7 @@ function showAllHistoryModal() {
 
 function archiveChapter(event, chapterFilename) {
 	event.stopPropagation();
-	$.post('action.php', {
+	$.post('action-book.php', {
 		'action': 'archive_chapter',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -459,7 +459,7 @@ function archiveChapter(event, chapterFilename) {
 
 function unarchiveChapter(event, chapterFilename) {
 	event.stopPropagation();
-	$.post('action.php', {
+	$.post('action-book.php', {
 		action: 'archive_chapter',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -517,7 +517,7 @@ function saveBeats() {
 		};
 	}).get();
 	
-	$.post('action.php', {
+	$.post('action-beats.php', {
 		action: 'save_beats',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -546,7 +546,7 @@ function createBeats() {
 	spinner.removeClass('d-none');
 	
 	// First, fetch all chapters to find the previous chapter
-	$.post('action.php', {action: 'get_all_chapters', book: bookParam}, function (response) {
+	$.post('action-book.php', {action: 'get_all_chapters', book: bookParam}, function (response) {
 		let chapters = JSON.parse(response);
 		
 		// Sort chapters incrementally
@@ -569,7 +569,7 @@ function createBeats() {
 		
 		// Now proceed with creating beats
 		$.ajax({
-			url: 'action.php',
+			url: 'action-beats.php',
 			method: 'POST',
 			data: {
 				action: 'write_beats',
@@ -620,7 +620,7 @@ function generateAllBeats() {
 	log.empty();
 	progressBar.css('width', '0%').attr('aria-valuenow', 0).text('0%');
 	
-	$.post('action.php', {action: 'get_all_chapters', book: bookParam}, function (response) {
+	$.post('action-book.php', {action: 'get_all_chapters', book: bookParam}, function (response) {
 		let chapters = JSON.parse(response);
 		
 		// Sort chapters incrementally
@@ -676,7 +676,7 @@ function generateAllBeats() {
 					}
 					
 					$.ajax({
-						url: 'action.php',
+						url: 'action-beats.php',
 						method: 'POST',
 						data: {
 							action: 'write_beats',
@@ -696,7 +696,7 @@ function generateAllBeats() {
 							if (response.success) {
 								// Save the generated beats back to the chapter
 								$.ajax({
-									url: 'action.php',
+									url: 'action-beats.php',
 									method: 'POST',
 									data: {
 										action: 'save_beats',
@@ -772,7 +772,7 @@ function showBeatDetailModal(beatIndex, chapterFilename) {
 }
 
 function writeBeatText(beatIndex, chapterFilename) {
-	$.post('action.php', {
+	$.post('action-beats.php', {
 		action: 'get_beat_prompt',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -792,7 +792,7 @@ function writeBeatText(beatIndex, chapterFilename) {
 
 function saveBeatText(beatIndex, chapterFilename) {
 	const beatText = $('#beatText').val();
-	$.post('action.php', {
+	$.post('action-beats.php', {
 		action: 'save_beat_text',
 		book: bookParam,
 		chapterFilename: chapterFilename,
@@ -810,7 +810,7 @@ function saveBeatText(beatIndex, chapterFilename) {
 }
 
 function showBookStructureModal() {
-	$.post('action.php', {
+	$.post('action-book.php', {
 		action: 'get_book_structure',
 		book: bookParam
 	}, function (response) {
@@ -1020,7 +1020,7 @@ $(document).ready(function () {
 	
 	// Fetch initial data
 	$.ajax({
-		url: 'action.php',
+		url: 'action-book.php',
 		method: 'POST',
 		data: {action: 'fetch_initial_data', book: bookParam},
 		dataType: 'json',
@@ -1114,7 +1114,7 @@ $(document).ready(function () {
 	$('#exportPdfBtn').on('click', function (e) {
 		e.preventDefault();
 		
-		$.post('action.php', {
+		$.post('action-book.php', {
 			action: 'get_book_structure',
 			book: bookParam
 		}, function (response) {
@@ -1209,7 +1209,7 @@ $(document).ready(function () {
 		const userPassword = $('#userPassword').val();
 		
 		if (userName && userPassword) {
-			$.post('action.php', {
+			$.post('action-other-functions.php', {
 				action: 'generate_user',
 				book: bookParam,
 				username: userName,
