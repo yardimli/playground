@@ -352,14 +352,20 @@
 			);
 
 			if ($use_llm === 'openai') {
-
-			} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				$data['max_tokens'] = 8000;
+			} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				if ($use_llm === 'anthropic-haiku') {
+					$data['max_tokens'] = 4096;
+				} else
+				{
+					$data['max_tokens'] = 8000;
+				}
 				unset($data['frequency_penalty']);
 				unset($data['presence_penalty']);
 				unset($data['n']);
 				unset($data['stop']);
 			} else if ($use_llm === 'open-router') {
+				$data['max_tokens'] = 8000;
 				unset($data['stop']);
 			}
 

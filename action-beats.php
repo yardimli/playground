@@ -130,8 +130,9 @@
 				break;
 
 			//-----------------------------//
-			case 'get_beat_prompt':
+			case 'write_beat_text':
 				$beatIndex = $_POST['beatIndex'];
+				$currentBeatDescription = $_POST['currentBeatDescription'] ?? '';
 
 				// Load the book data
 				$bookData = json_decode(file_get_contents($bookJsonPath), true);
@@ -143,16 +144,28 @@
 				$beatPromptTemplate = file_get_contents('beat_text_prompt.txt');
 				// Prepare the data for the prompt
 				$prevBeat = $beatIndex > 0 ? $chapterData['beats'][$beatIndex - 1] : null;
-				$currentBeat = $chapterData['beats'][$beatIndex];
+				if ($prevBeat) {
+					$prevBeat = "summary: " . ($prevBeat['description'] ?? '') . "\ntext: " . ($prevBeat['beat_text'] ?? '');
+				} else {
+					$prevBeat = 'N/A';
+				}
+
+				if ($currentBeatDescription === '') {
+					$currentBeat = $chapterData['beats'][$beatIndex];
+					$currentBeat = "summary: " . ($currentBeat['description'] ?? '');
+				} else
+				{
+					$currentBeat = "summary: " . $currentBeatDescription;
+				}
+
 				$nextBeat = $beatIndex < count($chapterData['beats']) - 1 ? $chapterData['beats'][$beatIndex + 1] : null;
+				$nextBeat = "summary: \n". ($nextBeat['description'] ?? '');
 
 				// Replace placeholders in the prompt template
 				$beatPrompt = str_replace(
 					['##book_title##', '##book_description##', '##chapter_name##', '##chapter_description##', '##prev_beat##', '##current_beat##', '##next_beat##'],
 					[$bookData['title'], $bookData['blurb'], $chapterData['name'], $chapterData['short_description'],
-						$prevBeat ? json_encode($prevBeat) : 'N/A',
-						json_encode($currentBeat),
-						$nextBeat ? json_encode($nextBeat) : 'N/A'],
+						$prevBeat, $currentBeat, $nextBeat],
 					$beatPromptTemplate
 				);
 
@@ -172,8 +185,10 @@
 				$chapterData = json_decode(file_get_contents($chapterFilePath), true);
 
 				$beatIndex = $_POST['beatIndex'];
+				$beatDescription = $_POST['beatDescription'];
 				$beatText = $_POST['beatText'];
 
+				$chapterData['beats'][$beatIndex]['description'] = $beatDescription;
 				$chapterData['beats'][$beatIndex]['beat_text'] = $beatText;
 
 				file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT));

@@ -129,6 +129,18 @@ body {
     z-index: 10;
 }
 
+.kanban-card:hover .beat-btn {
+    display: block;
+}
+
+.kanban-card .beat-btn {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 75px;
+    z-index: 10;
+}
+
 .kanban-card:hover .archive-btn {
     display: block;
 }

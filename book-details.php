@@ -152,7 +152,6 @@ require_once 'action-session.php';
 				<div class="modal-footer">
 					<button class="btn btn-primary" id="saveChapter">Save Chapter</button>
 					<button class="btn btn-secondary" id="showCommentModal">Add Comment</button>
-					<button class="btn btn-primary" id="showBeatModal">View Beats</button>
 					<button class="btn btn-info" id="showHistoryModal">View History</button>
 					<button type="button" class="btn btn-secondary  me-auto" data-bs-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-danger " id="deleteChapterBtn">Delete</button>
@@ -265,6 +264,22 @@ require_once 'action-session.php';
 		</div>
 	</div>
 
+	<!-- Modal for Viewing Book Structure -->
+	<div class="modal fade" id="bookStructureModal" tabindex="-1" aria-labelledby="bookStructureModalLabel"
+	     aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="bookStructureModalLabel">Book Structure</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="bookStructureContent"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Modal for Viewing Beats -->
 	<div class="modal fade modal-lg" id="beatModal" tabindex="-1" aria-labelledby="beatModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -277,12 +292,12 @@ require_once 'action-session.php';
 					<div id="beatsList"></div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger me-auto" id="createBeats">Create Beats</button>
+					<button type="button" class="btn btn-danger me-auto" id="recreateBeats">Recreate Beats</button>
 					<div class="spinner-border d-none" role="status" id="beat-spinner">
 						<span class="visually-hidden">Loading...</span>
 					</div>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="saveBeatsBtn">Save Beats</button>
+					<button type="button" class="btn btn-primary d-none" id="saveBeatsBtn">Save Beats</button>
 				</div>
 			</div>
 		</div>
@@ -310,21 +325,6 @@ require_once 'action-session.php';
 		</div>
 	</div>
 
-	<!-- Modal for Viewing Book Structure -->
-	<div class="modal fade" id="bookStructureModal" tabindex="-1" aria-labelledby="bookStructureModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="bookStructureModalLabel">Book Structure</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div id="bookStructureContent"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Modal for Beat Details and Writing -->
 	<div class="modal fade" id="beatDetailModal" tabindex="-1" aria-labelledby="beatDetailModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -334,11 +334,18 @@ require_once 'action-session.php';
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p id="beatDescription"></p>
-					<button id="writeBeatTextBtn" class="btn btn-primary mt-3">Write Beat Text</button>
-					<div id="beatTextArea" class="mt-3" style="display: none;">
+					<div id="beatDescriptionContainer">
+						<label for="beatDescription" class="form-label">Beat Description</label>
+						<textarea id="beatDescription" class="form-control" rows="3"></textarea>
+					</div>
+					<div id="beatTextArea" class="mt-3">
+						<label for="beatText" class="form-label">Beat Text</label>
 						<textarea id="beatText" class="form-control" rows="10"></textarea>
-						<button id="saveBeatTextBtn" class="btn btn-success mt-3">Save Beat Text</button>
+					</div>
+					<div class="modal-footer">
+						<button id="saveBeatBtn" class="btn btn-success mt-3">Save Beat</button>
+						<button id="writeBeatTextBtn" class="btn btn-primary mt-3 me-auto">Write Beat Text</button>
+						<button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -355,10 +362,14 @@ require_once 'action-session.php';
 
 <script src="js/jspdf.umd.min.js"></script>
 
-
-
 <!-- Your custom scripts -->
-<script src="js/custom-ui.js"></script> <!-- If you have custom JS -->
-<script src="js/custom.js"></script> <!-- If you have custom JS -->
+<script src="js/custom-ui.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/utility.js"></script>
+
+<script src="js/chapter.js"></script>
+<script src="js/comment.js"></script>
+<script src="js/beat.js"></script>
+
 </body>
 </html>
