@@ -6,7 +6,7 @@ require_once 'action-session.php';
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Fiction Fusion - The Book</title>
+	<title>Playground - The Book</title>
 
 	<!-- FAVICON AND TOUCH ICONS -->
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
@@ -25,20 +25,6 @@ require_once 'action-session.php';
 
 </head>
 <body>
-<header>
-	<form id="logoutForm" action="action-book.php" method="POST" class="d-none">
-		<input type="hidden" name="action" value="logout">
-	</form>
-	<div class="container-fluid mt-2">
-		<a href="#" class="btn btn-danger float-end ms-2" title="Log out"
-		   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
-		<button id="modeToggleBtn" class="btn btn-secondary float-end ms-2">
-			<i id="modeIcon" class="bi bi-sun"></i>
-		</button>
-		<button type="button" class="btn btn-success float-end ms-2" id="addBookBtn"><i class="bi bi-plus-circle-fill"></i>
-		</button>
-	</div>
-</header>
 
 <?php
 	$booksDir = './books';
@@ -76,7 +62,37 @@ require_once 'action-session.php';
 <main class="py-4">
 
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center">Fiction Fusion Book</h1>
+		<h1 style="margin:10px;" class="text-center">Playground Book</h1>
+		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
+			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+<!--			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>-->
+			<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+			<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+		</select>
+
+		<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
+			<input type="hidden" name="action" value="logout">
+		</form>
+		<div class="text-center mb-4">
+			<a href="#" class="btn btn-danger ms-2" title="Log out"
+			   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
+			<a href="login.php" class="btn btn-secondary ms-2" title="login/sign up"><i class="bi bi-person"></i></a>
+			<button id="modeToggleBtn" class="btn btn-secondary ms-2">
+				<i id="modeIcon" class="bi bi-sun"></i>
+			</button>
+			<button type="button" class="btn btn-success ms-2" id="addBookBtn"><i class="bi bi-plus-circle-fill"></i>
+			</button>
+		</div>
+
 		<div>
 			<div class="my-3 d-inline-block">
 				Hello <span id="currentUser"></span>,
@@ -89,10 +105,10 @@ require_once 'action-session.php';
 				<?php foreach ($books as $book): ?>
 
 					<div class="card general-card">
-						<div class="card-header modal-header">
+						<div class="card-header modal-header modal-header-color">
 							<span style="font-size: 22px; font-weight: normal;" class="p-2"><?php echo htmlspecialchars($book['title']); ?></span>
 						</div>
-						<div class="card-body modal-content">
+						<div class="card-body modal-content modal-content-color">
 							<div class="mb-4"><?php echo htmlspecialchars($book['blurb']); ?></div>
 							<div><em><span><?php echo htmlspecialchars($book['back_cover_text']); ?></span></em></div>
 						</div>
@@ -109,12 +125,12 @@ require_once 'action-session.php';
 		<div class="modal modal-lg fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel"
 		     aria-hidden="true">
 			<div class="modal-dialog  modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-header">
+				<div class="modal-content modal-content-color">
+					<div class="modal-header modal-header-color">
 						<h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body modal-body-color">
 						<!--						<div class="mb-3">-->
 						<!--							<label for="subject" class="form-label">Subject</label>-->
 						<!--							<input type="text" class="form-control" id="subject" name="subject" required>-->
@@ -152,18 +168,16 @@ require_once 'action-session.php';
 		<!-- Delete Book Confirmation Modal -->
 		<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="deleteBookModalLabel">Confirm Deletion</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+				<div class="modal-content modal-content-color">
+					<div class="modal-header modal-header-color">
+						<h5 class="modal-title">Confirm Deletion</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body modal-body-color">
 						Are you sure you want to delete this book? This action cannot be undone.
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<div class="modal-footer modal-footer-color">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-danger" id="confirmDeleteBook">Delete</button>
 					</div>
 				</div>
@@ -181,6 +195,8 @@ require_once 'action-session.php';
 		<script src="js/custom-ui.js"></script> <!-- If you have custom JS -->
 
 		<script>
+			window.currentUserName = "<?php echo htmlspecialchars($_SESSION['user']); ?>";
+
 			$(document).ready(function () {
 				let bookToDelete = null;
 
@@ -196,7 +212,8 @@ require_once 'action-session.php';
 							type: 'POST',
 							data: {
 								action: 'delete_book',
-								book_id: bookToDelete
+								llm:savedLlm,
+								book: bookToDelete
 							},
 							success: function(response) {
 								let result = JSON.parse(response);
@@ -230,6 +247,7 @@ require_once 'action-session.php';
 					formData.append('blurb', $('#blurb').val());
 					formData.append('language', $('#language').val());
 					formData.append('action', 'write_book');
+					formData.append('llm', savedLlm);
 
 					fetch('action-book.php', {
 						method: 'POST',

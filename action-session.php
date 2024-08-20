@@ -9,7 +9,12 @@
 			['username' => 'Ekim', 'password' => '$2y$10$DIbIGXf43w/583AeGtCtMuiGFJZvNn6CNqatLrYYqOzzDdgeu62Kq'],
 		];
 
-	$autoLoginUser = 'Admin'; //leave this empty if you want to allow all users to login
+	if (file_exists('users_x.json')) {
+		$json = file_get_contents('users_x.json');
+		$users = json_decode($json, true);
+	} else {
+		file_put_contents('users.json', json_encode($users));
+	}
 
 	$colorOptions = [
 		['background' => '#F28B82', 'text' => '#000000'],
@@ -26,17 +31,10 @@
 		['background' => '#FFFFFF', 'text' => '#000000']
 	];
 
-	if ($autoLoginUser !== '') {
-		$_SESSION['user'] = $autoLoginUser;
-		//check the current page to prevent redirect loop
-		$current_page = basename($_SERVER['PHP_SELF']);
-		if ($current_page === 'login.php') {
-			header('Location: book-details.php');
-			exit();
-		}
-	} else if (empty($_SESSION['user'])) {
+	 if (empty($_SESSION['user'])) {
 		$post_action = $_POST['action'] ?? '';
-		if ($post_action !== 'login') {
+		$current_page = basename($_SERVER['PHP_SELF']);
+		if ($post_action !== 'login' && $current_page !== 'login.php') {
 			header('Location: login.php');
 			exit();
 		}

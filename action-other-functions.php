@@ -5,6 +5,8 @@
 	require_once 'action-session.php';
 	require_once 'action-init.php';
 
+	$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
+
 	switch ($action) {
 
 		//-----------------------------//
@@ -52,9 +54,9 @@
 
 			foreach (glob($chaptersDir . '/*.json') as $chapterFilePaths) {
 				$chapter = json_decode(file_get_contents($chapterFilePaths), true);
-				if (isset($chapter['history'])) {
+				if (isset($chapter['row'])) {
 					foreach ($chapter['history'] as $history) {
-						$history['title'] = $chapter['title'];
+						$history['title'] = $chapter['name'];
 						$allHistories[] = $history;
 					}
 				}
@@ -66,22 +68,6 @@
 			});
 
 			echo json_encode($allHistories);
-			break;
-
-		//-----------------------------//
-		case 'generate_user':
-			$username = preg_replace('/\s+/', '', $_POST['username']);
-			$username = preg_replace('/[^\w\-]/', '', $username);
-			$password = $_POST['password'];
-
-			$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-			$response = [
-				'username' => $username,
-				'password' => $hashedPassword
-			];
-
-			echo "['username' => '" . $username . "', 'password' => '" . $hashedPassword . "'],";
 			break;
 
 		//-----------------------------//
@@ -136,19 +122,48 @@
 
 			$userFound = false;
 
-			foreach ($users as $user) {
-				if ($user['username'] === $username && password_verify($password, $user['password'])) {
-					$_SESSION['user'] = $username;
-					$userFound = true;
-					header('Location: book-details.php');
-					exit();
-				}
+			// Load users from the JSON file
+			$jsonFile = 'users_x.json';
+
+			if (file_exists($jsonFile)) {
+				$json = file_get_contents($jsonFile);
+				$users = json_decode($json, true);
+			} else {
+				$users = [];
 			}
 
+			$userFound = false;
+			foreach ($users as &$user) {
+				if ($user['username'] === $username) {
+					if (password_verify($password, $user['password'])) {
+						$_SESSION['user'] = $username;
+						$userFound = true;
+						header('Location: index.php');
+						exit();
+					} else {
+						$userFound = true; // Username exists but password is incorrect
+						break;
+					}
+				}
+			}
+			unset($user); // Break the reference with the last element
+
 			if (!$userFound) {
+				// Add new user to the user array if username doesn't exist or password is incorrect
+				$newUser = [
+					'username' => $username,
+					'password' => password_hash($password, PASSWORD_BCRYPT)
+				];
+				$users[] = $newUser;
+
+				// Save the updated users list to the JSON file
+				file_put_contents($jsonFile, json_encode($users));
+
+				$_SESSION['user'] = $username;
+				header('Location: index.php');
+			} else {
 				$error = "Invalid username or password";
 				header("Location: login.php?error=" . urlencode($error));
-				exit();
 			}
 			break;
 

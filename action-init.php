@@ -1,7 +1,9 @@
 <?php
 	$action = $_POST['action'] ?? '';
+	$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
 
-	if ($action === 'write_book' || $action === '') {
+
+	if ($action === 'write_book' || $action === 'login' || $action === 'register' || $action === 'logout' || $action === 'delete_book' || $action === '') {
 
 	} else {
 		if (isset($_POST['book']) && !empty($_POST['book'])) {
@@ -13,7 +15,7 @@
 			die('Book not found.');
 		}
 
-		$jsonFilePath = $chaptersDirName . '/chapters.json';
+		$jsonFilePath = $chaptersDirName . '/acts.json';
 		if (file_exists($jsonFilePath)) {
 			$jsonContent = file_get_contents($jsonFilePath);
 			$rows = json_decode($jsonContent, true);

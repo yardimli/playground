@@ -1,5 +1,5 @@
 <?php
-require_once 'action-book.php';
+require_once 'action-session.php';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +16,12 @@ require_once 'action-book.php';
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="card shadow">
 					<div class="card-title text-center border-bottom">
-						<h3 style="margin:10px;" class="text-center">
-							<img src="images/android-chrome-192x192.png" style="height: 48px;"> Git Kanban Board
-						</h3>
+							<img src="images/android-chrome-192x192.png">
 						<h4 class="p-3">Login</h4>
 					</div>
 					<div class="card-body">
 						<div id="error-message" class="alert alert-danger d-none" role="alert"></div>
-						<form method="POST" action="action-book.php">
+						<form method="POST" action="action-other-functions.php">
 							<input type="hidden" name="action" value="login">
 							<div class="mb-4">
 								<label for="username" class="form-label">Username</label>

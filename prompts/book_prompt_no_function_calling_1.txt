@@ -1,0 +1,16 @@
+The subject of the book is:
+##subject##
+it is written in ##language##.
+
+Output should be in JSON format as follows:
+{
+"title": "The title of the book",
+"blurb": "The blurb of the book",
+"back_cover_text": "3-4 paragraphs of text introducing the story expanding on the blurb.",
+}
+
+Don't include any text in front or after the JSON object.
+
+Use Double Quotes for Keys and String Values.
+Avoid Double Quotes Inside String Values. Instead, use Single Quotes.
+All opening double quotes should have a corresponding closing double quote.

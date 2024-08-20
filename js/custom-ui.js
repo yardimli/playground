@@ -1,4 +1,5 @@
 let savedTheme = localStorage.getItem('theme') || 'light';
+let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
 
 function formatRelativeTime(dateTime) {
 	return moment.utc(dateTime).local().fromNow();
@@ -18,7 +19,20 @@ function applyTheme(theme) {
 
 $(document).ready(function () {
 	
+	// Set the current user in the HTML
+	$('#currentUser').text(window.currentUserName);
+	console.log(window.currentUserName);
+	
+	
 	applyTheme(savedTheme);
+	
+	$("#llmSelect").on('change', function () {
+		localStorage.setItem('llm', $(this).val());
+		savedLlm = $(this).val();
+	});
+	
+	//change $llmSelect to savedLlm
+	$('#llmSelect').val(savedLlm);
 	
 	$('#modeToggleBtn').on('click', function () {
 		const currentTheme = $('body').hasClass('dark-mode') ? 'dark' : 'light';
@@ -43,5 +57,6 @@ $(document).ready(function () {
 			$('body').addClass('modal-open');
 		}
 	});
+	
 	
 });

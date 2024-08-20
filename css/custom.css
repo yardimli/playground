@@ -137,7 +137,7 @@ body {
     display: none;
     position: absolute;
     bottom: 5px;
-    right: 75px;
+    right: 10px;
     z-index: 10;
 }
 
@@ -154,25 +154,25 @@ body {
 
 /* Modal styles */
 
-.modal-content {
+.modal-content-color {
     background-color: var(--modal-background);
     color: var(--modal-text-color);
 }
 
 
-.modal-header {
+.modal-header-color {
     background-color: var(--modal-header-background);
     color: var(--modal-text-color);
     border-bottom: 1px solid var(--modal-border-bottom-color);
 }
 
 
-.modal-body {
+.modal-body-color {
     color: var(--modal-text-color);
 }
 
 
-.modal-footer {
+.modal-footer-color {
     background-color: var(--modal-header-background);
     color: var(--modal-text-color);
 }

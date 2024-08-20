@@ -113,6 +113,7 @@ function showAllHistoryModal() {
 }
 
 function exportAsPdf(bookStructure) {
+	console.log(bookStructure);
 	const {jsPDF} = window.jspdf;
 	const doc = new jsPDF({
 		unit: 'in',
@@ -120,11 +121,12 @@ function exportAsPdf(bookStructure) {
 	});
 	
 	// Load a Unicode font
-	doc.addFont('PlayfairDisplay-VariableFont_wght.ttf  ', 'Roboto', 'normal');
-	doc.addFont('PlayfairDisplay-VariableFont_wght.ttf', 'Roboto', 'bold');
+	doc.addFont('./fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
+	doc.addFont('./fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
+	doc.addFont('./fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
 	
 	// Set default font to Roboto
-	doc.setFont('Roboto', 'normal');
+	doc.setFont('NotoSans', 'normal');
 	
 	// Set font to a serif font
 	// doc.setFont('times', 'normal');
@@ -143,7 +145,7 @@ function exportAsPdf(bookStructure) {
 		currentFontStyle = isBold ? 'bold' : 'normal';
 		doc.setFontSize(fontSize);
 		// doc.setFont('times', currentFontStyle);
-		doc.setFont('Roboto', currentFontStyle);
+		doc.setFont('NotoSans', currentFontStyle);
 	}
 	
 	function addText(text, fontSize = 12, isBold = false, align = 'left') {
@@ -159,17 +161,18 @@ function exportAsPdf(bookStructure) {
 			}
 			
 			// Check if the line starts with a label (e.g., "Events:", "Places:")
-			const labelMatch = line.match(/^(\w+:)/);
+			const labelMatch = line.match(/^([\p{L}\p{N}_]+:)/u);
+			// const labelMatch = line.match(/^(\w+:)/);
 			if (labelMatch) {
 				const label = labelMatch[1];
 				const restOfLine = line.substring(label.length);
 				
 				// Draw the label in bold
-				doc.setFont(undefined, 'bold');
+				doc.setFont('NotoSans', 'bold');
 				doc.text(label, align === 'center' ? pageWidth / 2 : margin, yPosition, {align: align});
 				
 				// Draw the rest of the line in normal font
-				doc.setFont(undefined, 'normal');
+				doc.setFont('NotoSans', 'normal');
 				doc.text(restOfLine, align === 'center' ? pageWidth / 2 : margin + doc.getTextWidth(label), yPosition);
 			} else {
 				// Draw the entire line normally if it's not a label
@@ -178,7 +181,7 @@ function exportAsPdf(bookStructure) {
 			
 			yPosition += lineHeight;
 		});
-		yPosition += 0.1; // Add a small gap after each text block
+		yPosition += 0.2; // Add a small gap after each text block
 	}
 	
 	function addPageBreak() {
@@ -193,16 +196,16 @@ function exportAsPdf(bookStructure) {
 		const currentFont = doc.getFont();
 		const currentFontSize = doc.getFontSize();
 		doc.setFontSize(10);
-		doc.setFont(undefined, 'normal');
+		doc.setFont('NotoSans', 'normal');
 		doc.text(String(pageNumber), pageWidth - margin + 0.2, pageHeight - margin + 0.4, {align: 'right'});
 		doc.setFontSize(currentFontSize);
 		doc.setFont(currentFont.fontName, currentFont.fontStyle);
 	}
 	
 	
-	function addCenteredPage(text) {
+	function addCenteredPage(text, fontSize = 18, isBold = true) {
 		addPageBreak();
-		setFont(18, true);
+		setFont(fontSize, isBold);
 		const textLines = doc.splitTextToSize(text, pageWidth - 2 * margin);
 		const textHeight = textLines.length * lineHeight;
 		const startY = (pageHeight - textHeight) / 2;
@@ -210,37 +213,65 @@ function exportAsPdf(bookStructure) {
 	}
 	
 	// Title
-	addText(bookStructure.bookTitle, 18, true, 'center');
+	addCenteredPage(bookStructure.bookTitle, 18, true);
 	
 	// Blurb
-	addText('Blurb:', 14, true);
-	addText(bookStructure.bookBlurb);
+	addCenteredPage(bookStructure.bookBlurb,14,true);
+	addPageBreak();
 	
 	// Back Cover Text
-	addText('Back Cover Text:', 14, true);
-	addText(bookStructure.bookBackCoverText);
+	addText(bookStructure.backCoverText, 14, false);
+	addPageBreak();
 	
 	bookStructure.acts.forEach((act, actIndex) => {
-		addCenteredPage(`Act ${actIndex + 1}: ${act.name}`);
+		if (bookStructure.language === 'Turkish') {
+			act.name = act.name.replace('Act', 'Perde');
+		}
+		
+		addCenteredPage(`${act.name}`); //Act ${actIndex + 1}:
 		act.chapters.forEach((chapter, chapterIndex) => {
 			addPageBreak();
 			
-			// Chapter title
+			if (bookStructure.language === 'Turkish') {
+				chapter.name = chapter.name.replace('Chapter', 'Bölüm');
+			}
+				
+				// Chapter title
 			addText(chapter.name, 14, true);
 			addText(chapter.short_description);
 			
-			// Chapter details
-			addText(`Events: ${Array.isArray(chapter.events) ? chapter.events.join(', ') : chapter.events}`);
-			addText(`People: ${Array.isArray(chapter.people) ? chapter.people.join(', ') : chapter.people}`);
-			addText(`Places: ${Array.isArray(chapter.places) ? chapter.places.join(', ') : chapter.places}`);
-			addText(`Previous: ${chapter.from_prev_chapter}`);
-			addText(`Next: ${chapter.to_next_chapter}`);
+			if (bookStructure.language === 'Turkish') {
+				addText(`Olaylar:  ${Array.isArray(chapter.events) ? chapter.events.join(', ') : chapter.events}`);
+				addText(`Kişiler:  ${Array.isArray(chapter.people) ? chapter.people.join(', ') : chapter.people}`);
+				addText(`Mekanlar:  ${Array.isArray(chapter.places) ? chapter.places.join(', ') : chapter.places}`);
+				addText(`Önceki:  ${chapter.from_prev_chapter}`);
+				addText(`Sonraki:  ${chapter.to_next_chapter}`);
+			} else {
+				
+				// Chapter details
+				addText(`Events: ${Array.isArray(chapter.events) ? chapter.events.join(', ') : chapter.events}`);
+				addText(`People: ${Array.isArray(chapter.people) ? chapter.people.join(', ') : chapter.people}`);
+				addText(`Places: ${Array.isArray(chapter.places) ? chapter.places.join(', ') : chapter.places}`);
+				addText(`Previous: ${chapter.from_prev_chapter}`);
+				addText(`Next: ${chapter.to_next_chapter}`);
+			}
 			
 			// Beats
 			if (chapter.beats && chapter.beats.length > 0) {
-				addText('Beats:', 12, true);
+				if (bookStructure.language === 'Turkish') {
+					addText('İçerik:', 12, true);
+				} else {
+					addText('Beats:', 12, true);
+				}
 				chapter.beats.forEach((beat, beatIndex) => {
-					addText(`${beatIndex + 1}. ${beat.description}`);
+					if (beat.beat_text) {
+						addText(beat.beat_text);
+						// addText('____________________');
+						addText('');
+					} else
+					{
+						addText(`${beatIndex + 1}. ${beat.description}`);
+					}
 				});
 			}
 		});
@@ -248,61 +279,4 @@ function exportAsPdf(bookStructure) {
 	
 	addPageNumber(); // Add page number to the last page
 	doc.save('book_structure.pdf');
-}
-
-function showBookStructureModal() {
-	$.post('action-book.php', {
-		action: 'get_book_structure',
-		book: bookParam
-	}, function (response) {
-		if (response.success) {
-			let structureHtml = '<h2>' + response.bookTitle + '</h2>';
-			structureHtml += '<p><i>Blurb:</i> ' + response.bookBlurb + '</p>';
-			structureHtml += '<p><i>Back Cover Text:</i> ' + response.bookBackCoverText + '</p>';
-			
-			response.acts.forEach(function (act, actIndex) {
-				structureHtml += '<h3>Act ' + (actIndex + 1) + ': ' + act.name + '</h3>';
-				act.chapters.forEach(function (chapter) {
-					
-					var chapter_events = chapter.events;
-					if (Array.isArray(chapter.events)) {
-						chapter_events = chapter.events.join(', ');
-					}
-					var chapter_people = chapter.people;
-					if (Array.isArray(chapter.people)) {
-						chapter_people = chapter.people.join(', ');
-					}
-					var chapter_places = chapter.places;
-					if (Array.isArray(chapter.places)) {
-						chapter_places = chapter.places.join(', ');
-					}
-					
-					structureHtml += '<h4>' + chapter.name + '</h4>';
-					structureHtml += '<p>' + chapter.short_description + '</p>';
-					structureHtml += '<ul>';
-					structureHtml += '<li><i>Events</i>: ' + chapter_events + '</li>';
-					structureHtml += '<li><i>People</i>: ' + chapter_people + '</li>';
-					structureHtml += '<li><i>Places</i>: ' + chapter_places + '</li>';
-					structureHtml += '<li><i>From Previous Chapter: </i>' + chapter.from_prev_chapter + '</li>';
-					structureHtml += '<li><i>To Next Chapter</i>: ' + chapter.to_next_chapter + '</li>';
-					structureHtml += '</ul>';
-					if (chapter.beats && chapter.beats.length > 0) {
-						structureHtml += '<h5>Beats:</h5>';
-						structureHtml += '<ul>';
-						chapter.beats.forEach(function (beat) {
-							structureHtml += '<li>' + beat.description + '</li>';
-						});
-						structureHtml += '</ul>';
-					}
-				});
-			});
-			
-			$('#bookStructureContent').html(structureHtml);
-			$('#bookStructureModal').modal({backdrop: 'static', keyboard: true}).modal('show');
-			;
-		} else {
-			alert('Failed to load book structure: ' + response.message);
-		}
-	}, 'json');
-	
 }

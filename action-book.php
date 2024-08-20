@@ -4,6 +4,8 @@
 	require_once 'action-session.php';
 	require_once 'action-init.php';
 
+	$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
+
 	switch ($action) {
 
 		//-----------------------------//
@@ -20,78 +22,82 @@
 					$model = $_ENV['ANTHROPIC_SONET_MODEL'];
 				}
 
-				$schema = file_get_contents('book_schema_anthropic_1.json');
+				$schema = file_get_contents('./prompts/book_schema_anthropic_1.json');
 				$schema = json_decode($schema, true);
 
-				$prompt = file_get_contents('book_prompt_anthropic_1.txt');
+				$prompt = file_get_contents('./prompts/book_prompt_anthropic_1.txt');
 				$prompt = str_replace('#subject#', $blurb, $prompt);
 				$prompt = str_replace('#language#', $language, $prompt);
 
 				$results = $llmApp->function_call($prompt, $schema, $language);
 
-			} else if ($use_llm === 'open-ai-gpt4o' || $use_llm === 'open-ai-gpt4o-mini') {
-				if ($use_llm === 'open-ai-gpt4o') {
+			} else if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+				if ($use_llm === 'open-ai-gpt-4o') {
 					$model = $_ENV['OPEN_AI_GPT4_MODEL'] ?? 'open-router';
 				} else {
 					$model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'] ?? 'open-router';
 				}
-				
-				$schema = file_get_contents('book_schema_openai_1.json');
+
+				$schema = file_get_contents('./prompts/book_schema_openai_1.json');
 				$schema = json_decode($schema, true);
 
-				$prompt = file_get_contents('book_prompt_openai_1.txt');
+				$prompt = file_get_contents('./prompts/book_prompt_openai_1.txt');
 				$prompt = str_replace('#subject#', $blurb, $prompt);
 				$prompt = str_replace('#language#', $language, $prompt);
 
 				$results = $llmApp->function_call($prompt, $schema, $language);
 			} else {
-				$model = $_ENV['OPEN_ROUTER_MODEL'] ?? 'open-router';
-				$prompt = file_get_contents('book_prompt_no_function_calling_1.txt');
+				$model = $_ENV['OPEN_ROUTER_MODEL'] ?? 'anthropic/claude-3-haiku:beta';
+				$model = $llm;
+				$prompt = file_get_contents('./prompts/book_prompt_no_function_calling_1.txt');
 				$prompt = str_replace('##subject##', $blurb, $prompt);
 				$prompt = str_replace('##language##', $language, $prompt);
 				$schema = [];
 
-				$results = $llmApp->llm_no_stream($prompt, true, $language);
+				$results = $llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language);
 
 				$book_title = $results['title'] ?? '';
 				$book_blurb = $results['blurb'] ?? '';
-				$book_back_cover_text = $results['back_cover_text'] ?? '';
+				$back_cover_text = $results['back_cover_text'] ?? '';
 
-				if (empty($book_title) || empty($book_blurb) || empty($book_back_cover_text)) {
+				if (empty($book_title) || empty($book_blurb) || empty($back_cover_text)) {
 					$results = [
 						'title' => $book_title,
 						'blurb' => $book_blurb,
-						'back_cover_text' => $book_back_cover_text,
+						'back_cover_text' => $back_cover_text,
 						'error' => 'Failed to generate book'
 					];
 				} else {
 
-					$prompt = file_get_contents('book_prompt_no_function_calling_2.txt');
+					$prompt = file_get_contents('./prompts/book_prompt_no_function_calling_2.txt');
 					$prompt = str_replace('##subject##', $blurb, $prompt);
 					$prompt = str_replace('##language##', $language, $prompt);
 					$prompt = str_replace('##book_title##', $book_title, $prompt);
 					$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
-					$prompt = str_replace('##book_back_cover_text##', $book_back_cover_text, $prompt);
+					$prompt = str_replace('##back_cover_text##', $back_cover_text, $prompt);
 
-					$results = $llmApp->llm_no_stream($prompt, true, $language);
+					$results = $llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language);
 
 					$results['title'] = $book_title;
 					$results['blurb'] = $book_blurb;
-					$results['back_cover_text'] = $book_back_cover_text;
+					$results['back_cover_text'] = $back_cover_text;
 				}
 			}
 
-			// Process the JSON and create the folder structure
-			$llmApp->createBookStructure($results, $blurb, $model, $language);
-
-			echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
+			if ($results['title']!== '' && $results['blurb'] !== '' && $results['back_cover_text'] !== '') {
+				$llmApp->createBookStructure($results, $blurb, $model, $language);
+				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
+			} else
+			{
+				echo json_encode(['success' => false, 'message' => 'Failed to generate book']);
+			}
 			break;
 
 		//-----------------------------//
 		case 'get_book_structure':
 
 			$bookData = json_decode(file_get_contents($bookJsonPath), true);
-			$chaptersFile = $chaptersDirName . "/chapters.json";
+			$chaptersFile = $chaptersDirName . "/acts.json";
 			$chaptersData = json_decode(file_get_contents($chaptersFile), true);
 
 			$acts = [];
@@ -121,7 +127,9 @@
 				'success' => true,
 				'bookTitle' => $bookData['title'],
 				'bookBlurb' => $bookData['blurb'],
-				'bookBackCoverText' => $bookData['back_cover_text'],
+				'backCoverText' => $bookData['back_cover_text'],
+				'prompt' => $bookData['prompt'],
+				'language' => $bookData['language'],
 				'acts' => $acts
 			]);
 
@@ -129,8 +137,8 @@
 
 		//-----------------------------//
 		case 'delete_book':
-			$book_id = $_POST['book_id'];
-			$book_dir = "./books/$book_id";
+			$book = $_POST['book'];
+			$book_dir = "./books/".$book;
 
 			if (is_dir($book_dir)) {
 				// Function to delete directory and its contents
@@ -176,44 +184,42 @@
 			break;
 
 		//-----------------------------//
-		case 'get_all_chapters':
+		case 'load_chapters':
+			$chaptersFile = $chaptersDirName . "/acts.json";
+			$chaptersData = json_decode(file_get_contents($chaptersFile), true);
+
 			$chapters = [];
-			$files = glob($chaptersDirName . '/*.json');
-			foreach ($files as $file) {
-				$chapterData = json_decode(file_get_contents($file), true);
-				//check if $chapterData has "row" key
-				if (isset($chapterData['row'])) {
-					if (!isset($chapterData['archived'])) {
-						$chapterData['archived'] = false;
-					}
-					if ($chapterData['archived'] === false) {
-						$chapterData['chapterFilename'] = basename($file);
-						$chapters[] = $chapterData;
+			$acts = [];
+			foreach ($chaptersData as $act) {
+				$actChapters = [];
+				$chapterFiles = glob($chaptersDirName . "/*.json");
+				foreach ($chapterFiles as $chapterFile) {
+					$chapterData = json_decode(file_get_contents($chapterFile), true);
+					// Check if json_decode succeeded
+					if (json_last_error() === JSON_ERROR_NONE) {
+
+						if (!isset($chapterData['row'])) {
+							continue;
+						}
+
+						$chapterData['chapterFilename'] = basename($chapterFile);
+
+						if ($chapterData['row'] === $act['id']) {
+							$actChapters[] = $chapterData;
+						}
 					}
 				}
+
+				usort($actChapters, function ($a, $b) {
+					return $a['order'] - $b['order'];
+				});
+
+				foreach ($actChapters as $chapter) {
+					$chapters[] = $chapter;
+				}
 			}
+
 			echo json_encode($chapters);
-			break;
-
-		//-----------------------------//
-		case 'archive_chapter':
-			$archived = filter_var($_POST['archived'], FILTER_VALIDATE_BOOLEAN);
-
-			if (file_exists($chapterFilePath)) {
-				$chapter = json_decode(file_get_contents($chapterFilePath), true);
-				$chapter['archived'] = $archived;
-
-				if ($archived) {
-					$chapter = log_history($chapter, 'Archived the chapter', $user);
-				} else {
-					$chapter = log_history($chapter, 'Unarchived the chapter', $user);
-				}
-
-				file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-				echo json_encode(['success' => true]);
-			} else {
-				echo json_encode(['success' => false, 'message' => 'Chapter not found']);
-			}
 			break;
 
 		//-----------------------------//
@@ -243,53 +249,6 @@
 			break;
 
 		//-----------------------------//
-		case 'load_stories':
-			$stories = [];
-			$showArchived = isset($_POST['showArchived']) && $_POST['showArchived'] == 'true';
-
-			if (is_dir($chaptersDir)) {
-				$files = scandir($chaptersDir);
-
-				foreach ($files as $chapterFile) {
-					if ($chapterFile !== '.' && $chapterFile !== '..' && is_file($chaptersDir . '/' . $chapterFile)) {
-						$chapterFilePaths = $chaptersDir . '/' . $chapterFile;
-						$chapter = json_decode(file_get_contents($chapterFilePaths), true);
-
-						// Check if json_decode succeeded
-						if (json_last_error() === JSON_ERROR_NONE) {
-
-							if (isset($chapter['row'])) {
-
-								$chapter['chapterFilename'] = $chapterFile;
-								if (!isset($chapter['archived'])) {
-									$chapter['archived'] = false;
-								}
-
-								// Check if row is in the rows array; if not, change it to the first row in the array
-								$rowExists = false;
-								foreach ($rows as $row) {
-									if ($row['id'] === $chapter['row']) {
-										$rowExists = true;
-										break;
-									}
-								}
-								if (!$rowExists) {
-									$chapter['row'] = $rows[0]['id'];
-								}
-
-								if ($showArchived || !$chapter['archived']) {
-									$stories[] = $chapter;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			echo json_encode($stories);
-			break;
-
-		//-----------------------------//
 		case 'save_chapter':
 			$name = $_POST['name'];
 			$short_description = $_POST['short_description'];
@@ -304,7 +263,6 @@
 			$row = 'to-do';
 			$order = $_POST['order'] ?? 0;
 			$new_chapter = true;
-			$archived = false;
 
 			if (empty($chapterFilename)) {
 				$chapterFilename = create_slug($name) . '_' . time() . '.json';
@@ -317,7 +275,6 @@
 					$comments = $existingChapter['comments'] ?? [];
 					$files = $existingChapter['files'] ?? [];
 					$history = $existingChapter['history'] ?? [];
-					$archived = $existingChapter['archived'] ?? false;
 				}
 			}
 
@@ -337,8 +294,7 @@
 				'lastUpdated' => $lastUpdated,
 				'comments' => $comments ?? [],
 				'files' => $files ?? [],
-				'history' => $history ?? [],
-				'archived' => $archived
+				'history' => $history ?? []
 			];
 
 			if (!empty($_FILES['files']['name'][0])) {

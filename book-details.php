@@ -6,7 +6,7 @@ require_once 'action-session.php';
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Fiction Fusion - The Book</title>
+	<title>Playground - The Book</title>
 
 	<!-- FAVICON AND TOUCH ICONS -->
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
@@ -26,33 +26,15 @@ require_once 'action-session.php';
 </head>
 <body>
 <header>
-	<form id="logoutForm" action="action-book.php" method="POST" class="d-none">
+	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 	<div class="container-fluid mt-2">
-		<button class="btn btn-info float-start me-2" id="showAllHistoryBtn" title="show all history"><i
-				class="bi bi-clock-history"></i></button>
-		<button class="btn btn-secondary float-start me-2" data-bs-toggle="modal" data-bs-target="#addUserModal"
-		        title="add user modal"><i class="bi bi-person"></i></button>
-		<button class="btn btn-info float-start me-2" id="toggleArchivedBtn"><i class="bi bi-archive"></i></button>
-		<button class="btn btn-warning float-start me-2" id="generateAllBeatsBtn" title="Generate All Beats"><i
-				class="bi bi-lightning-charge"></i></button>
-
-		<button class="btn btn-primary float-start me-2" id="showBookStructureBtn" title="Show Book Structure">
-			<i class="bi bi-book-half"></i>
-		</button>
-
-		<button class="btn btn-success float-start me-2" id="exportPdfBtn" title="Export as PDF">
-			<i class="bi bi-file-earmark-pdf"></i>
-		</button>
-
 		<a href="#" class="btn btn-danger float-end ms-2" title="Log out"
 		   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
 		<button id="modeToggleBtn" class="btn btn-secondary float-end ms-2">
 			<i id="modeIcon" class="bi bi-sun"></i>
 		</button>
-		<button class="btn btn-primary float-end ms-2" id="addChapterBtn" title="add new chapter"><i
-				class="bi bi-plus-circle-fill"></i></button>
 		<a href="index.php" class="btn btn-primary float-end ms-2" title="add new book"><i class="bi bi-book"></i></a>
 	</div>
 </header>
@@ -60,7 +42,37 @@ require_once 'action-session.php';
 <main class="py-4">
 
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center">Fiction Fusion Book</h1>
+		<h1 style="margin:10px;" class="text-center">Playground Book</h1>
+		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
+			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+			<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+			<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+			<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+			<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+			<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+			<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+			<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+			<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+			<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+		</select>
+		<div class="text-center mb-4">
+			<button class="btn btn-info  me-2" id="showAllHistoryBtn" title="show all history"><i
+					class="bi bi-clock-history"></i></button>
+			<button class="btn btn-warning  me-2" id="generateAllBeatsBtn" title="Generate All Beats"><i
+					class="bi bi-lightning-charge"></i></button>
+
+			<button class="btn btn-primary me-2" id="showBookStructureBtn" title="Show Book Structure">
+				<i class="bi bi-book-half"></i>
+			</button>
+
+			<button class="btn btn-success me-2" id="exportPdfBtn" title="Export as PDF">
+				<i class="bi bi-file-earmark-pdf"></i>
+			</button>
+		</div>
+
 		<div>
 			<div class="my-3 d-inline-block">
 				Hello <span id="currentUser"></span>,
@@ -68,12 +80,14 @@ require_once 'action-session.php';
 		</div>
 
 		<div class="card general-card">
-			<div class="card-header modal-header">
+			<div class="card-header modal-header modal-header-color">
 				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookTitle"></span>
 			</div>
-			<div class="card-body modal-content">
+			<div class="card-body modal-content modal-content-color">
 				<div id="bookBlurb" class="mb-4"></div>
-				<div><em><span id="bookBackCoverText"></span></em></div>
+				<div><em><span id="backCoverText"></span></em></div>
+
+				<div><span id="bookPrompt"></span></div>
 			</div>
 		</div>
 
@@ -86,12 +100,12 @@ require_once 'action-session.php';
 	<div class="modal modal-lg fade" id="chapterModal" tabindex="-1" aria-labelledby="chapterModalLabel"
 	     aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="chapterModalLabel">Edit Chapter</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-color">
 					<form id="chapterForm" enctype="multipart/form-data">
 						<input type="hidden" id="chapterFilename">
 						<div class="mb-3">
@@ -149,7 +163,7 @@ require_once 'action-session.php';
 						<div id="UploadFilesList" class="row"></div>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer modal-footer-color">
 					<button class="btn btn-primary" id="saveChapter">Save Chapter</button>
 					<button class="btn btn-secondary" id="showCommentModal">Add Comment</button>
 					<button class="btn btn-info" id="showHistoryModal">View History</button>
@@ -161,44 +175,15 @@ require_once 'action-session.php';
 	</div>
 
 
-	<!-- Modal for Adding User -->
-	<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addUserModalLabel">Add User</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="addUserForm">
-						<div class="mb-3">
-							<label for="userName" class="form-label">Username</label>
-							<input type="text" class="form-control" id="userName" required>
-						</div>
-						<div class="mb-3">
-							<label for="userPassword" class="form-label">Password</label>
-							<input type="password" class="form-control" id="userPassword" required>
-						</div>
-						<button type="button" class="btn btn-primary" id="generateUser">Generate</button>
-					</form>
-					<div class="mt-3">
-						<pre id="userJsonOutput"></pre>
-						<button type="button" class="btn btn-secondary" id="copyUserJson">Copy</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Modal for Adding Comment -->
 	<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="commentModalLabel">Add Comment</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-color">
 					<form id="commentForm">
 						<input type="hidden" id="commentChapterFilename">
 						<input type="hidden" id="commentId">
@@ -217,15 +202,15 @@ require_once 'action-session.php';
 	<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
 	     aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-color">
 					Are you sure you want to delete this chapter? This action cannot be undone.
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer modal-footer-color">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 					<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
 				</div>
@@ -236,12 +221,12 @@ require_once 'action-session.php';
 	<!-- Modal for Viewing History -->
 	<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="historyModalLabel">History</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body" style="max-height: 400px; overflow: auto;">
+				<div class="modal-body modal-body-color" style="max-height: 400px; overflow: auto;">
 					<div id="historyList"></div>
 				</div>
 			</div>
@@ -252,12 +237,12 @@ require_once 'action-session.php';
 	<div class="modal fade" id="allHistoryModal" tabindex="-1" aria-labelledby="allHistoryModalLabel"
 	     aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="allHistoryModalLabel">All History</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body" style="max-height: 400px; overflow: auto;">
+				<div class="modal-body modal-body-color" style="max-height: 400px; overflow: auto;">
 					<div id="allHistoryList"></div>
 				</div>
 			</div>
@@ -268,36 +253,13 @@ require_once 'action-session.php';
 	<div class="modal fade" id="bookStructureModal" tabindex="-1" aria-labelledby="bookStructureModalLabel"
 	     aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="bookStructureModalLabel">Book Structure</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-color">
 					<div id="bookStructureContent"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal for Viewing Beats -->
-	<div class="modal fade modal-lg" id="beatModal" tabindex="-1" aria-labelledby="beatModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="beatModalLabel">View Beats</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body" style="min-height: 300px;">
-					<div id="beatsList"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger me-auto" id="recreateBeats">Recreate Beats</button>
-					<div class="spinner-border d-none" role="status" id="beat-spinner">
-						<span class="visually-hidden">Loading...</span>
-					</div>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary d-none" id="saveBeatsBtn">Save Beats</button>
 				</div>
 			</div>
 		</div>
@@ -307,12 +269,12 @@ require_once 'action-session.php';
 	<div class="modal fade" id="generateAllBeatsModal" tabindex="-1" aria-labelledby="generateAllBeatsModalLabel"
 	     aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
 					<h5 class="modal-title" id="generateAllBeatsModalLabel">Generating Beats for All Chapters</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body modal-body-color">
 					<div class="progress mb-3">
 						<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
 						     aria-valuemax="100">0%
@@ -324,34 +286,6 @@ require_once 'action-session.php';
 			</div>
 		</div>
 	</div>
-
-	<!-- Modal for Beat Details and Writing -->
-	<div class="modal fade" id="beatDetailModal" tabindex="-1" aria-labelledby="beatDetailModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="beatDetailModalLabel">Beat Details</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div id="beatDescriptionContainer">
-						<label for="beatDescription" class="form-label">Beat Description</label>
-						<textarea id="beatDescription" class="form-control" rows="3"></textarea>
-					</div>
-					<div id="beatTextArea" class="mt-3">
-						<label for="beatText" class="form-label">Beat Text</label>
-						<textarea id="beatText" class="form-control" rows="10"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button id="saveBeatBtn" class="btn btn-success mt-3">Save Beat</button>
-						<button id="writeBeatTextBtn" class="btn btn-primary mt-3 me-auto">Write Beat Text</button>
-						<button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 </main>
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
@@ -364,12 +298,11 @@ require_once 'action-session.php';
 
 <!-- Your custom scripts -->
 <script src="js/custom-ui.js"></script>
-<script src="js/custom.js"></script>
 <script src="js/utility.js"></script>
+<script src="js/custom.js"></script>
 
 <script src="js/chapter.js"></script>
 <script src="js/comment.js"></script>
-<script src="js/beat.js"></script>
 
 </body>
 </html>

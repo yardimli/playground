@@ -1,0 +1,38 @@
+Book Title: ##book_title##
+Back Cover Text: ##back_cover_text##
+Book Blurb: ##book_blurb##
+Book Language: ##language##
+
+What has happened so far:
+##prev_chapter##
+
+This Chapter:
+##act##
+##chapter##
+##description##
+Events: ##events##
+People: ##people##
+Places: ##places##
+
+Write 10 beats with short and long title to fill in this chapter.
+Language is: #language#.
+
+The first beat should be a continuation from the end of the previous chapter.
+The last beat should be written such that it leads to the next chapter without giving away too much information. The next chapter will start with
+##next_chapter##
+
+Output should be in JSON format as follows:
+{
+"beats": [
+{"description":"write beat 1 for this chapter."},
+{"description":"write beat 2 for this chapter."},
+{"description":"write beat 3 for this chapter."},
+{"description":"write beat 4 for this chapter."},
+{"description":"write beat 5 for this chapter."},
+{"description":"write beat 6 for this chapter."},
+{"description":"write beat 7 for this chapter."},
+{"description":"write beat 8 for this chapter."},
+{"description":"write beat 9 for this chapter."},
+{"description":"write beat 10 for this chapter."}
+]
+}

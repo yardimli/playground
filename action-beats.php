@@ -7,9 +7,13 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$action = $_POST['action'] ?? '';
+		$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
+
+
 
 		$chapterFilename = $_POST['chapterFilename'] ?? null;
 		$chapterFilePath = $chaptersDir . '/' . $chapterFilename;
+
 		$user = $_SESSION['user'] ?? '';
 		$id = $_POST['id'] ?? null;
 		$uploadFilename = $_POST['uploadFilename'] ?? null;
@@ -56,13 +60,13 @@
 				} else {
 
 					if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
-						$schema = file_get_contents('beat_schema_anthropic_1.json');
+						$schema = file_get_contents('./prompts/beat_schema_anthropic_1.json');
 						$schema = json_decode($schema, true);
 
 						// Prepare the prompt
-						$prompt = file_get_contents('beat_prompt_anthropic_1.txt');
-						$prompt = str_replace('##title##', $bookData['title'], $prompt);
-						$prompt = str_replace('##book_description##', $bookData['description'] ?? '', $prompt);
+						$prompt = file_get_contents('./prompts/beat_prompt_anthropic_1.txt');
+						$prompt = str_replace('##book_title##', $bookData['title'], $prompt);
+						$prompt = str_replace('##back_cover_text##', $bookData['description'] ?? '', $prompt);
 						$prompt = str_replace('##book_blurb##', $bookData['blurb'], $prompt);
 						$prompt = str_replace('##language##', $bookData['language'], $prompt);
 						$prompt = str_replace('##act##', $chapterData['row'], $prompt);
@@ -74,16 +78,16 @@
 						$prompt = str_replace('##prev_chapter##', $chapterFromPrevChapter, $prompt);
 						$prompt = str_replace('##next_chapter##', $chapterToNextChapter, $prompt);
 
-						$resultData = $llmApp->function_call($prompt, $schema);
+						$resultData = $llmApp->function_call($llm, $prompt, $schema);
 
-					} else if ($use_llm === 'open-ai-gpt4o' || $use_llm === 'open-ai-gpt4o-mini') {
-						$schema = file_get_contents('book_schema_openai_1.json');
+					} else if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+						$schema = file_get_contents('./prompts/book_schema_openai_1.json');
 						$schema = json_decode($schema, true);
 
 						// Prepare the prompt
-						$prompt = file_get_contents('beat_prompt_openai_1.txt');
-						$prompt = str_replace('##title##', $bookData['title'], $prompt);
-						$prompt = str_replace('##book_description##', $bookData['description'] ?? '', $prompt);
+						$prompt = file_get_contents('./prompts/beat_prompt_openai_1.txt');
+						$prompt = str_replace('##book_title##', $bookData['title'], $prompt);
+						$prompt = str_replace('##back_cover_text##', $bookData['description'] ?? '', $prompt);
 						$prompt = str_replace('##book_blurb##', $bookData['blurb'], $prompt);
 						$prompt = str_replace('##language##', $bookData['language'], $prompt);
 						$prompt = str_replace('##act##', $chapterData['row'], $prompt);
@@ -95,12 +99,12 @@
 						$prompt = str_replace('##prev_chapter##', $chapterFromPrevChapter, $prompt);
 						$prompt = str_replace('##next_chapter##', $chapterToNextChapter, $prompt);
 
-						$resultData = $llmApp->function_call($prompt, $schema);
+						$resultData = $llmApp->function_call($llm, $prompt, $schema);
 					} else {
 						// Prepare the prompt
-						$prompt = file_get_contents('beat_prompt_no_function_calling_1.txt');
-						$prompt = str_replace('##title##', $bookData['title'], $prompt);
-						$prompt = str_replace('##book_description##', $bookData['description'] ?? '', $prompt);
+						$prompt = file_get_contents('./prompts/beat_prompt_no_function_calling_1.txt');
+						$prompt = str_replace('##book_title##', $bookData['title'], $prompt);
+						$prompt = str_replace('##back_cover_text##', $bookData['description'] ?? '', $prompt);
 						$prompt = str_replace('##book_blurb##', $bookData['blurb'], $prompt);
 						$prompt = str_replace('##language##', $bookData['language'], $prompt);
 						$prompt = str_replace('##act##', $chapterData['row'], $prompt);
@@ -112,7 +116,7 @@
 						$prompt = str_replace('##prev_chapter##', $chapterFromPrevChapter, $prompt);
 						$prompt = str_replace('##next_chapter##', $chapterToNextChapter, $prompt);
 
-						$resultData = $llmApp->llm_no_stream($prompt, true);
+						$resultData = $llmApp->llm_no_tool_call(false, $llm, $prompt, true);
 					}
 
 					if (isset($resultData['beats'])) {
@@ -131,45 +135,96 @@
 
 			//-----------------------------//
 			case 'write_beat_text':
-				$beatIndex = $_POST['beatIndex'];
+				$beatIndex = (int)$_POST['beatIndex'];
 				$currentBeatDescription = $_POST['currentBeatDescription'] ?? '';
 
-				// Load the book data
-				$bookData = json_decode(file_get_contents($bookJsonPath), true);
-
-				// Load the chapter data
-				$chapterData = json_decode(file_get_contents($chapterFilePath), true);
 
 				// Load the beat prompt template
-				$beatPromptTemplate = file_get_contents('beat_text_prompt.txt');
-				// Prepare the data for the prompt
-				$prevBeat = $beatIndex > 0 ? $chapterData['beats'][$beatIndex - 1] : null;
-				if ($prevBeat) {
-					$prevBeat = "summary: " . ($prevBeat['description'] ?? '') . "\ntext: " . ($prevBeat['beat_text'] ?? '');
-				} else {
-					$prevBeat = 'N/A';
-				}
+				$beatPromptTemplate = file_get_contents('./prompts/beat_text_prompt.txt');
 
-				if ($currentBeatDescription === '') {
-					$currentBeat = $chapterData['beats'][$beatIndex];
-					$currentBeat = "summary: " . ($currentBeat['description'] ?? '');
-				} else
-				{
-					$currentBeat = "summary: " . $currentBeatDescription;
-				}
+				$book_title = $_POST['book_title'];
+				$book_blurb = $_POST['book_blurb'];
+				$back_cover_text = $_POST['back_cover_text'];
+				$language = $_POST['language'];
+				$act = $_POST['act'];
+				$chapter_title = $_POST['chapter_title'];
+				$chapter_description = $_POST['chapter_description'];
+				$chapter_events = $_POST['chapter_events'];
+				$chapter_people = $_POST['chapter_people'];
+				$chapter_places = $_POST['chapter_places'];
+				$prev_beat_summaries = $_POST['prev_beat_summaries'];
+				$last_beat = $_POST['last_beat'];
+				$current_beat = $_POST['current_beat'];
+				$next_beat = $_POST['next_beat'];
 
-				$nextBeat = $beatIndex < count($chapterData['beats']) - 1 ? $chapterData['beats'][$beatIndex + 1] : null;
-				$nextBeat = "summary: \n". ($nextBeat['description'] ?? '');
-
-				// Replace placeholders in the prompt template
 				$beatPrompt = str_replace(
-					['##book_title##', '##book_description##', '##chapter_name##', '##chapter_description##', '##prev_beat##', '##current_beat##', '##next_beat##'],
-					[$bookData['title'], $bookData['blurb'], $chapterData['name'], $chapterData['short_description'],
-						$prevBeat, $currentBeat, $nextBeat],
+					['##book_title##', '##book_blurb##', '##back_cover_text##', '##language##', '##act##', '##chapter##', '##description##', '##events##', '##people##', '##places##', '##prev_beat_summaries##', '##last_beat##', '##current_beat##', '##next_beat##'],
+					[
+						$book_title,
+						$book_blurb,
+						$back_cover_text,
+						$language,
+						$act,
+						$chapter_title,
+						$chapter_description,
+						$chapter_events,
+						$chapter_people,
+						$chapter_places,
+						$prev_beat_summaries,
+						$last_beat,
+						$current_beat,
+						$next_beat
+					],
 					$beatPromptTemplate
 				);
 
-				$resultData = $llmApp->llm_no_stream($beatPrompt, false);
+				$resultData = $llmApp->llm_no_tool_call(false, $llm, $beatPrompt, false);
+
+				echo json_encode(['success' => true, 'prompt' => $resultData]);
+
+				break;
+
+			//-----------------------------//
+			case 'write_beat_text_summary':
+				$currentBeatDescription = $_POST['currentBeatDescription'] ?? '';
+				$currentBeatText = $_POST['currentBeatText'] ?? '';
+
+				// Load the beat prompt template
+				$beatPromptTemplate = file_get_contents('./prompts/beat_text_summary.txt');
+
+				$book_title = $_POST['book_title'];
+				$book_blurb = $_POST['book_blurb'];
+				$back_cover_text = $_POST['back_cover_text'];
+				$language = $_POST['language'];
+				$act = $_POST['act'];
+				$chapter_title = $_POST['chapter_title'];
+				$chapter_description = $_POST['chapter_description'];
+				$chapter_events = $_POST['chapter_events'];
+				$chapter_people = $_POST['chapter_people'];
+				$chapter_places = $_POST['chapter_places'];
+
+				// Replace placeholders in the prompt template
+
+				$beatPrompt = str_replace(
+					['##book_title##', '##book_blurb##', '##back_cover_text##', '##language##', '##act##', '##chapter##', '##description##', '##events##', '##people##', '##places##', '##beat_summary##', '##beat_text##'],
+					[
+						$book_title,
+						$book_blurb,
+						$back_cover_text,
+						$language,
+						$act,
+						$chapter_title,
+						$chapter_description,
+						$chapter_events,
+						$chapter_people,
+						$chapter_places,
+						$currentBeatDescription,
+						$currentBeatText
+					],
+					$beatPromptTemplate
+				);
+
+				$resultData = $llmApp->llm_no_tool_call(false, $llm, $beatPrompt, false);
 
 				echo json_encode(['success' => true, 'prompt' => $resultData]);
 
@@ -187,9 +242,11 @@
 				$beatIndex = $_POST['beatIndex'];
 				$beatDescription = $_POST['beatDescription'];
 				$beatText = $_POST['beatText'];
+				$beatTextSummary = $_POST['beatTextSummary'];
 
 				$chapterData['beats'][$beatIndex]['description'] = $beatDescription;
 				$chapterData['beats'][$beatIndex]['beat_text'] = $beatText;
+				$chapterData['beats'][$beatIndex]['beat_text_summary'] = $beatTextSummary;
 
 				file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT));
 

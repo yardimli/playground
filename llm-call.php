@@ -10,6 +10,8 @@
 	$password = $_ENV['DB_PASSWORD'];
 	$database = $_ENV['DB_DATABASE'];
 
+	use Ahc\Json\Fixer;
+
 
 	class Log
 	{
@@ -33,12 +35,24 @@
 		private function writeLog($level, $message)
 		{
 			$date = new DateTime();
+
+			if (is_array($message)) {
+				$processedMessage = json_encode($message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+			} else {
+				$processedMessage = $message;
+			}
+			$processedMessage = str_replace('\r\n', "\n", $processedMessage);
+			$processedMessage = str_replace('\r', "\n", $processedMessage);
+			$processedMessage = str_replace('\n', "\n", $processedMessage);
+//				$processedMessage = nl2br($processedMessage);
+
 			$formattedMessage = sprintf(
 				"[%s] [%s] %s \n",
 				$date->format('Y-m-d H:i:s'),
 				$level,
-				is_array($message) ? json_encode($message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $message
+				$processedMessage
 			);
+
 			file_put_contents($this->filePath, $formattedMessage, FILE_APPEND);
 		}
 	}
@@ -85,6 +99,26 @@
 			}
 		}
 
+
+		function getContentsInBackticksOrOriginal($input)
+		{
+			// Define a regular expression pattern to match content within backticks
+			$pattern = '/`([^`]+)`/';
+
+			// Initialize an array to hold matches
+			$matches = array();
+
+			// Perform a global regular expression match
+			preg_match_all($pattern, $input, $matches);
+
+			// Check if any matches were found
+			if (empty($matches[1])) {
+				return $input; // Return the original input if no matches found
+			} else {
+				return implode(' ', $matches[1]);
+			}
+		}
+
 		public function moderation($message)
 		{
 			$openai_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
@@ -100,7 +134,7 @@
 		}
 
 		//------------------------------------------------------------
-		public function function_call($prompt, $schema, $language = 'english')
+		public function function_call($llm, $prompt, $schema, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -121,13 +155,16 @@
 				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
 				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
 				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
+				if ($llm !== '' && $llm !== null) {
+					$llm_model = $llm;
+				}
 
 			} else if ($use_llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
-			} else if ($use_llm === 'open-ai-get-4o-mini') {
+			} else if ($use_llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
@@ -135,15 +172,16 @@
 
 			$chat_messages = [];
 			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+
 				$chat_messages[] = [
 					'role' => 'user',
-					'content' => "You are an expert author advisor.\n" . $prompt
+					'content' => $prompt
 				];
 			} else {
-				$chat_messages[] = [
-					'role' => 'system',
-					'content' => 'You are an expert author advisor.'
-				];
+//				$chat_messages[] = [
+//					'role' => 'system',
+//					'content' => 'You are an expert author advisor.'
+//				];
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => $prompt
@@ -151,7 +189,7 @@
 			}
 
 
-			$temperature = 1;
+			$temperature = 0.8;
 			$max_tokens = 4000;
 
 			$tool_name = 'auto';
@@ -212,7 +250,7 @@
 				$this->logger->info(curl_getinfo($ch));
 			}
 			curl_close($ch);
-			session_start();
+//			session_start();
 
 			$this->logger->info('==================Log complete 1 =====================');
 			$complete = trim($complete, " \n\r\t\v\0");
@@ -284,12 +322,42 @@
 			return $jsonString;
 		}
 
-		public function llm_no_stream($prompt, $return_json = true, $language = 'english')
+		public function mergeStringsWithoutRepetition($string1, $string2, $maxRepetitionLength = 100)
+		{
+			$len1 = strlen($string1);
+			$len2 = strlen($string2);
+
+			// Determine the maximum possible repetition length
+			$maxPossibleRepetition = min($maxRepetitionLength, $len1, $len2);
+
+			// Find the length of the actual repetition
+			$repetitionLength = 0;
+			for ($i = 1; $i <= $maxPossibleRepetition; $i++) {
+				if (substr($string1, -$i) === substr($string2, 0, $i)) {
+					$repetitionLength = $i;
+				} else {
+					break;
+				}
+			}
+
+			// Remove the repetition from the beginning of the second string
+			$string2 = substr($string2, $repetitionLength);
+
+			// Merge the strings
+			return $string1 . $string2;
+		}
+
+		public function llm_no_tool_call($stream, $llm, $prompt, $return_json = true, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
 
 			$use_llm = $_ENV['USE_LLM'] ?? 'open-router';
+
+
+			if ($llm === 'openai/gpt-4o-mini') {
+				$use_llm = 'open-ai-gpt-4o-mini';
+			}
 
 			if ($use_llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
@@ -306,12 +374,16 @@
 				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
 				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
 
+				if ($llm !== '' && $llm !== null) {
+					$llm_model = $llm;
+				}
+
 			} else if ($use_llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
-			} else if ($use_llm === 'open-ai-get-4o-mini') {
+			} else if ($use_llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
@@ -321,13 +393,13 @@
 			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				$chat_messages[] = [
 					'role' => 'user',
-					'content' => "You are an expert author advisor.\n" . $prompt
+					'content' => $prompt
 				];
 			} else {
-				$chat_messages[] = [
-					'role' => 'system',
-					'content' => 'You are an expert author advisor.'
-				];
+//				$chat_messages[] = [
+//					'role' => 'system',
+//					'content' => 'You are an expert author advisor.'
+//				];
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => $prompt
@@ -335,8 +407,8 @@
 			}
 
 
-			$temperature = 1;
-			$max_tokens = 20000;
+			$temperature = 0.8;
+			$max_tokens = 8096;
 
 			$data = array(
 				'model' => $llm_model,
@@ -347,29 +419,53 @@
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => false,
+				'stream' => $stream,
 				'stop' => "" //"\n"
 			);
 
-			if ($use_llm === 'openai') {
-				$data['max_tokens'] = 8000;
+			if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+				$data['max_tokens'] = 4096;
+				$data['temperature'] = 1;
 			} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				if ($use_llm === 'anthropic-haiku') {
 					$data['max_tokens'] = 4096;
-				} else
-				{
-					$data['max_tokens'] = 8000;
+				} else {
+					$data['max_tokens'] = 4096;
 				}
-				unset($data['frequency_penalty']);
-				unset($data['presence_penalty']);
-				unset($data['n']);
 				unset($data['stop']);
 			} else if ($use_llm === 'open-router') {
-				$data['max_tokens'] = 8000;
-				unset($data['stop']);
+
+//				$data['provider'] = [
+//					"order" => [
+//						"OpenAI",
+//						"Mistral",
+//						"Google",
+//						"Cohere",
+//						"Novita",
+//						"Together",
+//						"Lambda",
+//						"Perplexity",
+//						"Fireworks"
+//					],
+//					"allow_fallbacks" => false
+//				];
+
+				$data['max_tokens'] = 8096;
+				if (stripos($llm_model, 'anthropic') !== false) {
+					unset($data['frequency_penalty']);
+					unset($data['presence_penalty']);
+					unset($data['n']);
+					unset($data['stop']);
+				}
+				if (stripos($llm_model, 'openai') !== false) {
+					$data['temperature'] = 1;
+				}
+				if (stripos($llm_model, 'google') !== false) {
+					$data['stop'] = [];
+				}
 			}
 
-			$this->logger->info('GPT NO Stream: ');
+			$this->logger->info('GPT NO TOOL USE: '.$llm_base_url);
 			$this->logger->info($data);
 
 			$post_json = json_encode($data);
@@ -391,6 +487,47 @@
 				$headers[] = "Authorization: Bearer " . $llm_api_key;
 			}
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$accumulatedData = '';
+			$txt = '';
+			$complete_rst = '';
+
+			if ($stream) {
+
+				curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$txt, &$accumulatedData) {
+//					$this->logger->info('==============');
+//					$this->logger->info($data);
+
+					$data_lines = explode("\n", $data);
+					for ($i = 0; $i < count($data_lines); $i++) {
+						$data_line = $data_lines[$i];
+
+						// Check if the data line contains [DONE]
+						if (stripos($data_line, "[DONE]") !== false) {
+							ob_flush();
+							flush();
+							return strlen($data_line);
+						}
+
+						// Append new data to the accumulated data
+						if (substr($data_line, 0, 5) !== "data:") {
+							$accumulatedData .= $data_line;
+						} else {
+							$accumulatedData = $data_line;
+						}
+
+						// Check if we have a complete JSON object
+						$clean = str_replace("data: ", "", $accumulatedData);
+						$decoded = json_decode($clean, true);
+						if ($decoded && isset($decoded["choices"])) {
+							$txt .= $decoded["choices"][0]["delta"]["content"] ?? '';
+							$accumulatedData = ''; // Reset accumulated data
+						}
+					}
+
+					return strlen($data);
+				});
+			}
+
 			$complete = curl_exec($ch);
 			if (curl_errno($ch)) {
 				$this->logger->info('CURL Error:');
@@ -398,83 +535,195 @@
 			}
 			curl_close($ch);
 
-			$this->logger->info('==================Log complete 2 =====================');
-			$complete = trim($complete, " \n\r\t\v\0");
-			$this->logger->info($complete);
+			if (!$stream) {
+//			$this->logger->info('==================Log complete 2 =====================');
+				$complete = trim($complete, " \n\r\t\v\0");
+//			$this->logger->info($complete);
 
-			$complete_rst = json_decode($complete, true);
-			$this->logger->info($complete_rst);
+				$complete_rst = json_decode($complete, true);
+
+				if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+					$content = $complete_rst['choices'][0]['message']['content'];
+				} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+					$content = $complete_rst['content'][0]['text'];
+				} else if ($use_llm === 'open-router') {
+					$content = $complete_rst['choices'][0]['message']['content'];
+				}
+			} else {
+//				echo "--------------TXT: $txt\n";
+				$content = $txt;
+				$complete = $txt;
+			}
 
 			if (!$return_json) {
-				$content = $complete_rst['content'][0]['text'];
+				if (!$stream) {
+					$this->logger->info("GPT NO STREAM RESPONSE:");
+					$this->logger->info($complete_rst);
+				} else {
+					$this->logger->info("GPT STREAM RESPONSE:");
+					$this->logger->info($content);
+				}
 
+				$this->logger->info('Return is NOT JSON. Will return content presuming it is text.');
 				return $content;
 			}
 
-			$content = $complete_rst['choices'][0]['message']['content'];
+//			$content = str_replace("\\\"", "\"", $content);
+			$content = $content ?? '';
+			$content = $this->getContentsInBackticksOrOriginal($content);
 
-
-			//------ Check if JSON is complete or not with a prompt to continue ------------
-			//-----------------------------------------------------------------------------
-			$verify_completed_prompt = 'if the JSON is complete output DONE otherwise continue finishing the JSON, do not add any explenations just continue from where it was interrupted.';
-
-			$chat_messages[] = [
-				'role' => 'assistant',
-				'content' => $content
-			];
-			$chat_messages[] = [
-				'role' => 'user',
-				'content' => $verify_completed_prompt
-			];
-
-			$data['messages'] = $chat_messages;
-			$post_json = json_encode($data);
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			$complete2 = curl_exec($ch);
-			if (curl_errno($ch)) {
-				$this->logger->info('CURL Error:');
-				$this->logger->info(curl_getinfo($ch));
-			}
-			curl_close($ch);
-			session_start();
-
-			$this->logger->info('==================Log complete 3 =====================');
-			$complete2 = trim($complete2, " \n\r\t\v\0");
-			$this->logger->info($complete2);
-
-			$complete2_rst = json_decode($complete2, true);
-			$this->logger->info($complete2_rst);
-
-			$content2 = $complete2_rst['choices'][0]['message']['content'];
-
-			//------------------------------------------------------------
-
-			$content = $content . $content2;
-
+			//check if content is JSON
 			$content_json_string = $this->extractJsonString($content);
-
-			$this->logger->info('==================extractJsonString==========');
-			$this->logger->info(gettype($content_json_string));
-			$this->logger->info($content_json_string);
-
 			$validate_result = $this->validateJson($content_json_string);
 
+			if ($validate_result !== "Valid JSON") {
+				$content_json_string =  (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
+				$validate_result = $this->validateJson($content_json_string);
+			}
+
+			if (strlen($content ?? '') < 20) {
+				$this->logger->info('================== CONTENT IS EMPTY =====================');
+				$this->logger->info($complete);
+				return '';
+			}
+
+			//if JSON failed make a second call to get the rest of the JSON
+			if ($validate_result !== "Valid JSON") {
+
+				//------ Check if JSON is complete or not with a prompt to continue ------------
+				//-----------------------------------------------------------------------------
+				$verify_completed_prompt = 'If the JSON is complete output DONE otherwise continue writing the JSON response. Only write the missing part of the JSON response, don\'t repeat the already written story JSON. Continue from exactly where the JSON response left off. Make sure the combined JSON response will be valid JSON.';
+
+				$chat_messages[] = [
+					'role' => 'assistant',
+					'content' => $content
+				];
+				$chat_messages[] = [
+					'role' => 'user',
+					'content' => $verify_completed_prompt
+				];
+
+				$data['messages'] = $chat_messages;
+				$this->logger->info('======== SECOND CALL TO FINISH JSON =========');
+				$this->logger->info($data);
+				$post_json = json_encode($data);
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $llm_base_url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+				$accumulatedData = '';
+				$txt = '';
+
+				if ($stream) {
+
+					curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$txt, &$accumulatedData) {
+//						$this->logger->info('==============');
+//						$this->logger->info($data);
+
+						$data_lines = explode("\n", $data);
+						for ($i = 0; $i < count($data_lines); $i++) {
+							$data_line = $data_lines[$i];
+
+							// Check if the data line contains [DONE]
+							if (stripos($data_line, "[DONE]") !== false) {
+								ob_flush();
+								flush();
+								return strlen($data_line);
+							}
+
+							// Append new data to the accumulated data
+							if (substr($data_line, 0, 5) !== "data:") {
+								$accumulatedData .= $data_line;
+							} else {
+								$accumulatedData = $data_line;
+							}
+
+							// Check if we have a complete JSON object
+							$clean = str_replace("data: ", "", $accumulatedData);
+							$decoded = json_decode($clean, true);
+							if ($decoded && isset($decoded["choices"])) {
+								$txt .= $decoded["choices"][0]["delta"]["content"] ?? '';
+								$accumulatedData = ''; // Reset accumulated data
+							}
+						}
+
+						return strlen($data);
+					});
+				}
+
+				$complete2 = curl_exec($ch);
+				if (curl_errno($ch)) {
+					$this->logger->info('CURL Error:');
+					$this->logger->info(curl_getinfo($ch));
+				}
+				curl_close($ch);
+//				session_start();
+
+				if (!$stream) {
+					$complete2 = trim($complete2, " \n\r\t\v\0");
+
+					$this->logger->info("GPT NO STREAM RESPONSE FOR EXTENDED VERSION JSON CHECK:");
+					$this->logger->info($complete2);
+
+					$complete2_rst = json_decode($complete2, true);
+					$content2 = $complete2_rst['choices'][0]['message']['content'];
+
+					//$content2 = str_replace("\\\"", "\"", $content2);
+					$content2 = $this->getContentsInBackticksOrOriginal($content2);
+
+					if (!str_contains($content2, 'DONE')) {
+						$content = $this->mergeStringsWithoutRepetition($content, $content2, 255);
+					}
+				} else {
+					$content2 = $txt;
+					$content2 = trim($content2, " \n\r\t\v\0");
+
+					$this->logger->info("GPT STREAM RESPONSE FOR EXTENDED VERSION JSON CHECK:");
+					$this->logger->info($content2);
+
+					//$content2 = str_replace("\\\"", "\"", $content2);
+					$content2 = $this->getContentsInBackticksOrOriginal($content2);
+
+					if (!str_contains($content2, 'DONE')) {
+						$content = $this->mergeStringsWithoutRepetition($content, $content2, 255);
+					}
+				}
+
+				//------------------------------------------------------------
+
+				$content_json_string = $this->extractJsonString($content);
+				$validate_result = $this->validateJson($content_json_string);
+
+				if ($validate_result !== "Valid JSON") {
+					$content_json_string =  (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
+					$validate_result = $this->validateJson($content_json_string);
+				}
+
+			} else
+			{
+				if (!$stream) {
+					$this->logger->info("GPT NO STREAM RESPONSE:");
+					$this->logger->info($complete_rst);
+				} else {
+					$this->logger->info("GPT STREAM RESPONSE:");
+					$this->logger->info($content);
+				}
+
+			}
+
 			if ($validate_result == "Valid JSON") {
-				$this->logger->info('==================Log JSON arguments=====================');
+				$this->logger->info('================== VALID JSON =====================');
 				$content_rst = json_decode($content_json_string, true);
 				$this->logger->info($content_rst);
 				return $content_rst;
 			} else {
-				$this->logger->info('==================Log JSON error : ' . $validate_result . '=====================');
-				$this->logger->info('==================CONTENT==========');
-				$this->logger->info(gettype($content));
+				$this->logger->info('================== INVALID JSON =====================');
+				$this->logger->info('JSON error : ' . $validate_result . ' -- ');
 				$this->logger->info($content);
 			}
 		}
@@ -500,6 +749,7 @@
 				'created' => (new DateTime())->format('Y-m-d H:i:s'),
 				'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
 				'language' => $language,
+				'owner' => $_SESSION['user'],
 			];
 			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
@@ -508,23 +758,23 @@
 
 			foreach ($acts as $act_index => $act) {
 				$act_id = 'act-' . ($act_index + 1);
-				$act_name = $act['name'];
+				$act_name = $act['name'] ?? 'act ' . ($act_index + 1);
 
 				$chapters = $act['chapters'];
 				foreach ($chapters as $chapter_index => $chapter) {
-					$chapter_name = $chapter['name'];
+					$chapter_name = $chapter['name'] ?? 'chapter ' . ($chapter_index + 1);
 					$slug_name = $this->slugify($chapter_name);
 
 					$chapter_data = [
 						'row' => $act_id,
 						'order' => $chapter_index + 1,
 						'name' => $chapter_name,
-						'short_description' => $chapter['short_description'],
-						'events' => $chapter['events'] ?? '',
-						'people' => $chapter['people'] ?? '',
-						'places' => $chapter['places'] ?? '',
-						'from_prev_chapter' => $chapter['from_prev_chapter'] ?? '',
-						'to_next_chapter' => $chapter['to_next_chapter'],
+						'short_description' => $chapter['short_description'] ?? 'no description',
+						'events' => $chapter['events'] ?? 'no events',
+						'people' => $chapter['people'] ?? 'no people',
+						'places' => $chapter['places'] ?? 'no places',
+						'from_prev_chapter' => $chapter['from_prev_chapter'] ?? 'N/A',
+						'to_next_chapter' => $chapter['to_next_chapter'] ?? 'N/A',
 						'backgroundColor' => '#AECBFA',
 						'textColor' => '#000000',
 						'created' => (new DateTime())->format('Y-m-d H:i:s'),
@@ -548,8 +798,8 @@
 				}
 			}
 
-			// Create chapters.json
-			$chapters_summary_file = $book_folder . '/chapters.json';
+			// Create acts.json
+			$chapters_summary_file = $book_folder . '/acts.json';
 			file_put_contents($chapters_summary_file, json_encode($chapters_summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 		}
 
