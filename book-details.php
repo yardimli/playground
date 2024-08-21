@@ -25,12 +25,12 @@ require_once 'action-session.php';
 
 </head>
 <body>
-<header>
+<header style="min-height: 30px;">
 	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 	<div class="container-fluid mt-2">
-		<a href="#" class="btn btn-danger float-end ms-2" title="Log out"
+		<a href="#" class="btn btn-danger float-end ms-2" title="Log out" id="logoutBtn"
 		   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
 		<button id="modeToggleBtn" class="btn btn-secondary float-end ms-2">
 			<i id="modeIcon" class="bi bi-sun"></i>
@@ -42,7 +42,7 @@ require_once 'action-session.php';
 <main class="py-4">
 
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center">Playground Book</h1>
+		<h1 style="margin:10px;" class="text-center" id="bookTitle">Playground Book</h1>
 		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
 			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
 			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
@@ -61,6 +61,9 @@ require_once 'action-session.php';
 		<div class="text-center mb-4">
 			<button class="btn btn-info  me-2" id="showAllHistoryBtn" title="show all history"><i
 					class="bi bi-clock-history"></i></button>
+			<button class="btn btn-warning me-2" title="Create Cover" id="createCoverBtn">
+				<i class="bi bi-image"></i>
+			</button>
 			<button class="btn btn-warning  me-2" id="generateAllBeatsBtn" title="Generate All Beats"><i
 					class="bi bi-lightning-charge"></i></button>
 
@@ -81,17 +84,22 @@ require_once 'action-session.php';
 
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
-				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookTitle"></span>
+				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookBlurb">About Book</span>
 			</div>
-			<div class="card-body modal-content modal-content-color">
-				<div id="bookBlurb" class="mb-4"></div>
-				<div><em><span id="backCoverText"></span></em></div>
-
-				<div><span id="bookPrompt"></span></div>
+			<div class="card-body modal-content modal-content-color d-flex flex-row">
+				<!-- Image Div -->
+				<div class="flex-shrink-0 d-none" id="bookCoverContainer">
+					<img src="" alt="Book Cover" style="width: 100%; height: 100%; max-width: 300px; min-height: 300px; object-fit: cover;" id="bookCover">
+				</div>
+				<!-- Text Blocks Div -->
+				<div class="flex-grow-1 ms-3">
+					<div><em><span id="backCoverText"></span></em></div>
+					<div><span id="bookPrompt"></span></div>
+				</div>
 			</div>
 		</div>
 
-		<div class="kanban-board" id="kanbanBoard">
+		<div class="book-chapter-board" id="bookBoard">
 		</div>
 
 	</div>
@@ -174,6 +182,46 @@ require_once 'action-session.php';
 		</div>
 	</div>
 
+
+	<!-- Modal for Creating Book Cover -->
+	<div class="modal fade" id="createCoverModal" tabindex="-1" aria-labelledby="createCoverModalLabel"
+	     aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
+					<h5 class="modal-title" id="createCoverModalLabel">Create Cover</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body modal-body-color">
+					<div class="row">
+						<div class="col-md-8">
+							<textarea class="form-control" id="coverPrompt" rows="5" placeholder="Enter cover description"></textarea>
+							<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="Book Title">
+							<input type="text" id="coverBookAuthor" class="form-control mt-2" placeholder="Book Author">
+							<div class="mb-1 form-check mt-2">
+								<input type="checkbox" class="form-check-input" id="enhancePrompt" checked>
+								<label class="form-check-label" for="enhancePrompt">
+									Enhance Prompt
+								</label>
+							</div>
+							<span style="font-size: 14px; margin-left:24px;">AI will optimize for creative visuals</span>
+						</div>
+						<div class="col-md-4">
+							<div id="coverImagePlaceholder"
+							     style="width: 200px; height: 300px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+								<span>Cover Image</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer modal-footer-color">
+					<button type="button" class="btn btn-primary" id="generateCoverBtn">Generate</button>
+					<button type="button" class="btn btn-success" id="saveCoverBtn" disabled>Save</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal for Adding Comment -->
 	<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -287,6 +335,10 @@ require_once 'action-session.php';
 		</div>
 	</div>
 </main>
+
+<script>
+	window.currentUserName = "<?php echo htmlspecialchars($current_user ?? 'Visior'); ?>";
+</script>
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="js/jquery-3.7.0.min.js"></script>

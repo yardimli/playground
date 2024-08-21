@@ -12,6 +12,7 @@
 		case 'write_book':
 			$language = $_POST['language'] ?? 'English';
 			$blurb = $_POST['blurb'] ?? '';
+			$book_structure = $_POST['bookStructure'] ?? 'fichtean_curve.txt';
 
 
 			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
@@ -69,7 +70,7 @@
 					];
 				} else {
 
-					$prompt = file_get_contents('./prompts/book_prompt_no_function_calling_2.txt');
+					$prompt = file_get_contents('./prompts/'. $book_structure ); //book_prompt_no_function_calling_2.txt');
 					$prompt = str_replace('##subject##', $blurb, $prompt);
 					$prompt = str_replace('##language##', $language, $prompt);
 					$prompt = str_replace('##book_title##', $book_title, $prompt);
@@ -85,7 +86,7 @@
 			}
 
 			if ($results['title']!== '' && $results['blurb'] !== '' && $results['back_cover_text'] !== '') {
-				$llmApp->createBookStructure($results, $blurb, $model, $language);
+				$llmApp->createBookStructure($results, $blurb, $model, $language, $current_user);
 				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
 			} else
 			{
@@ -137,6 +138,11 @@
 
 		//-----------------------------//
 		case 'delete_book':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+
 			$book = $_POST['book'];
 			$book_dir = "./books/".$book;
 
@@ -176,7 +182,7 @@
 				'colorOptions' => $colorOptions,
 				'chaptersDirName' => $chaptersDirName,
 				'users' => array_column($users, 'username'),
-				'currentUser' => $_SESSION['user'],
+				'currentUser' => $current_user,
 				'defaultRow' => $defaultRow,
 				'rows' => $rows,
 				'bookData' => $bookData,
@@ -224,6 +230,10 @@
 
 		//-----------------------------//
 		case 'delete_chapter':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
 
 			if (file_exists($chapterFilePath)) {
 				// Load the chapter to get the list of attachments
@@ -250,6 +260,11 @@
 
 		//-----------------------------//
 		case 'save_chapter':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+
 			$name = $_POST['name'];
 			$short_description = $_POST['short_description'];
 			$events = $_POST['events'];
@@ -310,9 +325,9 @@
 			}
 
 			if ($new_chapter) {
-				$chapter = log_history($chapter, 'Created chapter', $_SESSION['user']);
+				$chapter = log_history($chapter, 'Created chapter', $current_user);
 			} else {
-				$chapter = log_history($chapter, 'Edited chapter', $_SESSION['user']);
+				$chapter = log_history($chapter, 'Edited chapter', $current_user);
 			}
 
 			file_put_contents($chaptersDir . '/' . $chapterFilename, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
@@ -322,7 +337,37 @@
 			break;
 
 		//-----------------------------//
+		case 'save_cover':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+			$cover_filename = $_POST['cover_filename'];
+
+			$bookJsonPath = $chaptersDirName . '/book.json';
+			if (file_exists($bookJsonPath)) {
+				$bookJson = file_get_contents($bookJsonPath);
+				$bookData = json_decode($bookJson, true);
+				if (json_last_error() !== JSON_ERROR_NONE) {
+					echo json_encode(['success' => false, 'message' => 'Error decoding JSON: ' . json_last_error_msg()]);
+					die('Error decoding JSON: ' . json_last_error_msg());
+				}
+
+				$bookData['cover_filename'] = $cover_filename;
+				file_put_contents($bookJsonPath, json_encode($bookData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+				echo json_encode(['success' => true, 'message' => 'Cover saved successfully']);
+			} else {
+				echo json_encode(['success' => false, 'message' => 'Book JSON file not found.']);
+			}
+			break;
+
+		//-----------------------------//
 		case 'update_chapter_row':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+
 			$row = $_POST['row'];
 			$order = $_POST['order'];
 

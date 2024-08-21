@@ -25,12 +25,12 @@ require_once 'action-session.php';
 
 </head>
 <body>
-<header>
+<header style="min-height: 30px;">
 	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 	<div class="container-fluid mt-2">
-		<a href="#" class="btn btn-danger float-end ms-2" title="Log out"
+		<a href="#" class="btn btn-danger float-end ms-2" title="Log out" id="logoutBtn"
 		   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
 		<button id="modeToggleBtn" class="btn btn-secondary float-end ms-2">
 			<i id="modeIcon" class="bi bi-sun"></i>
@@ -113,8 +113,7 @@ require_once 'action-session.php';
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
 				<h5 class="modal-title" id="writeAllBeatsModalLabel">Writing All Beats</h5>
-				<div class="spinner-border float-start me-2 ms-2" style="width:20px; height: 20px;" role="status"
-				">
+				<div class="spinner-border float-start me-2 ms-2 d-none" style="width:20px; height: 20px;" role="status" id="beatSpinner">
 			</div>
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
@@ -147,6 +146,9 @@ require_once 'action-session.php';
 	</div>
 </div>
 
+<script>
+	window.currentUserName = "<?php echo htmlspecialchars($current_user ?? 'Visior'); ?>";
+</script>
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="js/jquery-3.7.0.min.js"></script>

@@ -110,7 +110,7 @@ function createChapter(chapter) {
 		chapter_places = chapter.places.join(', ');
 	}
 	
-	return `<div class="col-3 kanban-card-col" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" style="cursor: pointer;"><div class="kanban-card" style="background-color: ${chapter.backgroundColor}; color: ${chapter.textColor}">
+	return `<div class="col-3 book-chapter-card-col" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" style="cursor: pointer;"><div class="book-chapter-card" style="background-color: ${chapter.backgroundColor}; color: ${chapter.textColor}">
 				${beatsButton}
         <div style="font-size: 18px; margin-bottom: 15px;">${chapter.name}</div>
         <div class="mb-2">${truncatedText}</div>
@@ -149,32 +149,38 @@ function saveChapter() {
 		url: 'action-book.php',
 		type: 'POST',
 		data: formData,
+		dataType: 'json',
 		processData: false, // Prevent jQuery from automatically transforming the data into a query string
 		contentType: false, // Prevent jQuery from overriding the Content-Type header
 		success: function (response) {
-			$('#save_result').html('<div class="alert alert-success">Chapter saved successfully!</div>');
-			const chapter = JSON.parse(response);
-			const chapterSelector = `.kanban-card-col[data-chapter-filename="${chapter.chapterFilename}"]`;
-			const existingChapter = $(chapterSelector);
-			if (existingChapter.length) {
-				existingChapter.off('click'); // Unbind the click event
-				existingChapter.replaceWith(createChapter(chapter));
+			if (response.success) {
+				$('#save_result').html('<div class="alert alert-success">Chapter saved successfully!</div>');
+				const chapter = JSON.parse(response);
+				const chapterSelector = `.book-chapter-card-col[data-chapter-filename="${chapter.chapterFilename}"]`;
+				const existingChapter = $(chapterSelector);
+				if (existingChapter.length) {
+					existingChapter.off('click'); // Unbind the click event
+					existingChapter.replaceWith(createChapter(chapter));
+				} else {
+					const insertRow = $('.book-chapter-act-ul[data-row="' + defaultRow + '"]');
+					insertRow.prepend(createChapter(chapter));
+					
+					insertRow.children().each(function (index) {
+						const chapterFilename = $(this).attr('data-chapter-filename');
+						updateChapterRow(chapterFilename, defaultRow, index);
+					});
+					//scroll to top of document
+					setTimeout(function () {
+						$("#chapterModal").modal('hide');
+					}, 400);
+					
+					$('html, body').animate({scrollTop: 0}, 200);
+				}
+				updateUploadFilesList(chapter);
 			} else {
-				const insertRow = $('.kanban-row-ul[data-row="' + defaultRow + '"]');
-				insertRow.prepend(createChapter(chapter));
-				
-				insertRow.children().each(function (index) {
-					const chapterFilename = $(this).attr('data-chapter-filename');
-					updateChapterRow(chapterFilename, defaultRow, index);
-				});
-				//scroll to top of document
-				setTimeout(function () {
-					$("#chapterModal").modal('hide');
-				}, 400);
-				
-				$('html, body').animate({scrollTop: 0}, 200);
+				console.log(response);
+				alert('Failed to save chapter: ' + response.message);
 			}
-			updateUploadFilesList(chapter);
 		}
 	});
 }
@@ -238,12 +244,12 @@ function deleteChapter() {
 		chapterFilename: chapterFilename
 	}, function (response) {
 		if (response.success) {
-			$(`.kanban-card-col[data-chapter-filename="${chapterFilename}"]`).remove();
+			$(`.book-chapter-card-col[data-chapter-filename="${chapterFilename}"]`).remove();
 			$('#chapterModal').modal('hide');
 			$('#deleteConfirmationModal').modal('hide');
 			$('#save_result').html('<div class="alert alert-success">Chapter deleted successfully!</div>');
 		} else {
-			$('#save_result').html('<div class="alert alert-danger">Failed to delete the chapter: ' + response.message + '</div>');
+			alert('Failed to delete the chapter: ' + response.message);
 		}
 	}, 'json');
 }
@@ -252,9 +258,14 @@ function generateAllBeats() {
 	const modal = $('#generateAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
 	const log = $('#generateAllBeatsLog');
+	
+	
 	modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 	log.empty();
 	progressBar.css('width', '0%').attr('aria-valuenow', 0).text('0%');
+	
+	log.append('<br>This process will write 10 short beats for each chapter in the book. Later these beats will be turned into full book pages.<br>Please wait... <br><br>If the progress bar is stuck for a long time, please refresh the page and try again.<br><br>');
+	
 	
 	$.post('action-book.php', {action: 'load_chapters', book: bookParam, llm: savedLlm}, function (response) {
 		let chapters = JSON.parse(response);
@@ -361,7 +372,7 @@ function generateAllBeats() {
 									}
 								});
 							} else {
-								log.append(`<p>Failed to generate beats for chapter: ${chapter.name}</p>`);
+								log.append(`<p>Failed to generate beats for chapter: ${chapter.name} :: ${response.message}</p>`);
 								log.scrollTop(log[0].scrollHeight);
 								continueProcessing();
 							}
@@ -404,27 +415,33 @@ $(document).ready(function () {
 			window.currentUserName = data.currentUser;
 			window.defaultRow = data.defaultRow;
 			window.rows = data.rows;
+			bookData = data.bookData;
 			
 			$("#bookTitle").text(data.bookData.title);
 			$("#bookBlurb").text(data.bookData.blurb);
 			$("#backCoverText").text(data.bookData.back_cover_text);
 			$("#bookPrompt").html('<br><em>Prompt For Book:</em><br>' + data.bookData.prompt);
-
+			
+			if (data.bookData.cover_filename) {
+				$('#bookCover').attr('src', 'ai-images/' + data.bookData.cover_filename);
+				$("#bookCoverContainer").removeClass('d-none');
+			}
+			
 			
 			// Populate rows
 			for (let row of window.rows) {
-				$('#kanbanBoard').append(`
-                            <div class="kanban-row">
+				$('#bookBoard').append(`
+                            <div class="book-chapter-act">
                                 <h3>${row.title}</h3>
-                                <div class="row kanban-row-ul" id="${row.id}-row" data-row="${row.id}"></div>
+                                <div class="row book-chapter-act-ul" id="${row.id}-row" data-row="${row.id}"></div>
                             </div>
                         `);
 			}
 			
 			// Initialize Sortable for each kanban row
-			$('.kanban-row-ul').each(function () {
+			$('.book-chapter-act-ul').each(function () {
 				new Sortable(this, {
-					group: 'kanban', // set the same group for all rows
+					group: 'book-chapter', // set the same group for all rows
 					animation: 150,
 					scroll: false,
 					direction: 'horizontal', // Ensure the direction is horizontal
@@ -436,12 +453,12 @@ $(document).ready(function () {
 						isDragging = false;
 						
 						const item = evt.item;
-						const newRow = $(item).closest('.kanban-row-ul').attr('data-row');
+						const newRow = $(item).closest('.book-chapter-act-ul').attr('data-row');
 						const chapterFilename = $(item).attr('data-chapter-filename');
 						const newOrder = $(item).index(); // Get the new index/order
 						
 						// Update the order of all items in the row
-						$(item).closest('.kanban-row-ul').children().each(function (index) {
+						$(item).closest('.book-chapter-act-ul').children().each(function (index) {
 							const chapterFilename = $(this).attr('data-chapter-filename');
 							updateChapterRow(chapterFilename, newRow, index);
 						});
@@ -476,6 +493,68 @@ $(document).ready(function () {
 		}
 	});
 	
+	
+	$('#createCoverBtn').on('click', function (e) {
+		e.preventDefault();
+		$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');
+		$("#coverBookTitle").val(bookData.title);
+		$("#coverBookAuthor").val(currentUserName);
+		$("#coverPrompt").val('An image describing: ' + bookData.blurb);
+	});
+	
+	let createCoverFileName = '';
+	
+	$('#generateCoverBtn').on('click', function () {
+		$('#generateCoverBtn').prop('disabled', true).text('Generating...');
+		
+		$.ajax({
+			url: 'action-make-cover.php',
+			method: 'POST',
+			data: {
+				action: 'make-cover',
+				book: bookParam,
+				llm: savedLlm,
+				theme: $("#coverPrompt").val(),
+				title_1: $("#coverBookTitle").val(),
+				author_1: $("#coverBookAuthor").val(),
+				creative: $("#enhancePrompt").is(':checked') ? 'more' : 'no'
+			},
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					$('#coverImagePlaceholder').html('<img src="ai-images/' + data.output_filename + '" alt="Generated Cover" style="width: 100%; height: 100%; object-fit: cover;">');
+					createCoverFileName = data.output_filename;
+					$('#saveCoverBtn').prop('disabled', false);
+				} else {
+					alert('Failed to generate cover: ' + data.message);
+				}
+				$('#generateCoverBtn').prop('disabled', false).text('Generate');
+			}
+		});
+	});
+	
+	
+	$('#saveCoverBtn').on('click', function () {
+		$.ajax({
+			url: 'action-book.php',
+			method: 'POST',
+			data: {
+				action: 'save_cover',
+				book: bookParam,
+				llm: savedLlm,
+				cover_filename: createCoverFileName
+			},
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					alert('Cover saved successfully!');
+				} else {
+					alert('Failed to save cover: ' + data.message);
+				}
+			}
+		});
+	});
+	
 	$('#deleteChapterBtn').on('click', function (e) {
 		e.preventDefault();
 		$('#deleteConfirmationModal').modal({backdrop: 'static', keyboard: true}).modal('show');
@@ -486,8 +565,9 @@ $(document).ready(function () {
 		deleteChapter();
 	});
 	
-	$('#chapterForm').on('submit', function (e) {
+	$('#saveChapter').on('click', function (e) {
 		e.preventDefault();
+		console.log('submitting form');
 		saveChapter();
 	});
 	
@@ -507,4 +587,5 @@ $(document).ready(function () {
 	});
 	
 	
-});
+})
+;

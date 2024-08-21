@@ -729,7 +729,7 @@
 		}
 
 
-		public function createBookStructure($book, $prompt, $model, $language = 'english')
+		public function createBookStructure($book, $prompt, $model, $language = 'english', $current_user)
 		{
 			$timestamp = time();
 			$book_folder = __DIR__ . "/books/book_$timestamp";
@@ -749,7 +749,7 @@
 				'created' => (new DateTime())->format('Y-m-d H:i:s'),
 				'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
 				'language' => $language,
-				'owner' => $_SESSION['user'],
+				'owner' => $current_user,
 			];
 			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 

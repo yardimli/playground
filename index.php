@@ -41,6 +41,7 @@ require_once 'action-session.php';
 							'id' => $subDir,
 							'title' => $bookData['title'],
 							'blurb' => $bookData['blurb'],
+							'owner' => $bookData['owner'] ?? 'admin',
 							'back_cover_text' => $bookData['back_cover_text'],
 							'file_time' => filemtime($bookJsonPath)
 						];
@@ -55,6 +56,12 @@ require_once 'action-session.php';
 		return $b['file_time'] - $a['file_time'];
 	});
 
+	//remove books whose owner is not the current user or admin
+	$books = array_filter($books, function ($book) {
+		global $current_user;
+		return $book['owner'] === $current_user || $book['owner'] === 'admin';
+	});
+
 
 ?>
 
@@ -67,23 +74,23 @@ require_once 'action-session.php';
 			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
 			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-<!--			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>-->
+			<!--			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>-->
 			<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+			<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+			<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+			<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+			<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
 			<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+			<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+			<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+			<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
 		</select>
 
 		<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 			<input type="hidden" name="action" value="logout">
 		</form>
 		<div class="text-center mb-4">
-			<a href="#" class="btn btn-danger ms-2" title="Log out"
+			<a href="#" class="btn btn-danger ms-2" title="Log out" id="logoutBtn"
 			   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
 			<a href="login.php" class="btn btn-secondary ms-2" title="login/sign up"><i class="bi bi-person"></i></a>
 			<button id="modeToggleBtn" class="btn btn-secondary ms-2">
@@ -105,16 +112,25 @@ require_once 'action-session.php';
 				<?php foreach ($books as $book): ?>
 
 					<div class="card general-card">
-						<div class="card-header modal-header modal-header-color">
-							<span style="font-size: 22px; font-weight: normal;" class="p-2"><?php echo htmlspecialchars($book['title']); ?></span>
+						<div class="card-header modal-header modal-header-color" style="display: block">
+							<div style="font-size: 22px; font-weight: normal;"
+							     class="p-2"><?php echo htmlspecialchars($book['title']); ?>
+								<div style="font-size: 16px;"><em>By</em> <?php echo $book['owner']; ?></div>
+							</div>
 						</div>
 						<div class="card-body modal-content modal-content-color">
 							<div class="mb-4"><?php echo htmlspecialchars($book['blurb']); ?></div>
 							<div><em><span><?php echo htmlspecialchars($book['back_cover_text']); ?></span></em></div>
+
 						</div>
 						<div class="card-footer">
-							<a href="book-details.php?book=<?php echo urlencode($book['id']); ?>" class="btn btn-primary w-25 mt-3 d-inline-block">Read More</a>
-							<button class="btn btn-danger delete-book-btn mt-3 w-25 d-inline-block" data-book-id="<?php echo urlencode($book['id']); ?>">Delete Book</button>
+							<a href="book-details.php?book=<?php echo urlencode($book['id']); ?>"
+							   class="btn btn-primary mt-3 d-inline-block" style="min-width:20vw;">Read More</a>
+							<?php if ($current_user === 'admin' || $current_user === $book['owner']) : ?>
+							<button class="btn btn-danger delete-book-btn mt-3 d-inline-block" style="min-width:20vw;"
+							        data-book-id="<?php echo urlencode($book['id']); ?>">Delete Book
+							</button>
+							<?php endif; ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
@@ -129,6 +145,9 @@ require_once 'action-session.php';
 					<div class="modal-header modal-header-color">
 						<h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<div class="spinner-border d-none" role="status" id="spinner">
+							<span class="visually-hidden">Loading...</span>
+						</div>
 					</div>
 					<div class="modal-body modal-body-color">
 						<!--						<div class="mb-3">-->
@@ -136,29 +155,38 @@ require_once 'action-session.php';
 						<!--							<input type="text" class="form-control" id="subject" name="subject" required>-->
 						<!--						</div>-->
 						<div class="mb-3">
-							<label for="blurb" class="form-label">Blurb</label>
-							<textarea class="form-control" id="blurb" name="blurb" required></textarea>
+							<textarea class="form-control" id="blurb" name="blurb" required
+							          placeholder="describe your books story, people and events. While you can just say 'A Boy Meets World' the longer and more detailed your blurb is the more creative and unique the writing will be."
+							          rows="6"></textarea>
 						</div>
 						<!--						<div class="mb-3">-->
 						<!--							<label for="backCoverText" class="form-label">Back Cover Text</label>-->
 						<!--							<textarea class="form-control" id="backCoverText" name="back_cover_text" required></textarea>-->
 						<!--						</div>-->
 						<div class="mb-3">
-							<label for="language" class="form-label">Language</label>
 							<select class="form-control" id="language" name="language" required>
 								<option value="English">English</option>
+								<option value="Norwegian">Norwegian</option>
 								<option value="Turkish">Turkish</option>
-								<option value="Spanish">Spanish</option>
-								<option value="French">French</option>
-								<option value="German">German</option>
-								<option value="Traditional Chinese">Chinese</option>
 								<!-- Add more languages as needed -->
 							</select>
 						</div>
-						<button id="addBookForm" class="btn btn-primary">Submit</button>
-						<div class="spinner-border d-none" role="status" id="spinner">
-							<span class="visually-hidden">Loading...</span>
+
+						<div class="mb-3">
+							<select class="form-control" id="bookStructure" name="language" required>
+								<option value="fichtean_curve.txt">Fichtean Curve (3 Acts, 8 Chapters)</option>
+								<option value="freytags_pyramid.txt">Freytag's Pyramid (5 Acts, 9 Chapters)</option>
+								<option value="heros_journey.txt">Hero's Journey (3 Acts, 12 Chapters)</option>
+								<option value="story_clock.txt">Story Clock (4 Acts, 12 Chapters)</option>
+								<option value="save_the_cat.txt">Save The Cat (4 Acts, 15 Chapters)</option>
+								<option value="dan_harmons_story_circle.txt">Dan Harmon's Story Circle (8 Acts, 15 Chapters)</option>
+							</select>
 						</div>
+						<div class="mb-3" style="font-size: 14px;">
+							After clicking the submit button, the AI will first write the book's title and blurb. After that, it will
+							start creating 15 chapters for the book. This process may take a few minutes.
+						</div>
+						<button id="addBookForm" class="btn btn-primary">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -166,7 +194,8 @@ require_once 'action-session.php';
 
 
 		<!-- Delete Book Confirmation Modal -->
-		<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+		<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteBookModalLabel"
+		     aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-color">
 					<div class="modal-header modal-header-color">
@@ -195,27 +224,27 @@ require_once 'action-session.php';
 		<script src="js/custom-ui.js"></script> <!-- If you have custom JS -->
 
 		<script>
-			window.currentUserName = "<?php echo htmlspecialchars($_SESSION['user']); ?>";
+			window.currentUserName = "<?php echo htmlspecialchars($current_user ?? 'Visior'); ?>";
 
-			$(document).ready(function () {
+				$(document).ready(function () {
 				let bookToDelete = null;
 
-				$('.delete-book-btn').click(function() {
+				$('.delete-book-btn').click(function () {
 					bookToDelete = $(this).data('book-id');
 					$('#deleteBookModal').modal('show');
 				});
 
-				$('#confirmDeleteBook').click(function() {
+				$('#confirmDeleteBook').click(function () {
 					if (bookToDelete) {
 						$.ajax({
 							url: 'action-book.php',
 							type: 'POST',
 							data: {
 								action: 'delete_book',
-								llm:savedLlm,
+								llm: savedLlm,
 								book: bookToDelete
 							},
-							success: function(response) {
+							success: function (response) {
 								let result = JSON.parse(response);
 								if (result.success) {
 									location.reload(); // Reload the page to reflect the changes
@@ -223,7 +252,7 @@ require_once 'action-session.php';
 									alert('Error deleting book: ' + result.message);
 								}
 							},
-							error: function() {
+							error: function () {
 								alert('Error occurred while deleting the book.');
 							}
 						});
@@ -232,6 +261,11 @@ require_once 'action-session.php';
 				});
 
 				$("#addBookBtn").click(function () {
+					if (window.currentUserName === 'Visitor') {
+						//redirect to login page
+						window.location.href = 'login.php';
+						return;
+					}
 					$("#addBookModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				});
 
@@ -248,6 +282,7 @@ require_once 'action-session.php';
 					formData.append('language', $('#language').val());
 					formData.append('action', 'write_book');
 					formData.append('llm', savedLlm);
+					formData.append('bookStructure', $('#bookStructure').val());
 
 					fetch('action-book.php', {
 						method: 'POST',

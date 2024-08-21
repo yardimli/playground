@@ -60,14 +60,19 @@ function saveComment() {
 		$('#commentModal').modal('hide');
 		$('#commentForm')[0].reset();
 		const comment = JSON.parse(response);
-		comment.chapterFilename = commentData.chapterFilename; // Add chapterFilename to the comment
-		const commentsList = $('#commentsList');
-		$('.comments-section').show();
-		if (comment.isNew) {
-			commentsList.append(createCommentHtml(comment));
-		} else {
-			const commentElement = commentsList.find(`.comment[data-id="${comment.id}"]`);
-			commentElement.replaceWith(createCommentHtml(comment));
+		if (comment.success) {
+			comment.chapterFilename = commentData.chapterFilename; // Add chapterFilename to the comment
+			const commentsList = $('#commentsList');
+			$('.comments-section').show();
+			if (comment.isNew) {
+				commentsList.append(createCommentHtml(comment));
+			} else {
+				const commentElement = commentsList.find(`.comment[data-id="${comment.id}"]`);
+				commentElement.replaceWith(createCommentHtml(comment));
+			}
+		} else
+		{
+			alert('Failed to save comment. ' + comment.message);
 		}
 	});
 }

@@ -4,17 +4,14 @@
 	require_once 'action-session.php';
 	require_once 'action-init.php';
 
-
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$action = $_POST['action'] ?? '';
 		$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
 
 
-
 		$chapterFilename = $_POST['chapterFilename'] ?? null;
 		$chapterFilePath = $chaptersDir . '/' . $chapterFilename;
 
-		$user = $_SESSION['user'] ?? '';
 		$id = $_POST['id'] ?? null;
 		$uploadFilename = $_POST['uploadFilename'] ?? null;
 		$USE_LLM = $_ENV['USE_LLM'] ?? 'open-router';
@@ -25,6 +22,11 @@
 
 			//-----------------------------//
 			case 'write_beats':
+				if ($bookData['owner'] !== $current_user) {
+					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					break;
+				}
+
 				$chapterName = $_POST['chapterName'];
 				$chapterText = $_POST['chapterText'];
 				$chapterEvents = $_POST['chapterEvents'];
@@ -135,6 +137,11 @@
 
 			//-----------------------------//
 			case 'write_beat_text':
+				if ($bookData['owner'] !== $current_user) {
+					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					break;
+				}
+
 				$beatIndex = (int)$_POST['beatIndex'];
 				$currentBeatDescription = $_POST['currentBeatDescription'] ?? '';
 
@@ -186,6 +193,11 @@
 
 			//-----------------------------//
 			case 'write_beat_text_summary':
+				if ($bookData['owner'] !== $current_user) {
+					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					break;
+				}
+
 				$currentBeatDescription = $_POST['currentBeatDescription'] ?? '';
 				$currentBeatText = $_POST['currentBeatText'] ?? '';
 
@@ -232,6 +244,10 @@
 
 			//-----------------------------//
 			case 'save_beat_text':
+				if ($bookData['owner'] !== $current_user) {
+					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					break;
+				}
 
 				// Load the book data
 				$bookData = json_decode(file_get_contents($bookJsonPath), true);
@@ -255,6 +271,11 @@
 
 			//-----------------------------//
 			case 'save_beats':
+				if ($bookData['owner'] !== $current_user) {
+					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					break;
+				}
+
 				$beats = json_decode($_POST['beats'], true);
 
 				if (file_exists($chapterFilePath)) {

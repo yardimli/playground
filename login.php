@@ -16,25 +16,27 @@ require_once 'action-session.php';
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="card shadow">
 					<div class="card-title text-center border-bottom">
-							<img src="images/android-chrome-192x192.png">
-						<h4 class="p-3">Login</h4>
+							<a href="index.php"><img src="images/android-chrome-192x192.png" style="width: 140px;"></a>
+						<h4 class="p-1">Login / Register</h4>
 					</div>
 					<div class="card-body">
 						<div id="error-message" class="alert alert-danger d-none" role="alert"></div>
 						<form method="POST" action="action-other-functions.php">
 							<input type="hidden" name="action" value="login">
-							<div class="mb-4">
-								<label for="username" class="form-label">Username</label>
-								<input type="text" class="form-control" id="username" name="username"/>
+							<div class="mb-2">
+								<input type="text" class="form-control" id="username" name="username" placeholder="username"/>
 							</div>
-							<div class="mb-4">
-								<label for="password" class="form-label">Password</label>
-								<input type="password" class="form-control" id="password" name="password"/>
+							<div class="mb-2">
+								<input type="password" class="form-control" id="password" name="password" placeholder="password"/>
 							</div>
-							<div class="d-grid">
-								<button type="submit" class="btn btn-primary text-light main-bg">Login</button>
+							<div class="mb-2">
+								<button type="submit" class="btn btn-primary text-light main-bg d-inline-block">Login / Register</button>
+								<a href="index.php" class="btn btn-info text-dark float-end d-inline-block">Browse As Visitor</a>
 							</div>
 						</form>
+						<div id="error-message" class="alert alert-info mt-3" role="alert">
+							You can login with any username and password. If the username doesn't exist, it will be created. The password will be hashed. If the username exists, the password will be verified. If the password is incorrect, you will be told so.
+						</div>
 					</div>
 				</div>
 			</div>

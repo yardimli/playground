@@ -11,6 +11,10 @@
 
 		//-----------------------------//
 		case 'delete_comment':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
 
 			if (file_exists($chapterFilePath)) {
 				$chapter = json_decode(file_get_contents($chapterFilePath), true);
@@ -28,6 +32,11 @@
 
 		//-----------------------------//
 		case 'delete_file':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+
 			$delete_filename = $_POST['uploadFilename'];
 			$delete_filePath = $chaptersDir . '/uploads/' . $delete_filename;
 
@@ -72,6 +81,11 @@
 
 		//-----------------------------//
 		case 'save_comment':
+			if ($bookData['owner'] !== $current_user) {
+				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				break;
+			}
+
 			$text = $_POST['text'];
 			$timestamp = date('Y-m-d H:i:s');
 
@@ -105,6 +119,7 @@
 
 				file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 				echo json_encode([
+					'success' => true,
 					'id' => $id,
 					'text' => $text,
 					'user' => $user,
@@ -119,6 +134,12 @@
 		case 'login':
 			$username = $_POST['username'] ?? '';
 			$password = $_POST['password'] ?? '';
+
+			if (empty($username) || empty($password)) {
+				$error = "Username and password are required";
+				header("Location: login.php?error=" . urlencode($error));
+				exit();
+			}
 
 			$userFound = false;
 

@@ -23,6 +23,10 @@ $(document).ready(function () {
 	$('#currentUser').text(window.currentUserName);
 	console.log(window.currentUserName);
 	
+	if (window.currentUserName === 'Visitor') {
+		//hide logout button
+		$('#logoutBtn').addClass('d-none');
+	}
 	
 	applyTheme(savedTheme);
 	

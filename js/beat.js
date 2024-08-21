@@ -41,11 +41,13 @@ function writeAllBeats(chapterFilename) {
 	const modal = $('#writeAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
 	const log = $('#writeAllBeatsLog');
-	
+	$("#beatSpinner").removeClass('d-none');
 	modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 	
 	log.empty();
 	progressBar.css('width', '0%').attr('aria-valuenow', 0).text('0%');
+	
+	log.append('<br>This process will write the texts and the summaries for all beats in this chapter. The summaries are used to create the next beat. Please wait... <br><br>If the progress bar is stuck for a long time, please refresh the page and try again.<br><br>');
 	
 	const beats = $('.beat-outer-container');
 	const totalBeats = beats.length;
@@ -67,7 +69,7 @@ function writeAllBeats(chapterFilename) {
 				processNextBeat(chapterFilename);
 			} else {
 				
-				log.append(`<br><em>Writing beat ${beatIndex + 1}</em>`);
+				log.append(`<br><br><em>Writing beat ${beatIndex + 1}</em>`);
 				log.append('<br><em>Beat Description:</em> ' + beatDescription);
 				log.scrollTop(log[0].scrollHeight);
 				
@@ -89,13 +91,22 @@ function writeAllBeats(chapterFilename) {
 					.catch(error => {
 						log.append(`<br>Error processing beat ${beatIndex + 1}: ${error}`);
 						log.scrollTop(log[0].scrollHeight);
+
+						processedBeats++;
+						const progress = Math.round((processedBeats / totalBeats) * 100);
+						progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
 						processNextBeat(chapterFilename);
 					});
 			}
 		} else {
-			log.append('<br>All beats processed!');
+			$("#beatSpinner").addClass('d-none');
+			log.append('<br>All beats processed!<br><br><span style="font-weight: bold;">After reviewing the beats, click the "Save Beats" button to save the changes.</span><br><br>');
 			log.scrollTop(log[0].scrollHeight);
 			$('#saveBeatsBtn').removeClass('d-none');
+			setTimeout(function(){
+				log.scrollTop(log[0].scrollHeight);
+			},200);
+			
 		}
 	}
 	
@@ -164,9 +175,6 @@ function recreateBeats(chapterFilename) {
 	let spinner = $('#beat-spinner');
 	spinner.removeClass('d-none');
 	$("#recreateBeats").prop('disabled', true);
-	
-	//clear out all beats
-	$('#beatsList').empty();
 	
 	let prevChapterBeats = '';
 	if (prevChapter !== null) {
@@ -339,8 +347,8 @@ function writeBeatText(beatDescription, beatIndex, chapterFilename) {
 				//call the function to write the beat text summary
 				//writeBeatTextSummary(response.prompt, beatDescription, beatIndex, chapterFilename);
 			} else {
-				$('#beatDetailModalResult_' + beatIndex).html('Failed to get beat prompt: ' + response.message);
-				reject('Failed to get beat prompt');
+				$('#beatDetailModalResult_' + beatIndex).html('Failed to write beat text: ' + response.message);
+				reject('Failed to write beat text: ' + response.message);
 				
 			}
 		}, 'json');
@@ -379,8 +387,8 @@ function writeBeatTextSummary(beatText, beatDescription, beatIndex, chapterFilen
 				$('#writeBeatTextSummaryBtn_' + beatIndex).prop('disabled', false);
 				resolve();
 			} else {
-				$('#beatDetailModalResult_' + beatIndex).html('Failed to get beat prompt: ' + response.message);
-				reject('Failed to get beat prompt');
+				$('#beatDetailModalResult_' + beatIndex).html('Failed to write summary: ' + response.message);
+				reject('Failed to write summary');
 			}
 		}, 'json');
 	});
@@ -510,6 +518,8 @@ $(document).ready(function () {
 		}, function (response) {
 			if (response.success) {
 				alert('Beats saved successfully!');
+				//reload the page
+				location.reload();
 			} else {
 				alert('Failed to save beats: ' + response.message);
 			}
@@ -518,7 +528,10 @@ $(document).ready(function () {
 	
 	$("#recreateBeats").on('click', function (e) {
 		e.preventDefault();
-		recreateBeats(chapterParam + '.json');
+		//show confirmation dialog
+		if (confirm('Are you sure you want to recreate the beats? This will overwrite any existing beats.')) {
+			recreateBeats(chapterParam + '.json');
+		}
 	});
 	
 });

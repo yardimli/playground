@@ -31,14 +31,6 @@
 		['background' => '#FFFFFF', 'text' => '#000000']
 	];
 
-	 if (empty($_SESSION['user'])) {
-		$post_action = $_POST['action'] ?? '';
-		$current_page = basename($_SERVER['PHP_SELF']);
-		if ($post_action !== 'login' && $current_page !== 'login.php') {
-			header('Location: login.php');
-			exit();
-		}
-	}
 
 	function log_history($chapter, $action, $user)
 	{
@@ -56,3 +48,5 @@
 		return $slug;
 	}
 
+
+	$current_user = $_SESSION['user'] ?? 'Visitor';

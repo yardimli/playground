@@ -3,7 +3,7 @@
 	$llm = $_POST['llm'] ?? 'anthropic/claude-3-haiku:beta';
 
 
-	if ($action === 'write_book' || $action === 'login' || $action === 'register' || $action === 'logout' || $action === 'delete_book' || $action === '') {
+	if ($action === 'write_book' || $action === 'login' || $action === 'register' || $action === 'logout' || $action === '') {
 
 	} else {
 		if (isset($_POST['book']) && !empty($_POST['book'])) {
@@ -34,6 +34,7 @@
 			if (json_last_error() !== JSON_ERROR_NONE) {
 				die('Error decoding JSON: ' . json_last_error_msg());
 			}
+			$bookData['owner'] = $bookData['owner'] ?? 'admin';
 		} else {
 			die('Book JSON file not found.');
 		}
@@ -64,7 +65,6 @@
 		$chapterFilePath = $chaptersDir . '/' . $chapterFilename;
 	}
 
-	$user = $_SESSION['user'] ?? '';
 	$id = $_POST['id'] ?? null;
 	$uploadFilename = $_POST['uploadFilename'] ?? null;
 	$use_llm = $_ENV['USE_LLM'] ?? 'open-router';

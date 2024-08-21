@@ -6,7 +6,7 @@ let bookData = {};
 
 function loadStories() {
 	//empty the rows
-	$('.kanban-row-ul').empty();
+	$('.book-chapter-act-ul').empty();
 	
 	$.post('action-book.php', {action: 'load_chapters', book: bookParam, llm: savedLlm}, function (data) {
 		const stories = JSON.parse(data);
@@ -28,7 +28,7 @@ function loadStories() {
 			// Append sorted stories to the respective row
 			groupedStories[row].forEach(chapter => {
 				const chapterCard = createChapter(chapter);
-				$(`.kanban-row-ul[data-row="${row}"]`).append(chapterCard);
+				$(`.book-chapter-act-ul[data-row="${row}"]`).append(chapterCard);
 			});
 		});
 	});
