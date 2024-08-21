@@ -26,6 +26,9 @@ $(document).ready(function () {
 	if (window.currentUserName === 'Visitor') {
 		//hide logout button
 		$('#logoutBtn').addClass('d-none');
+	} else
+	{
+		$('#loginBtn').addClass('d-none');
 	}
 	
 	applyTheme(savedTheme);

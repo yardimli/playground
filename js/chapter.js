@@ -522,7 +522,7 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
-					$('#coverImagePlaceholder').html('<img src="ai-images/' + data.output_filename + '" alt="Generated Cover" style="width: 100%; height: 100%; object-fit: cover;">');
+					$('#generatedCover').attr('src',"ai-images/" + data.output_filename );
 					createCoverFileName = data.output_filename;
 					$('#saveCoverBtn').prop('disabled', false);
 				} else {
@@ -548,6 +548,7 @@ $(document).ready(function () {
 			success: function (data) {
 				if (data.success) {
 					alert('Cover saved successfully!');
+					$('#bookCover').attr('src', 'ai-images/' + createCoverFileName);
 				} else {
 					alert('Failed to save cover: ' + data.message);
 				}

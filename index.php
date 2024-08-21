@@ -43,6 +43,7 @@ require_once 'action-session.php';
 							'blurb' => $bookData['blurb'],
 							'owner' => $bookData['owner'] ?? 'admin',
 							'back_cover_text' => $bookData['back_cover_text'],
+							'cover_filename' => $bookData['cover_filename'] ?? '',
 							'file_time' => filemtime($bookJsonPath)
 						];
 					}
@@ -66,9 +67,9 @@ require_once 'action-session.php';
 ?>
 
 
-<main class="py-4">
+<main class="py-2">
 
-	<div class="container mt-2">
+	<div class="container mt-1">
 		<h1 style="margin:10px;" class="text-center">Playground Book</h1>
 		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
 			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
@@ -92,7 +93,7 @@ require_once 'action-session.php';
 		<div class="text-center mb-4">
 			<a href="#" class="btn btn-danger ms-2" title="Log out" id="logoutBtn"
 			   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
-			<a href="login.php" class="btn btn-secondary ms-2" title="login/sign up"><i class="bi bi-person"></i></a>
+			<a href="login.php" class="btn btn-secondary ms-2" title="login/sign up" id="loginBtn"><i class="bi bi-person"></i></a>
 			<button id="modeToggleBtn" class="btn btn-secondary ms-2">
 				<i id="modeIcon" class="bi bi-sun"></i>
 			</button>
@@ -100,41 +101,55 @@ require_once 'action-session.php';
 			</button>
 		</div>
 
-		<div>
-			<div class="my-3 d-inline-block">
+		<div class="container mt-1">
+			<div class="my-2 d-inline-block">
 				Hello <span id="currentUser"></span>,
 			</div>
-		</div>
 
-		<div class="container mt-5">
-			<h1>Books</h1>
-			<ul class="list-group">
-				<?php foreach ($books as $book): ?>
+			<div class="row">
+				<?php foreach ($books as $book):
+					?>
+					<div class="col-md-6 col-lg-6 col-12">
 
-					<div class="card general-card">
-						<div class="card-header modal-header modal-header-color" style="display: block">
-							<div style="font-size: 22px; font-weight: normal;"
-							     class="p-2"><?php echo htmlspecialchars($book['title']); ?>
-								<div style="font-size: 16px;"><em>By</em> <?php echo $book['owner']; ?></div>
+						<div class="card general-card">
+							<div class="card-header modal-header modal-header-color" style="display: block;">
+								<div style="font-size: 22px; font-weight: normal;" class="pt-2 ps-2 pe-2">
+									<span id="bookBlurb"><?php echo htmlspecialchars($book['title']); ?></span>
+								</div>
 							</div>
-						</div>
-						<div class="card-body modal-content modal-content-color">
-							<div class="mb-4"><?php echo htmlspecialchars($book['blurb']); ?></div>
-							<div><em><span><?php echo htmlspecialchars($book['back_cover_text']); ?></span></em></div>
+							<div class="card-body modal-content modal-content-color d-flex flex-row">
+								<!-- Image Div -->
+								<div class="row">
+									<div class="col-lg-5 col-12 mb-3">
+										<a href="book-details.php?book=<?php echo urlencode($book['id']); ?>"><img
+											src="<?php echo(($book['cover_filename'] !== '') ? 'ai-images/' . $book['cover_filename'] : 'images/placeholder-cover.jpg'); ?>"
+											alt="Book Cover"
+											style="width: 100%; object-fit: cover;"
+											id="bookCover"></a>
 
-						</div>
-						<div class="card-footer">
-							<a href="book-details.php?book=<?php echo urlencode($book['id']); ?>"
-							   class="btn btn-primary mt-3 d-inline-block" style="min-width:20vw;">Read More</a>
-							<?php if ($current_user === 'admin' || $current_user === $book['owner']) : ?>
-							<button class="btn btn-danger delete-book-btn mt-3 d-inline-block" style="min-width:20vw;"
-							        data-book-id="<?php echo urlencode($book['id']); ?>">Delete Book
-							</button>
-							<?php endif; ?>
+										<div class="mt-3 mb-3"><em><span><?php echo htmlspecialchars($book['blurb']); ?></span></em></div>
+
+										<a href="book-details.php?book=<?php echo urlencode($book['id']); ?>"
+										   class="btn btn-primary mt-3 d-inline-block" >Read More</a>
+										<?php if ($current_user === 'admin' || $current_user === $book['owner']) : ?>
+											<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
+											        data-book-id="<?php echo urlencode($book['id']); ?>">Delete Book
+											</button>
+										<?php endif; ?>
+									</div>
+									<!-- Text Blocks Div -->
+									<div class="col-lg-7 col-12">
+										<div><span><?php echo htmlspecialchars($book['back_cover_text']); ?></span></div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer modal-footer-color">
+								<span style="font-size: 16px;"><em>Author:</em> <?php echo $book['owner']; ?></span>
+							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
-			</ul>
+			</div>
 		</div>
 
 		<!-- Add Book Modal -->
@@ -226,7 +241,7 @@ require_once 'action-session.php';
 		<script>
 			window.currentUserName = "<?php echo htmlspecialchars($current_user ?? 'Visior'); ?>";
 
-				$(document).ready(function () {
+			$(document).ready(function () {
 				let bookToDelete = null;
 
 				$('.delete-book-btn').click(function () {

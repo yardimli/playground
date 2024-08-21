@@ -88,8 +88,8 @@ require_once 'action-session.php';
 			</div>
 			<div class="card-body modal-content modal-content-color d-flex flex-row">
 				<!-- Image Div -->
-				<div class="flex-shrink-0 d-none" id="bookCoverContainer">
-					<img src="" alt="Book Cover" style="width: 100%; height: 100%; max-width: 300px; min-height: 300px; object-fit: cover;" id="bookCover">
+				<div class="flex-shrink-0" id="bookCoverContainer">
+					<img src="images/placeholder-cover.jpg" alt="Book Cover" style="width: 100%; height: 100%; max-width: 300px; min-height: 300px; object-fit: cover;" id="bookCover">
 				</div>
 				<!-- Text Blocks Div -->
 				<div class="flex-grow-1 ms-3">
@@ -207,10 +207,7 @@ require_once 'action-session.php';
 							<span style="font-size: 14px; margin-left:24px;">AI will optimize for creative visuals</span>
 						</div>
 						<div class="col-md-4">
-							<div id="coverImagePlaceholder"
-							     style="width: 200px; height: 300px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
-								<span>Cover Image</span>
-							</div>
+							<img src="images/placeholder-cover.jpg" alt="Generated Cover" style="width: 100%; height: auto;" id="generatedCover">
 						</div>
 					</div>
 				</div>

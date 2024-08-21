@@ -138,7 +138,7 @@ Prompt:";
 		],
 		'json' => [
 			'prompt' => $prompt,
-			'image_size' => 'square_hd',
+			'image_size' => 'portrait_4_3',
 			'safety_tolerance' => '5',
 		]
 	]);
@@ -149,7 +149,7 @@ Prompt:";
 //add to render log file
 	$renderLog = [
 		'prompt' => $prompt,
-		'image_size' => 'portrait_16_9',
+		'image_size' => 'portrait_4_3',
 		'safety_tolerance' => '5',
 		'output_file' => $filename,
 		'status_code' => $response->getStatusCode(),
