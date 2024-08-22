@@ -482,6 +482,9 @@ $(document).ready(function () {
 		},
 		error: function (xhr, status, error) {
 			//redirect to login page
+			console.error(xhr.responseText);
+			console.error(status);
+			console.error(error);
 			window.location.href = 'login.php';
 		}
 	});

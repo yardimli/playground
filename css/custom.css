@@ -130,12 +130,9 @@ body {
     z-index: 10;
 }
 
-.book-chapter-card:hover .beat-btn {
-    display: block;
-}
 
 .book-chapter-card .beat-btn {
-    display: none;
+    display: block;
     position: absolute;
     bottom: 5px;
     right: 10px;

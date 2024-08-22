@@ -1,9 +1,11 @@
 The subject of the book is:
-##subject##
+##user_blurb##
 
 Book Title: ##book_title##
 Book Blurb: ##book_blurb##
 Back Cover Text: ##back_cover_text##
+Character Profiles:
+##character_profiles##
 Book Language: ##language##
 
 Create a story outline in the format "3 Act Structure" with the structure like

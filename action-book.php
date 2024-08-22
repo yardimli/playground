@@ -9,17 +9,16 @@
 	switch ($action) {
 
 		//-----------------------------//
-		case 'write_book':
+		case 'write_book_character_profiles':
 			$language = $_POST['language'] ?? 'English';
-			$blurb = $_POST['blurb'] ?? '';
+			$user_blurb = $_POST['user_blurb'] ?? '';
 			$book_structure = $_POST['bookStructure'] ?? 'fichtean_curve.txt';
 
 
 			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
 				if ($use_llm === 'anthropic-haiku') {
 					$model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
-				} else
-				{
+				} else {
 					$model = $_ENV['ANTHROPIC_SONET_MODEL'];
 				}
 
@@ -27,8 +26,8 @@
 				$schema = json_decode($schema, true);
 
 				$prompt = file_get_contents('./prompts/book_prompt_anthropic_1.txt');
-				$prompt = str_replace('#subject#', $blurb, $prompt);
-				$prompt = str_replace('#language#', $language, $prompt);
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
+				$prompt = str_replace('##language##', $language, $prompt);
 
 				$results = $llmApp->function_call($prompt, $schema, $language);
 
@@ -43,53 +42,107 @@
 				$schema = json_decode($schema, true);
 
 				$prompt = file_get_contents('./prompts/book_prompt_openai_1.txt');
-				$prompt = str_replace('#subject#', $blurb, $prompt);
-				$prompt = str_replace('#language#', $language, $prompt);
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
+				$prompt = str_replace('##language##', $language, $prompt);
 
 				$results = $llmApp->function_call($prompt, $schema, $language);
 			} else {
 				$model = $_ENV['OPEN_ROUTER_MODEL'] ?? 'anthropic/claude-3-haiku:beta';
 				$model = $llm;
 				$prompt = file_get_contents('./prompts/book_prompt_no_function_calling_1.txt');
-				$prompt = str_replace('##subject##', $blurb, $prompt);
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
 				$prompt = str_replace('##language##', $language, $prompt);
 				$schema = [];
 
 				$results = $llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language);
-
-				$book_title = $results['title'] ?? '';
-				$book_blurb = $results['blurb'] ?? '';
-				$back_cover_text = $results['back_cover_text'] ?? '';
-
-				if (empty($book_title) || empty($book_blurb) || empty($back_cover_text)) {
-					$results = [
-						'title' => $book_title,
-						'blurb' => $book_blurb,
-						'back_cover_text' => $back_cover_text,
-						'error' => 'Failed to generate book'
-					];
-				} else {
-
-					$prompt = file_get_contents('./prompts/'. $book_structure ); //book_prompt_no_function_calling_2.txt');
-					$prompt = str_replace('##subject##', $blurb, $prompt);
-					$prompt = str_replace('##language##', $language, $prompt);
-					$prompt = str_replace('##book_title##', $book_title, $prompt);
-					$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
-					$prompt = str_replace('##back_cover_text##', $back_cover_text, $prompt);
-
-					$results = $llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language);
-
-					$results['title'] = $book_title;
-					$results['blurb'] = $book_blurb;
-					$results['back_cover_text'] = $back_cover_text;
-				}
 			}
 
-			if ($results['title']!== '' && $results['blurb'] !== '' && $results['back_cover_text'] !== '') {
-				$llmApp->createBookStructure($results, $blurb, $model, $language, $current_user);
+			if ($results['title'] !== '' && $results['blurb'] !== '' && $results['back_cover_text'] !== '' && $results['character_profiles'] !== []) {
 				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
-			} else
-			{
+			} else {
+				echo json_encode(['success' => false, 'message' => 'Failed to generate book']);
+			}
+			break;
+
+
+		//-----------------------------//
+		case 'write_book':
+			$language = $_POST['language'] ?? 'English';
+			$book_structure = $_POST['bookStructure'] ?? 'fichtean_curve.txt';
+
+			$user_blurb = $_POST['user_blurb'] ?? '';
+			$book_title = $_POST['book_title'] ?? '';
+			$book_blurb = $_POST['book_blurb'] ?? '';
+			$back_cover_text = $_POST['back_cover_text'] ?? '';
+			$character_profiles = $_POST['character_profiles'] ?? '';
+
+			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				if ($use_llm === 'anthropic-haiku') {
+					$model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
+				} else {
+					$model = $_ENV['ANTHROPIC_SONET_MODEL'];
+				}
+
+				$schema = file_get_contents('./prompts/book_schema_anthropic_1.json');
+				$schema = json_decode($schema, true);
+
+				$prompt = file_get_contents('./prompts/book_prompt_anthropic_1.txt');
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
+				$prompt = str_replace('##language##', $language, $prompt);
+				$prompt = str_replace('##book_title##', $book_title, $prompt);
+				$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
+				$prompt = str_replace('##back_cover_text##', $back_cover_text, $prompt);
+				$prompt = str_replace('##character_profiles##', $character_profiles, $prompt);
+
+				$results = $llmApp->function_call($prompt, $schema, $language);
+
+			} else if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+				if ($use_llm === 'open-ai-gpt-4o') {
+					$model = $_ENV['OPEN_AI_GPT4_MODEL'] ?? 'open-router';
+				} else {
+					$model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'] ?? 'open-router';
+				}
+
+				$schema = file_get_contents('./prompts/book_schema_openai_1.json');
+				$schema = json_decode($schema, true);
+
+				$prompt = file_get_contents('./prompts/book_prompt_openai_1.txt');
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
+				$prompt = str_replace('##language##', $language, $prompt);
+				$prompt = str_replace('##book_title##', $book_title, $prompt);
+				$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
+				$prompt = str_replace('##back_cover_text##', $back_cover_text, $prompt);
+				$prompt = str_replace('##character_profiles##', $character_profiles, $prompt);
+
+				$results = $llmApp->function_call($prompt, $schema, $language);
+			} else {
+				$model = $_ENV['OPEN_ROUTER_MODEL'] ?? 'anthropic/claude-3-haiku:beta';
+				$model = $llm;
+
+				$prompt = file_get_contents('./prompts/' . $book_structure); //book_prompt_no_function_calling_2.txt');
+				$prompt = str_replace('##user_blurb##', $user_blurb, $prompt);
+				$prompt = str_replace('##language##', $language, $prompt);
+				$prompt = str_replace('##book_title##', $book_title, $prompt);
+				$prompt = str_replace('##book_blurb##', $book_blurb, $prompt);
+				$prompt = str_replace('##back_cover_text##', $back_cover_text, $prompt);
+				$prompt = str_replace('##character_profiles##', $character_profiles, $prompt);
+
+				$results = $llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language);
+			}
+
+			if (!empty($results['acts'])) {
+				$book_header_data = [
+					'title' => $book_title,
+					'back_cover_text' => $back_cover_text,
+					'blurb' => $book_blurb,
+					'character_profiles' => $character_profiles,
+					'prompt' => $user_blurb,
+					'language' => $language,
+				];
+
+				$llmApp->createBookStructure($book_header_data, $results, $model, $current_user);
+				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
+			} else {
 				echo json_encode(['success' => false, 'message' => 'Failed to generate book']);
 			}
 			break;
@@ -134,46 +187,6 @@
 				'acts' => $acts
 			]);
 
-			break;
-
-		//-----------------------------//
-		case 'delete_book':
-			if ($bookData['owner'] !== $current_user) {
-				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
-				break;
-			}
-
-			$book = $_POST['book'];
-			$book_dir = "./books/".$book;
-
-			if (is_dir($book_dir)) {
-				// Function to delete directory and its contents
-				function deleteDir($dirPath)
-				{
-					if (!is_dir($dirPath)) {
-						throw new InvalidArgumentException("$dirPath must be a directory");
-					}
-					if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-						$dirPath .= '/';
-					}
-					$files = glob($dirPath . '*', GLOB_MARK);
-					foreach ($files as $file) {
-						if (is_dir($file)) {
-							deleteDir($file);
-						} else {
-							unlink($file);
-						}
-					}
-					rmdir($dirPath);
-				}
-
-				// Delete the book directory
-				deleteDir($book_dir);
-
-				echo json_encode(['success' => true]);
-			} else {
-				echo json_encode(['success' => false, 'message' => 'Book directory not found']);
-			}
 			break;
 
 		//-----------------------------//
@@ -333,12 +346,13 @@
 			file_put_contents($chaptersDir . '/' . $chapterFilename, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 			$chapter['chapterFilename'] = $chapterFilename;
+			$chapter['success'] = true;
 			echo json_encode($chapter);
 			break;
 
 		//-----------------------------//
 		case 'save_cover':
-			if ($bookData['owner'] !== $current_user) {
+			if ($bookData['owner'] !== $current_user && $current_user !== 'admin') {
 				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
 				break;
 			}

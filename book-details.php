@@ -44,7 +44,20 @@ require_once 'action-session.php';
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">Playground Book</h1>
 		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
-			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+			<?php
+				if ($current_user === 'admin' || $current_user === 'deniz') {
+					?>
+					<option value="anthropic/claude-3.5-sonnet:beta">Select a LLM</option>
+					<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+					<option value="openai/gpt-4o">openai :: gpt-4o</option>
+					<?php
+				} else {
+					?>
+					<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+					<?php
+				}
+			?>
+
 			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
 			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
@@ -71,9 +84,14 @@ require_once 'action-session.php';
 				<i class="bi bi-book-half"></i>
 			</button>
 
+			<button class="btn btn-warning me-2" id="exportPdfDebugBtn" title="Export as PDF with Debug">
+				<i class="bi bi-filetype-pdf"></i>
+			</button>
+
 			<button class="btn btn-success me-2" id="exportPdfBtn" title="Export as PDF">
 				<i class="bi bi-file-earmark-pdf"></i>
 			</button>
+
 		</div>
 
 		<div>
@@ -88,14 +106,22 @@ require_once 'action-session.php';
 			</div>
 			<div class="card-body modal-content modal-content-color d-flex flex-row">
 				<!-- Image Div -->
-				<div class="flex-shrink-0" id="bookCoverContainer">
-					<img src="images/placeholder-cover.jpg" alt="Book Cover" style="width: 100%; height: 100%; max-width: 300px; min-height: 300px; object-fit: cover;" id="bookCover">
+				<div class="row">
+					<div class="col-lg-5 col-12 mb-3">
+						<img
+							src="images/placeholder-cover.jpg"
+							alt="Book Cover"
+							style="width: 100%; object-fit: cover;"
+							id="bookCover">
+					</div>
+					<!-- Text Blocks Div -->
+					<div class="col-lg-7 col-12">
+						<div><span id="backCoverText"></span></div>
+						<div class="mt-3 mb-3"><span id="bookPrompt"></span></div>
+						<div class="mt-3 mb-3"><span id="bookCharacters"></span></div>
+					</div>
 				</div>
-				<!-- Text Blocks Div -->
-				<div class="flex-grow-1 ms-3">
-					<div><em><span id="backCoverText"></span></em></div>
-					<div><span id="bookPrompt"></span></div>
-				</div>
+
 			</div>
 		</div>
 
@@ -207,7 +233,8 @@ require_once 'action-session.php';
 							<span style="font-size: 14px; margin-left:24px;">AI will optimize for creative visuals</span>
 						</div>
 						<div class="col-md-4">
-							<img src="images/placeholder-cover.jpg" alt="Generated Cover" style="width: 100%; height: auto;" id="generatedCover">
+							<img src="images/placeholder-cover.jpg" alt="Generated Cover" style="width: 100%; height: auto;"
+							     id="generatedCover">
 						</div>
 					</div>
 				</div>
@@ -328,6 +355,8 @@ require_once 'action-session.php';
 					<div id="generateAllBeatsLog"
 					     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
 				</div>
+				<div class="modal-footer modal-footer-color">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

@@ -112,7 +112,7 @@ function showAllHistoryModal() {
 	});
 }
 
-function exportAsPdf(bookStructure) {
+function exportAsPdfDebug(bookStructure) {
 	console.log(bookStructure);
 	const {jsPDF} = window.jspdf;
 	const doc = new jsPDF({
@@ -271,6 +271,135 @@ function exportAsPdf(bookStructure) {
 					} else
 					{
 						addText(`${beatIndex + 1}. ${beat.description}`);
+					}
+				});
+			}
+		});
+	});
+	
+	addPageNumber(); // Add page number to the last page
+	doc.save('book_structure.pdf');
+}
+
+
+function exportAsPdf(bookStructure) {
+	console.log(bookStructure);
+	const {jsPDF} = window.jspdf;
+	const doc = new jsPDF({
+		unit: 'in',
+		format: [6, 9]
+	});
+	
+	// Load a Unicode font
+	doc.addFont('./fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
+	doc.addFont('./fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
+	doc.addFont('./fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
+	
+	// Set default font to Roboto
+	doc.setFont('NotoSans', 'normal');
+	
+	// Set font to a serif font
+	// doc.setFont('times', 'normal');
+	
+	const lineHeight = 0.25; // Increased line height
+	let yPosition = 0.75; // Increased top margin
+	const pageHeight = 8.5;
+	const pageWidth = 6;
+	const margin = 0.75; // Increased side margins
+	let pageNumber = 1;
+	let currentFontSize = 12;
+	let currentFontStyle = 'normal';
+	
+	function setFont(fontSize = 12, isBold = false) {
+		currentFontSize = fontSize;
+		currentFontStyle = isBold ? 'bold' : 'normal';
+		doc.setFontSize(fontSize);
+		// doc.setFont('times', currentFontStyle);
+		doc.setFont('NotoSans', currentFontStyle);
+	}
+	
+	function addText(text, fontSize = 12, isBold = false, align = 'left') {
+		setFont(fontSize, isBold);
+		const splitText = doc.splitTextToSize(text, pageWidth - 2 * margin);
+		splitText.forEach(line => {
+			if (yPosition > pageHeight - margin) {
+				addPageNumber();
+				doc.addPage();
+				yPosition = margin;
+				pageNumber++;
+				setFont(currentFontSize, currentFontStyle === 'bold');
+			}
+			
+			doc.text(line, align === 'center' ? pageWidth / 2 : margin, yPosition, {align: align});
+			
+			yPosition += lineHeight;
+		});
+		yPosition += 0.2; // Add a small gap after each text block
+	}
+	
+	function addPageBreak() {
+		addPageNumber();
+		doc.addPage();
+		yPosition = margin;
+		pageNumber++;
+		setFont(currentFontSize, currentFontStyle === 'bold');
+	}
+	
+	function addPageNumber() {
+		const currentFont = doc.getFont();
+		const currentFontSize = doc.getFontSize();
+		doc.setFontSize(10);
+		doc.setFont('NotoSans', 'normal');
+		doc.text(String(pageNumber), pageWidth - margin + 0.2, pageHeight - margin + 0.4, {align: 'right'});
+		doc.setFontSize(currentFontSize);
+		doc.setFont(currentFont.fontName, currentFont.fontStyle);
+	}
+	
+	
+	function addCenteredPage(text, fontSize = 18, isBold = true) {
+		addPageBreak();
+		setFont(fontSize, isBold);
+		const textLines = doc.splitTextToSize(text, pageWidth - 2 * margin);
+		const textHeight = textLines.length * lineHeight;
+		const startY = (pageHeight - textHeight) / 2;
+		doc.text(textLines, pageWidth / 2, startY, {align: 'center'});
+	}
+	
+	// Title
+	addCenteredPage(bookStructure.bookTitle, 18, true);
+	
+	// Blurb
+	addCenteredPage(bookStructure.bookBlurb,14,true);
+	addPageBreak();
+	
+	// Back Cover Text
+	addText(bookStructure.backCoverText, 14, false);
+	addPageBreak();
+	
+	bookStructure.acts.forEach((act, actIndex) => {
+		if (bookStructure.language === 'Turkish') {
+			act.name = act.name.replace('Act', 'Perde');
+		}
+		
+		addCenteredPage(`${act.name}`); //Act ${actIndex + 1}:
+		act.chapters.forEach((chapter, chapterIndex) => {
+			addPageBreak();
+			
+			if (bookStructure.language === 'Turkish') {
+				chapter.name = chapter.name.replace('Chapter', 'Bölüm');
+			}
+			
+			// Chapter title
+			addText(chapter.name, 14, true);
+			
+			// Beats
+			if (chapter.beats && chapter.beats.length > 0) {
+
+				chapter.beats.forEach((beat, beatIndex) => {
+					if (beat.beat_text) {
+						addText(beat.beat_text);
+						// addText('____________________');
+						addText('');
 					}
 				});
 			}

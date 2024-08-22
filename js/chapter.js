@@ -110,7 +110,7 @@ function createChapter(chapter) {
 		chapter_places = chapter.places.join(', ');
 	}
 	
-	return `<div class="col-3 book-chapter-card-col" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" style="cursor: pointer;"><div class="book-chapter-card" style="background-color: ${chapter.backgroundColor}; color: ${chapter.textColor}">
+	return `<div class="col-xl-3 col-lg-3 col-12 book-chapter-card-col" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" style="cursor: pointer;"><div class="book-chapter-card" style="background-color: ${chapter.backgroundColor}; color: ${chapter.textColor}">
 				${beatsButton}
         <div style="font-size: 18px; margin-bottom: 15px;">${chapter.name}</div>
         <div class="mb-2">${truncatedText}</div>
@@ -155,7 +155,8 @@ function saveChapter() {
 		success: function (response) {
 			if (response.success) {
 				$('#save_result').html('<div class="alert alert-success">Chapter saved successfully!</div>');
-				const chapter = JSON.parse(response);
+				alert('Chapter saved successfully!');
+				const chapter = response;
 				const chapterSelector = `.book-chapter-card-col[data-chapter-filename="${chapter.chapterFilename}"]`;
 				const existingChapter = $(chapterSelector);
 				if (existingChapter.length) {
@@ -416,11 +417,14 @@ $(document).ready(function () {
 			window.defaultRow = data.defaultRow;
 			window.rows = data.rows;
 			bookData = data.bookData;
+			let characters = (data.bookData.character_profiles ?? '');
+			characters = characters.replace(/\n/g, '<br>');
 			
 			$("#bookTitle").text(data.bookData.title);
 			$("#bookBlurb").text(data.bookData.blurb);
 			$("#backCoverText").text(data.bookData.back_cover_text);
-			$("#bookPrompt").html('<br><em>Prompt For Book:</em><br>' + data.bookData.prompt);
+			$("#bookPrompt").html('<br><em>Prompt For Book:</em><br>' + (data.bookData.prompt ?? ''));
+			$("#bookCharacters").html('<br><em>Character Profiles:</em><br>' + characters);
 			
 			if (data.bookData.cover_filename) {
 				$('#bookCover').attr('src', 'ai-images/' + data.bookData.cover_filename);

@@ -61,6 +61,23 @@ let scrollTimeout = null;
 
 $(document).ready(function () {
 	
+	$('#exportPdfDebugBtn').on('click', function (e) {
+		e.preventDefault();
+		
+		$.post('action-book.php', {
+			action: 'get_book_structure',
+			llm: savedLlm,
+			book: bookParam
+		}, function (response) {
+			if (response.success) {
+				console.log(response);
+				exportAsPdfDebug(response);
+			} else {
+				alert('Failed to load book structure: ' + response.message);
+			}
+		}, 'json');
+	});
+	
 	$('#exportPdfBtn').on('click', function (e) {
 		e.preventDefault();
 		

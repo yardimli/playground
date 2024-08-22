@@ -45,7 +45,20 @@ require_once 'action-session.php';
 	<div class="container mt-2">
 		<h2 class="text-center m-4" id="bookTitle">Playground Book</h2>
 		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
-			<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+			<?php
+				if ($current_user === 'admin' || $current_user === 'deniz') {
+					?>
+					<option value="anthropic/claude-3.5-sonnet:beta">Select a LLM</option>
+					<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+					<option value="openai/gpt-4o">openai :: gpt-4o</option>
+					<?php
+				} else {
+					?>
+					<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
+					<?php
+				}
+			?>
+
 			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
 			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
@@ -113,21 +126,25 @@ require_once 'action-session.php';
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
 				<h5 class="modal-title" id="writeAllBeatsModalLabel">Writing All Beats</h5>
-				<div class="spinner-border float-start me-2 ms-2 d-none" style="width:20px; height: 20px;" role="status" id="beatSpinner">
-			</div>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body modal-body-color">
-			<div class="progress mb-3">
-				<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-				     aria-valuemax="100">0%
+				<div class="spinner-border float-start me-2 ms-2 d-none" style="width:20px; height: 20px;" role="status"
+				     id="beatSpinner">
 				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div id="writeAllBeatsLog"
-			     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+			<div class="modal-body modal-body-color">
+				<div class="progress mb-3">
+					<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+					     aria-valuemax="100">0%
+					</div>
+				</div>
+				<div id="writeAllBeatsLog"
+				     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 <!-- Modal for Viewing Chapter Beats -->

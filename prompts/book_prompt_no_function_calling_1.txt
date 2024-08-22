@@ -1,12 +1,13 @@
 The subject of the book is:
-##subject##
+##user_blurb##
 it is written in ##language##.
 
-Output should be in JSON format as follows:
+Output should be as follows:
 {
 "title": "The title of the book",
 "blurb": "The blurb of the book",
 "back_cover_text": "3-4 paragraphs of text introducing the story expanding on the blurb.",
+"character_profiles" : [ {"name":"name of the character", "description":"description of the character"} ]
 }
 
 Don't include any text in front or after the JSON object.

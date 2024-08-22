@@ -355,9 +355,9 @@
 			$use_llm = $_ENV['USE_LLM'] ?? 'open-router';
 
 
-			if ($llm === 'openai/gpt-4o-mini') {
-				$use_llm = 'open-ai-gpt-4o-mini';
-			}
+//			if ($llm === 'openai/gpt-4o-mini') {
+//				$use_llm = 'open-ai-gpt-4o-mini';
+//			}
 
 			if ($use_llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
@@ -729,7 +729,7 @@
 		}
 
 
-		public function createBookStructure($book, $prompt, $model, $language = 'english', $current_user)
+		public function createBookStructure($book_header_data, $book, $model, $current_user)
 		{
 			$timestamp = time();
 			$book_folder = __DIR__ . "/books/book_$timestamp";
@@ -740,15 +740,16 @@
 			// Create book.json
 			$book_file = $book_folder . '/book.json';
 			$book_header = [
-				'title' => $book['title'] ?? 'book title',
-				'blurb' => $book['blurb'] ?? 'book blurb',
-				'prompt' => $prompt,
+				'title' => $book_header_data['title'] ?? 'book title',
+				'back_cover_text' => $book_header_data['back_cover_text'] ?? 'back cover text',
+				'blurb' => $book_header_data['blurb'] ?? 'book blurb',
+				'character_profiles' => $book_header_data['character_profiles'] ?? 'no character profiles',
+				'prompt' => $book_header_data['prompt'] ?? 'a prompt',
 				'model' => $model,
-				'back_cover_text' => $book['back_cover_text'] ?? 'back cover text',
 				'folder' => $book_folder,
 				'created' => (new DateTime())->format('Y-m-d H:i:s'),
 				'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
-				'language' => $language,
+				'language' => $book_header_data['language'] ?? 'english',
 				'owner' => $current_user,
 			];
 			file_put_contents($book_file, json_encode($book_header, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
