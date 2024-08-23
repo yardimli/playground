@@ -95,6 +95,23 @@ $(document).ready(function () {
 		}, 'json');
 	});
 	
+	$('#exportTxtBtn').on('click', function (e) {
+		e.preventDefault();
+		
+		$.post('action-book.php', {
+			action: 'get_book_structure',
+			llm: savedLlm,
+			book: bookParam
+		}, function (response) {
+			if (response.success) {
+				console.log(response);
+				exportAsDocx(response);
+			} else {
+				alert('Failed to load book structure: ' + response.message);
+			}
+		}, 'json');
+	});
+	
 	$('#showAllHistoryBtn').on('click', function (e) {
 		e.preventDefault();
 		showAllHistoryModal();

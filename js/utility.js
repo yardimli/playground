@@ -409,3 +409,122 @@ function exportAsPdf(bookStructure) {
 	addPageNumber(); // Add page number to the last page
 	doc.save('book_structure.pdf');
 }
+
+async function exportAsDocx(bookStructure) {
+	console.log(bookStructure);
+	
+	const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak } = docx;
+	
+	let doc_children = [];
+	
+	function addText(text, size = 24, bold = false, alignment = AlignmentType.LEFT) {
+		doc_children.push(new Paragraph({
+			alignment: alignment,
+			spacing:{
+				line: 1.5 * 240
+			},
+			children: [
+				new TextRun({
+					text: text,
+					bold: bold,
+					size: size
+				})
+			]
+		}));
+	}
+	
+	function addPageBreak() {
+		doc_children.push(new Paragraph({
+			children: [new PageBreak()]
+		}));
+	}
+	
+	function addCenteredPage(text, size = 36, bold = true) {
+		addText('');
+		addText('');
+		addText('');
+		addText('');
+		addText('');
+		addText('');
+		addText('');
+		addText('');
+		addText(text, size, bold, AlignmentType.CENTER);
+	}
+	
+	// Title
+	addCenteredPage(bookStructure.bookTitle);
+	addPageBreak();
+	
+	// Blurb
+	addText('');
+	addText('');
+	addText('');
+	addText('');
+	addText(bookStructure.bookBlurb, 28, false, AlignmentType.JUSTIFIED);
+	addPageBreak();
+	
+	// Back Cover Text
+	addText(bookStructure.backCoverText, 28, false, AlignmentType.JUSTIFIED);
+	addPageBreak();
+	
+	bookStructure.acts.forEach((act, actIndex) => {
+		if (bookStructure.language === 'Turkish') {
+			act.name = act.name.replace('Act', 'Perde');
+		}
+		
+		addCenteredPage(`${act.name}`);
+		addPageBreak();
+		
+		act.chapters.forEach((chapter, chapterIndex) => {
+			if (bookStructure.language === 'Turkish') {
+				chapter.name = chapter.name.replace('Chapter', 'Bölüm');
+			}
+			
+			// Chapter title
+			addText('');
+			addText(chapter.name, 32, true,AlignmentType.CENTER);
+			addText('');
+			addText('');
+			
+			// Beats
+			if (chapter.beats && chapter.beats.length > 0) {
+				chapter.beats.forEach((beat, beatIndex) => {
+					if (beat.beat_text) {
+						addText(beat.beat_text, 24, false, AlignmentType.JUSTIFIED);
+						addText('');
+					}
+				});
+			}
+			
+			addPageBreak();
+			
+			
+		});
+	});
+	
+	// Generate and save the document
+	
+	const doc = new Document({
+		sections: [{
+			properties: {
+				page: {
+					size: {
+						width: 6 * 1440, // 6 inches in twips (1 inch = 1440 twips)
+						height: 9 * 1440, // 9 inches in twips
+					},
+				},
+			},
+			children: doc_children
+		}]
+	});
+	
+	const blob = await Packer.toBlob(doc);
+	const url = URL.createObjectURL(blob);
+	const link = document.createElement('a');
+	link.href = url;
+	link.download = 'book_structure.docx';
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
+}

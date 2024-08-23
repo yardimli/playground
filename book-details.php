@@ -92,6 +92,10 @@ require_once 'action-session.php';
 				<i class="bi bi-file-earmark-pdf"></i>
 			</button>
 
+			<button class="btn btn-success me-2" id="exportTxtBtn" title="Export as DocX">
+				<i class="bi bi-file-earmark-word"></i>
+			</button>
+
 		</div>
 
 		<div>
@@ -373,6 +377,8 @@ require_once 'action-session.php';
 <script src="js/sortable.min.js"></script>
 
 <script src="js/jspdf.umd.min.js"></script>
+<script src="js/docx.js"></script>
+
 
 <!-- Your custom scripts -->
 <script src="js/custom-ui.js"></script>
