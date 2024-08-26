@@ -67,11 +67,6 @@
 			$this->logger = new Log();
 		}
 
-		public function helloWorld()
-		{
-			echo 'Hello, World!';
-			$this->logger->info('Hello, World!');
-		}
 
 		public function validateJson($str)
 		{
@@ -780,10 +775,6 @@
 						'textColor' => '#000000',
 						'created' => (new DateTime())->format('Y-m-d H:i:s'),
 						'lastUpdated' => (new DateTime())->format('Y-m-d H:i:s'),
-						'comments' => [],
-						'history' => [
-							['action' => 'Create chapter', 'user' => 'Admin', 'timestamp' => (new DateTime())->format('Y-m-d H:i:s')]
-						]
 					];
 
 					$chapter_file = $book_folder . '/' . $slug_name . '.json';

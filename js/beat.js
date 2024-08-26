@@ -7,21 +7,21 @@ let prevChapter = null;
 function showChapterBeatsModal() {
 	
 	let structureHtml = '<h2>' + bookData.title + '</h2>';
-	structureHtml += '<p><i>Blurb:</i> ' + bookData.blurb + '</p>';
-	structureHtml += '<p><i>Back Cover Text:</i> ' + bookData.back_cover_text + '</p>';
+	structureHtml += '<p><i>' + __e('Blurb') + '</i>: ' + bookData.blurb + '</p>';
+	structureHtml += '<p><i>' + __e('Back Cover Text') + '</i>: ' + bookData.back_cover_text + '</p>';
 	
 	
 	structureHtml += '<h4>' + currentChapter.name + '</h4>';
 	structureHtml += '<p>' + currentChapter.short_description + '</p>';
 	structureHtml += '<ul>';
-	structureHtml += '<li><i>Events</i>: ' + currentChapter.events + '</li>';
-	structureHtml += '<li><i>People</i>: ' + currentChapter.people + '</li>';
-	structureHtml += '<li><i>Places</i>: ' + currentChapter.places + '</li>';
-	structureHtml += '<li><i>From Previous Chapter: </i>' + currentChapter.from_prev_chapter + '</li>';
-	structureHtml += '<li><i>To Next Chapter</i>: ' + currentChapter.to_next_chapter + '</li>';
+	structureHtml += '<li><i>' + __e('Events') + '</i>: ' + currentChapter.events + '</li>';
+	structureHtml += '<li><i>' + __e('People') + '</i>: ' + currentChapter.people + '</li>';
+	structureHtml += '<li><i>' + __e('Places') + '</i>: ' + currentChapter.places + '</li>';
+	structureHtml += '<li><i>' + __e('From Previous Chapter') + '</i>:' + currentChapter.from_prev_chapter + '</li>';
+	structureHtml += '<li><i>' + __e('To Next Chapter') + '</i>: ' + currentChapter.to_next_chapter + '</li>';
 	structureHtml += '</ul>';
 	if (currentChapter.beats && currentChapter.beats.length > 0) {
-		structureHtml += '<h5>Beats:</h5>';
+		structureHtml += '<h5>' + __e('Beats:') + '</h5>';
 		structureHtml += '<br>';
 		currentChapter.beats.forEach(function (beat) {
 			if (beat.beat_text) {
@@ -40,14 +40,14 @@ function showChapterBeatsModal() {
 function writeAllBeats(chapterFilename) {
 	const modal = $('#writeAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
-	const log = $('#writeAllBeatsLog');
 	$("#beatSpinner").removeClass('d-none');
 	modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 	
-	log.empty();
+	$('#writeAllBeatsLog').empty();
 	progressBar.css('width', '0%').attr('aria-valuenow', 0).text('0%');
 	
-	log.append('<br>This process will write the texts and the summaries for all beats in this chapter. The summaries are used to create the next beat. Please wait... <br><br>If the progress bar is stuck for a long time, please refresh the page and try again.<br><br>');
+	$('#writeAllBeatsLog').append('<br>' + __e('This process will write the texts and the summaries for all beats in this chapter. The summaries are used to create the next beat. Please wait... '));
+	$('#writeAllBeatsLog').append('<br><br>' + __e('If the progress bar is stuck for a long time, please refresh the page and try again.') + '<br><br>');
 	
 	const beats = $('.beat-outer-container');
 	const totalBeats = beats.length;
@@ -61,17 +61,17 @@ function writeAllBeats(chapterFilename) {
 			const beatDescription = $(`#beatDescription_${beatIndex}`).val();
 			const beatText = $(`#beatText_${beatIndex}`).val();
 			if (beatText.trim() !== '') {
-				log.append(`<br>Beat ${beatIndex + 1} already has text. Skipping...`);
-				log.scrollTop(log[0].scrollHeight);
+				$('#writeAllBeatsLog').append('<br>' + __e('Beat ${beatIndex} already has text. Skipping...', {beatIndex: beatIndex + 1}) + '<br>');
+				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				processedBeats++;
 				const progress = Math.round((processedBeats / totalBeats) * 100);
 				progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
 				processNextBeat(chapterFilename);
 			} else {
 				
-				log.append(`<br><br><em>Writing beat ${beatIndex + 1}</em>`);
-				log.append('<br><em>Beat Description:</em> ' + beatDescription);
-				log.scrollTop(log[0].scrollHeight);
+				$('#writeAllBeatsLog').append('<br><br><em>' + __e('Writing beat ${beatIndex}', {beatIndex: (beatIndex + 1)}) + '</em>');
+				$('#writeAllBeatsLog').append('<br><em>' + __e('Beat Description:') + '</em> ' + beatDescription);
+				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				
 				writeBeatText(beatDescription, beatIndex, chapterFilename)
 					.then(() => {
@@ -80,8 +80,8 @@ function writeAllBeats(chapterFilename) {
 					})
 					.then(() => {
 						//add the newly written summary to the log
-						log.append(`<br><em>Summary for beat ${beatIndex + 1}:</em>`);
-						log.append('<br>' + $(`#beatTextSummary_${beatIndex}`).val());
+						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for beat ${beatIndex}:', {beatIndex: (beatIndex + 1)}) + '</em>');
+						$('#writeAllBeatsLog').append('<br>' + $(`#beatTextSummary_${beatIndex}`).val());
 						
 						processedBeats++;
 						const progress = Math.round((processedBeats / totalBeats) * 100);
@@ -89,9 +89,12 @@ function writeAllBeats(chapterFilename) {
 						processNextBeat(chapterFilename);
 					})
 					.catch(error => {
-						log.append(`<br>Error processing beat ${beatIndex + 1}: ${error}`);
-						log.scrollTop(log[0].scrollHeight);
-
+						$('#writeAllBeatsLog').append('<br>' + __e('Error processing beat ${beatIndex}: ${error}', {
+							beatIndex: (beatIndex + 1),
+							error: error
+						}));
+						$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
+						
 						processedBeats++;
 						const progress = Math.round((processedBeats / totalBeats) * 100);
 						progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
@@ -100,50 +103,56 @@ function writeAllBeats(chapterFilename) {
 			}
 		} else {
 			$("#beatSpinner").addClass('d-none');
-			log.append('<br>All beats processed!<br><br><span style="font-weight: bold;">After reviewing the beats, click the "Save Beats" button to save the changes.</span><br><br>');
-			log.scrollTop(log[0].scrollHeight);
-			$('#saveBeatsBtn').removeClass('d-none');
-			setTimeout(function(){
-				log.scrollTop(log[0].scrollHeight);
-			},200);
+			$('#writeAllBeatsLog').append('<br>' + __e('All beats processed!'));
+			$('#writeAllBeatsLog').append('<br><br><span style="font-weight: bold;">' + __e('After reviewing the beats, click the "Save Beats" button to save the changes.') + '</span><br><br>');
 			
+			$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
+			$('#saveBeatsBtn').removeClass('d-none');
+			setTimeout(function () {
+				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
+			}, 200);
 		}
 	}
 	
 	processNextBeat(chapterFilename);
 }
 
-
 function loadBeats(chapterFilename) {
 	const beatsList = $('#beatsList');
 	beatsList.empty(); // Clear existing beats
 	
 	let chapterIndex = allBookChapters.findIndex(chapter => chapter.chapterFilename === chapterFilename);
+	let beat_description_label = __e('Beat Description');
+	let beat_text_label = __e('Beat Text');
+	let beat_summary_label = __e('Beat Text Summary');
+	let save_beat_label = __e('Save Beat');
+	let write_beat_text_label = __e('Write Beat Text');
+	let write_beat_text_summary_label = __e('Write Summary');
+	let beat_label = __e('Beat');
 	
 	allBookChapters[chapterIndex].beats.forEach((beat, index) => {
 		const beatHtml = `
                 <div class="mb-3 beat-outer-container" data-beat-index="${index}">
-                  <h5>Beat ${index + 1}</h5>
+                  <h5>${beat_label} ${index + 1}</h5>
                   <div id="beatDescriptionContainer_${index}">
-										<label for="beatDescription_${index}" class="form-label">Beat Description</label>
+										<label for="beatDescription_${index}" class="form-label">${beat_description_label}</label>
 										<textarea id="beatDescription_${index}" class="form-control beat-description-textarea" rows="3">${beat.description ?? ''}</textarea>
 									</div>
 									<div id="beatTextArea_${index}" class="mt-3">
-										<label for="beatText_${index}" class="form-label">Beat Text</label>
+										<label for="beatText_${index}" class="form-label">${beat_text_label}</label>
 										<textarea id="beatText_${index}" class="form-control beat-text-textarea" rows="10">${beat.beat_text ?? ''}</textarea>
 									</div>
 									<div id="beatTextSummaryArea_${index}" class="mt-3">
-										<label for="beatTextSummary_${index}" class="form-label">Beat Text Summary</label>
+										<label for="beatTextSummary_${index}" class="form-label">${beat_summary_label}</label>
 										<textarea id="beatTextSummary_${index}" class="form-control beat-summary-textarea" rows="3">${beat.beat_text_summary ?? ''}</textarea>
 									</div>
 									
-									<div class=""  data-index="${index}">
-										<button class="saveBeatBtn btn btn-success mt-3 me-2">Save Beat</button>
-										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">Write Beat Text</button>
-										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">Write Summary</button>
+									<div class="" data-index="${index}">
+										<button class="saveBeatBtn btn btn-success mt-3 me-2">${save_beat_label}</button>
+										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">${write_beat_text_label}</button>
+										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">${write_beat_text_summary_label}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_${index}"></div>
 									</div>
-
                 </div>
             `;
 		beatsList.append(beatHtml);
@@ -209,29 +218,36 @@ function recreateBeats(chapterFilename) {
 				beatsList.empty();
 				response.beats.forEach((beat, index) => {
 					
+					let beat_description_label = __e('Beat Description');
+					let beat_text_label = __e('Beat Text');
+					let beat_summary_label = __e('Beat Text Summary');
+					let save_beat_label = __e('Save Beat');
+					let write_beat_text_label = __e('Write Beat Text');
+					let write_beat_text_summary_label = __e('Write Summary');
+					let beat_label = __e('Beat');
+					
 					const beatHtml = `
                 <div class="mb-3 beat-outer-container" data-beat-index="${index}">
-                  <h5>Beat ${index + 1}</h5>
+                  <h5>${beat_label} ${index + 1}</h5>
                   <div id="beatDescriptionContainer_${index}">
-										<label for="beatDescription_${index}" class="form-label">Beat Description</label>
+										<label for="beatDescription_${index}" class="form-label">${beat_description_label}</label>
 										<textarea id="beatDescription_${index}" class="form-control beat-description-textarea" rows="3">${beat.description ?? ''}</textarea>
 									</div>
 									<div id="beatTextArea_${index}" class="mt-3">
-										<label for="beatText_${index}" class="form-label">Beat Text</label>
+										<label for="beatText_${index}" class="form-label">${beat_text_label}</label>
 										<textarea id="beatText_${index}" class="form-control beat-text-textarea" rows="10"></textarea>
 									</div>
 									<div id="beatTextSummaryArea_${index}" class="mt-3">
-										<label for="beatTextSummary_${index}" class="form-label">Beat Text Summary</label>
+										<label for="beatTextSummary_${index}" class="form-label">${beat_summary_label}</label>
 										<textarea id="beatTextSummary_${index}" class="form-control beat-summary-textarea" rows="3"></textarea>
 									</div>
 									
-									<div class=""  data-index="${index}">
-										<button class="saveBeatBtn btn btn-success mt-3 me-2">Save Beat</button>
-										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">Write Beat Text</button>
-										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">Write Summary</button>
+									<div class="" data-index="${index}">
+										<button class="saveBeatBtn btn btn-success mt-3 me-2">${save_beat_label}</button>
+										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">${write_beat_text_label}</button>
+										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">${write_beat_text_summary_label}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_${index}"></div>
 									</div>
-
                 </div>
             `;
 					beatsList.append(beatHtml);
@@ -262,13 +278,13 @@ function recreateBeats(chapterFilename) {
 				$("#recreateBeats").prop('disabled', false);
 				
 			} else {
-				alert('Failed to create beats: ' + response.message);
+				alert(__e('Failed to create beats: ') + response.message);
 				$("#recreateBeats").prop('disabled', false);
 			}
 		},
 		error: function () {
 			spinner.addClass('d-none');
-			alert('An error occurred while creating beats.');
+			alert(__e('An error occurred while creating beats.'));
 		}
 	});
 	
@@ -277,7 +293,7 @@ function recreateBeats(chapterFilename) {
 function writeBeatText(beatDescription, beatIndex, chapterFilename) {
 	return new Promise((resolve, reject) => {
 		$("#writeBeatTextBtn_" + beatIndex).prop('disabled', true);
-		$("#beatDetailModalResult_" + beatIndex).html('Writing beat text...');
+		$("#beatDetailModalResult_" + beatIndex).html(__e('Writing beat text...'));
 		
 		let prevBeatsSummaries = '';
 		let lastBeatBeforeCurrent = '';
@@ -340,15 +356,15 @@ function writeBeatText(beatDescription, beatIndex, chapterFilename) {
 		}, function (response) {
 			if (response.success) {
 				$('#beatText_' + beatIndex).val(response.prompt);
-				$('#beatDetailModalResult_' + beatIndex).html('Beat text generated successfully!');
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Beat text generated successfully!'));
 				$('#writeBeatTextBtn_' + beatIndex).prop('disabled', false);
 				resolve();
 				
 				//call the function to write the beat text summary
 				//writeBeatTextSummary(response.prompt, beatDescription, beatIndex, chapterFilename);
 			} else {
-				$('#beatDetailModalResult_' + beatIndex).html('Failed to write beat text: ' + response.message);
-				reject('Failed to write beat text: ' + response.message);
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write beat text: ') + response.message);
+				reject(__e('Failed to write beat text: ') + response.message);
 				
 			}
 		}, 'json');
@@ -358,7 +374,7 @@ function writeBeatText(beatDescription, beatIndex, chapterFilename) {
 function writeBeatTextSummary(beatText, beatDescription, beatIndex, chapterFilename) {
 	return new Promise((resolve, reject) => {
 		$('#writeBeatTextSummaryBtn_' + beatIndex).prop('disabled', true);
-		$('#beatDetailModalResult_' + beatIndex).html('Writing beat text summary...');
+		$('#beatDetailModalResult_' + beatIndex).html(__e('Writing beat text summary...'));
 		
 		$.post('action-beats.php', {
 			action: 'write_beat_text_summary',
@@ -383,12 +399,12 @@ function writeBeatTextSummary(beatText, beatDescription, beatIndex, chapterFilen
 		}, function (response) {
 			if (response.success) {
 				$('#beatTextSummary_' + beatIndex).val(response.prompt);
-				$('#beatDetailModalResult_' + beatIndex).html('Beat text summary generated successfully!');
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Beat text summary generated successfully!'));
 				$('#writeBeatTextSummaryBtn_' + beatIndex).prop('disabled', false);
 				resolve();
 			} else {
-				$('#beatDetailModalResult_' + beatIndex).html('Failed to write summary: ' + response.message);
-				reject('Failed to write summary');
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write summary: ') + response.message);
+				reject(__e('Failed to write summary: ') + response.message);
 			}
 		}, 'json');
 	});
@@ -406,9 +422,9 @@ function saveBeat(beatText, beatTextSummary, beatDescription, beatIndex, chapter
 		beatTextSummary: beatTextSummary
 	}, function (response) {
 		if (response.success) {
-			$("#beatDetailModalResult_"+beatIndex).html('Beat saved successfully!');
+			$("#beatDetailModalResult_" + beatIndex).html(__e('Beat saved successfully!'));
 		} else {
-			$("#beatDetailModalResult_"+beatIndex).html('Failed to save beat: ' + response.message);
+			$("#beatDetailModalResult_" + beatIndex).html(__e('Failed to save beat: ') + response.message);
 		}
 	}, 'json');
 }
@@ -433,7 +449,7 @@ $(document).ready(function () {
 			$("#bookTitle").text(bookData.title);
 			$("#bookBlurb").text(bookData.blurb);
 			$("#backCoverText").text(bookData.back_cover_text);
-
+			
 			
 			$.post('action-book.php', {action: 'load_chapters', book: bookParam, llm: savedLlm}, function (data) {
 				allBookChapters = JSON.parse(data);
@@ -458,7 +474,7 @@ $(document).ready(function () {
 					nextChapterText = nextChapter.name + ' -- ' + nextChapter.short_description;
 				}
 				
-				let prevChapterText = 'Start of the book';
+				let prevChapterText = __e('Start of the book');
 				if (prevChapter) {
 					prevChapterText = prevChapter.name + ' -- ' + prevChapter.short_description;
 				}
@@ -514,17 +530,17 @@ $(document).ready(function () {
 		
 		$.post('action-beats.php', {
 			action: 'save_beats',
-			llm:savedLlm,
+			llm: savedLlm,
 			book: bookParam,
 			chapterFilename: chapterParam + '.json',
 			beats: JSON.stringify(beats)
 		}, function (response) {
 			if (response.success) {
-				alert('Beats saved successfully!');
+				alert(__e('Beats saved successfully!'));
 				//reload the page
 				location.reload();
 			} else {
-				alert('Failed to save beats: ' + response.message);
+				alert(__e('Failed to save beats: ') + response.message);
 			}
 		}, 'json');
 	});
@@ -532,7 +548,7 @@ $(document).ready(function () {
 	$("#recreateBeats").on('click', function (e) {
 		e.preventDefault();
 		//show confirmation dialog
-		if (confirm('Are you sure you want to recreate the beats? This will overwrite any existing beats.')) {
+		if (confirm(__e('Are you sure you want to recreate the beats? This will overwrite any existing beats.'))) {
 			recreateBeats(chapterParam + '.json');
 		}
 	});

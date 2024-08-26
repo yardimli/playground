@@ -1,6 +1,7 @@
 <?php
 
 	session_start();
+	include_once 'lang-tr.php';
 
 	//json string for users, Admin password is 123456
 	$users =
@@ -31,22 +32,32 @@
 		['background' => '#FFFFFF', 'text' => '#000000']
 	];
 
-
-	function log_history($chapter, $action, $user)
-	{
-		$chapter['history'][] = [
-			'action' => $action,
-			'user' => $user,
-			'timestamp' => date('Y-m-d H:i:s')
-		];
-		return $chapter;
-	}
-
 	function create_slug($string)
 	{
 		$slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $string);
 		return $slug;
 	}
 
+	function __e($key)
+	{
+		global $translations;
+		return $translations[$key] ?? ('!!!' . $key);
+	}
+
 
 	$current_user = $_SESSION['user'] ?? 'Visitor';
+
+	function write_js_translations()
+	{
+		global $translations;
+
+		echo "\n\n<script>";
+		echo "\n\nconst translations = {";
+		foreach ($translations as $key => $value) {
+			$key = str_replace("'", "\'", $key);
+			$value = str_replace("'", "\'", $value);
+			echo "'$key': '$value',\n";
+		}
+		echo "};\n\n";
+		echo "</script>\n\n";
+	}

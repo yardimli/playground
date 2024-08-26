@@ -13,7 +13,7 @@
 				$chaptersDirName = "books/$bookDirName";
 			}
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Book not found.']);
+			echo json_encode(['success' => false, 'message' => __e('Book not found.')]);
 			exit();
 		}
 
@@ -26,12 +26,12 @@
 			}
 			$bookData['owner'] = $bookData['owner'] ?? 'admin';
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Book JSON file not found.']);
+			echo json_encode(['success' => false, 'message' => __e('Book JSON file not found.')]);
 			exit();
 		}
 
 		if ($bookData['owner'] !== $current_user) {
-			echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+			echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 			exit();
 		}
 
@@ -43,7 +43,7 @@
 			function deleteDir($dirPath)
 			{
 				if (!is_dir($dirPath)) {
-					throw new InvalidArgumentException("$dirPath must be a directory");
+					throw new InvalidArgumentException("$dirPath ".__e('must be a directory'));
 				}
 				if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
 					$dirPath .= '/';
@@ -64,7 +64,7 @@
 
 			echo json_encode(['success' => true]);
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Book directory not found']);
+			echo json_encode(['success' => false, 'message' => __e('Book directory not found')]);
 		}
 
 	} else {
@@ -74,7 +74,7 @@
 				$chaptersDirName = "books/$bookDirName";
 			}
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Book not found.']);
+			echo json_encode(['success' => false, 'message' => __e('Book not found.')]);
 			exit();
 		}
 
@@ -83,11 +83,11 @@
 			$jsonContent = file_get_contents($jsonFilePath);
 			$rows = json_decode($jsonContent, true);
 			if (json_last_error() !== JSON_ERROR_NONE) {
-				echo json_encode(['success' => false, 'message' => 'Error decoding JSON: ' . json_last_error_msg()]);
+				echo json_encode(['success' => false, 'message' => __e('Error decoding JSON:') . json_last_error_msg()]);
 				exit();
 			}
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Chapters JSON file not found.']);
+			echo json_encode(['success' => false, 'message' => __e('Chapters JSON file not found.')]);
 			exit();
 		}
 		$defaultRow = $rows[0]['id'];
@@ -97,11 +97,11 @@
 			$bookJson = file_get_contents($bookJsonPath);
 			$bookData = json_decode($bookJson, true);
 			if (json_last_error() !== JSON_ERROR_NONE) {
-				die('Error decoding JSON: ' . json_last_error_msg());
+				echo json_encode(['success' => false, 'message' => __e('Error decoding JSON:') . json_last_error_msg()]);
 			}
 			$bookData['owner'] = $bookData['owner'] ?? 'admin';
 		} else {
-			die('Book JSON file not found.');
+			echo json_encode(['success' => false, 'message' => __e('Book JSON file not found.')]);
 		}
 
 
@@ -111,19 +111,10 @@
 			mkdir($chaptersDir, 0777, true);
 		}
 
-		if (!file_exists($chaptersDir . '/uploads')) {
-			mkdir($chaptersDir . '/uploads', 0777, true);
-		}
-
-
 		$chaptersDir = __DIR__ . '/' . $chaptersDirName;
 
 		if (!file_exists($chaptersDir)) {
 			mkdir($chaptersDir, 0777, true);
-		}
-
-		if (!file_exists($chaptersDir . '/uploads')) {
-			mkdir($chaptersDir . '/uploads', 0777, true);
 		}
 
 		$chapterFilename = $_POST['chapterFilename'] ?? null;
@@ -132,7 +123,6 @@
 
 
 	$id = $_POST['id'] ?? null;
-	$uploadFilename = $_POST['uploadFilename'] ?? null;
 	$use_llm = $_ENV['USE_LLM'] ?? 'open-router';
 
 	$llmApp = new LlmFunctions();

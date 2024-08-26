@@ -58,9 +58,9 @@
 			}
 
 			if ($results['title'] !== '' && $results['blurb'] !== '' && $results['back_cover_text'] !== '' && $results['character_profiles'] !== []) {
-				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
+				echo json_encode(['success' => true, 'message' => __e('Book created successfully'), 'data' => $results]);
 			} else {
-				echo json_encode(['success' => false, 'message' => 'Failed to generate book']);
+				echo json_encode(['success' => false, 'message' => __e('Failed to generate book')]);
 			}
 			break;
 
@@ -141,9 +141,9 @@
 				];
 
 				$llmApp->createBookStructure($book_header_data, $results, $model, $current_user);
-				echo json_encode(['success' => true, 'message' => 'Book created successfully', 'data' => $results]);
+				echo json_encode(['success' => true, 'message' => __e('Book created successfully'), 'data' => $results]);
 			} else {
-				echo json_encode(['success' => false, 'message' => 'Failed to generate book']);
+				echo json_encode(['success' => false, 'message' => __e('Failed to generate book')]);
 			}
 			break;
 
@@ -241,40 +241,11 @@
 			echo json_encode($chapters);
 			break;
 
-		//-----------------------------//
-		case 'delete_chapter':
-			if ($bookData['owner'] !== $current_user) {
-				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
-				break;
-			}
-
-			if (file_exists($chapterFilePath)) {
-				// Load the chapter to get the list of attachments
-				$chapter = json_decode(file_get_contents($chapterFilePath), true);
-
-				// Delete attachments if they exist
-				if (!empty($chapter['files'])) {
-					foreach ($chapter['files'] as $file) {
-						$attachmentPath = $chaptersDir . '/uploads/' . $file['uploadFilename'];
-						if (file_exists($attachmentPath)) {
-							unlink($attachmentPath);
-						}
-					}
-				}
-
-				// Delete the chapter file itself
-				unlink($chapterFilePath);
-				echo json_encode(['success' => true]);
-			} else {
-				echo json_encode(['success' => false, 'message' => 'File not found']);
-			}
-
-			break;
 
 		//-----------------------------//
 		case 'save_chapter':
 			if ($bookData['owner'] !== $current_user) {
-				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 				break;
 			}
 
@@ -300,9 +271,6 @@
 					$existingChapter = json_decode(file_get_contents($chapterFilePath), true);
 					$created = $existingChapter['created'];
 					$row = $existingChapter['row'];
-					$comments = $existingChapter['comments'] ?? [];
-					$files = $existingChapter['files'] ?? [];
-					$history = $existingChapter['history'] ?? [];
 				}
 			}
 
@@ -320,28 +288,7 @@
 				'textColor' => $textColor,
 				'created' => $created,
 				'lastUpdated' => $lastUpdated,
-				'comments' => $comments ?? [],
-				'files' => $files ?? [],
-				'history' => $history ?? []
 			];
-
-			if (!empty($_FILES['files']['name'][0])) {
-				foreach ($_FILES['files']['name'] as $key => $uploadFilename) {
-					$file_tmp = $_FILES['files']['tmp_name'][$key];
-					$file_dest = $chaptersDir . '/uploads/' . $uploadFilename;
-					if (move_uploaded_file($file_tmp, $file_dest)) {
-						$chapter['files'][] = [
-							'uploadFilename' => $uploadFilename,
-						];
-					}
-				}
-			}
-
-			if ($new_chapter) {
-				$chapter = log_history($chapter, 'Created chapter', $current_user);
-			} else {
-				$chapter = log_history($chapter, 'Edited chapter', $current_user);
-			}
 
 			file_put_contents($chaptersDir . '/' . $chapterFilename, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
@@ -353,7 +300,7 @@
 		//-----------------------------//
 		case 'save_cover':
 			if ($bookData['owner'] !== $current_user && $current_user !== 'admin') {
-				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+				echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 				break;
 			}
 			$cover_filename = $_POST['cover_filename'];
@@ -363,43 +310,17 @@
 				$bookJson = file_get_contents($bookJsonPath);
 				$bookData = json_decode($bookJson, true);
 				if (json_last_error() !== JSON_ERROR_NONE) {
-					echo json_encode(['success' => false, 'message' => 'Error decoding JSON: ' . json_last_error_msg()]);
-					die('Error decoding JSON: ' . json_last_error_msg());
+					echo json_encode(['success' => false, 'message' => __e('Error decoding JSON:') . json_last_error_msg()]);
+					break;
 				}
 
 				$bookData['cover_filename'] = $cover_filename;
 				file_put_contents($bookJsonPath, json_encode($bookData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-				echo json_encode(['success' => true, 'message' => 'Cover saved successfully']);
+				echo json_encode(['success' => true, 'message' => __e('Cover saved successfully')]);
 			} else {
-				echo json_encode(['success' => false, 'message' => 'Book JSON file not found.']);
+				echo json_encode(['success' => false, 'message' => __e('Book JSON file not found.')]);
 			}
 			break;
 
-		//-----------------------------//
-		case 'update_chapter_row':
-			if ($bookData['owner'] !== $current_user) {
-				echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
-				break;
-			}
-
-			$row = $_POST['row'];
-			$order = $_POST['order'];
-
-			if (file_exists($chapterFilePath)) {
-				$chapter = json_decode(file_get_contents($chapterFilePath), true);
-				$dontUpdateTime = false;
-				if ($chapter['row'] === $row) {
-					$dontUpdateTime = true;
-				}
-				$chapter['row'] = $row;
-				$chapter['order'] = $order;
-				if (!$dontUpdateTime) {
-					$chapter['lastUpdated'] = date('Y-m-d H:i:s');
-					$chapter = log_history($chapter, 'Moved chapter to ' . $row, $user);
-				}
-				file_put_contents($chapterFilePath, json_encode($chapter, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-				echo json_encode($chapter);
-			}
-			break;
 	}
 

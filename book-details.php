@@ -6,7 +6,7 @@ require_once 'action-session.php';
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Playground - The Book</title>
+	<title><?php echo __e('Playground - The Book'); ?></title>
 
 	<!-- FAVICON AND TOUCH ICONS -->
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
@@ -22,91 +22,92 @@ require_once 'action-session.php';
 	<link href="css/bootstrap-icons.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="css/custom.css" rel="stylesheet"> <!-- If you have custom CSS -->
+	<?php echo write_js_translations(); ?>
 
 </head>
 <body>
-<header style="min-height: 30px;">
+
+<div class="ham-menu-items" id="ham-menu-items" style="height: 500px;">
 	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
-	<div class="container-fluid mt-2">
-		<a href="#" class="btn btn-danger float-end ms-2" title="Log out" id="logoutBtn"
-		   onclick="document.getElementById('logoutForm').submit();"><i class="bi bi-door-open"></i></a>
-		<button id="modeToggleBtn" class="btn btn-secondary float-end ms-2">
-			<i id="modeIcon" class="bi bi-sun"></i>
-		</button>
-		<a href="index.php" class="btn btn-primary float-end ms-2" title="add new book"><i class="bi bi-book"></i></a>
-	</div>
-</header>
 
-<main class="py-4">
+	<div id="modeToggleBtn" class="mb-2 mt-1 btn btn-primary w-100">
+		<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
+	</div>
+
+	<br>
+	<span style="font-size: 18px;">AI Engines:</span>
+	<select id="llmSelect" class="form-select mx-auto mb-1">
+		<?php
+			if ($current_user === 'admin' || $current_user === 'deniz') {
+				?>
+				<option value="anthropic/claude-3.5-sonnet:beta"><?php echo __e('Select an AI Engine'); ?></option>
+				<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+				<option value="openai/gpt-4o">openai :: gpt-4o</option>
+				<?php
+			} else {
+				?>
+				<option value="anthropic/claude-3-haiku:beta"><?php echo __e('Select an AI Engine'); ?></option>
+				<?php
+			}
+		?>
+		<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+		<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+		<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+		<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+		<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+		<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+		<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+		<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+		<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+		<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+		<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+		<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+	</select>
+
+
+	<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn" title="<?php echo __e('Write All Beats'); ?>"><i
+			class="bi bi-lightning-charge"></i> <?php echo __e('Write All Beats'); ?>
+	</button>
+
+	<button class="btn btn-primary mb-3 mt-1 w-100" title="<?php echo __e('Cover Image'); ?>" id="createCoverBtn">
+		<i class="bi bi-image"></i> <?php echo __e('Cover Image'); ?>
+	</button>
+
+	<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="<?php echo __e('Export as PDF'); ?>">
+		<i class="bi bi-file-earmark-pdf"></i> <?php echo __e('Export as PDF'); ?>
+	</button>
+
+	<button class="btn btn-success mb-1 mt-1 w-100" id="exportTxtBtn" title="<?php echo __e('Export as DocX'); ?>">
+		<i class="bi bi-file-earmark-word"></i> <?php echo __e('Export as DocX'); ?>
+	</button>
+
+	<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn" title="<?php echo __e('View Book'); ?>">
+		<i class="bi bi-book-half"></i> <?php echo __e('View Book'); ?>
+	</button>
+
+	<a href="index.php" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-bookshelf"></i> <?php echo __e('Back to Books'); ?></a>
+	<a href="#" id="logoutBtn" onclick="document.getElementById('logoutForm').submit();"
+	   class="mb-1 mt-1 btn btn-danger w-100"><i class="bi bi-door-open"></i> <?php echo __e('Log out'); ?></a>
+	<a href="login.php" id="loginBtn" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-person"></i> <?php echo __e('Login/Sign up'); ?></a>
+
+</div>
+<div class="ham-menu" id="ham-menu">
+	<span class="line line1"></span>
+	<span class="line line2"></span>
+	<span class="line line3"></span>
+</div>
+
+<main class="py-5">
 
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center" id="bookTitle">Playground Book</h1>
-		<select id="llmSelect" class="form-select w-50 mx-auto mb-4">
-			<?php
-				if ($current_user === 'admin' || $current_user === 'deniz') {
-					?>
-					<option value="anthropic/claude-3.5-sonnet:beta">Select a LLM</option>
-					<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-					<option value="openai/gpt-4o">openai :: gpt-4o</option>
-					<?php
-				} else {
-					?>
-					<option value="anthropic/claude-3-haiku:beta">Select a LLM</option>
-					<?php
-				}
-			?>
+		<h1 style="margin:10px;" class="text-center" id="bookTitle"><?php echo __e('Playground Book'); ?></h1>
 
-			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-			<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-			<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-			<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-			<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-			<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
-			<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-			<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-			<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-			<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
-		</select>
-		<div class="text-center mb-4">
-			<button class="btn btn-info  me-2" id="showAllHistoryBtn" title="show all history"><i
-					class="bi bi-clock-history"></i></button>
-			<button class="btn btn-warning me-2" title="Create Cover" id="createCoverBtn">
-				<i class="bi bi-image"></i>
-			</button>
-			<button class="btn btn-warning  me-2" id="generateAllBeatsBtn" title="Generate All Beats"><i
-					class="bi bi-lightning-charge"></i></button>
-
-			<button class="btn btn-primary me-2" id="showBookStructureBtn" title="Show Book Structure">
-				<i class="bi bi-book-half"></i>
-			</button>
-
-			<button class="btn btn-warning me-2" id="exportPdfDebugBtn" title="Export as PDF with Debug">
-				<i class="bi bi-filetype-pdf"></i>
-			</button>
-
-			<button class="btn btn-success me-2" id="exportPdfBtn" title="Export as PDF">
-				<i class="bi bi-file-earmark-pdf"></i>
-			</button>
-
-			<button class="btn btn-success me-2" id="exportTxtBtn" title="Export as DocX">
-				<i class="bi bi-file-earmark-word"></i>
-			</button>
-
-		</div>
-
-		<div>
-			<div class="my-3 d-inline-block">
-				Hello <span id="currentUser"></span>,
-			</div>
-		</div>
 
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
-				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookBlurb">About Book</span>
+				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookBlurb"> <?php echo __e('About Book'); ?></span>
 			</div>
 			<div class="card-body modal-content modal-content-color d-flex flex-row">
 				<!-- Image Div -->
@@ -140,73 +141,57 @@ require_once 'action-session.php';
 		<div class="modal-dialog  modal-dialog-scrollable">
 			<div class="modal-content modal-content-color">
 				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="chapterModalLabel">Edit Chapter</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h5 class="modal-title" id="chapterModalLabel"><?php echo __e('Edit Chapter'); ?></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo __e('Close'); ?>"></button>
 				</div>
 				<div class="modal-body modal-body-color">
 					<form id="chapterForm" enctype="multipart/form-data">
 						<input type="hidden" id="chapterFilename">
 						<div class="mb-3">
-							<label for="chapterName" class="form-label">Name</label>
+							<label for="chapterName" class="form-label"><?php echo __e('Name'); ?></label>
 							<input type="text" class="form-control" id="chapterName" required>
 						</div>
 						<div class="mb-3">
-							<label for="chapterText" class="form-label">Text</label>
+							<label for="chapterText" class="form-label"><?php echo __e('Text'); ?></label>
 							<textarea class="form-control" id="chapterText" rows="3" required></textarea>
 						</div>
 
 						<div class="mb-3">
-							<label for="chapterEvents" class="form-label">Events</label>
+							<label for="chapterEvents" class="form-label"> <?php echo __e('Events'); ?></label>
 							<input type="text" class="form-control" id="chapterEvents">
 						</div>
 						<div class="mb-3">
-							<label for="chapterPeople" class="form-label">People</label>
+							<label for="chapterPeople" class="form-label"><?php echo __e('People'); ?></label>
 							<input type="text" class="form-control" id="chapterPeople">
 						</div>
 						<div class="mb-3">
-							<label for="chapterPlaces" class="form-label">Places</label>
+							<label for="chapterPlaces" class="form-label"> <?php echo __e('Places'); ?></label>
 							<input type="text" class="form-control" id="chapterPlaces">
 						</div>
 						<div class="mb-3">
-							<label for="chapterFromPrevChapter" class="form-label">Prev Chapter</label>
+							<label for="chapterFromPrevChapter" class="form-label"><?php echo __e('Prev Chapter'); ?></label>
 							<input type="text" class="form-control" id="chapterFromPrevChapter">
 						</div>
 						<div class="mb-3">
-							<label for="chapterToNextChapter" class="form-label">Next Chapter</label>
+							<label for="chapterToNextChapter" class="form-label"> <?php echo __e('Next Chapter'); ?></label>
 							<input type="text" class="form-control" id="chapterToNextChapter">
 						</div>
 
 						<div class="mb-3">
-							<label class="form-label">Background Color</label>
+							<label class="form-label"><?php echo __e('Background Color'); ?></label>
 							<div id="colorPalette" class="d-flex flex-wrap">
 								<!-- Color buttons will be inserted here dynamically -->
 							</div>
 						</div>
 						<input type="hidden" id="chapterBackgroundColor">
 						<input type="hidden" id="chapterTextColor">
-						<div class="mb-3">
-							<label for="chapterFiles" class="form-label">Upload Files</label>
-							<input type="file" class="form-control" id="chapterFiles" name="chapterFiles[]" multiple>
-						</div>
+
 						<div id="save_result"></div>
 					</form>
-					<div class="comments-section">
-						<hr>
-						<h5>Comments</h5>
-						<div id="commentsList"></div>
-					</div>
-					<div class="upload-files-section">
-						<hr>
-						<h5>Files</h5>
-						<div id="UploadFilesList" class="row"></div>
-					</div>
 				</div>
 				<div class="modal-footer modal-footer-color">
-					<button class="btn btn-primary" id="saveChapter">Save Chapter</button>
-					<button class="btn btn-secondary" id="showCommentModal">Add Comment</button>
-					<button class="btn btn-info" id="showHistoryModal">View History</button>
-					<button type="button" class="btn btn-secondary  me-auto" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-danger " id="deleteChapterBtn">Delete</button>
+					<button class="btn btn-primary" id="saveChapter"><?php echo __e('Save Chapter'); ?></button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <?php echo __e('Close'); ?></button>
 				</div>
 			</div>
 		</div>
@@ -219,107 +204,33 @@ require_once 'action-session.php';
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content modal-content-color">
 				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="createCoverModalLabel">Create Cover</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h5 class="modal-title" id="createCoverModalLabel"><?php echo __e('Create Cover'); ?></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo __e('Close'); ?>"></button>
 				</div>
 				<div class="modal-body modal-body-color">
 					<div class="row">
 						<div class="col-md-8">
-							<textarea class="form-control" id="coverPrompt" rows="5" placeholder="Enter cover description"></textarea>
-							<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="Book Title">
-							<input type="text" id="coverBookAuthor" class="form-control mt-2" placeholder="Book Author">
+							<textarea class="form-control" id="coverPrompt" rows="5" placeholder="<?php echo __e('Enter cover description'); ?>"></textarea>
+							<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="<?php echo __e('Book Title'); ?>">
+							<input type="text" id="coverBookAuthor" class="form-control mt-2" placeholder="<?php echo __e('Book Author'); ?>">
 							<div class="mb-1 form-check mt-2">
 								<input type="checkbox" class="form-check-input" id="enhancePrompt" checked>
 								<label class="form-check-label" for="enhancePrompt">
-									Enhance Prompt
+									<?php echo __e('Enhance Prompt'); ?>
 								</label>
 							</div>
-							<span style="font-size: 14px; margin-left:24px;">AI will optimize for creative visuals</span>
+							<span style="font-size: 14px; margin-left:24px;"><?php echo __e('AI will optimize for creative visuals'); ?></span>
 						</div>
 						<div class="col-md-4">
-							<img src="images/placeholder-cover.jpg" alt="Generated Cover" style="width: 100%; height: auto;"
+							<img src="images/placeholder-cover.jpg" alt="<?php echo __e('Generated Cover'); ?>" style="width: 100%; height: auto;"
 							     id="generatedCover">
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer modal-footer-color">
-					<button type="button" class="btn btn-primary" id="generateCoverBtn">Generate</button>
-					<button type="button" class="btn btn-success" id="saveCoverBtn" disabled>Save</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal for Adding Comment -->
-	<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content modal-content-color">
-				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="commentModalLabel">Add Comment</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body modal-body-color">
-					<form id="commentForm">
-						<input type="hidden" id="commentChapterFilename">
-						<input type="hidden" id="commentId">
-						<div class="mb-3">
-							<label for="commentText" class="form-label">Comment</label>
-							<textarea class="form-control" id="commentText" rows="3" required></textarea>
-						</div>
-						<button type="submit" class="btn btn-primary">Save Comment</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Confirmation Modal for Deleting Chapter -->
-	<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-	     aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content modal-content-color">
-				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body modal-body-color">
-					Are you sure you want to delete this chapter? This action cannot be undone.
-				</div>
-				<div class="modal-footer modal-footer-color">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal for Viewing History -->
-	<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content modal-content-color">
-				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="historyModalLabel">History</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body modal-body-color" style="max-height: 400px; overflow: auto;">
-					<div id="historyList"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal for Viewing All History -->
-	<div class="modal fade" id="allHistoryModal" tabindex="-1" aria-labelledby="allHistoryModalLabel"
-	     aria-hidden="true">
-		<div class="modal-dialog modal-dialog-scrollable modal-lg">
-			<div class="modal-content modal-content-color">
-				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="allHistoryModalLabel">All History</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body modal-body-color" style="max-height: 400px; overflow: auto;">
-					<div id="allHistoryList"></div>
+					<button type="button" class="btn btn-primary" id="generateCoverBtn"> <?php echo __e('Generate'); ?></button>
+					<button type="button" class="btn btn-success" id="saveCoverBtn" disabled><?php echo __e('Save'); ?></button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <?php echo __e('Close'); ?></button>
 				</div>
 			</div>
 		</div>
@@ -331,8 +242,8 @@ require_once 'action-session.php';
 		<div class="modal-dialog modal-xl modal-dialog-scrollable">
 			<div class="modal-content modal-content-color">
 				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="bookStructureModalLabel">Book Structure</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h5 class="modal-title" id="bookStructureModalLabel"><?php echo __e('Book Structure'); ?></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo __e('Close'); ?>"></button>
 				</div>
 				<div class="modal-body modal-body-color">
 					<div id="bookStructureContent"></div>
@@ -347,8 +258,8 @@ require_once 'action-session.php';
 		<div class="modal-dialog modal-lg modal-dialog-scrollable">
 			<div class="modal-content modal-content-color">
 				<div class="modal-header modal-header-color">
-					<h5 class="modal-title" id="generateAllBeatsModalLabel">Generating Beats for All Chapters</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h5 class="modal-title" id="generateAllBeatsModalLabel"><?php echo __e('Generating Beats for All Chapters'); ?></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo __e('Close'); ?>"></button>
 				</div>
 				<div class="modal-body modal-body-color">
 					<div class="progress mb-3">
@@ -360,21 +271,20 @@ require_once 'action-session.php';
 					     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
 				</div>
 				<div class="modal-footer modal-footer-color">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <?php echo __e('Close'); ?></button>
+				</div>
 			</div>
 		</div>
-	</div>
 </main>
 
 <script>
-	window.currentUserName = "<?php echo htmlspecialchars($current_user ?? 'Visior'); ?>";
+	window.currentUserName = "<?php echo htmlspecialchars($current_user ?? __e('Visitor')); ?>";
 </script>
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="js/jquery-3.7.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/moment.min.js"></script>
-<script src="js/sortable.min.js"></script>
 
 <script src="js/jspdf.umd.min.js"></script>
 <script src="js/docx.js"></script>
@@ -382,11 +292,7 @@ require_once 'action-session.php';
 
 <!-- Your custom scripts -->
 <script src="js/custom-ui.js"></script>
-<script src="js/utility.js"></script>
-<script src="js/custom.js"></script>
-
 <script src="js/chapter.js"></script>
-<script src="js/comment.js"></script>
 
 </body>
 </html>

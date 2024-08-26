@@ -13,7 +13,6 @@
 		$chapterFilePath = $chaptersDir . '/' . $chapterFilename;
 
 		$id = $_POST['id'] ?? null;
-		$uploadFilename = $_POST['uploadFilename'] ?? null;
 		$USE_LLM = $_ENV['USE_LLM'] ?? 'open-router';
 
 		$llmApp = new LlmFunctions();
@@ -23,7 +22,7 @@
 			//-----------------------------//
 			case 'write_beats':
 				if ($bookData['owner'] !== $current_user) {
-					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
 				}
 
@@ -126,7 +125,7 @@
 					} elseif (is_array($resultData)) {
 						$beats = $resultData;
 					} else {
-						echo json_encode(['success' => false, 'message' => 'Failed to generate beats']);
+						echo json_encode(['success' => false, 'message' => __e('Failed to generate beats')]);
 						break;
 					}
 
@@ -138,7 +137,7 @@
 			//-----------------------------//
 			case 'write_beat_text':
 				if ($bookData['owner'] !== $current_user) {
-					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
 				}
 
@@ -194,7 +193,7 @@
 			//-----------------------------//
 			case 'write_beat_text_summary':
 				if ($bookData['owner'] !== $current_user) {
-					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
 				}
 
@@ -245,7 +244,7 @@
 			//-----------------------------//
 			case 'save_beat_text':
 				if ($bookData['owner'] !== $current_user) {
-					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
 				}
 
@@ -272,7 +271,7 @@
 			//-----------------------------//
 			case 'save_beats':
 				if ($bookData['owner'] !== $current_user) {
-					echo json_encode(['success' => false, 'message' => 'You are not the owner of this book.']);
+					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
 				}
 
@@ -285,10 +284,10 @@
 					if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
 						echo json_encode(['success' => true]);
 					} else {
-						echo json_encode(['success' => false, 'message' => 'Failed to write to file']);
+						echo json_encode(['success' => false, 'message' => __e('Failed to write to file')]);
 					}
 				} else {
-					echo json_encode(['success' => false, 'message' => 'Chapter file not found']);
+					echo json_encode(['success' => false, 'message' => __e('Chapter file not found')]);
 				}
 				break;
 		}

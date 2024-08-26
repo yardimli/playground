@@ -93,7 +93,7 @@ Prompt:";
 		$single_request = [
 			[
 				"role" => "system",
-				"content" => "You write prompts for making music album covers. Follow the format of the examples."
+				"content" => "You write prompts for making book covers. Follow the format of the examples."
 			],
 			[
 				"role" => "user",
@@ -175,10 +175,10 @@ Prompt:";
 			$image = file_get_contents($image_url);
 			file_put_contents($outputFile, $image);
 
-			echo json_encode(['success' => true, 'message' => 'Image generated successfully', 'output_filename' => $filename, 'output_path' => $outputFile, 'data' => json_encode($data), 'seed' => $data['seed'], 'status_code' => $response->getStatusCode()]);
+			echo json_encode(['success' => true, 'message' => __e('Image generated successfully'), 'output_filename' => $filename, 'output_path' => $outputFile, 'data' => json_encode($data), 'seed' => $data['seed'], 'status_code' => $response->getStatusCode()]);
 		} else {
-			echo json_encode(['success' => false, 'message' => 'Error (2) generating image', 'status_code' => $response->getStatusCode()]);
+			echo json_encode(['success' => false, 'message' => __e('Error (2) generating image'), 'status_code' => $response->getStatusCode()]);
 		}
 	} else {
-		echo json_encode(['success' => false, 'message' => 'Error (1) generating image', 'status_code' => $response->getStatusCode()]);
+		echo json_encode(['success' => false, 'message' => __e('Error (1) generating image'), 'status_code' => $response->getStatusCode()]);
 	}
