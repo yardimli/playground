@@ -52,7 +52,7 @@
 
 		$headers = array();
 		$headers[] = 'Content-Type: application/json';
-		$headers[] = "Authorization: Bearer ".$_ENV['OPEN_AI_GPT4_KEY'];
+		$headers[] = "Authorization: Bearer " . $_ENV['OPEN_AI_GPT4_KEY'];
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 		$result = curl_exec($ch);
@@ -69,24 +69,33 @@
 
 	}
 
+	if ($current_user === 'Visitor') {
+		echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+		exit();
+	}
+
 	$theme = $_POST['theme'] ?? 'an ocean in space';
 	$title1 = $_POST['title_1'] ?? 'Playground Computer';
 	$author1 = $_POST['author_1'] ?? 'I, Robot';
 	$model = $_POST['model'] ?? 'fast';
 	$creative = $_POST['creative'] ?? 'no';
 
+	if ($current_user === 'admin') {
+		$model = 'balanced';
+	}
 
-	$prompt = $theme. ' the book covers title is "'.$title1.'" and the author is "'.$author1.'" include the text lines on the cover.';
+
+	$prompt = $theme . ' the book covers title is "' . $title1 . '" and the author is "' . $author1 . '" include the text lines on the cover.';
 
 	if ($creative === 'more') {
 
-		$gpt_prompt = "Write a prompt for an album cover 
+		$gpt_prompt = "Write a prompt for an book cover 
 The image in the background is :
  " . $theme . "
  the book title is " . $title1 . "
  the author is " . $author1 . "
-
-With the above information, compose an album cover. Write it as a single paragraph. The instructions should focus on the text elements of the album cover. Generally the title should be on top part and the artist on the bottom of the image.
+Write in English even if the background is written in another language.
+With the above information, compose a book cover. Write it as a single paragraph. The instructions should focus on the text elements of the book cover. Generally the title should be on top part and the artist on the bottom of the image.
 
 Prompt:";
 

@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-	include_once 'lang-tr.php';
+	include_once 'lang-en.php';
 
 	//json string for users, Admin password is 123456
 	$users =

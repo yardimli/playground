@@ -10,7 +10,12 @@
 
 		//-----------------------------//
 		case 'write_book_character_profiles':
-			$language = $_POST['language'] ?? 'English';
+			if ($current_user === 'Visitor') {
+				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+				break;
+			}
+
+			$language = $_POST['language'] ?? __e('Default Language');
 			$user_blurb = $_POST['user_blurb'] ?? '';
 			$book_structure = $_POST['bookStructure'] ?? 'fichtean_curve.txt';
 
@@ -64,11 +69,15 @@
 			}
 			break;
 
-
 		//-----------------------------//
 		case 'write_book':
-			$language = $_POST['language'] ?? 'English';
-			$book_structure = $_POST['bookStructure'] ?? 'fichtean_curve.txt';
+			if ($current_user === 'Visitor') {
+				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+				break;
+			}
+
+			$language = $_POST['language'] ?? __e('Default Language');
+			$book_structure = $_POST['bookStructure'] ?? __e('Default Structure');
 
 			$user_blurb = $_POST['user_blurb'] ?? '';
 			$book_title = $_POST['book_title'] ?? '';
@@ -241,9 +250,13 @@
 			echo json_encode($chapters);
 			break;
 
-
 		//-----------------------------//
 		case 'save_chapter':
+			if ($current_user === 'Visitor') {
+				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+				break;
+			}
+
 			if ($bookData['owner'] !== $current_user) {
 				echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 				break;
@@ -299,10 +312,16 @@
 
 		//-----------------------------//
 		case 'save_cover':
+			if ($current_user === 'Visitor') {
+				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+				break;
+			}
+
 			if ($bookData['owner'] !== $current_user && $current_user !== 'admin') {
 				echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 				break;
 			}
+
 			$cover_filename = $_POST['cover_filename'];
 
 			$bookJsonPath = $chaptersDirName . '/book.json';

@@ -40,7 +40,9 @@ function showChapterBeatsModal() {
 function writeAllBeats(chapterFilename) {
 	const modal = $('#writeAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
+	const log = $('#writeAllBeatsLog');
 	$("#beatSpinner").removeClass('d-none');
+	
 	modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 	
 	$('#writeAllBeatsLog').empty();

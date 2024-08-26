@@ -21,6 +21,11 @@
 
 			//-----------------------------//
 			case 'write_beats':
+				if ($current_user === 'Visitor') {
+					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+					break;
+				}
+
 				if ($bookData['owner'] !== $current_user) {
 					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
@@ -136,6 +141,11 @@
 
 			//-----------------------------//
 			case 'write_beat_text':
+				if ($current_user === 'Visitor') {
+					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+					break;
+				}
+
 				if ($bookData['owner'] !== $current_user) {
 					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
@@ -192,6 +202,11 @@
 
 			//-----------------------------//
 			case 'write_beat_text_summary':
+				if ($current_user === 'Visitor') {
+					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+					break;
+				}
+
 				if ($bookData['owner'] !== $current_user) {
 					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
@@ -243,6 +258,11 @@
 
 			//-----------------------------//
 			case 'save_beat_text':
+				if ($current_user === 'Visitor') {
+					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+					break;
+				}
+
 				if ($bookData['owner'] !== $current_user) {
 					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;
@@ -270,6 +290,11 @@
 
 			//-----------------------------//
 			case 'save_beats':
+				if ($current_user === 'Visitor') {
+					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+					break;
+				}
+
 				if ($bookData['owner'] !== $current_user) {
 					echo json_encode(['success' => false, 'message' => __e('You are not the owner of this book.')]);
 					break;

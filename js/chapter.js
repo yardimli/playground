@@ -10,7 +10,7 @@ function showBookStructureModal() {
 			structureHtml += '<p><i>' + __e('Back Cover Text') + ':</i> ' + response.backCoverText + '</p>';
 			
 			response.acts.forEach(function (act, actIndex) {
-				structureHtml += '<h3>' + __e('Act ${act}', {act: (actIndex + 1)}) + ':' + act.name + ' < /h3>';
+				structureHtml += '<h3>' + __e('Act ${act}', {act: (actIndex + 1)}) + ':' + act.name + ' </h3>';
 				act.chapters.forEach(function (chapter) {
 					
 					var chapter_events = chapter.events;
@@ -224,6 +224,7 @@ function editChapter(chapterFilename) {
 function generateAllBeats() {
 	const modal = $('#generateAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
+	const log = $('#generateAllBeatsLog');
 	
 	modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 	$('#generateAllBeatsLog').empty();

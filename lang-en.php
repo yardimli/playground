@@ -1,7 +1,18 @@
 <?php
 	$translations = [
 
+		//files
+		'fichtean_curve.txt' => 'fichtean_curve.txt',
+		'freytags_pyramid.txt' => 'freytags_pyramid.txt',
+		'heros_journey.txt' => 'heros_journey.txt',
+		'story_clock.txt' => 'story_clock.txt',
+		'save_the_cat.txt' => 'save_the_cat.txt',
+		'dan_harmons_story_circle.txt' => 'dan_harmons_story_circle.txt',
+
 		//index.php
+		'Default Language' => 'English',
+		'Default Structure' => 'fichtean_curve.txt',
+		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
 		'Playground - The Book - Index' => 'Playground - The Book - Index',
 		'Toggle Mode' => 'Dark/Light Mode',
 		'Add Book' => 'Add Book',
@@ -13,8 +24,8 @@
 		'Loading...' => 'Loading...',
 		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.',
 		'English' => 'English',
-		'Norwegian' => 'Norwegian',
-		'Turkish' => 'Turkish',
+		'Norwegian' => 'Norsk',
+		'Turkish' => 'Türkçe',
 		'Fichtean Curve (3 Acts, 8 Chapters)' => 'Fichtean Curve (3 Acts, 8 Chapters)',
 		'Freytag\'s Pyramid (5 Acts, 9 Chapters)' => 'Freytag\'s Pyramid (5 Acts, 9 Chapters)',
 		'Hero\'s Journey (3 Acts, 12 Chapters)' => 'Hero\'s Journey (3 Acts, 12 Chapters)',

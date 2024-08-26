@@ -726,6 +726,11 @@
 
 		public function createBookStructure($book_header_data, $book, $model, $current_user)
 		{
+			if ($current_user === 'Visitor') {
+				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
+				exit();
+			}
+
 			$timestamp = time();
 			$book_folder = __DIR__ . "/books/book_$timestamp";
 			if (!file_exists($book_folder)) {

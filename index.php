@@ -195,20 +195,20 @@ require_once 'action-session.php';
 						</div>
 						<div class="mb-3">
 							<select class="form-control" id="language" name="language" required>
-								<option value="English"><?php echo __e('English'); ?></option>
-								<option value="Norwegian"><?php echo __e('Norwegian'); ?></option>
-								<option value="Turkish"><?php echo __e('Turkish'); ?></option>
+								<option value="<?php echo __e('English'); ?>" <?php if (__e('Default Language') === __e('English')) { echo " SELECTED;"; } ?>><?php echo __e('English'); ?></option>
+								<option value="<?php echo __e('Norwegian'); ?>" <?php if (__e('Default Language') === __e('Norwegian')) { echo " SELECTED;"; } ?>><?php echo __e('Norwegian'); ?></option>
+								<option value="<?php echo __e('Turkish'); ?>" <?php if (__e('Default Language') === __e('Turkish')) { echo " SELECTED;"; } ?>><?php echo __e('Turkish'); ?></option>
 							</select>
 						</div>
 
 						<div class="mb-3">
 							<select class="form-control" id="bookStructure" name="bookStructure" required>
-								<option value="fichtean_curve.txt"><?php echo __e('Fichtean Curve (3 Acts, 8 Chapters)'); ?></option>
-								<option value="freytags_pyramid.txt"><?php echo __e('Freytag\'s Pyramid (5 Acts, 9 Chapters)'); ?></option>
-								<option value="heros_journey.txt"><?php echo __e('Hero\'s Journey (3 Acts, 12 Chapters)'); ?></option>
-								<option value="story_clock.txt"><?php echo __e('Story Clock (4 Acts, 12 Chapters)'); ?></option>
-								<option value="save_the_cat.txt"><?php echo __e('Save The Cat (4 Acts, 15 Chapters)'); ?></option>
-								<option value="dan_harmons_story_circle.txt"><?php echo __e('Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)'); ?></option>
+								<option value="<?php echo __e('fichtean_curve.txt'); ?>"><?php echo __e('Fichtean Curve (3 Acts, 8 Chapters)'); ?></option>
+								<option value="<?php echo __e('freytags_pyramid.txt'); ?>"><?php echo __e('Freytag\'s Pyramid (5 Acts, 9 Chapters)'); ?></option>
+								<option value="<?php echo __e('heros_journey.txt'); ?>"><?php echo __e('Hero\'s Journey (3 Acts, 12 Chapters)'); ?></option>
+								<option value="<?php echo __e('story_clock.txt'); ?>"><?php echo __e('Story Clock (4 Acts, 12 Chapters)'); ?></option>
+								<option value="<?php echo __e('save_the_cat.txt'); ?>"><?php echo __e('Save The Cat (4 Acts, 15 Chapters)'); ?></option>
+								<option value="<?php echo __e('dan_harmons_story_circle.txt'); ?>"><?php echo __e('Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)'); ?></option>
 							</select>
 						</div>
 
