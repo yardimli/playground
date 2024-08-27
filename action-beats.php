@@ -21,7 +21,7 @@
 
 			//-----------------------------//
 			case 'write_beats':
-				if ($current_user === 'Visitor') {
+				if ($current_user === __e('Visitor')) {
 					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 					break;
 				}
@@ -141,7 +141,7 @@
 
 			//-----------------------------//
 			case 'write_beat_text':
-				if ($current_user === 'Visitor') {
+				if ($current_user === __e('Visitor')) {
 					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 					break;
 				}
@@ -202,7 +202,7 @@
 
 			//-----------------------------//
 			case 'write_beat_text_summary':
-				if ($current_user === 'Visitor') {
+				if ($current_user === __e('Visitor')) {
 					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 					break;
 				}
@@ -258,7 +258,7 @@
 
 			//-----------------------------//
 			case 'save_beat_text':
-				if ($current_user === 'Visitor') {
+				if ($current_user === __e('Visitor')) {
 					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 					break;
 				}
@@ -290,7 +290,7 @@
 
 			//-----------------------------//
 			case 'save_beats':
-				if ($current_user === 'Visitor') {
+				if ($current_user === __e('Visitor')) {
 					echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 					break;
 				}

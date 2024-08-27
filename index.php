@@ -67,20 +67,13 @@ require_once 'action-session.php';
 
 ?>
 
-	<div class="ham-menu-items" id="ham-menu-items">
+	<div class="ham-menu-items" id="ham-menu-items" style="height: 250px;">
 		<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 			<input type="hidden" name="action" value="logout">
 		</form>
 
-		<div id="modeToggleBtn" class="mb-1 mt-1 btn btn-primary w-100">
-			<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
-		</div>
-		<a href="#" id="logoutBtn" onclick="document.getElementById('logoutForm').submit();" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-door-open"></i> <?php echo __e('Log out'); ?></a>
-
-		<button id="addBookBtn"  class="mb-3 mt-1 btn btn-success w-100"><i class="bi bi-plus-circle-fill"></i> <?php echo __e('Add Book'); ?></button>
-
 		<?php echo __e('AI Engines:'); ?>
-		<select id="llmSelect" class="form-select mx-auto mb-1">
+		<select id="llmSelect" class="form-select mx-auto mb-3">
 			<?php
 				if ($current_user === 'admin' || $current_user === 'deniz') {
 					?>
@@ -108,6 +101,10 @@ require_once 'action-session.php';
 			<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
 		</select>
 
+		<button id="addBookBtn"  class="mb-4 mt-1 btn btn-success w-100"><i class="bi bi-plus-circle-fill"></i> <?php echo __e('Add Book'); ?></button>
+
+		<a href="#" id="logoutBtn" onclick="document.getElementById('logoutForm').submit();" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-door-open"></i> <?php echo __e('Log out'); ?></a>
+
 		<a href="login.php" id="loginBtn" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-person"></i> <?php echo __e('Login/Sign up'); ?></a>
 
 	</div>
@@ -115,6 +112,9 @@ require_once 'action-session.php';
 	<span class="line line1"></span>
 	<span class="line line2"></span>
 	<span class="line line3"></span>
+</div>
+<div id="modeToggleBtn">
+	<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
 </div>
 
 <main class="py-2">
@@ -124,9 +124,6 @@ require_once 'action-session.php';
 		<h1 style="margin:10px;" class="text-center"><?php echo __e('Playground Book'); ?></h1>
 
 		<div class="container mt-1">
-			<div class="my-2 d-inline-block">
-				<?php echo __e('Hello'); ?> <span id="currentUser"></span>,
-			</div>
 
 			<div class="row">
 				<?php foreach ($books as $book):
@@ -195,9 +192,9 @@ require_once 'action-session.php';
 						</div>
 						<div class="mb-3">
 							<select class="form-control" id="language" name="language" required>
-								<option value="<?php echo __e('English'); ?>" <?php if (__e('Default Language') === __e('English')) { echo " SELECTED;"; } ?>><?php echo __e('English'); ?></option>
-								<option value="<?php echo __e('Norwegian'); ?>" <?php if (__e('Default Language') === __e('Norwegian')) { echo " SELECTED;"; } ?>><?php echo __e('Norwegian'); ?></option>
-								<option value="<?php echo __e('Turkish'); ?>" <?php if (__e('Default Language') === __e('Turkish')) { echo " SELECTED;"; } ?>><?php echo __e('Turkish'); ?></option>
+								<option value="<?php echo __e('English'); ?>" <?php if (__e('Default Language') === __e('English')) { echo " SELECTED"; } ?>><?php echo __e('English'); ?></option>
+								<option value="<?php echo __e('Norwegian'); ?>" <?php if (__e('Default Language') === __e('Norwegian')) { echo " SELECTED"; } ?>><?php echo __e('Norwegian'); ?></option>
+								<option value="<?php echo __e('Turkish'); ?>" <?php if (__e('Default Language') === __e('Turkish')) { echo " SELECTED"; } ?>><?php echo __e('Turkish'); ?></option>
 							</select>
 						</div>
 

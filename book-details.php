@@ -27,16 +27,11 @@ require_once 'action-session.php';
 </head>
 <body>
 
-<div class="ham-menu-items" id="ham-menu-items" style="height: 500px;">
+<div class="ham-menu-items" id="ham-menu-items" style="height: 400px;">
 	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 
-	<div id="modeToggleBtn" class="mb-2 mt-1 btn btn-primary w-100">
-		<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
-	</div>
-
-	<br>
 	<span style="font-size: 18px;">AI Engines:</span>
 	<select id="llmSelect" class="form-select mx-auto mb-1">
 		<?php
@@ -71,10 +66,6 @@ require_once 'action-session.php';
 			class="bi bi-lightning-charge"></i> <?php echo __e('Write All Beats'); ?>
 	</button>
 
-	<button class="btn btn-primary mb-3 mt-1 w-100" title="<?php echo __e('Cover Image'); ?>" id="createCoverBtn">
-		<i class="bi bi-image"></i> <?php echo __e('Cover Image'); ?>
-	</button>
-
 	<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="<?php echo __e('Export as PDF'); ?>">
 		<i class="bi bi-file-earmark-pdf"></i> <?php echo __e('Export as PDF'); ?>
 	</button>
@@ -99,6 +90,10 @@ require_once 'action-session.php';
 	<span class="line line3"></span>
 </div>
 
+<div id="modeToggleBtn">
+	<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
+</div>
+
 <main class="py-5">
 
 	<div class="container mt-2">
@@ -118,6 +113,11 @@ require_once 'action-session.php';
 							alt="Book Cover"
 							style="width: 100%; object-fit: cover;"
 							id="bookCover">
+						<br>
+						<button class="btn btn-primary mb-3 mt-1 w-100" title="<?php echo __e('Cover Image'); ?>" id="createCoverBtn">
+							<i class="bi bi-image"></i> <?php echo __e('Cover Image'); ?>
+						</button>
+
 					</div>
 					<!-- Text Blocks Div -->
 					<div class="col-lg-7 col-12">

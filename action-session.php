@@ -45,7 +45,7 @@
 	}
 
 
-	$current_user = $_SESSION['user'] ?? 'Visitor';
+	$current_user = $_SESSION['user'] ?? __e('Visitor');
 
 	function write_js_translations()
 	{

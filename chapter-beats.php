@@ -27,16 +27,11 @@ require_once 'action-session.php';
 </head>
 <body>
 
-<div class="ham-menu-items" id="ham-menu-items" style="height: 450px;">
+<div class="ham-menu-items" id="ham-menu-items" style="height: 460px;">
 	<form id="logoutForm" action="action-other-functions.php" method="POST" class="d-none">
 		<input type="hidden" name="action" value="logout">
 	</form>
 
-	<div id="modeToggleBtn" class="mb-2 mt-1 btn btn-primary w-100">
-		<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
-	</div>
-
-	<br>
 	<span style="font-size: 18px;"><?php echo __e('AI Engines:'); ?></span>
 	<select id="llmSelect" class="form-select mx-auto mb-1">
 		<?php
@@ -91,6 +86,9 @@ require_once 'action-session.php';
 	<span class="line line1"></span>
 	<span class="line line2"></span>
 	<span class="line line3"></span>
+</div>
+<div id="modeToggleBtn">
+	<i id="modeIcon" class="bi bi-sun"></i> <?php echo __e('Toggle Mode'); ?>
 </div>
 
 <main class="py-4">

@@ -10,7 +10,7 @@
 
 		//-----------------------------//
 		case 'write_book_character_profiles':
-			if ($current_user === 'Visitor') {
+			if ($current_user === __e('Visitor')) {
 				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 				break;
 			}
@@ -71,7 +71,7 @@
 
 		//-----------------------------//
 		case 'write_book':
-			if ($current_user === 'Visitor') {
+			if ($current_user === __e('Visitor')) {
 				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 				break;
 			}
@@ -252,7 +252,7 @@
 
 		//-----------------------------//
 		case 'save_chapter':
-			if ($current_user === 'Visitor') {
+			if ($current_user === __e('Visitor')) {
 				echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 				break;
 			}

@@ -6,7 +6,7 @@
 	if ($action === 'write_book_character_profiles' || $action === 'write_book' || $action === 'login' || $action === 'register' || $action === 'logout' || $action === '') {
 
 	} else if ($action === 'delete_book') {
-		if ($current_user === 'Visitor') {
+		if ($current_user === __e('Visitor')) {
 			echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 			exit();
 		}

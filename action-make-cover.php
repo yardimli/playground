@@ -69,7 +69,7 @@
 
 	}
 
-	if ($current_user === 'Visitor') {
+	if ($current_user === __e('Visitor')) {
 		echo json_encode(['success' => false, 'message' => __e('You must be logged in to create a book.')]);
 		exit();
 	}

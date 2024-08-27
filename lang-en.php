@@ -14,7 +14,7 @@
 		'Default Structure' => 'fichtean_curve.txt',
 		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
 		'Playground - The Book - Index' => 'Playground - The Book - Index',
-		'Toggle Mode' => 'Dark/Light Mode',
+		'Toggle Mode' => '',
 		'Add Book' => 'Add Book',
 		'AI Engines:' => 'AI Engines:',
 		'Hello' => 'Hello',
