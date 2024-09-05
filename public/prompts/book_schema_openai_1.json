@@ -1,0 +1,91 @@
+{
+  "type": "function",
+  "function": {
+    "name": "create_book_schema",
+    "description": "Create a schema for a book divided into acts and chapters",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the book"
+        },
+        "blurb": {
+          "type": "string",
+          "description": "The blurb of the book"
+        },
+        "back_cover_text": {
+          "type": "string",
+          "description": "3-4 paragraphs of text introducing the story expanding on the blurb."
+        },
+        "acts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the act"
+              },
+              "chapters": {
+                "type": "array",
+                "description": "The chapters in the act",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the chapter"
+                    },
+                    "short_description": {
+                      "type": "string",
+                      "description": "A detailed description of what happens in this chapter. It should contain a beginning middle part and an end that leads to the next chapter."
+                    },
+                    "events": {
+                      "type": "string",
+                      "description": "Notable events in the chapter."
+                    },
+                    "people": {
+                      "type": "string",
+                      "description": "Description of people in the chapter."
+                    },
+                    "places": {
+                      "type": "string",
+                      "description": "Description of the places in this chapter."
+                    },
+                    "from_previous_chapter": {
+                      "type": "string",
+                      "description": "Summary of what we got from the previous chapter. N/A for first chapter."
+                    },
+                    "to_next_chapter": {
+                      "type": "string",
+                      "description": "Summary of what we will send to the next chapter. N/A for last chapter."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "short_description",
+                    "people",
+                    "from_previous_chapter",
+                    "to_next_chapter"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "name",
+              "chapters"
+            ]
+          },
+          "description": "The acts in the book"
+        }
+      },
+      "required": [
+        "title",
+        "blurb",
+        "back_cover_text",
+        "acts"
+      ]
+    }
+  }
+}
