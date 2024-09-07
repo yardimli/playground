@@ -42,6 +42,7 @@
 
 	Route::get('/my-profile', [StaticPagesController::class, 'myProfile'])->name('my-profile');
 	Route::get('/start-writing', [StaticPagesController::class, 'startWriting'])->name('start-writing');
+
 	Route::get('/faq', [StaticPagesController::class, 'faq'])->name('faq');
 	Route::get('/blog-grid', [StaticPagesController::class, 'blogGrid'])->name('blog-grid');
 	Route::get('/blog-detail', [StaticPagesController::class, 'blogDetail'])->name('blog-detail');
@@ -85,14 +86,18 @@
 
 
 
-
-	Route::post('/write-book-character-profiles', [BookActionController::class, 'writeBookCharacterProfiles']);
-	Route::post('/write-book', [BookActionController::class, 'writeBook']);
-	Route::post('/book/{bookSlug}/chapter', [BookActionController::class, 'saveChapter']);
-	Route::post('/book/{bookSlug}/cover', [BookActionController::class, 'saveCover']);
-	Route::delete('/book/{bookSlug}', [BookActionController::class, 'deleteBook']);
+	Route::post('/write-book-character-profiles', [BookActionController::class, 'writeBookCharacterProfiles'])->name('book.write-book-character-profiles');
+	Route::post('/write-book', [BookActionController::class, 'writeBook'])->name('book.write-book');
+	Route::post('/book/{bookSlug}/chapter', [BookActionController::class, 'saveChapter'])->name('book.save-chapter');
+	Route::post('/book/{bookSlug}/cover', [BookActionController::class, 'saveCover'])->name('book.save-cover');
+	Route::delete('/book/{bookSlug}', [BookActionController::class, 'deleteBook'])->name('book.delete');
 
 	Route::post('/cover-image/{bookSlug}', [BookActionController::class, 'makeCoverImage'])->name('book.make-cover-image');
+
+	Route::post('/book/write-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeats'])->name('book.write-chapter-beats');
+
+	Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveChapterBeats'])->name('book.save-chapter-beats');
+
 
 	Route::middleware(['auth'])->group(function () {
 

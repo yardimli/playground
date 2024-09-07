@@ -13,6 +13,7 @@
 	<meta property="og:description" content="Playground-Computer Ecommerce Website"/>
 	<meta property="og:image" content="https://makaanlelo.com/tf_products_007/playground/xhtml/social-image.png"/>
 	<meta name="format-detection" content="telephone=no">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<!-- FAVICONS ICON -->
 	<link rel="icon" type="image/x-icon" href="/images/favicon.png"/>
@@ -24,11 +25,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!-- STYLESHEETS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.min.css">
 	<link rel="stylesheet" type="text/css" href="/icons/fontawesome/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/animate.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	
+	<link href="/css/bootstrap-icons.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 	
 	<!-- GOOGLE FONTS-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,12 +43,68 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
 		rel="stylesheet">
+	
+	<!-- JAVASCRIPT FILES ========================================= -->
+	<script src="/js/jquery.min.js"></script><!-- JQUERY MIN JS -->
+	<script src="/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
+	<script src="/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
+	<script src="/js/custom.js"></script><!-- CUSTOM JS -->
+	
+	<script>
+		function applyTheme(theme) {
+			if (theme === 'dark') {
+				$('body').addClass('dark-mode');
+				$('#modeIcon').removeClass('bi-sun').addClass('bi-moon');
+				$('#modeToggleBtnFloat').attr('aria-label', 'Switch to Light Mode');
+			} else {
+				$('body').removeClass('dark-mode');
+				$('#modeIcon').removeClass('bi-moon').addClass('bi-sun');
+				$('#modeToggleBtnFloat').attr('aria-label', 'Switch to Dark Mode');
+			}
+		}
+		
+		
+		$(document).ready(function () {
+			const theme = localStorage.getItem('theme');
+			if (theme) {
+				applyTheme(theme);
+			}
+			
+			
+			$('#modeToggleBtnFloat').on('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				const currentTheme = $('body').hasClass('dark-mode') ? 'dark' : 'light';
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+				localStorage.setItem('theme', newTheme);
+				applyTheme(newTheme);
+			})
+		});
+		
+		
+		// Manage z-index for multiple modals
+		$('.modal').on('show.bs.modal', function () {
+			const zIndex = 1040 + (10 * $('.modal:visible').length);
+			$(this).css('z-index', zIndex);
+			setTimeout(function () {
+				$('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+			}, 0);
+		});
+		
+		$('.modal').on('hidden.bs.modal', function () {
+			if ($('.modal:visible').length) {
+				// Adjust the backdrop z-index when closing a modal
+				$('body').addClass('modal-open');
+			}
+		});
+	
+	</script>
 
 </head>
 <body>
 
 <div class="page-wraper">
-	<div id="loading-area" class="preloader-wrapper-1">
+	<div id="loading-area" class="preloader-wrapper-1 dropdown-menu-color">
 		<div class="preloader-inner">
 			<div class="preloader-shade"></div>
 			<div class="preloader-wrap"></div>
@@ -53,7 +116,7 @@
 	</div>
 	
 	<!-- Header -->
-	<header class="site-header mo-left header style-1">
+	<header class="site-header mo-left header style-1 modal-content-color">
 		<!-- Main Header -->
 		<div class="header-info-bar">
 			<div class="container clearfix">
@@ -79,14 +142,14 @@
 											<h6 class="title">{{ Auth::user()->username }}</h6>
 										</div>
 									</a>
-									<div class="dropdown-menu py-0 dropdown-menu-end">
-										<div class="dropdown-header">
+									<div class="dropdown-menu py-0 dropdown-menu-end dropdown-menu-color">
+										<div class="dropdown-header dropdown-menu-color">
 											<h6 class="m-0">{{ Auth::user()->username }}</h6>
 											<span>{{ Auth::user()->email }}</span>
 										</div>
-										<div class="dropdown-body">
+										<div class="dropdown-body dropdown-menu-color">
 											<a href="{{route('my-profile')}}"
-											   class="dropdown-item d-flex justify-content-between align-items-center ai-icon">
+											   class="dropdown-item d-flex justify-content-between align-items-center ai-icon dropdown-item-color">
 												<div>
 													<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
 													     fill="#000000">
@@ -97,9 +160,13 @@
 													<span class="ms-2">Profile</span>
 												</div>
 											</a>
-										
+											
+											<div id="modeToggleBtnFloat" class="dropdown-item dropdown-item-color" style="padding: 10px 20px; ">
+												<i id="modeIcon" class="bi bi-sun" style="margin-left:2px;"></i> <span class="ms-2">{{__('default.Toggle Mode Text')}}</span>
+											</div>
+											
 										</div>
-										<div class="dropdown-footer">
+										<div class="dropdown-footer dropdown-menu-color">
 											<a class="btn btn-primary w-100 btnhover btn-sm" href="#"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
 										</div>
 									</div>
@@ -122,8 +189,8 @@
 		<!-- Main Header End -->
 		
 		<!-- Main Header -->
-		<div class="sticky-header main-bar-wraper navbar-expand-lg">
-			<div class="main-bar clearfix">
+		<div class="sticky-header modal-header-color main-bar-wraper navbar-expand-lg">
+			<div class="main-bar clearfix modal-header-color">
 				<div class="container clearfix">
 					<!-- Website Logo -->
 					<div class="logo-header logo-dark">

@@ -54,10 +54,5 @@
 	</div>
 </div>
 
-<!-- JAVASCRIPT FILES ========================================= -->
-<script src="/js/jquery.min.js"></script><!-- JQUERY MIN JS -->
-<script src="/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-<script src="/js/custom.js"></script><!-- CUSTOM JS -->
-
 </body>
 </html>

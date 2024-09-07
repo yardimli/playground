@@ -94,10 +94,10 @@ function createChapter(chapter) {
         <br><strong>${__e('Next')}:</strong> ${chapter.to_next_chapter}
     </div>
     <div class="row" style="margin: 0px;">
-	    <div class="col-12 col-lg-6 mb-2" style="padding-left: 3px; padding-right: 3px;">
+	    <div class="col-12 col-lg-6 mb-2 zero-right-padding-on-mobile">
 				<div class="btn bt-lg btn-info w-100" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" >${__e('Edit Chapter')}</div>
 			</div>
-    <div class="col-12 col-lg-6 mb-2" style="padding-left: 3px; padding-right: 3px;">
+    <div class="col-12 col-lg-6 mb-2 zero-left-padding-on-mobile">
 			<a class="btn bt-lg btn-primary w-100" href="/book-beats/${bookSlug}/${chapter.chapterFilename.replace('.json', '')}">${__e('Open Beats')}</a>
 	    </div>
     </div>
@@ -198,142 +198,83 @@ function generateAllBeats() {
 	$('#generateAllBeatsLog').append('<br>' + __e('Please wait...'));
 	$('#generateAllBeatsLog').append('<br><br>' + __e('If the progress bar is stuck for a long time, please refresh the page and try again.') + '<br><br>');
 	
-	$.post('action-book.php', {action: 'load_chapters', book: bookSlug, llm: savedLlm}, function (response) {
-		let chapters = JSON.parse(response);
-		
-		const totalChapters = chapters.length;
-		let processedChapters = 0;
-		let lastChapterBeats = [];
-		
-		console.log(chapters);
-		
-		function processNextChapter() {
-			if (processedChapters < totalChapters) {
-				const chapter = chapters[processedChapters];
-				$('#generateAllBeatsLog').append('<br><br>' + __e('Processing chapter: ${chapter}', {chapter: chapter.name}));
-				$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-				
-				// Check if the chapter already has beats
-				if (chapter.beats && chapter.beats.length > 0) {
-					$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
-					$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-					lastChapterBeats = chapter.beats;
-					continueProcessing();
-				} else {
-					let previousChapterBeats = '';
-					if (lastChapterBeats.length > 0) {
-						previousChapterBeats = `${lastChapterBeats.map((beat, index) => __e('Beat ${index}', {index: index}) + ' : ' + beat.description).join('\n')}`;
-					}
-					
-					let nextChapterText = chapter.to_next_chapter;
-					if (processedChapters + 1 < totalChapters) {
-						let nextChapter = chapters[processedChapters + 1];
-						nextChapterText = nextChapter.name + ': ' + nextChapter.short_description;
-					}
-					
-					var chapter_events = chapter.events;
-					if (Array.isArray(chapter.events)) {
-						chapter_events = chapter.events.join(', ');
-					}
-					var chapter_people = chapter.people;
-					if (Array.isArray(chapter.people)) {
-						chapter_people = chapter.people.join(', ');
-					}
-					var chapter_places = chapter.places;
-					if (Array.isArray(chapter.places)) {
-						chapter_places = chapter.places.join(', ');
-					}
-					
-					$.ajax({
-						url: 'action-beats.php',
-						method: 'POST',
-						data: {
-							action: 'write_beats',
-							llm: savedLlm,
-							simulated: false,
-							book: bookSlug,
-							chapterFilename: chapter.chapterFilename,
-							chapterName: chapter.name,
-							chapterText: chapter.short_description,
-							chapterEvents: chapter_events,
-							chapterPeople: chapter_people,
-							chapterPlaces: chapter_places,
-							chapterFromPreviousChapter: previousChapterBeats, //chapter.from_previous_chapter,
-							chapterToNextChapter: nextChapterText
-						},
-						dataType: 'json',
-						success: function (response) {
-							if (response.success) {
-								// Save the generated beats back to the chapter
-								$.ajax({
-									url: 'action-beats.php',
-									method: 'POST',
-									data: {
-										action: 'save_beats',
-										llm: savedLlm,
-										book: bookSlug,
-										chapterFilename: chapter.chapterFilename,
-										beats: JSON.stringify(response.beats)
-									},
-									dataType: 'json',
-									success: function (saveResponse) {
-										if (saveResponse.success) {
-											if (Array.isArray(response.beats)) {
-												$('#generateAllBeatsLog').append('<br>' + __e('Beats generated and saved for chapter: ${chapter}', {chapter: chapter.name}));
-												lastChapterBeats = response.beats;
-												
-												response.beats.forEach((beat, index) => {
-													$('#generateAllBeatsLog').append(`<br>${beat.description}`);
-												});
-											} else {
-												$('#generateAllBeatsLog').append('<br>' + __e('Beats generated but failed to save for chapter: ${chapter}', {chapter: chapter.name}));
-												alert(__e('Failed to generate beats: ') + response.beats);
-											}
-											
-										} else {
-											$('#generateAllBeatsLog').append('<br>' + __e('Beats generated but failed to save for chapter: ${chapter}', {chapter: chapter.name}));
-										}
-										$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-										continueProcessing();
-									},
-									error: function () {
-										$('#generateAllBeatsLog').append('<p>' + __e('Error saving beats for chapter: ${chapter}', {chapter: chapter.name}) + '</p>');
-										$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-										continueProcessing();
-									}
-								});
-							} else {
-								$('#generateAllBeatsLog').append('<p>' + __e('Failed to generate beats for chapter: ${chapter} :: ${response}', {
-									chapter: chapter.name,
-									response: response
-								}) + '</p>');
-								$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-								continueProcessing();
-							}
-						},
-						error: function () {
-							$('#generateAllBeatsLog').append('<p>' + __e('Error generating beats for chapter: ${chapter}', {chapter: chapter.name}) + '</p>');
-							$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-							continueProcessing();
-						}
-					});
-				}
-			} else {
-				$('#generateAllBeatsLog').append('<p>' + __e('All chapters processed!') + '</p>');
-				$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-			}
-		}
-		
-		function continueProcessing() {
-			processedChapters++;
-			const progress = Math.round((processedChapters / totalChapters) * 100);
-			progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
-			processNextChapter();
-		}
-		
-		processNextChapter();
-	});
+	chapters = bookData.acts.flatMap(act => act.chapters);
+	
+	console.log(chapters);
+	generateSingleChapterBeats(chapters, 0);
+	
 }
+
+function generateSingleChapterBeats(chapters, chapter_index = 0) {
+	const modal = $('#generateAllBeatsModal');
+	const progressBar = modal.find('.progress-bar');
+	const log = $('#generateAllBeatsLog');
+	
+	const totalChapters = chapters.length;
+	
+	chapter_index++;
+	const progress = Math.round((chapter_index / totalChapters) * 100);
+	progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
+	
+	const chapter = chapters[chapter_index - 1];
+	$('#generateAllBeatsLog').append('<br><br>' + __e('Processing chapter: ${chapter}', {chapter: chapter.name}));
+	$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
+	
+	// Check if the chapter already has beats
+	if (chapter.beats && chapter.beats.length > 0) {
+		$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
+		$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
+		if (chapter_index < totalChapters) {
+			generateSingleChapterBeats(chapters, chapter_index);
+		}
+	} else {
+		
+		$.ajax({
+			url: `/book/write-beats/${bookSlug}/${chapter.chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				save_beats: true,
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					// Save the generated beats back to the chapter
+					
+					if (Array.isArray(response.beats)) {
+						$('#generateAllBeatsLog').append('<br>' + __e('Beats generated and saved for chapter: ${chapter}', {chapter: chapter.name}));
+						
+						response.beats.forEach((beat, index) => {
+							$('#generateAllBeatsLog').append(`<br>${beat.description}`);
+						});
+					} else {
+						$('#generateAllBeatsLog').append('<br>' + __e('Beats failed for chapter: ${chapter}', {chapter: chapter.name}));
+						alert(__e('Failed to generate beats: ') + response.beats);
+					}
+					if (chapter_index < totalChapters) {
+						generateSingleChapterBeats(chapters, chapter_index);
+					} else {
+						$('#generateAllBeatsLog').append('<br>' + __e('All chapters processed!'));
+						$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
+					}
+				} else {
+					$('#generateAllBeatsLog').append('<br>' + __e('Beats failed for chapter: ${chapter}', {chapter: chapter.name}));
+					alert(__e('Failed to generate beats: ') + response.beats);
+				}
+			},
+			
+			error: function () {
+				$('#generateAllBeatsLog').append('<p>' + __e('Error generating beats for chapter: ${chapter}', {chapter: chapter.name}) + '</p>');
+				$('#generateAllBeats').scrollTop(log[0].scrollHeight);
+				//break loop
+			}
+		});
+	}
+}
+
 
 $(document).ready(function () {
 	

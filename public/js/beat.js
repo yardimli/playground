@@ -1,4 +1,3 @@
-
 function showChapterBeatsModal() {
 	
 	let structureHtml = '<h2>' + bookData.title + '</h2>';
@@ -177,8 +176,7 @@ function loadBeats() {
 }
 
 function recreateBeats() {
-	let spinner = $('#beat-spinner');
-	spinner.removeClass('d-none');
+	$('#fullScreenOverlay').removeClass('d-none');
 	$("#recreateBeats").prop('disabled', true);
 	
 	let previousChapterBeats = '';
@@ -191,24 +189,18 @@ function recreateBeats() {
 	
 	// Now proceed with creating beats
 	$.ajax({
-		url: 'action-beats.php',
+		url: `/book/write-beats/${bookSlug}/${chapterFilename}`,
 		method: 'POST',
 		data: {
-			action: 'write_beats',
 			llm: savedLlm,
-			book: bookSlug,
-			chapterFilename: chapterFilename,
-			chapterName: currentChapter.name,
-			chapterText: currentChapter.short_description,
-			chapterEvents: currentChapter.events,
-			chapterPeople: currentChapter.people,
-			chapterPlaces: currentChapter.places,
-			chapterFromPreviousChapter: previousChapterBeats || currentChapter.from_previous_chapter,
-			chapterToNextChapter: nextChapter.description || currentChapter.to_next_chapter
+			save_beats: false,
+		},
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		dataType: 'json',
 		success: function (response) {
-			spinner.addClass('d-none');
+			$('#fullScreenOverlay').addClass('d-none');
 			if (response.success) {
 				const beatsList = $('#beatsList');
 				beatsList.empty();
@@ -279,7 +271,7 @@ function recreateBeats() {
 			}
 		},
 		error: function () {
-			spinner.addClass('d-none');
+			$('#fullScreenOverlay').addClass('d-none');
 			alert(__e('An error occurred while creating beats.'));
 		}
 	});
@@ -404,22 +396,28 @@ function writeBeatTextSummary(beatText, beatDescription, beatIndex) {
 }
 
 function saveBeat(beatText, beatTextSummary, beatDescription, beatIndex) {
-	$.post('action-beats.php', {
-		action: 'save_beat_text',
-		llm: savedLlm,
-		book: bookSlug,
-		chapterFilename: chapterFilename,
-		beatIndex: beatIndex,
-		beatDescription: beatDescription,
-		beatText: beatText,
-		beatTextSummary: beatTextSummary
-	}, function (response) {
-		if (response.success) {
-			$("#beatDetailModalResult_" + beatIndex).html(__e('Beat saved successfully!'));
-		} else {
-			$("#beatDetailModalResult_" + beatIndex).html(__e('Failed to save beat: ') + response.message);
+	$.ajax({
+		url: `/book/save-single-beats/${bookSlug}/${chapterFilename}`,
+		method: 'POST',
+		data: {
+			llm: savedLlm,
+			beatIndex: beatIndex,
+			beatDescription: beatDescription,
+			beatText: beatText,
+			beatTextSummary: beatTextSummary
+		},
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		},
+		dataType: 'json',
+		success: function (response) {
+			if (response.success) {
+				$("#beatDetailModalResult_" + beatIndex).html(__e('Beat saved successfully!'));
+			} else {
+				$("#beatDetailModalResult_" + beatIndex).html(__e('Failed to save beat: ') + response.message);
+			}
 		}
-	}, 'json');
+	});
 }
 
 $(document).ready(function () {
@@ -450,29 +448,32 @@ $(document).ready(function () {
 			beats.push({description: beatDescription, beat_text: beatText, beat_text_summary: beatTextSummary});
 		});
 		
-		$.post('action-beats.php', {
-			action: 'save_beats',
-			llm: savedLlm,
-			book: bookSlug,
-			chapterFilename: chapterFilename,
-			beats: JSON.stringify(beats)
-		}, function (response) {
-			if (response.success) {
-				alert(__e('Beats saved successfully!'));
-				//reload the page
-				location.reload();
-			} else {
-				alert(__e('Failed to save beats: ') + response.message);
+		$.ajax({
+			url: `/book/save-beats/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				beats: JSON.stringify(beats)
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					alert(__e('Beats saved successfully!'));
+					//reload the page
+					location.reload();
+				} else {
+					alert(__e('Failed to save beats: ') + response.message);
+				}
 			}
-		}, 'json');
+		});
 	});
 	
 	$("#recreateBeats").on('click', function (e) {
 		e.preventDefault();
-		//show confirmation dialog
-		if (confirm(__e('Are you sure you want to recreate the beats? This will overwrite any existing beats.'))) {
-			recreateBeats();
-		}
+		recreateBeats();
 	});
 	
 });

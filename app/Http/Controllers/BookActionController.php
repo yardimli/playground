@@ -99,8 +99,8 @@
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$results = $useLlm === 'open-router'
-				? $this->llmApp->llm_no_tool_call(false, $llm, $prompt, true, $language)
-				: $this->llmApp->function_call($prompt, $schema, $language);
+				? MyHelper::llm_no_tool_call(false, $llm, $prompt, true, $language)
+				: MyHelper::function_call($prompt, $schema, $language);
 
 			if (!empty($results['acts'])) {
 				$bookHeaderData = [
@@ -133,7 +133,7 @@
 				$acts = collect($results['acts'])->map(function ($act, $index) {
 					return [
 						'id' => $index + 1,
-						'title' => $act['title'],
+						'title' => $act['name'],
 						'description' => $act['description'] ?? '',
 					];
 				})->toArray();
@@ -142,7 +142,7 @@
 				// Save individual chapters
 				foreach ($results['acts'] as $actIndex => $act) {
 					foreach ($act['chapters'] as $chapterIndex => $chapter) {
-						$chapterFilename = Str::slug($chapter['title']) . '_' . time() . '.json';
+						$chapterFilename = Str::slug($chapter['name']) . '_' . time() . '.json';
 						$chapter_name = $chapter['name'] ?? 'chapter ' . ($chapter_index + 1);
 						$chapterData = [
 							'row' => $actIndex + 1,
@@ -163,11 +163,36 @@
 					}
 				}
 
+				// Call makeCoverImage
+				$coverImageRequest = new Request([
+					'theme' => __('An image describing: ') . $bookBlurb,
+					'title_1' => $bookTitle,
+					'author_1' => Auth::user()->name,
+					'creative' => 'more'
+				]);
+
+				Log::info('coverImageRequest');
+				Log::info($coverImageRequest);
+				$coverImageResponse = $this->makeCoverImage($coverImageRequest, $bookSlug);
+				Log::info('coverImageResponse');
+				Log::info($coverImageResponse);
+				$coverImageData = json_decode($coverImageResponse, true);
+				Log::info('coverImageData');
+				Log::info($coverImageData);
+
+				if ($coverImageData['success']) {
+					// Update book.json with cover image information
+					$bookData['cover_filename'] = $coverImageData['output_filename'];
+
+					File::put("{$bookPath}/book.json", json_encode($bookData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+				}
+
 				return response()->json([
 					'success' => true,
 					'message' => __('Book created successfully'),
 					'data' => $results,
-					'bookSlug' => $bookSlug
+					'bookSlug' => $bookSlug,
+					'coverImage' => $coverImageData['success'] ? $coverImageData : null
 				]);
 			} else {
 				return response()->json(['success' => false, 'message' => __('Failed to generate book')]);
@@ -193,8 +218,7 @@
 				if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
 					return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
 				}
-			} else
-			{
+			} else {
 				return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
 			}
 
@@ -315,19 +339,18 @@
 				if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
 					return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
 				}
-			} else
-			{
+			} else {
 				return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
 			}
 
-			$theme = $_POST['theme'] ?? 'an ocean in space';
-			$title1 = $_POST['title_1'] ?? 'Playground Computer';
-			$author1 = $_POST['author_1'] ?? 'I, Robot';
-			$model = 'fast'; //$_POST['model'] ?? 'fast';
-			$creative = $_POST['creative'] ?? 'no';
+			$theme = $request->input('theme', 'an ocean in space');
+			$title1 = $request->input('title_1', 'Playground Computer');
+			$author1 = $request->input('author_1', 'I, Robot');
+			$model = 'fast'; //$request->input('model', 'fast');
+			$creative = $request->input('creative', 'no');
 
 			if (Auth::user() && Auth::user()->isAdmin()) {
-				$model = 'balanced';
+//				$model = 'balanced';
 			}
 
 			$prompt = $theme . ' the book covers title is "' . $title1 . '" and the author is "' . $author1 . '" include the text lines on the cover.';
@@ -436,4 +459,312 @@ Prompt:";
 			}
 
 		}
+
+
+		public function writeChapterBeats(Request $request, $bookSlug, $chapterFilename)
+		{
+			if (Auth::guest()) {
+				return response()->json(['success' => false, 'message' => __('You must be logged in to make the cover image of a book.')]);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$bookJsonPath = "{$bookPath}/book.json";
+			$actsJsonPath = "{$bookPath}/acts.json";
+
+			if (!File::exists($bookJsonPath)) {
+				return response()->json(['success' => false, 'message' => __('Book not found')], 404);
+			}
+
+			if (!File::exists($actsJsonPath)) {
+				return response()->json(['success' => false, 'message' => __('Acts not found')], 404);
+			}
+
+			$bookData = json_decode(File::get($bookJsonPath), true);
+
+			if (Auth::user()) {
+				if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
+					return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+				}
+			} else {
+				return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+			}
+
+			$actsData = json_decode(File::get($actsJsonPath), true);
+			$acts = [];
+			foreach ($actsData as $act) {
+				$actChapters = [];
+				$chapterFiles = File::glob("{$bookPath}/*.json");
+				foreach ($chapterFiles as $chapterFile) {
+					$chapterData = json_decode(File::get($chapterFile), true);
+					if (!isset($chapterData['row'])) {
+						continue;
+					}
+					$chapterData['chapterFilename'] = basename($chapterFile);
+
+					if ($chapterData['row'] === $act['id']) {
+						$actChapters[] = $chapterData;
+
+					}
+				}
+
+				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
+				$acts[] = [
+					'id' => $act['id'],
+					'title' => $act['title'],
+					'chapters' => $actChapters
+				];
+			}
+
+
+			$current_chapter = null;
+			$previous_chapter = null;
+			$next_chapter = null;
+			foreach ($acts as $act) {
+				foreach ($act['chapters'] as $chapter) {
+					if ($current_chapter && !$next_chapter) {
+						$next_chapter = $chapter;
+						break;
+					}
+
+					if ($chapter['chapterFilename'] === $chapterFilename) {
+						$current_chapter = $chapter;
+					}
+
+					if (!$current_chapter) {
+						$previous_chapter = $chapter;
+					}
+
+				}
+			}
+
+
+			$save_beats = $request->input('save_beats', true);
+
+
+			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
+
+			$useLlm = env('USE_LLM', 'open-router');
+
+			if ($useLlm === 'anthropic-haiku' || $useLlm === 'anthropic-sonet') {
+				$model = $useLlm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
+				$schema = json_decode(File::get(resource_path('prompts/beat_schema_anthropic_1.json')), true);
+				$prompt = File::get(resource_path('prompts/beat_prompt_anthropic_1.txt'));
+			} elseif ($useLlm === 'open-ai-gpt-4o' || $useLlm === 'open-ai-gpt-4o-mini') {
+				$model = $useLlm === 'open-ai-gpt-4o' ? env('OPEN_AI_GPT4_MODEL', 'open-router') : env('OPEN_AI_GPT4_MINI_MODEL', 'open-router');
+				$schema = json_decode(File::get(resource_path('prompts/beat_schema_openai_1.json')), true);
+				$prompt = File::get(resource_path('prompts/beat_prompt_openai_1.txt'));
+			} else {
+				$model = $llm;
+				$prompt = File::get(resource_path('prompts/beat_prompt_no_function_calling_1.txt'));
+				$schema = [];
+			}
+
+			$previous_chapter_beats = $current_chapter['from_previous_chapter'];
+			if ($previous_chapter) {
+				if ($previous_chapter['beats']) {
+					$previous_chapter_beats = '';
+					foreach ($previous_chapter['beats'] as $beat) {
+						$previous_chapter_beats .= ($beat['description']??'') . "\n";
+					}
+				}
+			}
+
+			$replacements = [
+				'##book_title##' => $bookData['title'],
+				'##back_cover_text##' => $bookData['description'] ?? '',
+				'##book_blurb##' => $bookData['blurb'],
+				'##language##' => $bookData['language'],
+				'##act##' => $current_chapter['row'],
+				'##chapter##' => $current_chapter['name'],
+				'##description##' => $current_chapter['short_description'],
+				'##events##' => $current_chapter['events'],
+				'##people##' => $current_chapter['people'],
+				'##places##' => $current_chapter['places'],
+				'##previous_chapter##' => $previous_chapter_beats,
+				'##next_chapter##' => $current_chapter['to_next_chapter'],
+			];
+
+			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
+
+			$resultData = $useLlm === 'open-router'
+				? MyHelper::llm_no_tool_call(false, $llm, $prompt, true)
+				: MyHelper::function_call($llm, $prompt, $schema);
+
+			$beats = null;
+			if (isset($resultData['beats'])) {
+				$beats = $resultData['beats'];
+			} elseif (is_array($resultData)) {
+				$beats = $resultData;
+			}
+
+			if ($beats) {
+				$chapterFilePath = "{$bookPath}/{$current_chapter['chapterFilename']}";
+
+				if ($save_beats) {
+					if (file_exists($chapterFilePath)) {
+						$chapterData = json_decode(file_get_contents($chapterFilePath), true);
+						$chapterData['beats'] = $beats;
+
+						if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+							return response()->json(['success' => true, 'beats' => $beats]);
+						} else {
+							return response()->json(['success' => false, 'message' => __('Failed to write to file')]);
+						}
+					} else {
+						return response()->json(['success' => false, 'message' => __('Chapter file not found')]);
+					}
+				}
+			} else {
+				return response()->json(['success' => false, 'message' => __('Failed to generate beats')]);
+			}
+
+			return response()->json(['success' => true, 'beats' => $beats]);
+		}
+
+		public function writeChapterBeatText(Request $request, $bookSlug, $chapter_name, $beat_text)
+		{
+			if (Auth::guest()) {
+				return response()->json(['success' => false, 'message' => __('You must be logged in to make the cover image of a book.')]);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$bookJsonPath = "{$bookPath}/book.json";
+
+			if (!File::exists($bookJsonPath)) {
+				return response()->json(['success' => false, 'message' => __('Book not found')], 404);
+			}
+
+			$bookData = json_decode(File::get($bookJsonPath), true);
+
+			if (Auth::user()) {
+				if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
+					return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+				}
+			} else {
+				return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+			}
+
+			$beatIndex = (int)$request->input('beatIndex');
+			$currentBeatDescription = $request->input('currentBeatDescription') ?? '';
+
+
+			// Load the beat prompt template
+			$beatPromptTemplate = file_get_contents('./prompts/beat_text_prompt.txt');
+
+			$book_title = $request->input('book_title');
+			$book_blurb = $request->input('book_blurb');
+			$back_cover_text = $request->input('back_cover_text');
+			$language = $request->input('language');
+			$act = $request->input('act');
+			$chapter_title = $request->input('chapter_title');
+			$chapter_description = $request->input('chapter_description');
+			$chapter_events = $request->input('chapter_events');
+			$chapter_people = $request->input('chapter_people');
+			$chapter_places = $request->input('chapter_places');
+			$previous_beat_summaries = $request->input('previous_beat_summaries');
+			$last_beat = $request->input('last_beat');
+			$current_beat = $request->input('current_beat');
+			$next_beat = $request->input('next_beat');
+
+			$beatPrompt = str_replace(
+				['##book_title##', '##book_blurb##', '##back_cover_text##', '##language##', '##act##', '##chapter##', '##description##', '##events##', '##people##', '##places##', '##previous_beat_summaries##', '##last_beat##', '##current_beat##', '##next_beat##'],
+				[
+					$book_title,
+					$book_blurb,
+					$back_cover_text,
+					$language,
+					$act,
+					$chapter_title,
+					$chapter_description,
+					$chapter_events,
+					$chapter_people,
+					$chapter_places,
+					$previous_beat_summaries,
+					$last_beat,
+					$current_beat,
+					$next_beat
+				],
+				$beatPromptTemplate
+			);
+
+			$resultData = $llmApp->llm_no_tool_call(false, $llm, $beatPrompt, false);
+
+			echo json_encode(['success' => true, 'prompt' => $resultData]);
+
+		}
+
+		public function writeChapterBeatTextSummary(Request $request, $bookSlug, $chapter_name, $beat_text)
+		{
+			if (Auth::guest()) {
+				return response()->json(['success' => false, 'message' => __('You must be logged in to make the cover image of a book.')]);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$bookJsonPath = "{$bookPath}/book.json";
+
+			if (!File::exists($bookJsonPath)) {
+				return response()->json(['success' => false, 'message' => __('Book not found')], 404);
+			}
+
+			$bookData = json_decode(File::get($bookJsonPath), true);
+
+			if (Auth::user()) {
+				if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
+					return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+				}
+			} else {
+				return response()->json(['success' => false, 'message' => __('You are not the owner of this book.')]);
+			}
+
+			$currentBeatDescription = $request->input('currentBeatDescription') ?? '';
+			$currentBeatText = $request->input('currentBeatText') ?? '';
+
+			// Load the beat prompt template
+			$beatPromptTemplate = file_get_contents('./prompts/beat_text_summary.txt');
+
+			$book_title = $request->input('book_title');
+			$book_blurb = $request->input('book_blurb');
+			$back_cover_text = $request->input('back_cover_text');
+			$language = $request->input('language');
+			$act = $request->input('act');
+			$chapter_title = $request->input('chapter_title');
+			$chapter_description = $request->input('chapter_description');
+			$chapter_events = $request->input('chapter_events');
+			$chapter_people = $request->input('chapter_people');
+			$chapter_places = $request->input('chapter_places');
+
+			// Replace placeholders in the prompt template
+
+			$beatPrompt = str_replace(
+				['##book_title##', '##book_blurb##', '##back_cover_text##', '##language##', '##act##', '##chapter##', '##description##', '##events##', '##people##', '##places##', '##beat_summary##', '##beat_text##'],
+				[
+					$book_title,
+					$book_blurb,
+					$back_cover_text,
+					$language,
+					$act,
+					$chapter_title,
+					$chapter_description,
+					$chapter_events,
+					$chapter_people,
+					$chapter_places,
+					$currentBeatDescription,
+					$currentBeatText
+				],
+				$beatPromptTemplate
+			);
+
+			$resultData = $llmApp->llm_no_tool_call(false, $llm, $beatPrompt, false);
+
+			echo json_encode(['success' => true, 'prompt' => $resultData]);
+
+		}
+
+//	$chapterData['beats'][$beatIndex]['description'] = $beatDescription;
+//	$chapterData['beats'][$beatIndex]['beat_text'] = $beatText;
+//	$chapterData['beats'][$beatIndex]['beat_text_summary'] = $beatTextSummary;
+//
+//	file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT));
+
+
 	}

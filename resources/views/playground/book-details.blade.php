@@ -32,69 +32,7 @@
 </head>
 <body>
 
-<div class="ham-menu-items" id="ham-menu-items" style="height: 400px;">
-
-
-	<span style="font-size: 18px;">AI Engines:</span>
-	<select id="llmSelect" class="form-select mx-auto mb-1">
-		<?php
-			if (Auth::user() && Auth::user()->isAdmin()) {
-				?>
-				<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-				<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-				<option value="openai/gpt-4o">openai :: gpt-4o</option>
-				<?php
-			} else {
-				?>
-				<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-				<?php
-			}
-		?>
-		<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-		<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-		<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-		<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-		<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-		<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-		<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-		<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
-		<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-		<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-		<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-		<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
-	</select>
-
-
-	<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn" title="{{__('default.Write All Beats')}}"><i
-			class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
-	</button>
-
-	<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
-		<i class="bi bi-file-earmark-pdf"></i> {{__('default.Export as PDF')}}
-	</button>
-
-	<button class="btn btn-success mb-1 mt-1 w-100" id="exportTxtBtn" title="{{__('default.Export as DocX')}}">
-		<i class="bi bi-file-earmark-word"></i> {{__('default.Export as DocX')}}
-	</button>
-
-	<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn" title="{{__('default.View Book')}}">
-		<i class="bi bi-book-half"></i> {{__('default.View Book')}}
-	</button>
-
-	<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
-
-</div>
-<div class="ham-menu" id="ham-menu">
-	<span class="line line1"></span>
-	<span class="line line2"></span>
-	<span class="line line3"></span>
-</div>
-
-<div id="modeToggleBtn">
-	<i id="modeIcon" class="bi bi-sun"></i> {{__('default.Toggle Mode')}}
-</div>
-
-<main class="py-5">
+<main class="py-1">
 
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
@@ -117,6 +55,56 @@
 						<button class="btn btn-primary mb-3 mt-1 w-100" title="{{__('default.Cover Image')}}" id="createCoverBtn">
 							<i class="bi bi-image"></i> {{__('default.Cover Image')}}
 						</button>
+						
+						<br>
+						
+						<span style="font-size: 18px;">AI Engines:</span>
+						<select id="llmSelect" class="form-select mx-auto mb-1">
+							<?php
+							if (Auth::user() && Auth::user()->isAdmin()) {
+								?>
+							<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
+							<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+							<option value="openai/gpt-4o">openai :: gpt-4o</option>
+								<?php
+							} else {
+								?>
+							<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
+								<?php
+							}
+							?>
+							<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+							<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+							<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+							<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+							<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+							<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+							<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+							<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+							<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+							<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+							<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+							<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+						</select>
+						
+						
+						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn" title="{{__('default.Write All Beats')}}"><i
+								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
+						</button>
+						
+						<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
+							<i class="bi bi-file-earmark-pdf"></i> {{__('default.Export as PDF')}}
+						</button>
+						
+						<button class="btn btn-success mb-1 mt-1 w-100" id="exportTxtBtn" title="{{__('default.Export as DocX')}}">
+							<i class="bi bi-file-earmark-word"></i> {{__('default.Export as DocX')}}
+						</button>
+						
+						<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn" title="{{__('default.Read Book')}}">
+							<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
+						</button>
+						
+						<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 
 					</div>
 					<!-- Text Blocks Div -->
@@ -126,6 +114,15 @@
 								{{$book['prompt'] ?? 'no prompt'}}</span></div>
 						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
 								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
+						
+						@if (Auth::user())
+							@if (Auth::user()->email === $book['owner'] || Auth::user()->name === $book['owner'])
+								<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
+								        data-book-id="<?php echo urlencode($book_slug); ?>">{{__('default.Delete Book')}}
+								</button>
+							@endif
+						@endif
+						
 					</div>
 				</div>
 
@@ -262,7 +259,7 @@
 <!-- Modal for Generating All Beats -->
 <div class="modal fade" id="generateAllBeatsModal" tabindex="-1" aria-labelledby="generateAllBeatsModalLabel"
      aria-hidden="true">
-	<div class="modal-dialog  modal-dialog-scrollable">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
 				<h5 class="modal-title" id="generateAllBeatsModalLabel">{{__('default.Generating Beats for All Chapters')}}</h5>

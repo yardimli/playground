@@ -396,6 +396,7 @@
 		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
 		'Playground - The Book - Index' => 'Playground - The Book - Index',
 		'Toggle Mode' => '',
+		'Toggle Mode Text' => 'Toggle Dark/Light',
 		'Add Book' => 'Add Book',
 		'AI Engines:' => 'AI Engines:',
 		'Hello' => 'Hello',
@@ -447,6 +448,7 @@
 		'Export as PDF' => 'Export as PDF',
 		'Export as DocX' => 'Export as DocX',
 		'View Book' => 'View Book',
+		'Read Book' => 'Read Book',
 
 		'Back to Books' => 'Back to Books',
 		'Log out' => 'Log out',

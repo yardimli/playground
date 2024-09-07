@@ -464,6 +464,7 @@
 		'You must be logged in to create a book.' => 'Kitap oluşturmak için giriş yapmalısınız.',
 		'Playground - The Book - Index' => 'Netkitap - Ana Sayfa',
 		'Toggle Mode' => '',
+		'Toggle Mode Text' => 'Toggle Dark/Light',
 		'Add Book' => 'Kitap Ekle',
 		'AI Engines:' => 'Yapay Zeka Motorları:',
 		'Hello' => 'Merhaba',
@@ -515,6 +516,7 @@
 		'Export as PDF' => 'PDF Olarak Dışa Aktar',
 		'Export as DocX' => 'DocX Olarak Dışa Aktar',
 		'View Book' => 'Kitabı Görüntüle',
+		'Read Book' => 'Kitabı Oku',
 
 		'Back to Books' => 'Kitaplara Geri Dön',
 		'Log out' => 'Çıkış Yap',

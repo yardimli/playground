@@ -57,16 +57,14 @@
             <!-- Terms END -->
 		</div>
 
+<!-- Footer -->
+<footer class="site-footer style-1">
 @include('playground.footer')
+</footer>
+<!-- Footer End -->
+
 		<button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 	</div>
-
-
-<!-- JAVASCRIPT FILES ========================================= -->
-<script src="/js/jquery.min.js"></script><!-- JQUERY MIN JS -->
-<script src="/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-<script src="/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
-<script src="/js/custom.js"></script><!-- CUSTOM JS -->
 
 </body>
 </html>

@@ -175,17 +175,24 @@
 
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
-			$chaptersFile = "{$bookPath}/acts.json";
+			$actsFile = "{$bookPath}/acts.json";
 
-			if (!File::exists($bookJsonPath) || !File::exists($chaptersFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found '.$bookJsonPath)], 404);
+			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
+				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
 			}
 
 			$book = json_decode(File::get($bookJsonPath), true);
-			$chaptersData = json_decode(File::get($chaptersFile), true);
+
+			//search $book['owner'] in users table name column
+			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
+			if ($user) {
+				$book['owner'] = $user->name;
+			}
+
+			$actsData = json_decode(File::get($actsFile), true);
 
 			$acts = [];
-			foreach ($chaptersData as $act) {
+			foreach ($actsData as $act) {
 				$actChapters = [];
 				$chapterFiles = File::glob("{$bookPath}/*.json");
 				foreach ($chapterFiles as $chapterFile) {
@@ -210,14 +217,14 @@
 			}
 
 
-			$random_int = rand(1,16);
-			$coverFilename =  'images/placeholder-cover-'.$random_int.'.jpg';
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 			$book['cover_filename'] = $book['cover_filename'] ?? '';
 
 			$book_slug = $slug;
 
-			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/".$book['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/".$book['cover_filename']);
+			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
+				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
 			}
 
 			$book['cover_filename'] = $coverFilename;
@@ -244,8 +251,6 @@
 		}
 
 
-
-
 		public function bookBeats(Request $request, $slug, $chapter_file)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -253,17 +258,24 @@
 
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
-			$chaptersFile = "{$bookPath}/acts.json";
+			$actsFile = "{$bookPath}/acts.json";
 
-			if (!File::exists($bookJsonPath) || !File::exists($chaptersFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found '.$bookJsonPath)], 404);
+			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
+				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
 			}
 
 			$book = json_decode(File::get($bookJsonPath), true);
-			$chaptersData = json_decode(File::get($chaptersFile), true);
+
+			//search $book['owner'] in users table name column
+			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
+			if ($user) {
+				$book['owner'] = $user->name;
+			}
+
+			$actsData = json_decode(File::get($actsFile), true);
 
 			$acts = [];
-			foreach ($chaptersData as $act) {
+			foreach ($actsData as $act) {
 				$actChapters = [];
 				$chapterFiles = File::glob("{$bookPath}/*.json");
 				foreach ($chapterFiles as $chapterFile) {
@@ -275,7 +287,6 @@
 
 					if ($chapterData['row'] === $act['id']) {
 						$actChapters[] = $chapterData;
-
 					}
 				}
 
@@ -287,9 +298,9 @@
 				];
 			}
 
-			$current_chapter = null;
-			$previous_chapter = null;
-			$next_chapter = null;
+			$current_chapter = [];
+			$previous_chapter = [];
+			$next_chapter = [];
 			foreach ($acts as $act) {
 				foreach ($act['chapters'] as $chapter) {
 					if ($current_chapter && !$next_chapter) {
@@ -297,7 +308,7 @@
 						break;
 					}
 
-					if ($chapter['chapterFilename'] === $chapter_file.'.json') {
+					if ($chapter['chapterFilename'] === $chapter_file . '.json') {
 						$current_chapter = $chapter;
 					}
 
@@ -307,25 +318,34 @@
 
 				}
 			}
+			if (!key_exists('beats', $current_chapter)) {
+				$current_chapter['beats'] = [];
+			}
+			if (!key_exists('beats', $previous_chapter)) {
+				$previous_chapter['beats'] = [];
+			}
+			if (!key_exists('beats', $next_chapter)) {
+				$next_chapter['beats'] = [];
+			}
 
 			$next_chapter_text = $current_chapter['to_next_chapter'] ?? '';
 			if ($next_chapter) {
 				$next_chapter_text = ($next_chapter['name'] ?? '') . ' - ' . ($next_chapter['short_description'] ?? '');
 			}
 
-			$previous_chapter_text = $current_chapter['to_previous_chapter'] ??  __('default.Start of the book');
+			$previous_chapter_text = $current_chapter['to_previous_chapter'] ?? __('default.Start of the book');
 			if ($previous_chapter) {
 				$previous_chapter_text = ($previous_chapter['name'] ?? '') . ' - ' . ($previous_chapter['short_description'] ?? '');
 			}
 
-			$random_int = rand(1,16);
-			$coverFilename =  'images/placeholder-cover-'.$random_int.'.jpg';
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 			$book['cover_filename'] = $book['cover_filename'] ?? '';
 
 			$book_slug = $slug;
 
-			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/".$book['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/".$book['cover_filename']);
+			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
+				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
 			}
 
 			$book['cover_filename'] = $coverFilename;
@@ -351,12 +371,19 @@
 							$bookJson = file_get_contents($bookJsonPath);
 							$bookData = json_decode($bookJson, true);
 							if ($bookData) {
-								$random_int = rand(1,16);
-								$coverFilename =  'images/placeholder-cover-'.$random_int.'.jpg';
+
+								//search $book['owner'] in users table name column
+								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
+								if ($user) {
+									$bookData['owner'] = $user->name;
+								}
+
+								$random_int = rand(1, 16);
+								$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 								$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
 
-								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/".$bookData['cover_filename']))) {
-									$coverFilename = asset("storage/ai-images/".$bookData['cover_filename']);
+								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
+									$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
 								}
 
 								$books[] = [
@@ -381,16 +408,12 @@
 
 			//remove books whose owner is not the current user or admin
 			$books = array_filter($books, function ($book) {
-				return (Auth::user() && (($book['owner']??'') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner']??'') === 'admin');
+				return (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner'] ?? '') === 'admin');
 			});
 
 
-			return view('playground.all-books', compact('locale','json_translations', 'books'));
+			return view('playground.all-books', compact('locale', 'json_translations', 'books'));
 		}
-
-
-
-
 
 
 		public function booksList(Request $request)
@@ -409,13 +432,20 @@
 							$bookJson = file_get_contents($bookJsonPath);
 							$bookData = json_decode($bookJson, true);
 							if ($bookData) {
-								$random_int = rand(1,16);
-								$coverFilename =  'images/placeholder-cover-'.$random_int.'.jpg';
+								$random_int = rand(1, 16);
+								$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 								$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
 
-								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/".$bookData['cover_filename']))) {
-									$coverFilename = asset("storage/ai-images/".$bookData['cover_filename']);
+								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
+									$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
 								}
+
+								//search $book['owner'] in users table name column
+								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
+								if ($user) {
+									$bookData['owner'] = $user->name;
+								}
+
 
 								$books[] = [
 									'id' => $subDir,
@@ -439,14 +469,24 @@
 
 			//remove books whose owner is not the current user or admin
 			$books = array_filter($books, function ($book) {
-				return (Auth::user() && (($book['owner']??'') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner']??'') === 'admin');
+				return (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner'] ?? '') === 'admin');
 			});
 
 
+			$perPage = 12; // Number of items per page
+			$currentPage = $request->input('page', 1);
+			$offset = ($currentPage - 1) * $perPage;
 
-			return view('playground.books-list', compact('locale','json_translations', 'books'));
+			$paginatedBooks = new LengthAwarePaginator(
+				array_slice($books, $offset, $perPage),
+				count($books),
+				$perPage,
+				$currentPage,
+				['path' => $request->url(), 'query' => $request->query()]
+			);
+
+			return view('playground.books-list', compact('locale', 'json_translations', 'paginatedBooks'));
 		}
-
 
 
 		public function booksDetail(Request $request, $slug)
@@ -456,17 +496,24 @@
 
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
-			$chaptersFile = "{$bookPath}/acts.json";
+			$actsFile = "{$bookPath}/acts.json";
 
-			if (!File::exists($bookJsonPath) || !File::exists($chaptersFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found '.$bookJsonPath)], 404);
+			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
+				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
 			}
 
 			$book = json_decode(File::get($bookJsonPath), true);
-			$chaptersData = json_decode(File::get($chaptersFile), true);
+
+			//search $book['owner'] in users table name column
+			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
+			if ($user) {
+				$book['owner'] = $user->name;
+			}
+
+			$actsData = json_decode(File::get($actsFile), true);
 
 			$acts = [];
-			foreach ($chaptersData as $act) {
+			foreach ($actsData as $act) {
 				$actChapters = [];
 				$chapterFiles = File::glob("{$bookPath}/*.json");
 				foreach ($chapterFiles as $chapterFile) {
@@ -491,14 +538,14 @@
 			}
 
 
-			$random_int = rand(1,16);
-			$coverFilename =  'images/placeholder-cover-'.$random_int.'.jpg';
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 			$book['cover_filename'] = $book['cover_filename'] ?? '';
 
 			$book_slug = $slug;
 
-			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/".$book['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/".$book['cover_filename']);
+			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
+				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
 			}
 
 			$book['cover_filename'] = $coverFilename;
@@ -522,6 +569,17 @@
 
 
 			return view('playground.books-detail', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions'));
+		}
+
+		public function startWriting(Request $request)
+		{
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
+
+			$posts = MyHelper::getBlogData();
+			// Return to the existing blog list view with the posts
+			return view("playground.start-writing", compact('posts', 'coverFilename'));
+
 		}
 
 	}

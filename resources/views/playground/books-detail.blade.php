@@ -7,10 +7,10 @@
 	let colorOptions = @json($colorOptions);
 </script>
 
-<div class="page-content bg-grey">
+<div class="page-content bg-grey-custom">
 	<section class="content-inner-1">
 		<div class="container">
-			<div class="row book-grid-row style-4 m-b60">
+			<div class="row book-grid-row style-4 m-b60 pt-3 pb-5 book-list-small-container-color">
 				<div class="col">
 					<div class="dz-box">
 						<div class="dz-media">
@@ -52,14 +52,9 @@
 								<div class="book-footer">
 									
 									<a href="{{route('playground.book-details',$book_slug)}}"
-									   class="btn btn-primary mt-3 d-inline-block">{{__('default.Read More')}}</a>
-									@if (Auth::user())
-										@if (Auth::user()->email === $book['owner'])
-											<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
-											        data-book-id="<?php echo urlencode($book_slug); ?>">{{__('default.Delete Book')}}
-											</button>
-										@endif
-									@endif
+									   class="btn btn-primary mt-3 me-2 d-inline-block">{{__('default.Read More')}}</a>
+									
+									<div class="flex-fill"></div>
 									
 									<div class="product-num">
 										<div class="bookmark-btn style-1 d-none d-sm-block">
@@ -220,7 +215,7 @@
 												</li>
 											</ol>
 										</div>
-										<div class="default-form comment-respond style-1" id="respond">
+										<div class="default-form comment-respond style-1  modal-content-color" id="respond">
 											<h4 class="comment-reply-title" id="reply-title">LEAVE A REPLY <small> <a rel="nofollow"
 											                                                                          id="cancel-comment-reply-link"
 											                                                                          href="javascript:void(0)"
@@ -357,20 +352,23 @@
 	<!-- Newsletter End -->
 </div>
 
-@include('playground.footer')
+<!-- Footer -->
+<footer class="site-footer style-1">
+	@include('playground.footer-categories')
+	@include('playground.footer')
+</footer>
+<!-- Footer End -->
+
 <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
 
 <!-- JAVASCRIPT FILES ========================================= -->
-<script src="/js/jquery.min.js"></script><!-- JQUERY MIN JS -->
-<script src="/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-<script src="/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
+
 <script src="/js/swiper-bundle.min.js"></script><!-- SWIPER JS -->
 <script src="/js/dz.carousel.js"></script><!-- DZ CAROUSEL JS -->
 <script src="/js/waypoints-min.js"></script><!-- WAYPOINTS JS -->
 <script src="/js/counterup.min.js"></script><!-- COUNTERUP JS -->
 <script src="/js/dz.ajax.js"></script><!-- AJAX -->
-<script src="/js/custom.js"></script><!-- CUSTOM JS -->
 
 </body>
 </html>

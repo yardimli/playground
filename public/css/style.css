@@ -36,7 +36,7 @@
   --grey: #f7f7f7;
   --border-radius-base: 6px;
   --font-family-title: Poppins, sans-serif;
-  --title: #1a1668;
+  /*--title: #1a1668;*/
   --headings-font-weight:600;
   --headings-font-weight2:400;
   --headings-font-weight3:300; }
@@ -123,7 +123,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   line-height: 1.2;
-  color: #1a1668; }
+  /*color: #1a1668; */
+}
 
 h1, .h1 {
   font-size: calc(1.3875rem + 1.65vw); }
@@ -22913,7 +22914,7 @@ body.woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-va
   position: relative;
   z-index: 9999; }
   .site-header .main-bar {
-    background: #ffffff;
+    /*background: #ffffff;*/
     width: 100%;
     position: relative;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05); }
@@ -23742,7 +23743,7 @@ body.woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-va
     inset: 14px 0px auto auto !important;
     position: absolute;
     border-radius: var(--border-radius-base) !important;
-    background-color: #fff;
+    /*background-color: #fff;*/
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); }
     .extra-nav .extra-cell .header-right .dropdown-menu svg {
       fill: var(--primary); }
@@ -23751,7 +23752,7 @@ body.woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-va
       border-bottom: 0; }
 
 .profile-dropdown .dropdown-menu {
-  background-color: #fff;
+  /*background-color: #fff;*/
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); }
   .profile-dropdown .dropdown-menu .dropdown-item {
     padding: 10px 20px;

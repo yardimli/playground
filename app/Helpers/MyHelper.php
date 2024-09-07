@@ -22,8 +22,33 @@
 	{
 
 
+		public static function moderation($message)
+		{
+			function isValidUtf8($string)
+			{
+				return mb_check_encoding($string, 'UTF-8');
+			}
 
-		public function validateJson($str)
+			$openai_api_key = env('OPEN_AI_API_KEY');
+			//make sure $message can be json encoded
+			if (!isValidUtf8($message)) {
+				$message = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $message);
+			}
+
+
+			$response = Http::withHeaders([
+				'Content-Type' => 'application/json',
+				'Authorization' => 'Bearer ' . $openai_api_key,
+			])->post(env('OPEN_AI_API_BASE_MODERATIONS'), [
+				'input' => $message,
+			]);
+
+			return $response->json();
+			// {"id":"modr-7Km1oF0aR5KEwtX09UjbshKivO4B5","model":"text-moderation-004","results":[{"flagged":false,"categories":{"sexual":false,"hate":false,"violence":false,"self-harm":false,"sexual\/minors":false,"hate\/threatening":false,"violence\/graphic":false},"category_scores":{"sexual":1.2816758e-6,"hate":1.2005827e-7,"violence":4.2831335e-8,"self-harm":5.430266e-11,"sexual\/minors":1.4781849e-9,"hate\/threatening":1.0553468e-11,"violence\/graphic":9.761698e-9}}]}
+
+		}
+
+		public static function validateJson($str)
 		{
 			Log::info('Starting JSON validation.');
 
@@ -49,7 +74,7 @@
 			}
 		}
 
-		function getContentsInBackticksOrOriginal($input)
+		public static function getContentsInBackticksOrOriginal($input)
 		{
 			// Define a regular expression pattern to match content within backticks
 			$pattern = '/`([^`]+)`/';
@@ -69,7 +94,7 @@
 		}
 
 		//------------------------------------------------------------
-		public function function_call($llm, $prompt, $schema, $language = 'english')
+		public static function function_call($llm, $prompt, $schema, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -191,7 +216,7 @@
 			$complete = trim($complete, " \n\r\t\v\0");
 			Log::info($complete);
 
-			$validateJson = $this->validateJson($complete);
+			$validateJson = self::validateJson($complete);
 			if ($validateJson == "Valid JSON") {
 				Log::info('==================Log JSON complete=====================');
 				$complete_rst = json_decode($complete, true);
@@ -208,7 +233,7 @@
 				} else {
 					$content = $complete_rst['choices'][0]['message']['tool_calls'][0]['function'];
 					$arguments = $content['arguments'];
-					$validateJson = $this->validateJson($arguments);
+					$validateJson = self::validateJson($arguments);
 					if ($validateJson == "Valid JSON") {
 						Log::info('==================Log JSON arguments=====================');
 						$arguments_rst = json_decode($arguments, true);
@@ -224,7 +249,7 @@
 			}
 		}
 
-		public function extractJsonString($input)
+		public static function extractJsonString($input)
 		{
 
 			//replace \n\n with <br><br>
@@ -257,7 +282,7 @@
 			return $jsonString;
 		}
 
-		public function mergeStringsWithoutRepetition($string1, $string2, $maxRepetitionLength = 100)
+		public static function mergeStringsWithoutRepetition($string1, $string2, $maxRepetitionLength = 100)
 		{
 			$len1 = strlen($string1);
 			$len2 = strlen($string2);
@@ -282,7 +307,7 @@
 			return $string1 . $string2;
 		}
 
-		public function llm_no_tool_call($stream, $llm, $prompt, $return_json = true, $language = 'english')
+		public static function llm_no_tool_call($stream, $llm, $prompt, $return_json = true, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -505,15 +530,15 @@
 
 //			$content = str_replace("\\\"", "\"", $content);
 			$content = $content ?? '';
-			$content = $this->getContentsInBackticksOrOriginal($content);
+			$content = self::getContentsInBackticksOrOriginal($content);
 
 			//check if content is JSON
-			$content_json_string = $this->extractJsonString($content);
-			$validate_result = $this->validateJson($content_json_string);
+			$content_json_string = self::extractJsonString($content);
+			$validate_result = self::validateJson($content_json_string);
 
 			if ($validate_result !== "Valid JSON") {
 				$content_json_string = (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
-				$validate_result = $this->validateJson($content_json_string);
+				$validate_result = self::validateJson($content_json_string);
 			}
 
 			if (strlen($content ?? '') < 20) {
@@ -609,10 +634,10 @@
 					$content2 = $complete2_rst['choices'][0]['message']['content'];
 
 					//$content2 = str_replace("\\\"", "\"", $content2);
-					$content2 = $this->getContentsInBackticksOrOriginal($content2);
+					$content2 = self::getContentsInBackticksOrOriginal($content2);
 
 					if (!str_contains($content2, 'DONE')) {
-						$content = $this->mergeStringsWithoutRepetition($content, $content2, 255);
+						$content = self::mergeStringsWithoutRepetition($content, $content2, 255);
 					}
 				} else {
 					$content2 = $txt;
@@ -622,21 +647,21 @@
 					Log::info($content2);
 
 					//$content2 = str_replace("\\\"", "\"", $content2);
-					$content2 = $this->getContentsInBackticksOrOriginal($content2);
+					$content2 = self::getContentsInBackticksOrOriginal($content2);
 
 					if (!str_contains($content2, 'DONE')) {
-						$content = $this->mergeStringsWithoutRepetition($content, $content2, 255);
+						$content = self::mergeStringsWithoutRepetition($content, $content2, 255);
 					}
 				}
 
 				//------------------------------------------------------------
 
-				$content_json_string = $this->extractJsonString($content);
-				$validate_result = $this->validateJson($content_json_string);
+				$content_json_string = self::extractJsonString($content);
+				$validate_result = self::validateJson($content_json_string);
 
 				if ($validate_result !== "Valid JSON") {
 					$content_json_string = (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
-					$validate_result = $this->validateJson($content_json_string);
+					$validate_result = self::validateJson($content_json_string);
 				}
 
 			} else {
@@ -662,13 +687,6 @@
 			}
 		}
 
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
 		//-------------------------------------------------------------------------
 		//-------------------------------------------------------------------------
 		//-------------------------------------------------------------------------
@@ -803,42 +821,6 @@
 
 			return array('complete' => $complete);
 		}
-
-
-		//-------------------------------------------------------------------------
-
-		function tryParseJson($inputText) {
-			$startBracketPos = strpos($inputText, '[');
-			$endBracketPos = strrpos($inputText, ']');
-			$startCurlyPos = strpos($inputText, '{');
-			$endCurlyPos = strrpos($inputText, '}');
-
-			$startPos = $startBracketPos;
-			$endPos = $endBracketPos;
-
-			if ($startCurlyPos !== false && ($startCurlyPos < $startBracketPos || $startBracketPos === false)) {
-				$startPos = $startCurlyPos;
-				$endPos = $endCurlyPos;
-			}
-
-			if ($startPos >= 0 && $endPos > 0) {
-				$jsonString = substr($inputText, $startPos, $endPos - $startPos + 1);
-				$jsonString = preg_replace('/\}\s*\{/', '}, {', $jsonString);
-				$jsonString = preg_replace('/\]\s*\[/', '], [', $jsonString);
-				$jsonString = preg_replace('/\"\s*\"/', '", "', $jsonString);
-
-				$decodedJson = json_decode($jsonString, true);
-
-				if ($decodedJson === null && json_last_error() !== JSON_ERROR_NONE) {
-					$decodedJson = json_decode("[$jsonString]", true);
-				}
-
-				return $decodedJson;
-			}
-
-			return null;
-		}
-
 
 		//-------------------------------------------------------------------------
 		// Send the message to the OpenAI API
@@ -1063,6 +1045,7 @@
 			return array('message_text' => $txt, 'completion_tokens' => $completion_tokens, 'prompt_tokens' => $prompt_tokens);
 		}
 
+		//-------------------------------------------------------------------------
 
 		public static function openAI_no_stream($messages, $temperature, $max_tokens, $llm_engine)
 		{
@@ -1178,31 +1161,5 @@
 		}
 
 		//-------------------------------------------------------------------------
-
-		public static function moderation($message)
-		{
-			function isValidUtf8($string)
-			{
-				return mb_check_encoding($string, 'UTF-8');
-			}
-
-			$openai_api_key = env('OPEN_AI_API_KEY');
-			//make sure $message can be json encoded
-			if (!isValidUtf8($message)) {
-				$message = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $message);
-			}
-
-
-			$response = Http::withHeaders([
-				'Content-Type' => 'application/json',
-				'Authorization' => 'Bearer ' . $openai_api_key,
-			])->post(env('OPEN_AI_API_BASE_MODERATIONS'), [
-				'input' => $message,
-			]);
-
-			return $response->json();
-			// {"id":"modr-7Km1oF0aR5KEwtX09UjbshKivO4B5","model":"text-moderation-004","results":[{"flagged":false,"categories":{"sexual":false,"hate":false,"violence":false,"self-harm":false,"sexual\/minors":false,"hate\/threatening":false,"violence\/graphic":false},"category_scores":{"sexual":1.2816758e-6,"hate":1.2005827e-7,"violence":4.2831335e-8,"self-harm":5.430266e-11,"sexual\/minors":1.4781849e-9,"hate\/threatening":1.0553468e-11,"violence\/graphic":9.761698e-9}}]}
-
-		}
 
 	}

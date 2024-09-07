@@ -3,7 +3,7 @@ let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
 
 
 function __e(text, variables = {}) {
-	console.log('text: ' + text);
+	// console.log('text: ' + text);
 	// Get the translated text or use the original if not found
 	let translatedText = translations[text] || ('???' + text);
 	

@@ -83,7 +83,7 @@
 					</div>
 				</div>
 			</div>
-
+		
 		</div>
 	</section>
 	<section class="main-faq-content bg-light content-inner">
@@ -156,25 +156,26 @@
 		</div>
 	</section>
 	<!-- FAQ Content End -->
-	
+
 </div>
 
-		@include('playground.footer')
-	
+<!-- Footer -->
+<footer class="site-footer style-1">
+	@include('playground.footer-categories')
+	@include('playground.footer')
+</footer>
+<!-- Footer End -->
+
 
 <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
 
-	<!-- JAVASCRIPT FILES ========================================= -->
-	<script src="/js/jquery.min.js"></script><!-- JQUERY MIN JS -->
-	<script src="/js/wow.min.js"></script><!-- WOW JS -->
-	<script src="/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-	<script src="/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
-	<script src="/js/waypoints-min.js"></script><!-- WAYPOINTS JS -->
-	<script src="/js/counterup.min.js"></script><!-- COUNTERUP JS -->
-	<script src="/js/counter.js"></script><!-- COUNTER JS -->
-	<script src="/js/custom.js"></script><!-- CUSTOM JS -->
+<!-- JAVASCRIPT FILES ========================================= -->
+<script src="/js/wow.min.js"></script><!-- WOW JS -->
+<script src="/js/waypoints-min.js"></script><!-- WAYPOINTS JS -->
+<script src="/js/counterup.min.js"></script><!-- COUNTERUP JS -->
+<script src="/js/counter.js"></script><!-- COUNTER JS -->
 
-	</body>
-	</html>
+</body>
+</html>
 

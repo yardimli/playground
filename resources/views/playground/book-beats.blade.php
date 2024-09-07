@@ -38,81 +38,10 @@
 </head>
 <body>
 
-<div class="ham-menu-items" id="ham-menu-items" style="height: 460px;">
-	
-	<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
-	<select id="llmSelect" class="form-select mx-auto mb-1">
-		<?php
-		if (Auth::user() && Auth::user()->isAdmin()) {
-			?>
-		<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-		<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-		<option value="openai/gpt-4o">openai :: gpt-4o</option>
-			<?php
-		} else {
-			?>
-		<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-			<?php
-		}
-		?>
-		<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-		<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-		<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-		<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-		<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-		<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-		<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-		<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
-		<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-		<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-		<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-		<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
-	</select>
-	
-	
-	<button type="button" class="btn btn-primary mt-2 mb-1 w-100" id="writeAllBeatsBtn"
-	        title="{{__('default.Write All Beats')}}"><i
-			class="bi bi-lightning-charge"></i> {{__('default.Write All Beat Contents')}}
-	</button>
-	
-	<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
-			class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
-	
-	
-	<button class="btn btn-primary mb-3 mt-1 w-100" id="showchapterBeatsBtn" title="{{__('default.Read all beats')}}">
-		<i class="bi bi-book-half"></i> {{__('default.Read all beats')}}
-	</button>
-	
-	<a href="{{route('playground.book-details', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
-	   title="{{__('default.Back to Chapters')}}"><i class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
-	<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
-			class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
-
-</div>
-<div class="ham-menu" id="ham-menu">
-	<span class="line line1"></span>
-	<span class="line line2"></span>
-	<span class="line line3"></span>
-</div>
-<div id="modeToggleBtn">
-	<i id="modeIcon" class="bi bi-sun"></i> {{__('default.Toggle Mode')}}
-</div>
-
-<main class="py-4">
+<main class="py-1">
 	
 	<div class="container mt-2">
 		<h2 class="text-center m-4" id="bookTitle">{{$book['title']}}</h2>
-		
-		
-		<div class="text-center mb-4">
-			<div class="spinner-border d-none me-2 ms-2" style="width:20px; height: 20px;"
-			     role="status" id="beat-spinner">
-				<span class="visually-hidden">{{__('default.Loading...')}}</span>
-			</div>
-			
-			<button type="button" class="btn btn-primary d-none mb-2  me-2"
-			        id="saveBeatsBtn">{{__('default.Save Beats')}}</button>
-		</div>
 		
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
@@ -127,8 +56,72 @@
 				<em>{{__('default.Events')}}</em>: <span id="chapterEvents">{{$current_chapter['events'] ?? 'no events'}}</span><br>
 				<em>{{__('default.People')}}</em>: <span id="chapterPeople">{{$current_chapter['people'] ?? 'no people'}}</span><br>
 				<em>{{__('default.Places')}}</em>: <span id="chapterPlaces">{{$current_chapter['places'] ?? 'no places'}}</span><br>
-				<em>{{__('default.Previous Chapter')}}</em>: <span id="chapterFromPreviousChapter">{{$previous_chapter_text}}</span><br>
+				<em>{{__('default.Previous Chapter')}}</em>: <span
+					id="chapterFromPreviousChapter">{{$previous_chapter_text}}</span><br>
 				<em>{{__('default.Next Chapter')}}</em>: <span id="chapterToNextChapter">{{$next_chapter_text}}</span><br>
+			</div>
+		</div>
+		
+		
+		<div class="card general-card">
+			<div class="card-body  modal-content-color">
+				<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
+				<select id="llmSelect" class="form-select mx-auto mb-1">
+					<?php
+					if (Auth::user() && Auth::user()->isAdmin()) {
+						?>
+					<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
+					<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+					<option value="openai/gpt-4o">openai :: gpt-4o</option>
+						<?php
+					} else {
+						?>
+					<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
+						<?php
+					}
+					?>
+					<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+					<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+					<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+					<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+					<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
+					<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
+					<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
+					<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+					<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+					<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
+					<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
+					<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+				</select>
+				
+				<button type="button" class="btn btn-primary mt-2 mb-1 w-100" id="writeAllBeatsBtn"
+				        title="{{__('default.Write All Beats')}}"><i
+						class="bi bi-lightning-charge"></i> {{__('default.Write All Beat Contents')}}
+				</button>
+				
+				<div class="text-center mb-4">
+					<div class="spinner-border d-none me-2 ms-2" style="width:20px; height: 20px;"
+					     role="status" id="beat-spinner">
+						<span class="visually-hidden">{{__('default.Loading...')}}</span>
+					</div>
+					
+					<button type="button" class="btn btn-primary d-none mb-2  me-2"
+					        id="saveBeatsBtn">{{__('default.Save Beats')}}</button>
+				</div>
+				
+				<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
+						class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
+				
+				
+				<button class="btn btn-primary mb-3 mt-1 w-100" id="showchapterBeatsBtn"
+				        title="{{__('default.Read all beats')}}">
+					<i class="bi bi-book-half"></i> {{__('default.Read all beats')}}
+				</button>
+				
+				<a href="{{route('playground.book-details', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
+				   title="{{__('default.Back to Chapters')}}"><i class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
+				<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
+						class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 			</div>
 		</div>
 		
@@ -191,6 +184,17 @@
 		</div>
 	</div>
 </div>
+
+
+<div id="fullScreenOverlay" class="d-none">
+	<div class="overlay-content">
+		<div class="spinner-border text-light" role="status">
+			<span class="visually-hidden">{{__('Loading...')}}</span>
+		</div>
+		<p class="mt-3 text-light">{{__('default.Processing your request. This may take a few minutes...')}}</p>
+	</div>
+</div>
+
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="/js/jquery-3.7.0.min.js"></script>
