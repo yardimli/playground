@@ -73,18 +73,23 @@
 								<?php
 							}
 							?>
+							{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
+							{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
+							{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
+							{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
 							<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 							<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
 							<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
 							<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-							<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-							<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-							<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-							<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+							{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
+							{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
+							{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
+							{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
 							<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-							<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-							<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-							<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+							{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
+							{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
+							{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+						
 						</select>
 						
 						
@@ -139,7 +144,7 @@
 <!-- Modal for Adding/Editing Stories -->
 <div class="modal  fade" id="chapterModal" tabindex="-1" aria-labelledby="chapterModalLabel"
      aria-hidden="true">
-	<div class="modal-dialog  modal-dialog-scrollable">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
 				<h5 class="modal-title" id="chapterModalLabel">{{__('default.Edit Chapter')}}</h5>
@@ -279,6 +284,27 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div id="alertModalContent"></div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
 	window.currentUserName = "<?php echo htmlspecialchars(Auth::user()->email ?? __('Visitor')); ?>";

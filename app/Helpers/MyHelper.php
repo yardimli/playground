@@ -99,39 +99,34 @@
 			set_time_limit(300);
 			session_write_close();
 
-			$use_llm = $_ENV['USE_LLM'] ?? 'openai';
-
-			if ($use_llm === 'anthropic-haiku') {
+			if ($llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
 				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
 				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
 
-			} else if ($use_llm === 'anthropic-sonet') {
+			} else if ($llm === 'anthropic-sonet') {
 				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
 				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
 				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
 
-			} else if ($use_llm === 'open-router') {
-				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
-				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
-				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
-				if ($llm !== '' && $llm !== null) {
-					$llm_model = $llm;
-				}
-
-			} else if ($use_llm === 'open-ai-gpt-4o') {
+			} else if ($llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
-			} else if ($use_llm === 'open-ai-gpt-4o-mini') {
+			} else if ($llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
+			} else {
+				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
+				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_model = $llm;
 			}
 
+
 			$chat_messages = [];
-			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 
 				$chat_messages[] = [
 					'role' => 'user',
@@ -153,7 +148,7 @@
 			$max_tokens = 4000;
 
 			$tool_name = 'auto';
-//			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+//			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 //				$tool_name = $schema['function']['name'];
 //			}
 
@@ -172,7 +167,7 @@
 				'stop' => "" //"\n"
 			);
 
-			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				//remove tool_choice
 				unset($data['tool_choice']);
 				unset($data['frequency_penalty']);
@@ -194,7 +189,7 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 
 			$headers = array();
-			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$headers[] = "x-api-key: " . $llm_api_key;
 				$headers[] = 'anthropic-version: 2023-06-01';
 				$headers[] = 'content-type: application/json';
@@ -223,7 +218,7 @@
 				Log::info($complete_rst);
 				$arguments_rst = [];
 
-				if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 					$contents = $complete_rst['content'];
 					foreach ($contents as $content) {
 						if ($content['type'] === 'tool_use') {
@@ -312,45 +307,33 @@
 			set_time_limit(300);
 			session_write_close();
 
-			$use_llm = $_ENV['USE_LLM'] ?? 'open-router';
-
-
-//			if ($llm === 'openai/gpt-4o-mini') {
-//				$use_llm = 'open-ai-gpt-4o-mini';
-//			}
-
-			if ($use_llm === 'anthropic-haiku') {
+			if ($llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
 				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
 				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
 
-			} else if ($use_llm === 'anthropic-sonet') {
+			} else if ($llm === 'anthropic-sonet') {
 				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
 				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
 				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
 
-			} else if ($use_llm === 'open-router') {
-				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
-				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
-				$llm_model = $_ENV['OPEN_ROUTER_MODEL'];
-
-				if ($llm !== '' && $llm !== null) {
-					$llm_model = $llm;
-				}
-
-			} else if ($use_llm === 'open-ai-gpt-4o') {
+			} else if ($llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
-			} else if ($use_llm === 'open-ai-gpt-4o-mini') {
+			} else if ($llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
 				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
+			} else {
+				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
+				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_model = $llm;
 			}
 
 			$chat_messages = [];
-			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => $prompt
@@ -383,17 +366,17 @@
 				'stop' => "" //"\n"
 			);
 
-			if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+			if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$data['max_tokens'] = 4096;
 				$data['temperature'] = 1;
-			} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
-				if ($use_llm === 'anthropic-haiku') {
+			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
+				if ($llm === 'anthropic-haiku') {
 					$data['max_tokens'] = 4096;
 				} else {
 					$data['max_tokens'] = 4096;
 				}
 				unset($data['stop']);
-			} else if ($use_llm === 'open-router') {
+			} else {
 
 //				$data['provider'] = [
 //					"order" => [
@@ -416,12 +399,18 @@
 					unset($data['presence_penalty']);
 					unset($data['n']);
 					unset($data['stop']);
-				}
+				} else
 				if (stripos($llm_model, 'openai') !== false) {
 					$data['temperature'] = 1;
-				}
+				} else
 				if (stripos($llm_model, 'google') !== false) {
 					$data['stop'] = [];
+				} else
+				{
+					unset($data['frequency_penalty']);
+					unset($data['presence_penalty']);
+					unset($data['n']);
+					unset($data['stop']);
 				}
 			}
 
@@ -438,7 +427,7 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 
 			$headers = array();
-			if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$headers[] = "x-api-key: " . $llm_api_key;
 				$headers[] = 'anthropic-version: 2023-06-01';
 				$headers[] = 'content-type: application/json';
@@ -502,11 +491,11 @@
 
 				$complete_rst = json_decode($complete, true);
 
-				if ($use_llm === 'open-ai-gpt-4o' || $use_llm === 'open-ai-gpt-4o-mini') {
+				if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 					$content = $complete_rst['choices'][0]['message']['content'];
-				} else if ($use_llm === 'anthropic-haiku' || $use_llm === 'anthropic-sonet') {
+				} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 					$content = $complete_rst['content'][0]['text'];
-				} else if ($use_llm === 'open-router') {
+				} else {
 					$content = $complete_rst['choices'][0]['message']['content'];
 				}
 			} else {
@@ -964,13 +953,12 @@
 				$headers[] = "anthropic-version: 2023-06-01";
 				$headers[] = "anthropic-beta: messages-2023-12-15";
 
-			} else
-			{
+			} else {
 				$headers[] = 'Content-Type: application/json';
 				$headers[] = "Authorization: Bearer " . $llm_api_key;
 			}
 
-			Log::info('LLM headers: '.$llm_base_url);
+			Log::info('LLM headers: ' . $llm_base_url);
 
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -979,13 +967,12 @@
 			curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl_info, $data) use (&$txt, &$completion_tokens, &$accumulatedData) {
 
 
-
 				$data_lines = explode("\n", $data);
 				for ($i = 0; $i < count($data_lines); $i++) {
 					$data_line = $data_lines[$i];
 //					Log::info($data_line);
 
-					if (stripos( $data_line, 'event:') !== false) {
+					if (stripos($data_line, 'event:') !== false) {
 						continue;
 					}
 

@@ -69,15 +69,15 @@ function writeAllBeats() {
 				$('#writeAllBeatsLog').append('<br><em>' + __e('Beat Description:') + '</em> ' + beatDescription);
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				
-				writeBeatText(beatDescription, beatIndex)
+				writeBeatText(beatDescription, beatIndex, false, true)
 					.then(() => {
 						const beatText = $(`#beatText_${beatIndex}`).val();
-						return writeBeatTextSummary(beatText, beatDescription, beatIndex);
+						return writeBeatSummary(beatText, beatDescription, beatIndex, false, true);
 					})
 					.then(() => {
 						//add the newly written summary to the log
 						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for beat ${beatIndex}:', {beatIndex: (beatIndex + 1)}) + '</em>');
-						$('#writeAllBeatsLog').append('<br>' + $(`#beatTextSummary_${beatIndex}`).val());
+						$('#writeAllBeatsLog').append('<br>' + $(`#beatSummary_${beatIndex}`).val());
 						
 						processedBeats++;
 						const progress = Math.round((processedBeats / totalBeats) * 100);
@@ -99,11 +99,10 @@ function writeAllBeats() {
 			}
 		} else {
 			$("#beatSpinner").addClass('d-none');
-			$('#writeAllBeatsLog').append('<br>' + __e('All beats processed!'));
-			$('#writeAllBeatsLog').append('<br><br><span style="font-weight: bold;">' + __e('After reviewing the beats, click the "Save Beats" button to save the changes.') + '</span><br><br>');
+			$('#writeAllBeatsLog').append('<br><br><span style="font-weight: bold;">' + __e('All beats processed!') + '</span><br><br>');
+			//$('#writeAllBeatsLog').append('<br><br><span style="font-weight: bold;">' + __e('After reviewing the beats, click the "Save Beats" button to save the changes.') + '</span><br><br>');
 			
 			$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
-			$('#saveBeatsBtn').removeClass('d-none');
 			setTimeout(function () {
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 			}, 200);
@@ -119,14 +118,17 @@ function loadBeats() {
 	
 	let beat_description_label = __e('Beat Description');
 	let beat_text_label = __e('Beat Text');
-	let beat_summary_label = __e('Beat Text Summary');
+	let beat_summary_label = __e('Beat Summary');
 	let save_beat_label = __e('Save Beat');
 	let write_beat_text_label = __e('Write Beat Text');
-	let write_beat_text_summary_label = __e('Write Summary');
+	let write_beat_summary_label = __e('Write Summary');
 	let beat_label = __e('Beat');
 	
-	currentChapter.beats.forEach((beat, index) => {
-		const beatHtml = `
+	//check if currentChapter.beats is an array
+	
+	if (Array.isArray(currentChapter.beats)) {
+		currentChapter.beats.forEach((beat, index) => {
+			const beatHtml = `
                 <div class="mb-3 beat-outer-container" data-beat-index="${index}">
                   <h5>${beat_label} ${index + 1}</h5>
                   <div id="beatDescriptionContainer_${index}">
@@ -137,42 +139,43 @@ function loadBeats() {
 										<label for="beatText_${index}" class="form-label">${beat_text_label}</label>
 										<textarea id="beatText_${index}" class="form-control beat-text-textarea" rows="10">${beat.beat_text ?? ''}</textarea>
 									</div>
-									<div id="beatTextSummaryArea_${index}" class="mt-3">
-										<label for="beatTextSummary_${index}" class="form-label">${beat_summary_label}</label>
-										<textarea id="beatTextSummary_${index}" class="form-control beat-summary-textarea" rows="3">${beat.beat_text_summary ?? ''}</textarea>
+									<div id="beatSummaryArea_${index}" class="mt-3">
+										<label for="beatSummary_${index}" class="form-label">${beat_summary_label}</label>
+										<textarea id="beatSummary_${index}" class="form-control beat-summary-textarea" rows="3">${beat.beat_summary ?? ''}</textarea>
 									</div>
 									
 									<div class="" data-index="${index}">
 										<button class="saveBeatBtn btn btn-success mt-3 me-2">${save_beat_label}</button>
 										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">${write_beat_text_label}</button>
-										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">${write_beat_text_summary_label}</button>
+										<button class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${write_beat_summary_label}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_${index}"></div>
 									</div>
                 </div>
             `;
-		beatsList.append(beatHtml);
-	});
-	
-	$('.saveBeatBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-index'));
-		let beatText = $('#beatText_' + beatIndex).val();
-		let beatDescription = $('#beatDescription_' + beatIndex).val();
-		let beatTextSummary = $('#beatTextSummary_' + beatIndex).val();
-		saveBeat(beatText, beatTextSummary, beatDescription, beatIndex);
-	});
-	
-	$('.writeBeatTextBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-index'));
-		let beatDescription = $('#beatDescription_' + beatIndex).val();
-		writeBeatText(beatDescription, beatIndex);
-	});
-	
-	$('.writeBeatTextSummaryBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-index'));
-		let beatText = $('#beatText_' + beatIndex).val();
-		let beatDescription = $('#beatDescription_' + beatIndex).val();
-		writeBeatTextSummary(beatText, beatDescription, beatIndex);
-	});
+			beatsList.append(beatHtml);
+		});
+		
+		$('.saveBeatBtn').off('click').on('click', function () {
+			let beatIndex = Number($(this).parent().attr('data-index'));
+			let beatText = $('#beatText_' + beatIndex).val();
+			let beatDescription = $('#beatDescription_' + beatIndex).val();
+			let beatSummary = $('#beatSummary_' + beatIndex).val();
+			saveBeat(beatText, beatSummary, beatDescription, beatIndex);
+		});
+		
+		$('.writeBeatTextBtn').off('click').on('click', function () {
+			let beatIndex = Number($(this).parent().attr('data-index'));
+			let beatDescription = $('#beatDescription_' + beatIndex).val();
+			writeBeatText(beatDescription, beatIndex, true, false);
+		});
+		
+		$('.writeBeatSummaryBtn').off('click').on('click', function () {
+			let beatIndex = Number($(this).parent().attr('data-index'));
+			let beatText = $('#beatText_' + beatIndex).val();
+			let beatDescription = $('#beatDescription_' + beatIndex).val();
+			writeBeatSummary(beatText, beatDescription, beatIndex, true, false);
+		});
+	}
 }
 
 function recreateBeats() {
@@ -182,7 +185,7 @@ function recreateBeats() {
 	let previousChapterBeats = '';
 	if (previousChapter !== null) {
 		for (let i = 0; i < previousChapter.beats.length; i++) {
-			previousChapterBeats += previousChapter.beats[i]?.beat_text_summary || previousChapter.beats[i]?.description || '';
+			previousChapterBeats += previousChapter.beats[i]?.beat_summary || previousChapter.beats[i]?.description || '';
 			previousChapterBeats += "\n";
 		}
 	}
@@ -193,7 +196,7 @@ function recreateBeats() {
 		method: 'POST',
 		data: {
 			llm: savedLlm,
-			save_beats: false,
+			save_results: false,
 		},
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -208,10 +211,10 @@ function recreateBeats() {
 					
 					let beat_description_label = __e('Beat Description');
 					let beat_text_label = __e('Beat Text');
-					let beat_summary_label = __e('Beat Text Summary');
+					let beat_summary_label = __e('Beat Summary');
 					let save_beat_label = __e('Save Beat');
 					let write_beat_text_label = __e('Write Beat Text');
-					let write_beat_text_summary_label = __e('Write Summary');
+					let write_beat_summary_label = __e('Write Summary');
 					let beat_label = __e('Beat');
 					
 					const beatHtml = `
@@ -225,15 +228,15 @@ function recreateBeats() {
 										<label for="beatText_${index}" class="form-label">${beat_text_label}</label>
 										<textarea id="beatText_${index}" class="form-control beat-text-textarea" rows="10"></textarea>
 									</div>
-									<div id="beatTextSummaryArea_${index}" class="mt-3">
-										<label for="beatTextSummary_${index}" class="form-label">${beat_summary_label}</label>
-										<textarea id="beatTextSummary_${index}" class="form-control beat-summary-textarea" rows="3"></textarea>
+									<div id="beatSummaryArea_${index}" class="mt-3">
+										<label for="beatSummary_${index}" class="form-label">${beat_summary_label}</label>
+										<textarea id="beatSummary_${index}" class="form-control beat-summary-textarea" rows="3"></textarea>
 									</div>
 									
 									<div class="" data-index="${index}">
 										<button class="saveBeatBtn btn btn-success mt-3 me-2">${save_beat_label}</button>
 										<button class="writeBeatTextBtn btn btn-primary mt-3 me-2">${write_beat_text_label}</button>
-										<button class="writeBeatTextSummaryBtn btn btn-primary mt-3 me-2">${write_beat_text_summary_label}</button>
+										<button class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${write_beat_summary_label}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_${index}"></div>
 									</div>
                 </div>
@@ -245,166 +248,143 @@ function recreateBeats() {
 					let beatIndex = Number($(this).parent().attr('data-index'));
 					let beatText = $('#beatText_' + beatIndex).val();
 					let beatDescription = $('#beatDescription_' + beatIndex).val();
-					let beatTextSummary = $('#beatTextSummary_' + beatIndex).val();
-					saveBeat(beatText, beatTextSummary, beatDescription, beatIndex);
+					let beatSummary = $('#beatSummary_' + beatIndex).val();
+					saveBeat(beatText, beatSummary, beatDescription, beatIndex);
 				});
 				
 				$('.writeBeatTextBtn').off('click').on('click', function () {
 					let beatIndex = Number($(this).parent().attr('data-index'));
 					let beatDescription = $('#beatDescription_' + beatIndex).val();
-					writeBeatText(beatDescription, beatIndex);
+					writeBeatText(beatDescription, beatIndex, true, false);
 				});
 				
-				$('.writeBeatTextSummaryBtn').off('click').on('click', function () {
+				$('.writeBeatSummaryBtn').off('click').on('click', function () {
 					let beatIndex = Number($(this).parent().attr('data-index'));
 					let beatText = $('#beatText_' + beatIndex).val();
 					let beatDescription = $('#beatDescription_' + beatIndex).val();
-					writeBeatTextSummary(beatText, beatDescription, beatIndex);
+					writeBeatSummary(beatText, beatDescription, beatIndex, true, false);
 				});
 				
-				$('#saveBeatsBtn').removeClass('d-none');
 				$("#recreateBeats").prop('disabled', false);
+				$("#writeAllBeatsBtn").prop('disabled', true);
+				$("#writeAllBeatsBtn").html(__e('Click "Save Beats" before proceeding to write all beat contents.'));
+				$("#alertModalContent").html(__e('All chapter Beat Descriptions generated successfully. Don\'t forget to save!'));
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				
 			} else {
-				alert(__e('Failed to create beats: ') + response.message);
+				$('#fullScreenOverlay').addClass('d-none');
+				$("#alertModalContent").html(__e('Failed to create beats: ') + response.message);
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+
 				$("#recreateBeats").prop('disabled', false);
 			}
 		},
 		error: function () {
 			$('#fullScreenOverlay').addClass('d-none');
-			alert(__e('An error occurred while creating beats.'));
+			$("#alertModalContent").html(__e('An error occurred while creating beats.'));
+			$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		}
 	});
 	
 }
 
-function writeBeatText(beatDescription, beatIndex) {
+function writeBeatText(beatDescription, beatIndex, showOverlay = true, save_results = false) {
 	return new Promise((resolve, reject) => {
+		if (showOverlay) {
+			$('#fullScreenOverlay').removeClass('d-none');
+		}
 		$("#writeBeatTextBtn_" + beatIndex).prop('disabled', true);
 		$("#beatDetailModalResult_" + beatIndex).html(__e('Writing beat text...'));
 		
-		let prevBeatsSummaries = '';
-		let lastBeatBeforeCurrent = '';
 		
-		if (beatIndex > 0) {
-			for (let i = 0; i < beatIndex; i++) {
-				if (i === beatIndex - 1) {
-					lastBeatBeforeCurrent = $("#beatText_" + i).val() || '';
+		$.ajax({
+			url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				beatIndex: beatIndex,
+				current_beat: beatDescription,
+				save_results: save_results,
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				$('#fullScreenOverlay').addClass('d-none');
+				if (response.success) {
+					$('#beatText_' + beatIndex).val(response.prompt);
+					$('#beatDetailModalResult_' + beatIndex).html(__e('Beat text generated successfully!'));
+					$('#writeBeatTextBtn_' + beatIndex).prop('disabled', false);
+					resolve();
 				} else {
-					let currentBeatSummary = $("#beatTextSummary_" + i).val() || $("#beatDescription" + i).val() || '';
-					prevBeatsSummaries += currentBeatSummary + '\n';
+					$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write beat text: ') + response.message);
+					reject(__e('Failed to write beat text: ') + response.message);
+					
 				}
+			},
+			error: function () {
+				$('#fullScreenOverlay').addClass('d-none');
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write beat text.'));
+				reject(__e('Failed to write beat text.'));
 			}
-		} else {
-			// Loop through previous chapter beats
-			if (previousChapter !== null) {
-				for (let i = 0; i < previousChapter.beats.length; i++) {
-					if (i === previousChapter.beats.length - 1) {
-						lastBeatBeforeCurrent = previousChapter.beats[i]?.beat_text || '';
-					} else {
-						let currentBeatSummary = previousChapter.beats[i]?.beat_text_summary || previousChapter.beats[i]?.description || '';
-						prevBeatsSummaries += currentBeatSummary + '\n';
-					}
-				}
-			}
-		}
-		
-		let nextBeat = '';
-		console.log(beatIndex, (beatIndex + 1), currentChapter.beats.length - 1);
-		if (beatIndex < currentChapter.beats.length - 1) {
-			nextBeat = $("#beatDescription_" + (beatIndex + 1)).val() || '';
-		} else {
-			if (nextChapter !== null) {
-				nextBeat = nextChapter.beats[0]?.description || '';
-			}
-		}
-		
-		$.post('action-beats.php', {
-			action: 'write_beat_text',
-			llm: savedLlm,
-			chapterFilename: chapterFilename,
-			beatIndex: beatIndex,
-			
-			book: bookSlug,
-			book_title: bookData.title,
-			book_blurb: bookData.blurb,
-			back_cover_text: bookData.back_cover_text,
-			language: bookData.language,
-			act: currentChapter.row,
-			chapter_title: currentChapter.name,
-			chapter_description: currentChapter.short_description,
-			chapter_events: currentChapter.events,
-			chapter_people: currentChapter.people,
-			chapter_places: currentChapter.places,
-			previous_beat_summaries: prevBeatsSummaries,
-			last_beat: lastBeatBeforeCurrent,
-			current_beat: beatDescription,
-			next_beat: nextBeat,
-			
-		}, function (response) {
-			if (response.success) {
-				$('#beatText_' + beatIndex).val(response.prompt);
-				$('#beatDetailModalResult_' + beatIndex).html(__e('Beat text generated successfully!'));
-				$('#writeBeatTextBtn_' + beatIndex).prop('disabled', false);
-				resolve();
-			} else {
-				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write beat text: ') + response.message);
-				reject(__e('Failed to write beat text: ') + response.message);
-				
-			}
-		}, 'json');
+		});
 	});
 }
 
-function writeBeatTextSummary(beatText, beatDescription, beatIndex) {
+function writeBeatSummary(beatText, beatDescription, beatIndex, showOverlay = true, save_results = false) {
 	return new Promise((resolve, reject) => {
-		$('#writeBeatTextSummaryBtn_' + beatIndex).prop('disabled', true);
-		$('#beatDetailModalResult_' + beatIndex).html(__e('Writing beat text summary...'));
+		$('#writeBeatSummaryBtn_' + beatIndex).prop('disabled', true);
+		if (showOverlay) {
+			$('#fullScreenOverlay').removeClass('d-none');
+		}
+		$('#beatDetailModalResult_' + beatIndex).html(__e('Writing beat summary...'));
 		
-		$.post('action-beats.php', {
-			action: 'write_beat_text_summary',
-			llm: savedLlm,
-			
-			book: bookSlug,
-			chapterFilename: chapterFilename,
-			
-			book_title: bookData.title,
-			book_blurb: bookData.blurb,
-			back_cover_text: bookData.back_cover_text,
-			language: bookData.language,
-			act: currentChapter.row,
-			chapter_title: currentChapter.name,
-			chapter_description: currentChapter.short_description,
-			chapter_events: currentChapter.events,
-			chapter_people: currentChapter.people,
-			chapter_places: currentChapter.places,
-			
-			currentBeatDescription: beatDescription,
-			currentBeatText: beatText
-		}, function (response) {
-			if (response.success) {
-				$('#beatTextSummary_' + beatIndex).val(response.prompt);
-				$('#beatDetailModalResult_' + beatIndex).html(__e('Beat text summary generated successfully!'));
-				$('#writeBeatTextSummaryBtn_' + beatIndex).prop('disabled', false);
-				resolve();
-			} else {
-				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write summary: ') + response.message);
-				reject(__e('Failed to write summary: ') + response.message);
+		$.ajax({
+			url: `/book/write-beat-summary/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				beatIndex: beatIndex,
+				currentBeatDescription: beatDescription,
+				currentBeatText: beatText,
+				save_results: save_results,
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				$('#fullScreenOverlay').addClass('d-none');
+				if (response.success) {
+					$('#beatSummary_' + beatIndex).val(response.prompt);
+					$('#beatDetailModalResult_' + beatIndex).html(__e('Beat summary generated successfully!'));
+					$('#writeBeatSummaryBtn_' + beatIndex).prop('disabled', false);
+					resolve();
+				} else {
+					$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write summary: ') + response.message);
+					reject(__e('Failed to write summary: ') + response.message);
+				}
+			},
+			error: function () {
+				$('#fullScreenOverlay').addClass('d-none');
+				$('#beatDetailModalResult_' + beatIndex).html(__e('Failed to write beat summary.'));
+				reject(__e('Failed to write beat summary.'));
 			}
-		}, 'json');
+		});
 	});
 }
 
-function saveBeat(beatText, beatTextSummary, beatDescription, beatIndex) {
+function saveBeat(beatText, beatSummary, beatDescription, beatIndex) {
 	$.ajax({
-		url: `/book/save-single-beats/${bookSlug}/${chapterFilename}`,
+		url: `/book/save-single-beat/${bookSlug}/${chapterFilename}`,
 		method: 'POST',
 		data: {
 			llm: savedLlm,
 			beatIndex: beatIndex,
 			beatDescription: beatDescription,
 			beatText: beatText,
-			beatTextSummary: beatTextSummary
+			beatSummary: beatSummary
 		},
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -444,8 +424,8 @@ $(document).ready(function () {
 		$('#beatsList').find('.beat-outer-container').each(function (index, element) {
 			let beatDescription = $(element).find('.beat-description-textarea').val();
 			let beatText = $(element).find('.beat-text-textarea').val();
-			let beatTextSummary = $(element).find('.beat-summary-textarea').val();
-			beats.push({description: beatDescription, beat_text: beatText, beat_text_summary: beatTextSummary});
+			let beatSummary = $(element).find('.beat-summary-textarea').val();
+			beats.push({description: beatDescription, beat_text: beatText, beat_summary: beatSummary});
 		});
 		
 		$.ajax({
@@ -461,11 +441,15 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (response) {
 				if (response.success) {
-					alert(__e('Beats saved successfully!'));
-					//reload the page
-					location.reload();
+					$("#alertModalContent").html(__e('Beats saved successfully!'));
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+					setTimeout(function () {
+						location.reload();
+					},2500);
+					
 				} else {
-					alert(__e('Failed to save beats: ') + response.message);
+					$("#alertModalContent").html(__e('Failed to save beats: ') + response.message);
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			}
 		});

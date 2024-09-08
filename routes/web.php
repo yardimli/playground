@@ -98,6 +98,12 @@
 
 	Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveChapterBeats'])->name('book.save-chapter-beats');
 
+	Route::post('/book/save-single-beat/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveChapterSingleBeat'])->name('book.save-chapter-single-beats');
+
+	Route::post('/book/write-beat-text/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeatText'])->name('book.write-beat-text');
+
+	Route::post('/book/write-beat-summary/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeatSummary'])->name('book.write-beat-summary');
+
 
 	Route::middleware(['auth'])->group(function () {
 

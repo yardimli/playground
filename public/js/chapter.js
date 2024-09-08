@@ -129,17 +129,20 @@ function saveChapter() {
 		success: function (response) {
 			if (response.success) {
 				$('#save_result').html('<div class="alert alert-success">' + __e('Chapter saved successfully!') + '</div>');
-				alert(__e('Chapter saved successfully!'));
+				$("#alertModalContent").html(__e('Chapter saved successfully!'));
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				// Refresh the page
 				location.reload();
 			} else {
 				console.log(response);
-				alert(__e('Failed to save chapter: ') + response.message);
+				$("#alertModalContent").html(__e('Failed to save chapter: ') + response.message);
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 			}
 		},
 		error: function (xhr, status, error) {
 			console.error(xhr.responseText);
-			alert(__e('An error occurred while saving the chapter.'));
+			$("#alertModalContent").html(__e('An error occurred while saving the chapter.'));
+			$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		}
 	});
 }
@@ -234,7 +237,7 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 			method: 'POST',
 			data: {
 				llm: savedLlm,
-				save_beats: true,
+				save_results: true,
 			},
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -252,7 +255,8 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 						});
 					} else {
 						$('#generateAllBeatsLog').append('<br>' + __e('Beats failed for chapter: ${chapter}', {chapter: chapter.name}));
-						alert(__e('Failed to generate beats: ') + response.beats);
+						$("#alertModalContent").html(__e('Failed to generate beats: ') + response.beats);
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 					if (chapter_index < totalChapters) {
 						generateSingleChapterBeats(chapters, chapter_index);
@@ -262,7 +266,8 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 					}
 				} else {
 					$('#generateAllBeatsLog').append('<br>' + __e('Beats failed for chapter: ${chapter}', {chapter: chapter.name}));
-					alert(__e('Failed to generate beats: ') + response.beats);
+					$("#alertModalContent").html(__e('Failed to generate beats: ') + response.beats);
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			},
 			
@@ -348,7 +353,8 @@ $(document).ready(function () {
 					createCoverFileName = data.output_filename;
 					$('#saveCoverBtn').prop('disabled', false);
 				} else {
-					alert(__e('Failed to generate cover: ') + data.message);
+					$("#alertModalContent").html(__e('Failed to generate cover: ') + data.message);
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 				$('#generateCoverBtn').prop('disabled', false).text(__e('Generate'));
 			}
@@ -369,14 +375,18 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
-					alert(__e('Cover saved successfully!'));
+					$("#alertModalContent").html(__e('Cover saved successfully!'));
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+
 					$('#bookCover').attr('src', '/storage/ai-images/' + createCoverFileName);
 				} else {
-					alert(__e('Failed to save cover: ') + data.message);
+					$("#alertModalContent").html(__e('Failed to save cover: ') + data.message);
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			},
 			error: function (xhr, status, error) {
-				alert(__e('An error occurred while saving the cover.'));
+				$("#alertModalContent").html(__e('An error occurred while saving the cover.'));
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 			}
 		});
 	});

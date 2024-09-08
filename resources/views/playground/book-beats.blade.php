@@ -80,18 +80,22 @@
 						<?php
 					}
 					?>
+{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
+{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
+{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
+{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
 					<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 					<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
 					<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
 					<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-					<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-					<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-					<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-					<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
+{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
+{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
+{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
 					<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-					<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-					<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-					<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
+{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
+{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
 				</select>
 				
 				<button type="button" class="btn btn-primary mt-2 mb-1 w-100" id="writeAllBeatsBtn"
@@ -99,18 +103,12 @@
 						class="bi bi-lightning-charge"></i> {{__('default.Write All Beat Contents')}}
 				</button>
 				
-				<div class="text-center mb-4">
-					<div class="spinner-border d-none me-2 ms-2" style="width:20px; height: 20px;"
-					     role="status" id="beat-spinner">
-						<span class="visually-hidden">{{__('default.Loading...')}}</span>
-					</div>
-					
-					<button type="button" class="btn btn-primary d-none mb-2  me-2"
-					        id="saveBeatsBtn">{{__('default.Save Beats')}}</button>
-				</div>
-				
 				<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
 						class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
+				
+				<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
+				        id="saveBeatsBtn"><i
+						class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
 				
 				
 				<button class="btn btn-primary mb-3 mt-1 w-100" id="showchapterBeatsBtn"
@@ -177,6 +175,25 @@
 			</div>
 			<div class="modal-body modal-body-color">
 				<div id="chapterBeatsContent"></div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div id="alertModalContent"></div>
 			</div>
 			<div class="modal-footer modal-footer-color">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>

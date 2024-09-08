@@ -14,8 +14,8 @@ Places: ##places##
 Previous Beat Summaries:
 ##previous_beat_summaries##
 
-Last Beat:
-##last_beat##
+Last Beat Full Text:
+##last_beat_full_text##
 
 Current Beat:
 ##current_beat##

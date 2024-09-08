@@ -46,18 +46,23 @@
 					<?php
 				}
 			?>
+			{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
+			{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
+			{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
+			{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
 			<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
 			<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
 			<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
 			<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-			<!--			<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>-->
-			<!--			<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>-->
-			<!--			<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>-->
-			<!--			<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>-->
+			{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
+			{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
+			{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
+			{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
 			<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-			<!--			<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>-->
-			<!--			<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>-->
-			<!--			<option value="cohere/command-r">cohere :: command-r</option>-->
+			{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
+			{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
+			{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+		
 		</select>
 
 		<button id="addBookBtn"  class="mb-4 mt-1 btn btn-success w-100"><i class="bi bi-plus-circle-fill"></i> {{__('default.Add Book')}}</button>
