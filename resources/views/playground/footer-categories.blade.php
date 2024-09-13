@@ -6,7 +6,6 @@
 			<div class="toggle-items row book-grid-row">
 				<div class="footer-col-book">
 					<ul>
-						<li><a href="{{route('playground.books-list')}}">Art</a></li>
 						<li><a href="{{route('playground.books-list')}}">Action</a></li>
 						<li><a href="{{route('playground.books-list')}}">Biography</a></li>
 						<li><a href="{{route('playground.books-list')}}">Body, Mind & Spirit</a></li>

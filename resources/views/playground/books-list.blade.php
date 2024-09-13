@@ -24,128 +24,122 @@
 			<div class="acod-content collapse book-list-small-container-color" id="collapseExample">
 				<div class="widget widget_services">
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox2">
-						<label class="form-check-label" for="productCheckBox2">
-							Art
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox3">
-						<label class="form-check-label" for="productCheckBox3">
+						<input class="form-check-input" type="radio" value="Action" id="productRadio3" name="category">
+						<label class="form-check-label" for="productRadio3">
 							Action
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox4">
-						<label class="form-check-label" for="productCheckBox4">
+						<input class="form-check-input" type="radio" value="Biography & Autobiography" id="productRadio4" name="category">
+						<label class="form-check-label" for="productRadio4">
 							Biography & Autobiography
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox5">
-						<label class="form-check-label" for="productCheckBox5">
+						<input class="form-check-input" type="radio" value="Body, Mind & Spirit" id="productRadio5" name="category">
+						<label class="form-check-label" for="productRadio5">
 							Body, Mind & Spirit
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox6">
-						<label class="form-check-label" for="productCheckBox6">
+						<input class="form-check-input" type="radio" value="Business & Economics" id="productRadio6" name="category">
+						<label class="form-check-label" for="productRadio6">
 							Business & Economics
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox7">
-						<label class="form-check-label" for="productCheckBox7">
+						<input class="form-check-input" type="radio" value="Children Fiction" id="productRadio7" name="category">
+						<label class="form-check-label" for="productRadio7">
 							Children Fiction
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox8">
-						<label class="form-check-label" for="productCheckBox8">
+						<input class="form-check-input" type="radio" value="Children Non-Fiction" id="productRadio8" name="category">
+						<label class="form-check-label" for="productRadio8">
 							Children Non-Fiction
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox10">
-						<label class="form-check-label" for="productCheckBox10">
+						<input class="form-check-input" type="radio" value="Cooking" id="productRadio10" name="category">
+						<label class="form-check-label" for="productRadio10">
 							Cooking
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox11">
-						<label class="form-check-label" for="productCheckBox11">
+						<input class="form-check-input" type="radio" value="Crafts & Hobbies" id="productRadio11" name="category">
+						<label class="form-check-label" for="productRadio11">
 							Crafts & Hobbies
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox12">
-						<label class="form-check-label" for="productCheckBox12">
+						<input class="form-check-input" type="radio" value="Design" id="productRadio12" name="category">
+						<label class="form-check-label" for="productRadio12">
 							Design
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox13">
-						<label class="form-check-label" for="productCheckBox13">
+						<input class="form-check-input" type="radio" value="Drama" id="productRadio13" name="category">
+						<label class="form-check-label" for="productRadio13">
 							Drama
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox14">
-						<label class="form-check-label" for="productCheckBox14">
+						<input class="form-check-input" type="radio" value="Education" id="productRadio14" name="category">
+						<label class="form-check-label" for="productRadio14">
 							Education
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox15">
-						<label class="form-check-label" for="productCheckBox15">
+						<input class="form-check-input" type="radio" value="Family & Relationships" id="productRadio15" name="category">
+						<label class="form-check-label" for="productRadio15">
 							Family & Relationships
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox16">
-						<label class="form-check-label" for="productCheckBox16">
+						<input class="form-check-input" type="radio" value="Fiction" id="productRadio16" name="category">
+						<label class="form-check-label" for="productRadio16">
 							Fiction
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox17">
-						<label class="form-check-label" for="productCheckBox17">
+						<input class="form-check-input" type="radio" value="Foreign Language Study" id="productRadio17" name="category">
+						<label class="form-check-label" for="productRadio17">
 							Foreign Language Study
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox18">
-						<label class="form-check-label" for="productCheckBox18">
+						<input class="form-check-input" type="radio" value="Games" id="productRadio18" name="category">
+						<label class="form-check-label" for="productRadio18">
 							Games
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox19">
-						<label class="form-check-label" for="productCheckBox19">
+						<input class="form-check-input" type="radio" value="Gardening" id="productRadio19" name="category">
+						<label class="form-check-label" for="productRadio19">
 							Gardening
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox20">
-						<label class="form-check-label" for="productCheckBox20">
+						<input class="form-check-input" type="radio" value="Health & Fitness" id="productRadio20" name="category">
+						<label class="form-check-label" for="productRadio20">
 							Health & Fitness
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox21">
-						<label class="form-check-label" for="productCheckBox21">
+						<input class="form-check-input" type="radio" value="History" id="productRadio21" name="category">
+						<label class="form-check-label" for="productRadio21">
 							History
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox23">
-						<label class="form-check-label" for="productCheckBox23">
+						<input class="form-check-input" type="radio" value="Humor" id="productRadio23" name="category">
+						<label class="form-check-label" for="productRadio23">
 							Humor
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox25">
-						<label class="form-check-label" for="productCheckBox25">
+						<input class="form-check-input" type="radio" value="Mathematics" id="productRadio25" name="category">
+						<label class="form-check-label" for="productRadio25">
 							Mathematics
 						</label>
 					</div>
