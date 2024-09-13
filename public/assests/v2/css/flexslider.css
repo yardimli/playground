@@ -50,7 +50,7 @@ html[xmlns] .slides {display: block;}
 
 /* Direction Nav */
 .flex-direction-nav {*height: 0;}
-.flex-direction-nav a {width: 25px; height: 50px; margin: -20px 0 0; display: block; background: url(../img/assets/icons/bg_direction_nav.png) no-repeat 0 0; position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 0; -webkit-transition: all .3s ease;}
+.flex-direction-nav a {width: 25px; height: 50px; margin: -20px 0 0; display: block; background: url(../img/assets/bg_direction_nav.png) no-repeat 0 0; position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 0; -webkit-transition: all .3s ease;}
 .flex-direction-nav .flex-next {background-position: 100% 0; right: -10px; }
 .flex-direction-nav .flex-prev {left: -10px;}
 .content_slider:hover .flex-next, .hero_slider:hover .flex-next, .blog-img-slider:hover .flex-next {opacity: 0.9; right: 5px;}

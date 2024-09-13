@@ -28,7 +28,7 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.min.css">
-	<link rel="stylesheet" type="text/css" href="/assets/icons/fontawesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/fontawesome/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/animate.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">

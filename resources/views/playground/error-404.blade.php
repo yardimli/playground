@@ -23,7 +23,7 @@
 	
 	<!-- STYLESHEETS -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="icons/fontawesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
 	
 	
