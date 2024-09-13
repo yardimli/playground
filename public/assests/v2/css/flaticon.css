@@ -1,10 +1,10 @@
 @font-face {
     font-family: "flaticon";
-    src: url("../assets/fonts/flaticon.ttf?99008aa38e7de407db084b96baa4b2a2") format("truetype"),
-url("../assets/fonts/flaticon.woff?99008aa38e7de407db084b96baa4b2a2") format("woff"),
-url("../assets/fonts/flaticon.woff2?99008aa38e7de407db084b96baa4b2a2") format("woff2"),
-url("../assets/fonts/flaticon.eot?99008aa38e7de407db084b96baa4b2a2#iefix") format("embedded-opentype"),
-url("../assets/fonts/flaticon.svg?99008aa38e7de407db084b96baa4b2a2#flaticon") format("svg");
+    src: url("/assets/flaticon/flaticon.ttf?99008aa38e7de407db084b96baa4b2a2") format("truetype"),
+url("/assets/flaticon/flaticon.woff?99008aa38e7de407db084b96baa4b2a2") format("woff"),
+url("/assets/flaticon/flaticon.woff2?99008aa38e7de407db084b96baa4b2a2") format("woff2"),
+url("/assets/flaticon/flaticon.eot?99008aa38e7de407db084b96baa4b2a2#iefix") format("embedded-opentype"),
+url("/assets/flaticon/flaticon.svg?99008aa38e7de407db084b96baa4b2a2#flaticon") format("svg");
 }
 
 span[class^="flaticon-"]:before, span[class*=" flaticon-"]:before {

@@ -15,7 +15,7 @@
 
 */
 @import url("../assets/icons/fontawesome/css/all.min.css");
-@import url("../assets/icons/flaticon/font/flaticon.css");
+@import url("../assets/icons/flaticon/flaticon.css");
 :root {
   --gradient: linear-gradient( to right, rgb(255,64,62) 0%, rgb(255,129,27) 100%);
   --gradient-sec: linear-gradient( to right, rgb(57,26,166) 0%, rgb(6,163,245) 100%);
