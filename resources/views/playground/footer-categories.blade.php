@@ -6,7 +6,6 @@
 			<div class="toggle-items row book-grid-row">
 				<div class="footer-col-book">
 					<ul>
-						<li><a href="{{route('playground.books-list')}}">Architecture</a></li>
 						<li><a href="{{route('playground.books-list')}}">Art</a></li>
 						<li><a href="{{route('playground.books-list')}}">Action</a></li>
 						<li><a href="{{route('playground.books-list')}}">Biography</a></li>
@@ -14,7 +13,6 @@
 						<li><a href="{{route('playground.books-list')}}">Business & Economics</a></li>
 						<li><a href="{{route('playground.books-list')}}">Children Fiction</a></li>
 						<li><a href="{{route('playground.books-list')}}">Children Non-Fiction</a></li>
-						<li><a href="{{route('playground.books-list')}}">Comics & Graphics</a></li>
 						<li><a href="{{route('playground.books-list')}}">Cooking</a></li>
 						<li><a href="{{route('playground.books-list')}}">Crafts & Hobbies</a></li>
 						<li><a href="{{route('playground.books-list')}}">Design</a></li>
@@ -27,15 +25,8 @@
 						<li><a href="{{route('playground.books-list')}}">Gardening</a></li>
 						<li><a href="{{route('playground.books-list')}}">Health & Fitness</a></li>
 						<li><a href="{{route('playground.books-list')}}">History</a></li>
-						<li><a href="{{route('playground.books-list')}}">House & Home</a></li>
 						<li><a href="{{route('playground.books-list')}}">Humor</a></li>
-						<li><a href="{{route('playground.books-list')}}">Literary Collections</a></li>
 						<li><a href="{{route('playground.books-list')}}">Mathematics</a></li>
-						<li><a href="{{route('playground.books-list')}}">Medical</a></li>
-						<li><a href="{{route('playground.books-list')}}">Nature</a></li>
-						<li><a href="{{route('playground.books-list')}}">Performing Arts</a></li>
-						<li><a href="{{route('playground.books-list')}}">Pets</a></li>
-						<li><a href="{{route('playground.books-list')}}">Show others</a></li>
 					</ul>
 				</div>
 			</div>

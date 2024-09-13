@@ -24,12 +24,6 @@
 			<div class="acod-content collapse book-list-small-container-color" id="collapseExample">
 				<div class="widget widget_services">
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox1">
-						<label class="form-check-label" for="productCheckBox1">
-							Architecture
-						</label>
-					</div>
-					<div class="form-check search-content">
 						<input class="form-check-input" type="checkbox" value="" id="productCheckBox2">
 						<label class="form-check-label" for="productCheckBox2">
 							Art
@@ -69,12 +63,6 @@
 						<input class="form-check-input" type="checkbox" value="" id="productCheckBox8">
 						<label class="form-check-label" for="productCheckBox8">
 							Children Non-Fiction
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox9">
-						<label class="form-check-label" for="productCheckBox9">
-							Comics & Graphic Novels
 						</label>
 					</div>
 					<div class="form-check search-content">
@@ -150,21 +138,9 @@
 						</label>
 					</div>
 					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox22">
-						<label class="form-check-label" for="productCheckBox22">
-							House & Home
-						</label>
-					</div>
-					<div class="form-check search-content">
 						<input class="form-check-input" type="checkbox" value="" id="productCheckBox23">
 						<label class="form-check-label" for="productCheckBox23">
 							Humor
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="checkbox" value="" id="productCheckBox24">
-						<label class="form-check-label" for="productCheckBox24">
-							Literary Collections
 						</label>
 					</div>
 					<div class="form-check search-content">
