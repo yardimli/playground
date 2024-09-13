@@ -21,13 +21,13 @@
 		<title>Discover a new beginning.</title>
 		
 		<!-- FAVICON AND TOUCH ICONS -->
-		<link rel="shortcut icon" href="/v2/images/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/v2/images/favicon.ico" type="image/x-icon">
-		<link rel="apple-touch-icon" sizes="152x152" href="/v2/images/apple-touch-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="/v2/images/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="/v2/images/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" href="/v2/images/apple-touch-icon.png">
-		<link rel="icon" href="/v2/images/apple-touch-icon.png" type="image/x-icon">
+		<link rel="shortcut icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
+		<link rel="apple-touch-icon" sizes="152x152" href="/assets/v2/images/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/assets/v2/images/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/assets/v2/images/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" href="/assets/v2/images/apple-touch-icon.png">
+		<link rel="icon" href="/assets/v2/images/apple-touch-icon.png" type="image/x-icon">
 
 		<!-- GOOGLE FONTS -->
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -35,25 +35,25 @@
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 		
 		<!-- BOOTSTRAP CSS -->
-		<link href="/v2/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/v2/css/bootstrap.min.css" rel="stylesheet">
 		
 		<!-- FONT ICONS -->
-		<link href="/v2/css/flaticon.css" rel="stylesheet">
+		<link href="/assets/v2/css/flaticon.css" rel="stylesheet">
 
 		<!-- PLUGINS STYLESHEET -->
-		<link href="/v2/css/menu.css" rel="stylesheet">
-		<link id="effect" href="/v2/css/dropdown-effects/fade-down.css" media="all" rel="stylesheet">
-		<link href="/v2/css/magnific-popup.css" rel="stylesheet">
-		<link href="/v2/css/lunar.css" rel="stylesheet">
+		<link href="/assets/v2/css/menu.css" rel="stylesheet">
+		<link id="effect" href="/assets/v2/css/dropdown-effects/fade-down.css" media="all" rel="stylesheet">
+		<link href="/assets/v2/css/magnific-popup.css" rel="stylesheet">
+		<link href="/assets/v2/css/lunar.css" rel="stylesheet">
 
 		<!-- ON SCROLL ANIMATION -->
-		<link href="/v2/css/animate.css" rel="stylesheet">
+		<link href="/assets/v2/css/animate.css" rel="stylesheet">
 
 		<!-- TEMPLATE CSS -->
-		<link href="/v2/css/blue-theme.css" rel="stylesheet">
+		<link href="/assets/v2/css/blue-theme.css" rel="stylesheet">
 	
 		<!-- RESPONSIVE CSS -->
-		<link href="/v2/css/responsive.css" rel="stylesheet">
+		<link href="/assets/v2/css/responsive.css" rel="stylesheet">
 
 	</head>
 
@@ -125,7 +125,7 @@
 												<input type="hidden" name="login2" value="true">
 												<div class="col-md-12">
 													<a  href="{{ url('login/google')}}" class="btn btn-google ico-left" style="margin-bottom: 10px;">
-														<img src="/v2/images/png_icons/google.png" alt="google-icon"> {{__('default.Log in with Google')}}
+														<img src="/assets/v2/images/png_icons/google.png" alt="google-icon"> {{__('default.Log in with Google')}}
 													</a>
 													
 												</div>

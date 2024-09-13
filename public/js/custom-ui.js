@@ -36,9 +36,9 @@ function exportAsPdf(bookStructure) {
 	});
 	
 	// Load a Unicode font
-	doc.addFont('/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
-	doc.addFont('/fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
-	doc.addFont('/fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
+	doc.addFont('/assets/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
+	doc.addFont('/assets/fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
+	doc.addFont('/assets/fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
 	
 	// Set default font to Roboto
 	doc.setFont('NotoSans', 'normal');
