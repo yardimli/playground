@@ -32,3 +32,7 @@ storage/logs/*.log
 public/blog_images/
 /storage/app/public
 users_x.json
+/resources/books/anne
+/resources/books/fast
+/resources/books/twain
+php_errors.log

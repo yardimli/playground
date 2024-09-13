@@ -22,6 +22,46 @@
 	{
 
 
+		public static function get_embedding_similarity($text, $threshold, $max_answers): array
+		{
+
+
+				$embedding_results = self::getEmbedding($text);
+
+			$threshold = $threshold * (-1);
+			$similarity_array = DB::connection('pgsql')->select("
+				SELECT * FROM (
+					SELECT (embedding <#> :embedding) AS distance, *
+          FROM public.question_embeddings_pg
+          ORDER BY distance ASC
+					LIMIT 5) AS subquery
+				WHERE distance < :threshold
+				ORDER BY distance ASC
+				LIMIT " . $max_answers,
+				['embedding' => $embedding_results, 'threshold' => $threshold]
+			);
+
+			return $similarity_array;
+		}
+
+		public static function getEmbedding($input_string)
+		{
+
+			$data = array(
+				'model' => 'text-embedding-3-large',
+				'input' => $input_string,
+				'dimensions' => 256
+			);
+
+			$openai_api_key = env('OPEN_AI_API_KEY');
+			$response = Http::withHeaders([
+				'Content-Type' => 'application/json',
+				'Authorization' => 'Bearer ' . $openai_api_key,
+			])->post(env('OPEN_AI_API_BASE_EMBEDDINGS'), $data);
+
+			return $response->json();
+		}
+
 		public static function moderation($message)
 		{
 			function isValidUtf8($string)
@@ -39,7 +79,7 @@
 			$response = Http::withHeaders([
 				'Content-Type' => 'application/json',
 				'Authorization' => 'Bearer ' . $openai_api_key,
-			])->post(env('OPEN_AI_API_BASE_MODERATIONS'), [
+			])->post(env('OPEN_AI_API_BASE_MODERATION'), [
 				'input' => $message,
 			]);
 

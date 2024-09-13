@@ -25,6 +25,7 @@
         "league/csv": "^9.14",
         "nesbot/carbon": "^2.67",
         "orhanerday/open-ai": "^4.7",
+        "pgvector/pgvector": "^0.2.0",
         "socialiteproviders/line": "^4.1",
         "symfony/http-client": "^6.2",
         "symfony/mailgun-mailer": "^6.3",

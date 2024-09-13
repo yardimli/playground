@@ -67,12 +67,12 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => env('POSTGRESQL_DATABASE_URL'),
+            'host' => env('POSTGRESQL_DB_HOST', '127.0.0.1'),
+            'port' => env('POSTGRESQL_DB_PORT', '5432'),
+            'database' => env('POSTGRESQL_DB_DATABASE', 'forge'),
+            'username' => env('POSTGRESQL_DB_USERNAME', 'forge'),
+            'password' => env('POSTGRESQL_DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
