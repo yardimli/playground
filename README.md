@@ -1,35 +1,40 @@
 
-## About Mindful•Enlightenment
+## About Playground
 
-Mindful•Enlightenment is a web application that allows users to create and share stories in a chat format. Users can create stories and add chapters to them. Each chapter is a message in a chat. Users can also add other users to their stories and allow them to contribute to the story. Users can also like and comment on chapters.
+Playground is a application that uses different AI models to write books. You can use the application to generate books, stories, and other content. You can use OpenRouter or OpenAI or Anthropic to generate content currently.
 
 ## Contributing
 
-Thank you for considering contributing to the Mindful•Enlightenment framework! The contribution guide can be found in the [Laravel documentation](https://mindful-enlightenment.com/contributions).
+Thank you for considering contributing to the Playground framework! The contribution guide can be found in the [Laravel documentation](https://mindful-enlightenment.com/contributions).
 
 ## Code of Conduct
 
-In order to ensure that the Mindful•Enlightenment community is welcoming to all, please review and abide by the [Code of Conduct](https://mindful-enlightenment.com/docs/contributions#code-of-conduct).
+In order to ensure that the Playground community is welcoming to all, please review and abide by the [Code of Conduct](https://mindful-enlightenment.com/docs/contributions#code-of-conduct).
 
 ## License
 
-Chat Story is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Playground is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 #
-#### Mindful•Enlightenment SETUP
+### Playground SETUP
 
 run `composer install`
 
-Run `php artisan key:generate`
+run `composer require pgvector/pgvector`
 
-Run `php artisan migrate`
+run `php artisan key:generate`
 
-Run `php artisan storage:link`
+edit `the .env file to match your database credentials for boty mysql and postgres`
 
-Run `php artisan serve`
+run `php artisan migrate`
 
+run `php artisan storage:link`
 
+run `php artisan serve`
 
-## Importing Data
+run `edit the .env file to include the various AI api keys`
 
-Run `php artisan app:import-mindful-csv`
+#
+### Importing Data
+
+import the postgres dump manually. 
