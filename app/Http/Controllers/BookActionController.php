@@ -79,8 +79,8 @@
 			$prompt = str_replace(['##user_blurb##', '##language##'], [$userBlurb, $language], $prompt);
 
 			$results = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $prompt, true, $language)
-				: MyHelper::function_call($prompt, $schema, $language);
+				? MyHelper::llm_no_tool_call(false, $llm, $userBlurb, $prompt, true, $language)
+				: MyHelper::function_call($llm, $userBlurb, $prompt, $schema, $language);
 
 			if (!empty($results['title']) && !empty($results['blurb']) && !empty($results['back_cover_text']) && !empty($results['character_profiles'])) {
 				return response()->json(['success' => true, 'message' => __('Book created successfully'), 'data' => $results]);
@@ -132,8 +132,8 @@
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$results = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $prompt, true, $language)
-				: MyHelper::function_call($prompt, $schema, $language);
+				? MyHelper::llm_no_tool_call(false, $llm, $bookTitle . ' - ' . $bookBlurb, $prompt, true, $language)
+				: MyHelper::function_call($llm, $userBlurb, $prompt, $schema, $language);
 
 			if (!empty($results['acts'])) {
 				$bookHeaderData = [
@@ -507,6 +507,7 @@ Prompt:";
 			$save_results = ($request->input('save_results', 'true') === 'true');
 
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
+			$beats_per_chapter = (int)$request->input('beats_per_chapter', 3);
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
@@ -522,6 +523,14 @@ Prompt:";
 				$schema = [];
 			}
 
+			$beats_per_chapter_list = '';
+			for ($i = 0; $i < $beats_per_chapter; $i++) {
+				$beats_per_chapter_list .= "{\"description\":\"write beat ". ($i+1) ." for this chapter.\"}";
+				if ($i < $beats_per_chapter - 1) {
+					$beats_per_chapter_list .= ",\n";
+				}
+			}
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
@@ -535,13 +544,15 @@ Prompt:";
 				'##places##' => $current_chapter['places'] ?? 'no places',
 				'##previous_chapter##' => $previous_chapter_beats ?? 'Beginning of the book',
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
+				'##beats_per_chapter##' => $beats_per_chapter,
+				'##beats_per_chapter_list##' => $beats_per_chapter_list,
 			];
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$resultData = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $prompt, true)
-				: MyHelper::function_call($llm, $prompt, $schema);
+				? MyHelper::llm_no_tool_call(false, $llm, $current_chapter['short_description'], $prompt, true)
+				: MyHelper::function_call($llm, $current_chapter['short_description'], $prompt, $schema);
 
 			$beats = null;
 			if (isset($resultData['beats'])) {
@@ -725,7 +736,7 @@ Prompt:";
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
-			$resultData = MyHelper::llm_no_tool_call(false, $llm, $beatPrompt, false);
+			$resultData = MyHelper::llm_no_tool_call(false, $llm, $current_beat, $beatPrompt, false);
 
 			if ($save_results) {
 				$chapterFilePath = "{$bookPath}/{$chapterFilename}";
@@ -791,7 +802,7 @@ Prompt:";
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
-			$resultData = MyHelper::llm_no_tool_call(false, $llm, $beatPrompt, false);
+			$resultData = MyHelper::llm_no_tool_call(false, $llm, $currentBeatText, $beatPrompt, false);
 
 			if ($save_results) {
 				$chapterFilePath = "{$bookPath}/{$chapterFilename}";

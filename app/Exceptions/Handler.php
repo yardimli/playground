@@ -3,6 +3,7 @@
 	namespace App\Exceptions;
 
 	use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+	use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 	use Throwable;
 	use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -35,6 +36,12 @@
 		{
 			$this->reportable(function (Throwable $e) {
 				//
+			});
+
+			$this->renderable(function (NotFoundHttpException $e, $request) {
+				if ($request->is('*.map')) {
+					return response()->json(['message' => 'Not Found'], 404);
+				}
 			});
 
 			$this->renderable(function (\Exception $e) {

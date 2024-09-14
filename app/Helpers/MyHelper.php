@@ -2,6 +2,7 @@
 
 	namespace App\Helpers;
 
+	use App\Models\SentencesTable;
 	use BinshopsBlog\Models\BinshopsCategory;
 	use BinshopsBlog\Models\BinshopsCategoryTranslation;
 	use BinshopsBlog\Models\BinshopsLanguage;
@@ -22,11 +23,15 @@
 	{
 
 
-		public static function get_embedding_similarity($text, $threshold, $max_answers): array
+		public static function getEmbeddingSimilarity($text, $threshold = 0.5, $field_type = 1, $max_answers = 10): array
 		{
 
+			//$field_type: 1 = question, 2 = answer
 
-				$embedding_results = self::getEmbedding($text);
+			$search_text_embedding = self::getEmbedding($text);
+			$search_text_embedding = $search_text_embedding['data'][0]['embedding'];
+			$search_text_embedding = json_encode($search_text_embedding);
+
 
 			$threshold = $threshold * (-1);
 			$similarity_array = DB::connection('pgsql')->select("
@@ -36,9 +41,10 @@
           ORDER BY distance ASC
 					LIMIT 5) AS subquery
 				WHERE distance < :threshold
+				AND field_type = :field_type
 				ORDER BY distance ASC
 				LIMIT " . $max_answers,
-				['embedding' => $embedding_results, 'threshold' => $threshold]
+				['embedding' => $search_text_embedding, 'threshold' => $threshold, 'field_type' => $field_type]
 			);
 
 			return $similarity_array;
@@ -134,7 +140,7 @@
 		}
 
 		//------------------------------------------------------------
-		public static function function_call($llm, $prompt, $schema, $language = 'english')
+		public static function function_call($llm, $simple_prompt, $prompt, $schema, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -203,8 +209,7 @@
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => false,
-				'stop' => "" //"\n"
+				'stream' => false
 			);
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
@@ -213,7 +218,6 @@
 				unset($data['frequency_penalty']);
 				unset($data['presence_penalty']);
 				unset($data['n']);
-				unset($data['stop']);
 			}
 
 			Log::info('==================openAI_question=====================');
@@ -342,7 +346,7 @@
 			return $string1 . $string2;
 		}
 
-		public static function llm_no_tool_call($stream, $llm, $prompt, $return_json = true, $language = 'english')
+		public static function llm_no_tool_call($stream, $llm,  $simple_prompt, $prompt, $return_json = true, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -373,16 +377,74 @@
 			}
 
 			$chat_messages = [];
-			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
+
+			if (stripos($llm_model, 'anthropic') === false) {
+				$chat_messages[] = [
+					'role' => 'system',
+					'content' => 'You are an expert fiction writer.
+Always keep the following rules in mind:
+- Write in active voice
+- Always follow the "show, don\'t tell" principle.
+- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
+- Convey events and story through dialogue.
+- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
+- Skip "he/she said said" dialogue tags and convey people\'s actions or face expressions through their speech
+- Avoid mushy dialog and descriptions, have dialogue always continue the action, never stall or add unnecessary fluff. Vary the descriptions to not repeat yourself.
+- Put dialogue on its own paragraph to separate scene and action.
+- Reduce indicators of uncertainty like "trying" or "maybe"'
+				];
+			}
+
+			//convert prompt to vector
+
+			$similar_prompts = self::getEmbeddingSimilarity($simple_prompt, 0.1, 2, 5);
+			if ($similar_prompts===[]) {
+				$similar_prompts = self::getEmbeddingSimilarity($simple_prompt, 0.1, 1, 5);
+			}
+
+			if ($similar_prompts!==[]) {
+				$question_index = 0;
+				$question = null;
+				shuffle($similar_prompts);
+				while ($question_index < count($similar_prompts)) {
+					$question_id = $similar_prompts[$question_index]->questions_id;
+					$question = SentencesTable::where('id', $question_id)->first();
+					if ($question) {
+						break;
+					}
+					$question_index++;
+				}
+				if ($question) {
+					$chat_messages[] = [
+						'role' => 'user',
+						'content' => $question['prompt']
+					];
+					$chat_messages[] = [
+						'role' => 'assistant',
+						'content' => $question['sentences']
+					];
+				}
+			}
+
+
+			if (stripos($llm_model, 'anthropic') !== false) {
 				$chat_messages[] = [
 					'role' => 'user',
-					'content' => $prompt
+					'content' => 'You are an expert fiction writer.
+Always keep the following rules in mind:
+- Write in active voice
+- Always follow the "show, don\'t tell" principle.
+- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
+- Convey events and story through dialogue.
+- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
+- Skip "he/she said said" dialogue tags and convey people\'s actions or face expressions through their speech
+- Avoid mushy dialog and descriptions, have dialogue always continue the action, never stall or add unnecessary fluff. Vary the descriptions to not repeat yourself.
+- Put dialogue on its own paragraph to separate scene and action.
+- Reduce indicators of uncertainty like "trying" or "maybe"
+
+' . $prompt
 				];
 			} else {
-//				$chat_messages[] = [
-//					'role' => 'system',
-//					'content' => 'You are an expert author advisor.'
-//				];
 				$chat_messages[] = [
 					'role' => 'user',
 					'content' => $prompt
@@ -402,8 +464,7 @@
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => $stream,
-				'stop' => "" //"\n"
+				'stream' => $stream
 			);
 
 			if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
@@ -415,46 +476,24 @@
 				} else {
 					$data['max_tokens'] = 4096;
 				}
-				unset($data['stop']);
 			} else {
-
-//				$data['provider'] = [
-//					"order" => [
-//						"OpenAI",
-//						"Mistral",
-//						"Google",
-//						"Cohere",
-//						"Novita",
-//						"Together",
-//						"Lambda",
-//						"Perplexity",
-//						"Fireworks"
-//					],
-//					"allow_fallbacks" => false
-//				];
-
 				$data['max_tokens'] = 8096;
 				if (stripos($llm_model, 'anthropic') !== false) {
 					unset($data['frequency_penalty']);
 					unset($data['presence_penalty']);
 					unset($data['n']);
-					unset($data['stop']);
-				} else
-				if (stripos($llm_model, 'openai') !== false) {
+				} else if (stripos($llm_model, 'openai') !== false) {
 					$data['temperature'] = 1;
-				} else
-				if (stripos($llm_model, 'google') !== false) {
+				} else if (stripos($llm_model, 'google') !== false) {
 					$data['stop'] = [];
-				} else
-				{
+				} else {
 					unset($data['frequency_penalty']);
 					unset($data['presence_penalty']);
 					unset($data['n']);
-					unset($data['stop']);
 				}
 			}
 
-			Log::info('GPT NO TOOL USE: ' . $llm_base_url);
+			Log::info('GPT NO TOOL USE: ' . $llm_base_url . ' (' . $llm . ')');
 			Log::info($data);
 
 			$post_json = json_encode($data);
@@ -561,11 +600,18 @@
 			$content = $content ?? '';
 			$content = self::getContentsInBackticksOrOriginal($content);
 
+			//remove all backticks
+			$content = str_replace("`", "", $content);
+
 			//check if content is JSON
 			$content_json_string = self::extractJsonString($content);
 			$validate_result = self::validateJson($content_json_string);
 
 			if ($validate_result !== "Valid JSON") {
+				Log::info('================== VALIDATE JSON ON FIRST PASS FAILED =====================');
+				Log::info('String that failed:: ---- Error:' . $validate_result);
+				Log::info($content_json_string);
+
 				$content_json_string = (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
 				$validate_result = self::validateJson($content_json_string);
 			}
@@ -807,8 +853,7 @@
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => false,
-				'stop' => "" //"\n"
+				'stream' => false
 			);
 
 //			Log::info('==================openAI_question=====================');
@@ -962,8 +1007,7 @@
 					'frequency_penalty' => 0,
 					'presence_penalty' => 0,
 					'n' => 1,
-					'stream' => true,
-					'stop' => "" //"\n"
+					'stream' => true
 				);
 
 			}
@@ -1153,8 +1197,7 @@
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => false,
-				'stop' => "" //"\n"
+				'stream' => false
 			);
 
 			session_write_close();

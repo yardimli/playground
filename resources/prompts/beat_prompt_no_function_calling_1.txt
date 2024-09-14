@@ -14,7 +14,7 @@ Events: ##events##
 People: ##people##
 Places: ##places##
 
-Write 10 beats with short and long title to fill in this chapter.
+Write ##beats_per_chapter## beats with short and long title to fill in this chapter.
 Language is: ##language##.
 
 The first beat should be a continuation from the end of the previous chapter.
@@ -26,18 +26,11 @@ The next chapter will start with
 Output should be in JSON format as follows:
 {
 "beats": [
-{"description":"write beat 1 for this chapter."},
-{"description":"write beat 2 for this chapter."},
-{"description":"write beat 3 for this chapter."},
-{"description":"write beat 4 for this chapter."},
-{"description":"write beat 5 for this chapter."},
-{"description":"write beat 6 for this chapter."},
-{"description":"write beat 7 for this chapter."},
-{"description":"write beat 8 for this chapter."},
-{"description":"write beat 9 for this chapter."},
-{"description":"write beat 10 for this chapter."}
+##beats_per_chapter_list##
 ]
 }
+
+Each beat will only have the description.
 
 Don't include any text in front or after the JSON object.
 

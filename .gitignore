@@ -36,9 +36,6 @@ users_x.json
 /resources/books/twain
 php_errors.log
 /storage/app/public/books/book_*
-/storage/app/public/books/t*
-/storage/app/public/books/e*
-/storage/app/public/books/g*
-/storage/app/public/books/b*
+/storage/app/public/books/[A-z]*
 storage/app/public/ai-images/render-log.json
 storage/app/public/ai-images/*-*-*-*-*.jpg

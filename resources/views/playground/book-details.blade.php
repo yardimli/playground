@@ -58,14 +58,14 @@
 						
 						<br>
 						
-						<span style="font-size: 18px;">AI Engines:</span>
+						<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
 						<select id="llmSelect" class="form-select mx-auto mb-1">
 							<?php
 							if (Auth::user() && Auth::user()->isAdmin()) {
 								?>
 							<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
 							<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-							<option value="openai/gpt-4o">openai :: gpt-4o</option>
+							<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
 								<?php
 							} else {
 								?>
@@ -91,6 +91,20 @@
 							{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
 						
 						</select>
+						
+						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
+						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
+							<option value="2">2</option>
+							<option value="3" selected>3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+						
 						
 						
 						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn" title="{{__('default.Write All Beats')}}"><i
@@ -280,7 +294,7 @@
 				     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
 			</div>
 			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> {{__('default.Close')}}</button>
+				<button type="button" class="btn btn-secondary closeAndRefreshButton"> {{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>

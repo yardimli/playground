@@ -77,7 +77,7 @@
 										?>
 									<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
 									<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-									<option value="openai/gpt-4o">openai :: gpt-4o</option>
+									<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
 										<?php
 									} else {
 										?>

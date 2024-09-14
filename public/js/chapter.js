@@ -188,7 +188,7 @@ function editChapter(chapterFilename) {
 	
 }
 
-function generateAllBeats() {
+function generateAllBeats(beatsPerChapter = 3) {
 	const modal = $('#generateAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
 	const log = $('#generateAllBeatsLog');
@@ -204,39 +204,42 @@ function generateAllBeats() {
 	chapters = bookData.acts.flatMap(act => act.chapters);
 	
 	console.log(chapters);
-	generateSingleChapterBeats(chapters, 0);
+	generateSingleChapterBeats(chapters, beatsPerChapter, 0);
 	
 }
 
-function generateSingleChapterBeats(chapters, chapter_index = 0) {
+function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0) {
 	const modal = $('#generateAllBeatsModal');
-	const progressBar = modal.find('.progress-bar');
 	const log = $('#generateAllBeatsLog');
 	
 	const totalChapters = chapters.length;
 	
 	chapter_index++;
-	const progress = Math.round((chapter_index / totalChapters) * 100);
-	progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
 	
 	const chapter = chapters[chapter_index - 1];
 	$('#generateAllBeatsLog').append('<br><br>' + __e('Processing chapter: ${chapter}', {chapter: chapter.name}));
 	$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
 	
 	// Check if the chapter already has beats
-	if (chapter.beats && chapter.beats.length > 0) {
-		$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
-		$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-		if (chapter_index < totalChapters) {
-			generateSingleChapterBeats(chapters, chapter_index);
-		}
-	} else {
+	// if (chapter.beats && chapter.beats.length > 0) {
+	// 	$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
+	//
+	// 	const progressBar = modal.find('.progress-bar');
+	// 	const progress = Math.round((chapter_index / totalChapters) * 100);
+	// 	progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
+	//
+	// 	$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
+	// 	if (chapter_index < totalChapters) {
+	// 		generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
+	// 	}
+	// } else {
 		
 		$.ajax({
 			url: `/book/write-beats/${bookSlug}/${chapter.chapterFilename}`,
 			method: 'POST',
 			data: {
 				llm: savedLlm,
+				beats_per_chapter: beatsPerChapter,
 				save_results: true,
 			},
 			headers: {
@@ -246,6 +249,10 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 			success: function (response) {
 				if (response.success) {
 					// Save the generated beats back to the chapter
+					
+					const progressBar = modal.find('.progress-bar');
+					const progress = Math.round((chapter_index / totalChapters) * 100);
+					progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
 					
 					if (Array.isArray(response.beats)) {
 						$('#generateAllBeatsLog').append('<br>' + __e('Beats generated and saved for chapter: ${chapter}', {chapter: chapter.name}));
@@ -259,7 +266,7 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 					if (chapter_index < totalChapters) {
-						generateSingleChapterBeats(chapters, chapter_index);
+						generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
 					} else {
 						$('#generateAllBeatsLog').append('<br>' + __e('All chapters processed!'));
 						$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
@@ -277,7 +284,7 @@ function generateSingleChapterBeats(chapters, chapter_index = 0) {
 				//break loop
 			}
 		});
-	}
+	// }
 }
 
 
@@ -320,6 +327,9 @@ $(document).ready(function () {
 		}
 	}
 	
+	$('.closeAndRefreshButton').on('click', function () {
+		location.reload();
+	});
 	
 	$('#createCoverBtn').on('click', function (e) {
 		e.preventDefault();
@@ -404,7 +414,7 @@ $(document).ready(function () {
 	
 	$('#generateAllBeatsBtn').on('click', function (e) {
 		e.preventDefault();
-		generateAllBeats();
+		generateAllBeats( parseInt($('#beatsPerChapter').val()) );
 	});
 	
 	$('#chapterModal').on('shown.bs.modal', function () {

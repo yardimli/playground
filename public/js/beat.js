@@ -178,7 +178,7 @@ function loadBeats() {
 	}
 }
 
-function recreateBeats() {
+function recreateBeats( beatsPerChapter = 3 ) {
 	$('#fullScreenOverlay').removeClass('d-none');
 	$("#recreateBeats").prop('disabled', true);
 	
@@ -196,6 +196,7 @@ function recreateBeats() {
 		method: 'POST',
 		data: {
 			llm: savedLlm,
+			beats_per_chapter: beatsPerChapter,
 			save_results: false,
 		},
 		headers: {
@@ -457,7 +458,11 @@ $(document).ready(function () {
 	
 	$("#recreateBeats").on('click', function (e) {
 		e.preventDefault();
-		recreateBeats();
+		recreateBeats(parseInt($('#beatsPerChapter').val()));
+	});
+	
+	$('.closeAndRefreshButton').on('click', function () {
+		location.reload();
 	});
 	
 });
