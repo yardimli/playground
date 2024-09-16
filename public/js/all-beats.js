@@ -141,7 +141,7 @@ function writeAllBeats() {
 			let beatDescription = $(`#beatDescription_${chapterIndex}_${beatIndex}`).val();
 			let beatText = $(`#beatText_${chapterIndex}_${beatIndex}`).val();
 			if (beatText.trim() !== '') {
-				$('#writeAllBeatsLog').append('<br>' + __e('Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...', {chapterIndex : chapterIndex + 1, beatIndex: beatIndex + 1}) + '<br>');
+				$('#writeAllBeatsLog').append('<br>' + __e('Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...', {chapterIndex : chapterIndex, beatIndex: beatIndex + 1}) + '<br>');
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				processedBeats++;
 				let progress = Math.round((processedBeats / totalBeats) * 100);
@@ -149,7 +149,7 @@ function writeAllBeats() {
 				processNextBeat();
 			} else {
 				
-				$('#writeAllBeatsLog').append('<br><br><em>' + __e('Writing chapter ${chapterIndex}, beat ${beatIndex}', {chapterIndex : chapterIndex + 1, beatIndex: (beatIndex + 1)}) + '</em>');
+				$('#writeAllBeatsLog').append('<br><br><em>' + __e('Writing chapter ${chapterIndex}, beat ${beatIndex}', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
 				
 				$('#writeAllBeatsLog').append('<br><em>' + __e('Beat Description:') + '</em> ' + beatDescription);
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
@@ -161,7 +161,7 @@ function writeAllBeats() {
 					})
 					.then(() => {
 						//add the newly written summary to the log
-						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex + 1, beatIndex: (beatIndex + 1)}) + '</em>');
+						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
 						$('#writeAllBeatsLog').append('<br>' + $(`#beatSummary_${chapterIndex}_${beatIndex}`).val());
 						
 						processedBeats++;
