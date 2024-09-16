@@ -157,6 +157,9 @@
 	let savedTheme = localStorage.getItem('theme') || 'light';
 	let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
 	
+	let exampleQuestion = '';
+	let exampleAnswer = '';
+	
 	$(document).ready(function () {
 		$("#llmSelect").on('change', function () {
 			localStorage.setItem('llm', $(this).val());
@@ -209,6 +212,9 @@
 						$('#book_blurb').val(data.data.blurb);
 						$('#back_cover_text').val(data.data.back_cover_text);
 						
+						exampleQuestion = data.data.example_question;
+						exampleAnswer = data.data.example_answer;
+						
 						let characterProfiles = '';
 						data.data.character_profiles.forEach(function (profile) {
 							characterProfiles += (profile.name || '') + '\n' + (profile.description || '') + '\n\n';
@@ -241,6 +247,8 @@
 					book_blurb: $('#book_blurb').val(),
 					back_cover_text: $('#back_cover_text').val(),
 					character_profiles: $('#character_profiles').val(),
+					example_question: exampleQuestion,
+					example_answer: exampleAnswer,
 					llm: savedLlm,
 				},
 				headers: {

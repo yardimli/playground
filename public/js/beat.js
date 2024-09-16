@@ -178,17 +178,9 @@ function loadBeats() {
 	}
 }
 
-function recreateBeats( beatsPerChapter = 3 ) {
+function recreateBeats(beatsPerChapter = 3) {
 	$('#fullScreenOverlay').removeClass('d-none');
 	$("#recreateBeats").prop('disabled', true);
-	
-	let previousChapterBeats = '';
-	if (previousChapter !== null) {
-		for (let i = 0; i < previousChapter.beats.length; i++) {
-			previousChapterBeats += previousChapter.beats[i]?.beat_summary || previousChapter.beats[i]?.description || '';
-			previousChapterBeats += "\n";
-		}
-	}
 	
 	// Now proceed with creating beats
 	$.ajax({
@@ -276,7 +268,7 @@ function recreateBeats( beatsPerChapter = 3 ) {
 				$('#fullScreenOverlay').addClass('d-none');
 				$("#alertModalContent").html(__e('Failed to create beats: ') + response.message);
 				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-
+				
 				$("#recreateBeats").prop('disabled', false);
 			}
 		},
@@ -446,7 +438,7 @@ $(document).ready(function () {
 					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					setTimeout(function () {
 						location.reload();
-					},2500);
+					}, 2500);
 					
 				} else {
 					$("#alertModalContent").html(__e('Failed to save beats: ') + response.message);

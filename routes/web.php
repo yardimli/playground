@@ -34,6 +34,7 @@
 	Route::get('/all-books', [StaticPagesController::class, 'allBooks'])->name('playground.all-books');
 	Route::get('/book-details/{slug}', [StaticPagesController::class, 'bookDetails'])->name('playground.book-details');
 	Route::get('/book-beats/{slug}/{chapter_file}', [StaticPagesController::class, 'bookBeats'])->name('playground.book-beats');
+	Route::get('/book-all-beats/{slug}', [StaticPagesController::class, 'showAllBeats'])->name('playground.book-all-beats');
 
 	Route::get('/', [StaticPagesController::class, 'index'])->name('index');
 

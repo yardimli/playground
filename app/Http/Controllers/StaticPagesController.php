@@ -41,7 +41,6 @@
 
 		}
 
-
 		public function blogArticle(Request $request, $slug)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -80,7 +79,6 @@
 			return view("playground.about-us", compact('posts'));
 
 		}
-
 
 		public function faq(Request $request)
 		{
@@ -137,7 +135,6 @@
 
 		}
 
-
 		public function terms(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
@@ -146,6 +143,7 @@
 
 		}
 
+		//------------------------------------------------------------------------------
 
 		private function write_js_translations()
 		{
@@ -249,7 +247,6 @@
 
 			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions'));
 		}
-
 
 		public function bookBeats(Request $request, $slug, $chapter_file)
 		{
@@ -415,7 +412,6 @@
 			return view('playground.all-books', compact('locale', 'json_translations', 'books'));
 		}
 
-
 		public function booksList(Request $request)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -487,7 +483,6 @@
 
 			return view('playground.books-list', compact('locale', 'json_translations', 'paginatedBooks'));
 		}
-
 
 		public function booksDetail(Request $request, $slug)
 		{
@@ -580,6 +575,57 @@
 			// Return to the existing blog list view with the posts
 			return view("playground.start-writing", compact('posts', 'coverFilename'));
 
+		}
+
+		public function showAllBeats($bookSlug)
+		{
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
+			if (!$verified['success']) {
+				return redirect()->route('playground.books')->with('error', $verified['message']);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$bookData = json_decode(File::get("{$bookPath}/book.json"), true);
+			$actsData = json_decode(File::get("{$bookPath}/acts.json"), true);
+
+			// Load all chapters and their beats
+			$acts = [];
+			foreach ($actsData as $act) {
+				$actChapters = [];
+				$chapterFiles = File::glob("{$bookPath}/*.json");
+				foreach ($chapterFiles as $chapterFile) {
+					$chapterData = json_decode(File::get($chapterFile), true);
+					if (!isset($chapterData['row']) || $chapterData['row'] !== $act['id']) {
+						continue;
+					}
+					$chapterData['chapterFilename'] = basename($chapterFile);
+					$actChapters[] = $chapterData;
+				}
+				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
+				$acts[] = [
+					'id' => $act['id'],
+					'title' => $act['title'],
+					'chapters' => $actChapters
+				];
+			}
+
+			$bookData['acts'] = $acts;
+
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
+			$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
+
+			if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
+				$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
+			}
+
+			$bookData['cover_filename'] = $coverFilename;
+
+			return view('playground.all-beats', [
+				'book' => $bookData,
+				'book_slug' => $bookSlug,
+				'json_translations' => $this->write_js_translations(),
+			]);
 		}
 
 	}

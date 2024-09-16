@@ -2,6 +2,7 @@
 
 	namespace App\Http\Controllers;
 
+	use App\Models\SentencesTable;
 	use GuzzleHttp\Client;
 	use GuzzleHttp\Exception\ClientException;
 	use Illuminate\Http\Request;
@@ -15,51 +16,15 @@
 	class BookActionController extends Controller
 	{
 
-		public static function verifyBookOwnership($bookSlug)
-		{
-			if (Auth::guest()) {
-				return ['success' => false, 'message' => __('You must be logged in to verify book ownership.')];
-			}
-
-			if ($bookSlug !== '' && $bookSlug !== null) {
-				$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
-				$bookJsonPath = "{$bookPath}/book.json";
-				$actsJsonPath = "{$bookPath}/acts.json";
-
-				if (!File::exists($bookJsonPath)) {
-					return ['success' => false, 'message' => __('Book not found')];
-				}
-
-				if (!File::exists($actsJsonPath)) {
-					return ['success' => false, 'message' => __('Acts not found')];
-				}
-
-				$bookData = json_decode(File::get($bookJsonPath), true);
-
-				if (Auth::user()) {
-					if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
-						return ['success' => false, 'message' => __('You are not the owner of this book.')];
-					} else {
-						return ['success' => true, 'message' => __('You are the owner of this book.')];
-					}
-				} else {
-					return ['success' => false, 'message' => __('You are not the owner of this book.')];
-				}
-			} else {
-				return ['success' => true, 'message' => __('Book not found')];
-			}
-		}
-
 		public function writeBookCharacterProfiles(Request $request)
 		{
-			$verified = self::verifyBookOwnership('');
+			$verified = MyHelper::verifyBookOwnership('');
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
 
 			$language = $request->input('language', __('Default Language'));
 			$userBlurb = $request->input('user_blurb', '');
-			$bookStructure = $request->input('bookStructure', 'fichtean_curve.txt');
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
@@ -76,13 +41,60 @@
 				$schema = [];
 			}
 
+			$example_question = '';
+			$example_answer = '';
+
+			$blurb_vector = MyHelper::getEmbedding($userBlurb);
+
+			$similar_prompts = MyHelper::getEmbeddingSimilarity($userBlurb, 0.1, 2, 5);
+			if ($similar_prompts === []) {
+				$similar_prompts = MyHelper::getEmbeddingSimilarity($userBlurb, 0.1, 1, 5);
+			}
+
+			if ($similar_prompts !== []) {
+				$question_index = 0;
+				$question = null;
+				shuffle($similar_prompts);
+				while ($question_index < count($similar_prompts)) {
+					$question_id = $similar_prompts[$question_index]->questions_id;
+					$question = SentencesTable::where('id', $question_id)->first();
+					if ($question) {
+						break;
+					}
+					$question_index++;
+				}
+				if ($question) {
+					$example_question = $question['prompt'];
+					$example_answer = $question['sentences'];
+				}
+			}
+
 			$prompt = str_replace(['##user_blurb##', '##language##'], [$userBlurb, $language], $prompt);
 
 			$results = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $userBlurb, $prompt, true, $language)
-				: MyHelper::function_call($llm, $userBlurb, $prompt, $schema, $language);
+				? MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true, $language)
+				: MyHelper::function_call($llm, $example_question, $example_answer, $prompt, $schema, $language);
 
 			if (!empty($results['title']) && !empty($results['blurb']) && !empty($results['back_cover_text']) && !empty($results['character_profiles'])) {
+
+				//loop all data fields and replace <BR> with \n
+				foreach ($results as $key => $value) {
+					if (gettype($value) === 'string') {
+						$results[$key] = str_replace('<BR>', "\n", $value);
+					} else if (gettype($value) === 'array') {
+						foreach ($value as $key2 => $value2) {
+							if (gettype($value2) === 'string') {
+								$results[$key][$key2] = str_replace('<BR>', "\n", $value2);
+							}
+						}
+					}
+				}
+
+				$results['example_question'] = $example_question;
+				$results['example_answer'] = $example_answer;
+				$results['similar_prompts'] = $similar_prompts;
+				$results['blurb_vector'] = $blurb_vector['data'][0]['embedding'];
+
 				return response()->json(['success' => true, 'message' => __('Book created successfully'), 'data' => $results]);
 			} else {
 				return response()->json(['success' => false, 'message' => __('Failed to generate book')]);
@@ -91,7 +103,7 @@
 
 		public function writeBook(Request $request)
 		{
-			$verified = self::verifyBookOwnership('');
+			$verified = MyHelper::verifyBookOwnership('');
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -103,6 +115,8 @@
 			$bookBlurb = $request->input('book_blurb', '');
 			$backCoverText = $request->input('back_cover_text', '');
 			$characterProfiles = $request->input('character_profiles', '');
+			$exampleQuestion = $request->input('example_question', '');
+			$exampleAnswer = $request->input('example_answer', '');
 
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
 
@@ -132,8 +146,22 @@
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$results = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $bookTitle . ' - ' . $bookBlurb, $prompt, true, $language)
-				: MyHelper::function_call($llm, $userBlurb, $prompt, $schema, $language);
+				? MyHelper::llm_no_tool_call($llm, $exampleQuestion, $exampleAnswer, $prompt, true, $language)
+				: MyHelper::function_call($llm, $exampleQuestion, $exampleAnswer, $prompt, $schema, $language);
+
+			//loop all data fields and replace <BR> with \n
+			foreach ($results as $key => $value) {
+				if (gettype($value) === 'string') {
+					$results[$key] = str_replace('<BR>', "\n", $value);
+				} else if (gettype($value) === 'array') {
+					foreach ($value as $key2 => $value2) {
+						if (gettype($value2) === 'string') {
+							$results[$key][$key2] = str_replace('<BR>', "\n", $value2);
+						}
+					}
+				}
+			}
+
 
 			if (!empty($results['acts'])) {
 				$bookHeaderData = [
@@ -144,6 +172,8 @@
 					'prompt' => $userBlurb,
 					'language' => $language,
 					'model' => $model,
+					'example_question' => $exampleQuestion,
+					'example_answer' => $exampleAnswer,
 				];
 
 				$bookSlug = Str::slug($bookTitle) . '-' . Str::random(8);
@@ -187,6 +217,8 @@
 							'places' => $chapter['places'] ?? 'no places',
 							'from_previous_chapter' => $chapter['from_previous_chapter'] ?? 'N/A',
 							'to_next_chapter' => $chapter['to_next_chapter'] ?? 'N/A',
+							'main_prompt_example_question' => $exampleQuestion ?? 'no example question',
+							'main_prompt_example_answer' => $exampleAnswer ?? 'no example answer',
 							'backgroundColor' => '#AECBFA',
 							'textColor' => '#000000',
 							'created' => now()->toDateTimeString(),
@@ -234,7 +266,7 @@
 
 		public function saveChapter(Request $request, $bookSlug)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -276,7 +308,7 @@
 
 		public function saveCover(Request $request, $bookSlug)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -295,7 +327,7 @@
 
 		public function deleteBook($bookSlug)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -308,7 +340,7 @@
 
 		public function makeCoverImage(Request $request, $bookSlug)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -348,7 +380,7 @@ Prompt:";
 					]
 				];
 
-				$prompt = MyHelper::openAI_question($single_request, 1, 256, 'gpt-4o');
+				$prompt = MyHelper::openAI_no_stream($single_request, 1, 256, 'gpt-4o');
 				$gpt_results = $prompt;
 			}
 			Log::info('prompt');
@@ -432,7 +464,7 @@ Prompt:";
 
 		public function writeChapterBeats(Request $request, $bookSlug, $chapterFilename)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -525,7 +557,7 @@ Prompt:";
 
 			$beats_per_chapter_list = '';
 			for ($i = 0; $i < $beats_per_chapter; $i++) {
-				$beats_per_chapter_list .= "{\"description\":\"write beat ". ($i+1) ." for this chapter.\"}";
+				$beats_per_chapter_list .= "{\"description\":\"write beat " . ($i + 1) . " for this chapter.\"}";
 				if ($i < $beats_per_chapter - 1) {
 					$beats_per_chapter_list .= ",\n";
 				}
@@ -550,9 +582,47 @@ Prompt:";
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
+			$example_question = '';
+			$example_answer = '';
+			$similar_prompts = MyHelper::getEmbeddingSimilarity($current_chapter['short_description'], 0.1, 2, 5);
+			if ($similar_prompts === []) {
+				$similar_prompts = MyHelper::getEmbeddingSimilarity($current_chapter['short_description'], 0.1, 1, 5);
+			}
+
+			if ($similar_prompts !== []) {
+				$question_index = 0;
+				$question = null;
+				shuffle($similar_prompts);
+				while ($question_index < count($similar_prompts)) {
+					$question_id = $similar_prompts[$question_index]->questions_id;
+					$question = SentencesTable::where('id', $question_id)->first();
+					if ($question) {
+						break;
+					}
+					$question_index++;
+				}
+				if ($question) {
+					$example_question = $question['prompt'];
+					$example_answer = $question['sentences'];
+				}
+			}
+
 			$resultData = $schema === []
-				? MyHelper::llm_no_tool_call(false, $llm, $current_chapter['short_description'], $prompt, true)
-				: MyHelper::function_call($llm, $current_chapter['short_description'], $prompt, $schema);
+				? MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true)
+				: MyHelper::function_call($llm, $example_question, $example_answer, $prompt, $schema);
+
+			//loop all data fields and replace <BR> with \n
+			foreach ($resultData as $key => $value) {
+				if (gettype($value) === 'string') {
+					$resultData[$key] = str_replace('<BR>', "\n", $value);
+				} else if (gettype($value) === 'array') {
+					foreach ($value as $key2 => $value2) {
+						if (gettype($value2) === 'string') {
+							$resultData[$key][$key2] = str_replace('<BR>', "\n", $value2);
+						}
+					}
+				}
+			}
 
 			$beats = null;
 			if (isset($resultData['beats'])) {
@@ -568,6 +638,8 @@ Prompt:";
 					if (file_exists($chapterFilePath)) {
 						$chapterData = json_decode(file_get_contents($chapterFilePath), true);
 						$chapterData['beats'] = $beats;
+						$chapterData['example_question'] = $example_question;
+						$chapterData['example_answer'] = $example_answer;
 
 						if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
 							return response()->json(['success' => true, 'message' => 'Wrote beats to file.', 'beats' => $beats]);
@@ -585,10 +657,9 @@ Prompt:";
 			return response()->json(['success' => true, 'message' => 'Generated beats.', 'beats' => $beats]);
 		}
 
-
 		public function writeChapterBeatText(Request $request, $bookSlug, $chapterFilename)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -665,7 +736,7 @@ Prompt:";
 			$next_beat = '';
 
 			// Get the current beat
-			if ($current_beat==='') {
+			if ($current_beat === '') {
 				if (isset($current_chapter['beats'][$beatIndex])) {
 					$current_beat = $current_chapter['beats'][$beatIndex]['beat_text'] ?? '';
 				}
@@ -720,6 +791,7 @@ Prompt:";
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
 				'##book_blurb##' => $bookData['blurb'] ?? 'no blurb',
 				'##language##' => $bookData['language'] ?? 'English',
+				'##character_profiles##' => $bookData['character_profiles'] ?? 'no character profiles',
 				'##act##' => $current_chapter['row'] ?? 'no act',
 				'##chapter##' => $current_chapter['name'] ?? 'no name',
 				'##description##' => $current_chapter['short_description'] ?? 'no description',
@@ -736,7 +808,9 @@ Prompt:";
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
-			$resultData = MyHelper::llm_no_tool_call(false, $llm, $current_beat, $beatPrompt, false);
+			$resultData = MyHelper::llm_no_tool_call($llm, $current_chapter['example_question'], $current_chapter['example_answer'], $beatPrompt, false);
+
+			$resultData = str_replace('<BR>', "\n", $resultData);
 
 			if ($save_results) {
 				$chapterFilePath = "{$bookPath}/{$chapterFilename}";
@@ -760,7 +834,7 @@ Prompt:";
 
 		public function writeChapterBeatSummary(Request $request, $bookSlug, $chapterFilename)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -802,7 +876,7 @@ Prompt:";
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
-			$resultData = MyHelper::llm_no_tool_call(false, $llm, $currentBeatText, $beatPrompt, false);
+			$resultData = MyHelper::llm_no_tool_call($llm, '', '', $beatPrompt, false);
 
 			if ($save_results) {
 				$chapterFilePath = "{$bookPath}/{$chapterFilename}";
@@ -826,7 +900,7 @@ Prompt:";
 
 		public function saveChapterBeats(Request $request, $bookSlug, $chapterFilename)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
@@ -870,7 +944,7 @@ Prompt:";
 
 		public function saveChapterSingleBeat(Request $request, $bookSlug, $chapterFilename)
 		{
-			$verified = self::verifyBookOwnership($bookSlug);
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}

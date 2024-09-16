@@ -236,8 +236,11 @@ async function exportAsDocx(bookStructure) {
 			if (chapter.beats && chapter.beats.length > 0) {
 				chapter.beats.forEach((beat, beatIndex) => {
 					if (beat.beat_text) {
-						addText(beat.beat_text, 24, false, AlignmentType.JUSTIFIED);
-						addText('');
+						let beat_texts = beat.beat_text.split('\n');
+						beat_texts.forEach((beat_text) => {
+							addText(beat_text, 24, false, AlignmentType.JUSTIFIED);
+							// addText('');
+						});
 					}
 				});
 			}

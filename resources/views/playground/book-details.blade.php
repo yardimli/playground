@@ -40,7 +40,6 @@
 
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
-				<span style="font-size: 22px; font-weight: normal;" class="p-2" id="bookBlurb">{{$book['blurb']}}</span>
 			</div>
 			<div class="card-body modal-content modal-content-color d-flex flex-row">
 				<!-- Image Div -->
@@ -111,6 +110,10 @@
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
 						</button>
 						
+						<a href="{{route('playground.book-all-beats',$book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
+							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
+						</a>
+						
 						<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
 							<i class="bi bi-file-earmark-pdf"></i> {{__('default.Export as PDF')}}
 						</button>
@@ -128,7 +131,9 @@
 					</div>
 					<!-- Text Blocks Div -->
 					<div class="col-lg-7 col-12">
-						<div><span id="backCoverText">{{$book['back_cover_text']}}</span></div>
+						<span style="font-size: 16px; font-weight: normal; font-style: italic;" id="bookBlurb">{{$book['blurb']}}</span>
+						<br><br>
+						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
 						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
 								{{$book['prompt'] ?? 'no prompt'}}</span></div>
 						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>

@@ -2,6 +2,8 @@ Book Title: ##book_title##
 Back Cover Text: ##back_cover_text##
 Book Blurb: ##book_blurb##
 Book Language: ##language##
+Character Profiles:
+##character_profiles##
 
 This Chapter:
 ##act##

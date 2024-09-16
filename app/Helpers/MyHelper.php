@@ -11,6 +11,7 @@
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Auth;
 	use Illuminate\Support\Facades\DB;
+	use Illuminate\Support\Facades\File;
 	use Illuminate\Support\Facades\Http;
 	use Illuminate\Support\Facades\Log;
 	use Illuminate\Support\Facades\Session;
@@ -21,6 +22,111 @@
 
 	class MyHelper
 	{
+
+		public static function getBlogData()
+		{
+			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
+
+			// the published_at + is_published are handled by BinshopsBlogPublishedScope, and don't take effect if the logged in user can manageb log posts
+
+			//todo
+			$title = 'Blog Page'; // default title...
+			$category_slug = null;
+
+			$categoryChain = null;
+			$posts = array();
+			if ($category_slug) {
+				$category = BinshopsCategoryTranslation::where("slug", $category_slug)->with('category')->firstOrFail()->category;
+				$categoryChain = $category->getAncestorsAndSelf();
+				$posts = $category->posts()->where("binshops_post_categories.category_id", $category->id)->get(); //->where("lang_id", '=', 2)->get();
+
+				$posts = BinshopsPostTranslation::join('binshops_posts', 'binshops_post_translations.post_id', '=', 'binshops_posts.id')
+//					->where('lang_id', 2)
+					->where("is_published", '=', true)
+					->where('posted_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
+					->orderBy("posted_at", "desc")
+					->whereIn('binshops_posts.id', $posts->pluck('id'))
+					->paginate(config("binshopsblog.per_page", 10));
+
+				// at the moment we handle this special case (viewing a category) by hard coding in the following two lines.
+				// You can easily override this in the view files.
+				\View::share('binshopsblog_category', $category); // so the view can say "You are viewing $CATEGORYNAME category posts"
+				$title = 'Posts in ' . $category->category_name . " category"; // hardcode title here...
+			} else {
+				$posts = BinshopsPostTranslation::join('binshops_posts', 'binshops_post_translations.post_id', '=', 'binshops_posts.id')
+//					->where('lang_id', 2)
+					->where("is_published", '=', true)
+					->where('posted_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
+					->orderBy("posted_at", "desc")
+					->paginate(config("binshopsblog.per_page", 10));
+
+				foreach ($posts as $post) {
+					$post->category_name = '';
+					//get post categories
+					$categories = BinshopsCategory::join('binshops_post_categories', 'binshops_categories.id', '=', 'binshops_post_categories.category_id')
+						->where('binshops_post_categories.post_id', $post->id)
+						->get();
+					//get category translations
+					$categories = json_decode(json_encode($categories), true);
+					foreach ($categories as $category) {
+						if ($post->category_name == '' || $post->category_name == null) {
+							$post->category_name = BinshopsCategoryTranslation::where('category_id', $category['category_id'])->first()->category_name ?? '';
+						}
+					}
+				}
+			}
+
+			//load category hierarchy
+			$rootList = BinshopsCategory::roots()->get();
+			BinshopsCategory::loadSiblingsWithList($rootList);
+
+			$blogData = [
+				'lang_list' => BinshopsLanguage::all('locale', 'name'),
+				'locale' => $locale, // $request->get("locale"),
+				'category_chain' => $categoryChain,
+				'categories' => $rootList,
+				'posts' => $posts,
+				'title' => $title,
+			];
+
+			return $blogData;
+
+		}
+
+		public static function verifyBookOwnership($bookSlug)
+		{
+			if (Auth::guest()) {
+				return ['success' => false, 'message' => __('You must be logged in to verify book ownership.')];
+			}
+
+			if ($bookSlug !== '' && $bookSlug !== null) {
+				$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+				$bookJsonPath = "{$bookPath}/book.json";
+				$actsJsonPath = "{$bookPath}/acts.json";
+
+				if (!File::exists($bookJsonPath)) {
+					return ['success' => false, 'message' => __('Book not found')];
+				}
+
+				if (!File::exists($actsJsonPath)) {
+					return ['success' => false, 'message' => __('Acts not found')];
+				}
+
+				$bookData = json_decode(File::get($bookJsonPath), true);
+
+				if (Auth::user()) {
+					if ($bookData['owner'] !== Auth::user()->email && !Auth::user()->isAdmin()) {
+						return ['success' => false, 'message' => __('You are not the owner of this book.')];
+					} else {
+						return ['success' => true, 'message' => __('You are the owner of this book.')];
+					}
+				} else {
+					return ['success' => false, 'message' => __('You are not the owner of this book.')];
+				}
+			} else {
+				return ['success' => true, 'message' => __('Book not found')];
+			}
+		}
 
 
 		public static function getEmbeddingSimilarity($text, $threshold = 0.5, $field_type = 1, $max_answers = 10): array
@@ -34,17 +140,12 @@
 
 
 			$threshold = $threshold * (-1);
-			$similarity_array = DB::connection('pgsql')->select("
-				SELECT * FROM (
-					SELECT (embedding <#> :embedding) AS distance, *
+			$similarity_array = DB::connection('pgsql')->select("SELECT (embedding <#> :embedding) AS distance, *
           FROM public.question_embeddings_pg
+          WHERE field_type = :field_type
           ORDER BY distance ASC
-					LIMIT 5) AS subquery
-				WHERE distance < :threshold
-				AND field_type = :field_type
-				ORDER BY distance ASC
-				LIMIT " . $max_answers,
-				['embedding' => $search_text_embedding, 'threshold' => $threshold, 'field_type' => $field_type]
+					LIMIT " . $max_answers,
+				['embedding' => $search_text_embedding, 'field_type' => $field_type]
 			);
 
 			return $similarity_array;
@@ -120,6 +221,70 @@
 			}
 		}
 
+		public static function repaceNewLineWithBRInsideQuotes($input)
+		{
+			$output = '';
+			$inQuotes = false;
+			$length = strlen($input);
+			$i = 0;
+
+			while ($i < $length) {
+				$char = $input[$i];
+
+				if ($char === '"') {
+					$inQuotes = !$inQuotes;
+					$output .= $char;
+				} elseif ($inQuotes) {
+					if ($char === "\n" || $char === "\r") {
+						$output .= '<BR>';
+						if ($char === "\r" && $i + 1 < $length && $input[$i + 1] === "\n") {
+							$i++; // Skip the next character if it's a Windows-style line ending (\r\n)
+						}
+					} elseif ($char === '\\') {
+						if ($i + 1 < $length) {
+							$nextChar = $input[$i + 1];
+							if ($nextChar === 'n') {
+								$output .= '<BR>';
+								$i++;
+							} elseif ($nextChar === 'r') {
+								$output .= '<BR>';
+								$i++;
+								if ($i + 1 < $length && $input[$i + 1] === '\\' && $i + 2 < $length && $input[$i + 2] === 'n') {
+									$i += 2; // Skip the next two characters if it's \\r\\n
+								}
+							} elseif ($nextChar === '\\') {
+								if ($i + 2 < $length) {
+									$nextNextChar = $input[$i + 2];
+									if ($nextNextChar === 'n' || $nextNextChar === 'r') {
+										$output .= '<BR>';
+										$i += 2;
+										if ($nextNextChar === 'r' && $i + 2 < $length && $input[$i + 1] === '\\' && $input[$i + 2] === 'n') {
+											$i += 2; // Skip the next two characters if it's \\r\\n
+										}
+									} else {
+										$output .= $char;
+									}
+								} else {
+									$output .= $char;
+								}
+							} else {
+								$output .= $char;
+							}
+						} else {
+							$output .= $char;
+						}
+					} else {
+						$output .= $char;
+					}
+				} else {
+					$output .= $char;
+				}
+				$i++;
+			}
+
+			return $output;
+		}
+
 		public static function getContentsInBackticksOrOriginal($input)
 		{
 			// Define a regular expression pattern to match content within backticks
@@ -139,8 +304,58 @@
 			}
 		}
 
+		public static function extractJsonString($input)
+		{
+			// Find the first position of '{' or '['
+			$startPos = strpos($input, '{');
+			if ($startPos === false) {
+				$startPos = strpos($input, '[');
+			}
+
+			// Find the last position of '}' or ']'
+			$endPos = strrpos($input, '}');
+			if ($endPos === false) {
+				$endPos = strrpos($input, ']');
+			}
+
+			// If start or end positions are not found, return an empty string
+			if ($startPos === false || $endPos === false) {
+				return '';
+			}
+
+			// Extract the JSON substring
+			$jsonString = substr($input, $startPos, $endPos - $startPos + 1);
+
+			return $jsonString;
+		}
+
+		public static function mergeStringsWithoutRepetition($string1, $string2, $maxRepetitionLength = 100)
+		{
+			$len1 = strlen($string1);
+			$len2 = strlen($string2);
+
+			// Determine the maximum possible repetition length
+			$maxPossibleRepetition = min($maxRepetitionLength, $len1, $len2);
+
+			// Find the length of the actual repetition
+			$repetitionLength = 0;
+			for ($i = 1; $i <= $maxPossibleRepetition; $i++) {
+				if (substr($string1, -$i) === substr($string2, 0, $i)) {
+					$repetitionLength = $i;
+				} else {
+					break;
+				}
+			}
+
+			// Remove the repetition from the beginning of the second string
+			$string2 = substr($string2, $repetitionLength);
+
+			// Merge the strings
+			return $string1 . $string2;
+		}
+
 		//------------------------------------------------------------
-		public static function function_call($llm, $simple_prompt, $prompt, $schema, $language = 'english')
+		public static function function_call($llm, $example_question, $example_answer, $prompt, $schema, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -190,7 +405,7 @@
 			}
 
 
-			$temperature = 0.8;
+			$temperature =  rand(80, 100) / 100;
 			$max_tokens = 4000;
 
 			$tool_name = 'auto';
@@ -220,7 +435,7 @@
 				unset($data['n']);
 			}
 
-			Log::info('==================openAI_question=====================');
+			Log::info('================== FUNCTION CALL DATA =====================');
 			Log::info($data);
 
 			$post_json = json_encode($data);
@@ -288,65 +503,7 @@
 			}
 		}
 
-		public static function extractJsonString($input)
-		{
-
-			//replace \n\n with <br><br>
-			$input = str_replace("\",\n\n\"", "\",\n\"", $input);
-
-			$input = str_replace("\n\n", "[NEW-PARA-0]", $input);
-
-			// Find the first position of '{' or '['
-			$startPos = strpos($input, '{');
-			if ($startPos === false) {
-				$startPos = strpos($input, '[');
-			}
-
-			// Find the last position of '}' or ']'
-			$endPos = strrpos($input, '}');
-			if ($endPos === false) {
-				$endPos = strrpos($input, ']');
-			}
-
-			// If start or end positions are not found, return an empty string
-			if ($startPos === false || $endPos === false) {
-				return '';
-			}
-
-			// Extract the JSON substring
-			$jsonString = substr($input, $startPos, $endPos - $startPos + 1);
-
-			$jsonString = str_replace("[NEW-PARA-0]", "\\n\\n", $jsonString);
-
-			return $jsonString;
-		}
-
-		public static function mergeStringsWithoutRepetition($string1, $string2, $maxRepetitionLength = 100)
-		{
-			$len1 = strlen($string1);
-			$len2 = strlen($string2);
-
-			// Determine the maximum possible repetition length
-			$maxPossibleRepetition = min($maxRepetitionLength, $len1, $len2);
-
-			// Find the length of the actual repetition
-			$repetitionLength = 0;
-			for ($i = 1; $i <= $maxPossibleRepetition; $i++) {
-				if (substr($string1, -$i) === substr($string2, 0, $i)) {
-					$repetitionLength = $i;
-				} else {
-					break;
-				}
-			}
-
-			// Remove the repetition from the beginning of the second string
-			$string2 = substr($string2, $repetitionLength);
-
-			// Merge the strings
-			return $string1 . $string2;
-		}
-
-		public static function llm_no_tool_call($stream, $llm,  $simple_prompt, $prompt, $return_json = true, $language = 'english')
+		public static function llm_no_tool_call($llm, $example_question, $example_answer, $prompt, $return_json = true, $language = 'english')
 		{
 			set_time_limit(300);
 			session_write_close();
@@ -378,79 +535,45 @@
 
 			$chat_messages = [];
 
-			if (stripos($llm_model, 'anthropic') === false) {
+			if ($example_question === '') {
 				$chat_messages[] = [
 					'role' => 'system',
-					'content' => 'You are an expert fiction writer.
-Always keep the following rules in mind:
-- Write in active voice
-- Always follow the "show, don\'t tell" principle.
-- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
-- Convey events and story through dialogue.
-- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
-- Skip "he/she said said" dialogue tags and convey people\'s actions or face expressions through their speech
-- Avoid mushy dialog and descriptions, have dialogue always continue the action, never stall or add unnecessary fluff. Vary the descriptions to not repeat yourself.
-- Put dialogue on its own paragraph to separate scene and action.
-- Reduce indicators of uncertainty like "trying" or "maybe"'
-				];
-			}
+					'content' => 'You are an expert writer.'];
 
-			//convert prompt to vector
+//					$chat_messages[] = [
+//						'role' => 'system',
+//						'content' => 'You are an expert fiction writer.
+//Always keep the following rules in mind:
+//- Write in active voice
+//- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
+//- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
+//'];
 
-			$similar_prompts = self::getEmbeddingSimilarity($simple_prompt, 0.1, 2, 5);
-			if ($similar_prompts===[]) {
-				$similar_prompts = self::getEmbeddingSimilarity($simple_prompt, 0.1, 1, 5);
-			}
-
-			if ($similar_prompts!==[]) {
-				$question_index = 0;
-				$question = null;
-				shuffle($similar_prompts);
-				while ($question_index < count($similar_prompts)) {
-					$question_id = $similar_prompts[$question_index]->questions_id;
-					$question = SentencesTable::where('id', $question_id)->first();
-					if ($question) {
-						break;
-					}
-					$question_index++;
-				}
-				if ($question) {
-					$chat_messages[] = [
-						'role' => 'user',
-						'content' => $question['prompt']
-					];
-					$chat_messages[] = [
-						'role' => 'assistant',
-						'content' => $question['sentences']
-					];
-				}
-			}
-
-
-			if (stripos($llm_model, 'anthropic') !== false) {
-				$chat_messages[] = [
-					'role' => 'user',
-					'content' => 'You are an expert fiction writer.
-Always keep the following rules in mind:
-- Write in active voice
-- Always follow the "show, don\'t tell" principle.
-- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
-- Convey events and story through dialogue.
-- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
-- Skip "he/she said said" dialogue tags and convey people\'s actions or face expressions through their speech
-- Avoid mushy dialog and descriptions, have dialogue always continue the action, never stall or add unnecessary fluff. Vary the descriptions to not repeat yourself.
-- Put dialogue on its own paragraph to separate scene and action.
-- Reduce indicators of uncertainty like "trying" or "maybe"
-
-' . $prompt
-				];
 			} else {
 				$chat_messages[] = [
-					'role' => 'user',
-					'content' => $prompt
-				];
+					'role' => 'system',
+					'content' => 'You are an expert writer. As an example given the following prompt: '.$example_question.' you wrote: '.$example_answer];
+
+//					$chat_messages[] = [
+//						'role' => 'system',
+//						'content' => 'You are an expert fiction writer.
+//Always keep the following rules in mind:
+//- Write in active voice
+//- Always follow the "show, don\'t tell" principle.
+//- Avoid adverbs and cliches and overused/commonly used phrases. Aim for fresh and original descriptions.
+//- Convey events and story through dialogue.
+//- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
+//- Skip "he/she said said" dialogue tags and convey people\'s actions or face expressions through their speech
+//- Avoid mushy dialog and descriptions, have dialogue always continue the action, never stall or add unnecessary fluff. Vary the descriptions to not repeat yourself.
+//- Put dialogue on its own paragraph to separate scene and action.
+//- Reduce indicators of uncertainty like "trying" or "maybe"'
+//					];
 			}
 
+			$chat_messages[] = [
+				'role' => 'user',
+				'content' => $prompt
+			];
 
 			$temperature = 0.8;
 			$max_tokens = 8096;
@@ -464,18 +587,14 @@ Always keep the following rules in mind:
 				'frequency_penalty' => 0,
 				'presence_penalty' => 0,
 				'n' => 1,
-				'stream' => $stream
+				'stream' => false
 			);
 
 			if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$data['max_tokens'] = 4096;
 				$data['temperature'] = 1;
 			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
-				if ($llm === 'anthropic-haiku') {
-					$data['max_tokens'] = 4096;
-				} else {
-					$data['max_tokens'] = 4096;
-				}
+				$data['max_tokens'] = 4096;
 			} else {
 				$data['max_tokens'] = 8096;
 				if (stripos($llm_model, 'anthropic') !== false) {
@@ -513,48 +632,10 @@ Always keep the following rules in mind:
 			} else {
 				$headers[] = 'Content-Type: application/json';
 				$headers[] = "Authorization: Bearer " . $llm_api_key;
+				$headers[] = "HTTP-Referer: https://writebookswithai.com";
+				$headers[] = "X-Title: WriteBooksWithAI";
 			}
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			$accumulatedData = '';
-			$txt = '';
-			$complete_rst = '';
-
-			if ($stream) {
-
-				curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$txt, &$accumulatedData) {
-//					Log::info('==============');
-//					Log::info($data);
-
-					$data_lines = explode("\n", $data);
-					for ($i = 0; $i < count($data_lines); $i++) {
-						$data_line = $data_lines[$i];
-
-						// Check if the data line contains [DONE]
-						if (stripos($data_line, "[DONE]") !== false) {
-							ob_flush();
-							flush();
-							return strlen($data_line);
-						}
-
-						// Append new data to the accumulated data
-						if (substr($data_line, 0, 5) !== "data:") {
-							$accumulatedData .= $data_line;
-						} else {
-							$accumulatedData = $data_line;
-						}
-
-						// Check if we have a complete JSON object
-						$clean = str_replace("data: ", "", $accumulatedData);
-						$decoded = json_decode($clean, true);
-						if ($decoded && isset($decoded["choices"])) {
-							$txt .= $decoded["choices"][0]["delta"]["content"] ?? '';
-							$accumulatedData = ''; // Reset accumulated data
-						}
-					}
-
-					return strlen($data);
-				});
-			}
 
 			$complete = curl_exec($ch);
 			if (curl_errno($ch)) {
@@ -563,34 +644,23 @@ Always keep the following rules in mind:
 			}
 			curl_close($ch);
 
-			if (!$stream) {
 //			Log::info('==================Log complete 2 =====================');
-				$complete = trim($complete, " \n\r\t\v\0");
+			$complete = trim($complete, " \n\r\t\v\0");
 //			Log::info($complete);
 
-				$complete_rst = json_decode($complete, true);
+			$complete_rst = json_decode($complete, true);
 
-				if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
-					$content = $complete_rst['choices'][0]['message']['content'];
-				} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
-					$content = $complete_rst['content'][0]['text'];
-				} else {
-					$content = $complete_rst['choices'][0]['message']['content'];
-				}
+			if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
+				$content = $complete_rst['choices'][0]['message']['content'];
+			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
+				$content = $complete_rst['content'][0]['text'];
 			} else {
-//				echo "--------------TXT: $txt\n";
-				$content = $txt;
-				$complete = $txt;
+				$content = $complete_rst['choices'][0]['message']['content'];
 			}
 
 			if (!$return_json) {
-				if (!$stream) {
-					Log::info("GPT NO STREAM RESPONSE:");
-					Log::info($complete_rst);
-				} else {
-					Log::info("GPT STREAM RESPONSE:");
-					Log::info($content);
-				}
+				Log::info("GPT NO STREAM RESPONSE:");
+				Log::info($complete_rst);
 
 				Log::info('Return is NOT JSON. Will return content presuming it is text.');
 				return $content;
@@ -605,12 +675,14 @@ Always keep the following rules in mind:
 
 			//check if content is JSON
 			$content_json_string = self::extractJsonString($content);
+			$content_json_string = self::repaceNewLineWithBRInsideQuotes($content_json_string);
+
 			$validate_result = self::validateJson($content_json_string);
 
 			if ($validate_result !== "Valid JSON") {
 				Log::info('================== VALIDATE JSON ON FIRST PASS FAILED =====================');
 				Log::info('String that failed:: ---- Error:' . $validate_result);
-				Log::info($content_json_string);
+				Log::info("$content_json_string");
 
 				$content_json_string = (new Fixer)->silent(true)->missingValue('"truncated"')->fix($content_json_string);
 				$validate_result = self::validateJson($content_json_string);
@@ -651,87 +723,33 @@ Always keep the following rules in mind:
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-				$accumulatedData = '';
-				$txt = '';
-
-				if ($stream) {
-
-					curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$txt, &$accumulatedData) {
-//						Log::info('==============');
-//						Log::info($data);
-
-						$data_lines = explode("\n", $data);
-						for ($i = 0; $i < count($data_lines); $i++) {
-							$data_line = $data_lines[$i];
-
-							// Check if the data line contains [DONE]
-							if (stripos($data_line, "[DONE]") !== false) {
-								ob_flush();
-								flush();
-								return strlen($data_line);
-							}
-
-							// Append new data to the accumulated data
-							if (substr($data_line, 0, 5) !== "data:") {
-								$accumulatedData .= $data_line;
-							} else {
-								$accumulatedData = $data_line;
-							}
-
-							// Check if we have a complete JSON object
-							$clean = str_replace("data: ", "", $accumulatedData);
-							$decoded = json_decode($clean, true);
-							if ($decoded && isset($decoded["choices"])) {
-								$txt .= $decoded["choices"][0]["delta"]["content"] ?? '';
-								$accumulatedData = ''; // Reset accumulated data
-							}
-						}
-
-						return strlen($data);
-					});
-				}
-
 				$complete2 = curl_exec($ch);
 				if (curl_errno($ch)) {
 					Log::info('CURL Error:');
 					Log::info(curl_getinfo($ch));
 				}
 				curl_close($ch);
-//				session_start();
 
-				if (!$stream) {
-					$complete2 = trim($complete2, " \n\r\t\v\0");
+				$complete2 = trim($complete2, " \n\r\t\v\0");
 
-					Log::info("GPT NO STREAM RESPONSE FOR EXTENDED VERSION JSON CHECK:");
-					Log::info($complete2);
+				Log::info("GPT NO STREAM RESPONSE FOR EXTENDED VERSION JSON CHECK:");
+				Log::info($complete2);
 
-					$complete2_rst = json_decode($complete2, true);
-					$content2 = $complete2_rst['choices'][0]['message']['content'];
+				$complete2_rst = json_decode($complete2, true);
+				$content2 = $complete2_rst['choices'][0]['message']['content'];
 
-					//$content2 = str_replace("\\\"", "\"", $content2);
-					$content2 = self::getContentsInBackticksOrOriginal($content2);
+				//$content2 = str_replace("\\\"", "\"", $content2);
+				$content2 = self::getContentsInBackticksOrOriginal($content2);
 
-					if (!str_contains($content2, 'DONE')) {
-						$content = self::mergeStringsWithoutRepetition($content, $content2, 255);
-					}
-				} else {
-					$content2 = $txt;
-					$content2 = trim($content2, " \n\r\t\v\0");
-
-					Log::info("GPT STREAM RESPONSE FOR EXTENDED VERSION JSON CHECK:");
-					Log::info($content2);
-
-					//$content2 = str_replace("\\\"", "\"", $content2);
-					$content2 = self::getContentsInBackticksOrOriginal($content2);
-
-					if (!str_contains($content2, 'DONE')) {
-						$content = self::mergeStringsWithoutRepetition($content, $content2, 255);
-					}
+				if (!str_contains($content2, 'DONE')) {
+					$content = self::mergeStringsWithoutRepetition($content, $content2, 255);
 				}
 
 				//------------------------------------------------------------
 
 				$content_json_string = self::extractJsonString($content);
+				$content_json_string = self::repaceNewLineWithBRInsideQuotes($content_json_string);
+
 				$validate_result = self::validateJson($content_json_string);
 
 				if ($validate_result !== "Valid JSON") {
@@ -740,14 +758,8 @@ Always keep the following rules in mind:
 				}
 
 			} else {
-				if (!$stream) {
-					Log::info("GPT NO STREAM RESPONSE:");
-					Log::info($complete_rst);
-				} else {
-					Log::info("GPT STREAM RESPONSE:");
-					Log::info($content);
-				}
-
+				Log::info("GPT NO STREAM RESPONSE:");
+				Log::info($complete_rst);
 			}
 
 			if ($validate_result == "Valid JSON") {
@@ -762,359 +774,6 @@ Always keep the following rules in mind:
 			}
 		}
 
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-		//-------------------------------------------------------------------------
-
-		public static function getBlogData()
-		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-
-			// the published_at + is_published are handled by BinshopsBlogPublishedScope, and don't take effect if the logged in user can manageb log posts
-
-			//todo
-			$title = 'Blog Page'; // default title...
-			$category_slug = null;
-
-			$categoryChain = null;
-			$posts = array();
-			if ($category_slug) {
-				$category = BinshopsCategoryTranslation::where("slug", $category_slug)->with('category')->firstOrFail()->category;
-				$categoryChain = $category->getAncestorsAndSelf();
-				$posts = $category->posts()->where("binshops_post_categories.category_id", $category->id)->get(); //->where("lang_id", '=', 2)->get();
-
-				$posts = BinshopsPostTranslation::join('binshops_posts', 'binshops_post_translations.post_id', '=', 'binshops_posts.id')
-//					->where('lang_id', 2)
-					->where("is_published", '=', true)
-					->where('posted_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
-					->orderBy("posted_at", "desc")
-					->whereIn('binshops_posts.id', $posts->pluck('id'))
-					->paginate(config("binshopsblog.per_page", 10));
-
-				// at the moment we handle this special case (viewing a category) by hard coding in the following two lines.
-				// You can easily override this in the view files.
-				\View::share('binshopsblog_category', $category); // so the view can say "You are viewing $CATEGORYNAME category posts"
-				$title = 'Posts in ' . $category->category_name . " category"; // hardcode title here...
-			} else {
-				$posts = BinshopsPostTranslation::join('binshops_posts', 'binshops_post_translations.post_id', '=', 'binshops_posts.id')
-//					->where('lang_id', 2)
-					->where("is_published", '=', true)
-					->where('posted_at', '<', Carbon::now()->format('Y-m-d H:i:s'))
-					->orderBy("posted_at", "desc")
-					->paginate(config("binshopsblog.per_page", 10));
-
-				foreach ($posts as $post) {
-					$post->category_name = '';
-					//get post categories
-					$categories = BinshopsCategory::join('binshops_post_categories', 'binshops_categories.id', '=', 'binshops_post_categories.category_id')
-						->where('binshops_post_categories.post_id', $post->id)
-						->get();
-					//get category translations
-					$categories = json_decode(json_encode($categories), true);
-					foreach ($categories as $category) {
-						if ($post->category_name == '' || $post->category_name == null) {
-							$post->category_name = BinshopsCategoryTranslation::where('category_id', $category['category_id'])->first()->category_name ?? '';
-						}
-					}
-				}
-			}
-
-			//load category hierarchy
-			$rootList = BinshopsCategory::roots()->get();
-			BinshopsCategory::loadSiblingsWithList($rootList);
-
-			$blogData = [
-				'lang_list' => BinshopsLanguage::all('locale', 'name'),
-				'locale' => $locale, // $request->get("locale"),
-				'category_chain' => $categoryChain,
-				'categories' => $rootList,
-				'posts' => $posts,
-				'title' => $title,
-			];
-
-			return $blogData;
-
-		}
-
-		//-------------------------------------------------------------------------
-
-		public static function openAI_function($messages, $functions, $temperature, $max_tokens, $llm_engine)
-		{
-			set_time_limit(300);
-
-			$data = array(
-				'model' => $llm_engine, // 'gpt-3.5-turbo', 'gpt-4',
-				'messages' => $messages,
-				'functions' => $functions,
-				'function_call' => ['name' => 'get_content'],
-				'temperature' => $temperature,
-				'max_tokens' => $max_tokens,
-				'top_p' => 1,
-				'frequency_penalty' => 0,
-				'presence_penalty' => 0,
-				'n' => 1,
-				'stream' => false
-			);
-
-//			Log::info('==================openAI_question=====================');
-//			Log::info($data);
-
-			session_write_close();
-			$txt = '';
-			$completion_tokens = 0;
-
-//			Log::info('openAI_question: ');
-//			Log::info($data);
-
-			$llm_base_url = env('OPEN_AI_API_BASE');
-			$llm_api_key = env('OPEN_AI_API_KEY');
-
-			//dont stream
-			$post_json = json_encode($data);
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
-
-			$headers = array();
-			$headers[] = 'Content-Type: application/json';
-			$headers[] = "Authorization: Bearer " . $llm_api_key;
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			$complete = curl_exec($ch);
-//			Log::info('==================Log complete=====================');
-//			Log::info($complete);
-			if (curl_errno($ch)) {
-				Log::info('CURL Error:');
-				Log::info(curl_getinfo($ch));
-			}
-			curl_close($ch);
-			session_start();
-
-			return array('complete' => $complete);
-		}
-
-		//-------------------------------------------------------------------------
-		// Send the message to the OpenAI API
-
-		public static function openAI_question($messages, $temperature, $max_tokens, $llm_engine)
-		{
-			set_time_limit(300);
-
-			$user_id = "1";  //  users id optional
-
-			$disable_validation = true;
-			if (!$disable_validation) {
-				//parse the $chat_messages array select the last content belonging to the user
-				$message = $messages[count($messages) - 1]['content'];
-				Log::info('message: ' . $message);
-
-				$mod_result = self::moderation($message);
-
-				$flag_reason = '';
-
-				Log::info('mod_result: ' . json_encode($mod_result));
-				if ($mod_result['results'][0]['flagged'] == true ||
-					$mod_result['results'][0]['category_scores']['hate'] > 0.4 ||
-					$mod_result['results'][0]['category_scores']['sexual'] > 0.6 ||
-					$mod_result['results'][0]['category_scores']['violence'] > 0.6 ||
-					$mod_result['results'][0]['category_scores']['self-harm'] > 0.6 ||
-					$mod_result['results'][0]['category_scores']['sexual/minors'] > 0.6 ||
-					$mod_result['results'][0]['category_scores']['hate/threatening'] > 0.4 ||
-					$mod_result['results'][0]['category_scores']['violence/graphic'] > 0.6
-				) {
-					//clear $messages array
-//				$messages = [];
-					if ($mod_result['results'][0]['category_scores']['hate'] > 0.4) {
-						$flag_reason = 'hate';
-					}
-					if ($mod_result['results'][0]['category_scores']['sexual'] > 0.6) {
-						$flag_reason = 'sexual';
-					}
-					if ($mod_result['results'][0]['category_scores']['violence'] > 0.6) {
-						$flag_reason = 'violence';
-					}
-					if ($mod_result['results'][0]['category_scores']['self-harm'] > 0.6) {
-						$flag_reason = 'self-harm';
-					}
-					if ($mod_result['results'][0]['category_scores']['sexual/minors'] > 0.6) {
-						$flag_reason = 'sexual/minors';
-					}
-					if ($mod_result['results'][0]['category_scores']['hate/threatening'] > 0.4) {
-						$flag_reason = 'hate/threatening';
-					}
-					if ($mod_result['results'][0]['category_scores']['violence/graphic'] > 0.6) {
-						$flag_reason = 'violence/graphic';
-					}
-				}
-
-				if ($flag_reason !== '') {
-					Log::info($flag_reason);
-
-					$messages[] = [
-						'role' => 'system',
-						'content' => 'Tell the user why the message the following request they made is flagged as inappropriate. Tell to Please write a request that doesnt break MySong Cloud guidelines. When telling them why they can\'t write use MySong Cloud instead of OpenAI. Reason for the problem is: ' . $flag_reason
-					];
-					$messages[] = [
-						'role' => 'user',
-						'content' => 'why can\'t i write about this topic?'
-					];
-
-				}
-			}
-
-			$prompt_tokens = 0;
-			foreach ($messages as $message) {
-				$prompt_tokens += round(str_word_count($message['content']) * 1.25);
-			}
-			$prompt_tokens = (int)$prompt_tokens;
-
-
-			if (stripos($llm_engine, 'claude') !== false) {
-				$llm_base_url = env('ANTHROPIC_SONET_BASE');
-				$llm_api_key = env('ANTHROPIC_SONET_KEY');
-
-				$system_message = '';
-				foreach ($messages as $key => &$message) {
-					if ($message['role'] === 'system') {
-						$system_message = $message['content'];
-						unset($messages[$key]);
-					}
-				}
-				$messages = array_values($messages);
-
-
-				$data = array(
-					'model' => $llm_engine, // 'claude-3-opus-20240229', ...
-					'messages' => $messages,
-					'temperature' => $temperature,
-					'max_tokens' => $max_tokens,
-					'system' => $system_message,
-					'stream' => true,
-				);
-			} else {
-				$llm_base_url = env('OPEN_AI_GPT4_BASE');
-				$llm_api_key = env('OPEN_AI_GPT4_KEY');
-
-				$data = array(
-					'model' => $llm_engine, // 'gpt-3.5-turbo', 'gpt-4',
-					'messages' => $messages,
-					'temperature' => $temperature,
-					'max_tokens' => $max_tokens,
-					'top_p' => 1,
-					'frequency_penalty' => 0,
-					'presence_penalty' => 0,
-					'n' => 1,
-					'stream' => true
-				);
-
-			}
-
-			session_write_close();
-			$txt = '';
-			$completion_tokens = 0;
-
-			Log::info('LLM QUESTION: ');
-			Log::info($data);
-
-			$post_json = json_encode($data);
-//			Log::info('openAI_question post_json: ');
-//			Log::info($post_json);
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $llm_base_url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
-
-			$headers = array();
-			if (stripos($llm_engine, 'claude') !== false) {
-				$headers[] = 'Content-Type: application/json';
-				$headers[] = "x-api-key: " . $llm_api_key;
-				$headers[] = "anthropic-version: 2023-06-01";
-				$headers[] = "anthropic-beta: messages-2023-12-15";
-
-			} else {
-				$headers[] = 'Content-Type: application/json';
-				$headers[] = "Authorization: Bearer " . $llm_api_key;
-			}
-
-			Log::info('LLM headers: ' . $llm_base_url);
-
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-			$accumulatedData = '';
-
-			curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl_info, $data) use (&$txt, &$completion_tokens, &$accumulatedData) {
-
-
-				$data_lines = explode("\n", $data);
-				for ($i = 0; $i < count($data_lines); $i++) {
-					$data_line = $data_lines[$i];
-//					Log::info($data_line);
-
-					if (stripos($data_line, 'event:') !== false) {
-						continue;
-					}
-
-					// Check if the data line contains [DONE]
-					if (stripos($data_line, "[DONE]") !== false || stripos($data_line, "message_stop") !== false) {
-						Log::info('OpenAI [DONE]');
-//						echo "data: [DONE]\n\n";
-//						ob_flush();
-//						flush();
-						return strlen($data_line);
-					}
-
-					$completion_tokens++;
-
-					// Append new data to the accumulated data
-					if (stripos($data_line, "data:") === false) {
-						$accumulatedData .= $data_line;
-					} else {
-						$accumulatedData = $data_line;
-					}
-
-					// Check if we have a complete JSON object
-					$clean = str_replace("data: ", "", $accumulatedData);
-					$decoded = json_decode($clean, true);
-
-					if ($decoded && isset($decoded["delta"])) {
-//						echo $accumulatedData . "\n";
-//						echo PHP_EOL;
-//						ob_flush();
-//						flush();
-
-						$txt .= $decoded["delta"]["text"] ?? '';
-						$accumulatedData = ''; // Reset accumulated data
-					}
-
-					if ($decoded && isset($decoded["choices"])) {
-//						echo $accumulatedData . "\n";
-//						echo PHP_EOL;
-//						ob_flush();
-//						flush();
-
-						$txt .= $decoded["choices"][0]["delta"]["content"] ?? '';
-						$accumulatedData = ''; // Reset accumulated data
-					}
-				}
-
-				return strlen($data);
-			});
-
-			$result = curl_exec($ch);
-
-			Log::info('curl result:');
-			Log::info($result);
-
-			curl_close($ch);
-
-			return array('message_text' => $txt, 'completion_tokens' => $completion_tokens, 'prompt_tokens' => $prompt_tokens);
-		}
 
 		//-------------------------------------------------------------------------
 
@@ -1205,7 +864,7 @@ Always keep the following rules in mind:
 			Log::info('openAI_no_stream: ');
 			Log::info($data);
 
-			$llm_base_url = env('OPEN_AI_API_BASE');
+			$llm_base_url = env('OPEN_AI_GPT4_BASE');
 			$llm_api_key = env('OPEN_AI_API_KEY');
 
 			$post_json = json_encode($data);

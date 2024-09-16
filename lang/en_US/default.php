@@ -420,11 +420,8 @@
 		'Book Blurb' => 'Book Blurb',
 		'Back Cover Text' => 'Back Cover Text',
 		'Character Profiles' => 'Character Profiles',
-		'Submit' => 'Submit',
 		'Confirm Deletion' => 'Confirm Deletion',
 		'Are you sure you want to delete this book? This action cannot be undone.' => 'Are you sure you want to delete this book? This action cannot be undone.',
-		'Delete' => 'Delete',
-		'Cancel' => 'Cancel',
 		'Error deleting book:' => 'Error deleting book:',
 		'Error occurred while deleting the book.' => 'Error occurred while deleting the book.',
 		'Book created successfully. Please check the new fields before continuing.' => 'Book created successfully. Please check the new fields before continuing.',
@@ -457,7 +454,6 @@
 		'About Book' => 'About Book',
 		'Book Cover' => 'Book Cover',
 		'Edit Chapter' => 'Edit Chapter',
-		'Name' => 'Name',
 		'Text' => 'Text',
 		'Events' => 'Events',
 		'People' => 'People',
@@ -471,7 +467,7 @@
 		'Save Chapter' => 'Save Chapter',
 		'Add Comment' => 'Add Comment',
 		'View History' => 'View History',
-		'Close' => 'Close',
+		'Chapter' => 'Chapter',
 
 		'Create Cover' => 'Create Cover',
 		'Enter cover description' => 'Enter cover description',
@@ -497,10 +493,10 @@
 		'Back to Chapters' => 'Back to Chapters',
 		'Save Beats' => 'Save Beats',
 		'Description' => 'Description',
-		'Previous Chapter' => 'Previous Chapter',
 		'Beats' => 'Beats',
 		'Writing All Beats' => 'Writing All Beats',
 		'Read Chapter Beats' => 'Read Chapter Beats',
+		'Edit All Beats' => 'Edit All Beats',
 
 
 		//action-beats.php
@@ -550,9 +546,12 @@
 		'This process will write the texts and the summaries for all beats in this chapter. The summaries are used to create the next beat. Please wait... ' => 'This process will write the texts and the summaries for all beats in this chapter. The summaries are used to create the next beat. Please wait... ',
 		'If the progress bar is stuck for a long time, please refresh the page and try again.' => 'If the progress bar is stuck for a long time, please refresh the page and try again.',
 		'Beat ${beatIndex} already has text. Skipping...' => 'Beat ${beatIndex} already has text. Skipping...',
+		'Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...' => 'Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...',
 		'Writing beat ${beatIndex}' => 'Writing beat ${beatIndex}',
+		'Writing chapter ${chapterIndex}, beat ${beatIndex}' => 'Writing chapter ${chapterIndex}, beat ${beatIndex}',
 		'Beat Description:' => 'Beat Description:',
 		'Summary for beat ${beatIndex}:' => 'Summary for beat ${beatIndex}:',
+		'Summary for chapter ${chapterIndex}, beat ${beatIndex}:' => 'Summary for chapter ${chapterIndex}, beat ${beatIndex}:',
 		'Error processing beat ${beatIndex}: ${error}' => 'Error processing beat ${beatIndex}: ${error}',
 		'All beats processed!' => 'All beats processed!',
 		'After reviewing the beats, click the "Save Beats" button to save the changes.' => 'After reviewing the beats, click the "Save Beats" button to save the changes.',
@@ -580,7 +579,6 @@
 		'Beats saved successfully!' => 'Beats saved successfully!',
 		'Failed to save beats: ' => 'Failed to save beats: ',
 		'Are you sure you want to recreate the beats? This will overwrite any existing beats.' => 'Are you sure you want to recreate the beats? This will overwrite any existing beats.',
-
 
 
 		//chapter.js
@@ -611,5 +609,8 @@
 		'Cover saved successfully!' => 'Cover saved successfully!',
 		'Failed to save cover: ' => 'Failed to save cover: ',
 
+		'This process will write the texts and the summaries for all beats in all chapters. Please wait...' => 'This process will write the texts and the summaries for all beats in all chapters. Please wait...',
+		'Processing chapter: ${chapterName}' => 'Processing chapter: ${chapterName}',
+		'Error processing chapter ${chapterName}: ${error}' => 'Error processing chapter ${chapterName}: ${error}',
 	];
 

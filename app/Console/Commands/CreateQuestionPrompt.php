@@ -35,7 +35,7 @@
 
 				$prompt = "Respond with a short single sentence prompt that would generate the following text: \n" . $randomSentence->sentences;
 
-				$promptResult = MyHelper::llm_no_tool_call(false, 'open-ai-gpt-4o-mini', $prompt, false, 'english');
+				$promptResult = MyHelper::llm_no_tool_call( 'open-ai-gpt-4o-mini', '', '', $prompt, false, 'english');
 
 				$this->info("Prompt result: \n\n\n" . $promptResult);
 
