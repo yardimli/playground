@@ -33,8 +33,8 @@
 
 	Route::get('/all-books', [StaticPagesController::class, 'allBooks'])->name('playground.all-books');
 	Route::get('/book-details/{slug}', [StaticPagesController::class, 'bookDetails'])->name('playground.book-details');
-	Route::get('/book-beats/{slug}/{chapter_file}', [StaticPagesController::class, 'bookBeats'])->name('playground.book-beats');
-	Route::get('/book-all-beats/{slug}', [StaticPagesController::class, 'showAllBeats'])->name('playground.book-all-beats');
+
+	Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [StaticPagesController::class, 'bookBeats'])->name('playground.book-beats');
 
 	Route::get('/', [StaticPagesController::class, 'index'])->name('index');
 
@@ -105,6 +105,7 @@
 
 	Route::post('/book/write-beat-summary/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeatSummary'])->name('book.write-beat-summary');
 
+	Route::post('/book/update-beat-lore-book/{bookSlug}/{chapterFilename}', [BookActionController::class, 'updateBeatLoreBook'])->name('book.update-beat-lore-book');
 
 	Route::middleware(['auth'])->group(function () {
 

@@ -248,110 +248,6 @@
 			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions'));
 		}
 
-		public function bookBeats(Request $request, $slug, $chapter_file)
-		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
-
-			$bookPath = Storage::disk('public')->path("books/{$slug}");
-			$bookJsonPath = "{$bookPath}/book.json";
-			$actsFile = "{$bookPath}/acts.json";
-
-			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
-			}
-
-			$book = json_decode(File::get($bookJsonPath), true);
-
-			//search $book['owner'] in users table name column
-			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
-			if ($user) {
-				$book['owner'] = $user->name;
-			}
-
-			$actsData = json_decode(File::get($actsFile), true);
-
-			$acts = [];
-			foreach ($actsData as $act) {
-				$actChapters = [];
-				$chapterFiles = File::glob("{$bookPath}/*.json");
-				foreach ($chapterFiles as $chapterFile) {
-					$chapterData = json_decode(File::get($chapterFile), true);
-					if (!isset($chapterData['row'])) {
-						continue;
-					}
-					$chapterData['chapterFilename'] = basename($chapterFile);
-
-					if ($chapterData['row'] === $act['id']) {
-						$actChapters[] = $chapterData;
-					}
-				}
-
-				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
-				$acts[] = [
-					'id' => $act['id'],
-					'title' => $act['title'],
-					'chapters' => $actChapters
-				];
-			}
-
-			$current_chapter = [];
-			$previous_chapter = [];
-			$next_chapter = [];
-			foreach ($acts as $act) {
-				foreach ($act['chapters'] as $chapter) {
-					if ($current_chapter && !$next_chapter) {
-						$next_chapter = $chapter;
-						break;
-					}
-
-					if ($chapter['chapterFilename'] === $chapter_file . '.json') {
-						$current_chapter = $chapter;
-					}
-
-					if (!$current_chapter) {
-						$previous_chapter = $chapter;
-					}
-
-				}
-			}
-			if (!key_exists('beats', $current_chapter)) {
-				$current_chapter['beats'] = [];
-			}
-			if (!key_exists('beats', $previous_chapter)) {
-				$previous_chapter['beats'] = [];
-			}
-			if (!key_exists('beats', $next_chapter)) {
-				$next_chapter['beats'] = [];
-			}
-
-			$next_chapter_text = $current_chapter['to_next_chapter'] ?? '';
-			if ($next_chapter) {
-				$next_chapter_text = ($next_chapter['name'] ?? '') . ' - ' . ($next_chapter['short_description'] ?? '');
-			}
-
-			$previous_chapter_text = $current_chapter['to_previous_chapter'] ?? __('default.Start of the book');
-			if ($previous_chapter) {
-				$previous_chapter_text = ($previous_chapter['name'] ?? '') . ' - ' . ($previous_chapter['short_description'] ?? '');
-			}
-
-			$random_int = rand(1, 16);
-			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
-			$book['cover_filename'] = $book['cover_filename'] ?? '';
-
-			$book_slug = $slug;
-
-			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
-			}
-
-			$book['cover_filename'] = $coverFilename;
-
-			$book['acts'] = $acts;
-
-			return view('playground.book-beats', compact('locale', 'book', 'json_translations', 'book_slug', 'chapter_file', 'current_chapter', 'next_chapter', 'previous_chapter', 'next_chapter_text', 'previous_chapter_text'));
-		}
-
 		public function allBooks(Request $request)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -577,7 +473,7 @@
 
 		}
 
-		public function showAllBeats($bookSlug)
+		public function bookBeats(Request $request, $bookSlug, $selectedChapter = 'all-chapters', $beatsPerChapter = 3)
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
@@ -588,6 +484,8 @@
 			$bookData = json_decode(File::get("{$bookPath}/book.json"), true);
 			$actsData = json_decode(File::get("{$bookPath}/acts.json"), true);
 
+			$beatsPerChapter = intval($beatsPerChapter);
+
 			// Load all chapters and their beats
 			$acts = [];
 			foreach ($actsData as $act) {
@@ -597,6 +495,17 @@
 					$chapterData = json_decode(File::get($chapterFile), true);
 					if (!isset($chapterData['row']) || $chapterData['row'] !== $act['id']) {
 						continue;
+					}
+					if (!isset($chapterData['beats'])) {
+						$chapterData['beats'] = [];
+						//create 3 empty beats
+						for ($i = 0; $i < $beatsPerChapter; $i++) {
+							$chapterData['beats'][] = [
+								'description' => '',
+								'beat_text' => '',
+								'beat_summary' => '',
+							];
+						}
 					}
 					$chapterData['chapterFilename'] = basename($chapterFile);
 					$actChapters[] = $chapterData;
@@ -621,9 +530,55 @@
 
 			$bookData['cover_filename'] = $coverFilename;
 
+			$selectedChapterIndex = 0;
+
+			if ($selectedChapter !== 'all-chapters') {
+
+				foreach ($bookData['acts'] as $act) {
+					foreach ($act['chapters'] as $index => $chapter) {
+						$selectedChapterIndex++;
+						if ($chapter['chapterFilename'] === $selectedChapter . '.json') {
+							break 2;
+						}
+					}
+				}
+
+				// Filter to only include the specified chapter
+				foreach ($bookData['acts'] as &$act) {
+					$act['chapters'] = array_filter($act['chapters'], function ($chapter) use ($selectedChapter) {
+						return $chapter['chapterFilename'] === $selectedChapter . '.json';
+					});
+				}
+				// Remove acts with no chapters
+				$bookData['acts'] = array_filter($bookData['acts'], function ($act) {
+					return !empty($act['chapters']);
+				});
+			}
+
+			foreach ($bookData['acts'] as &$act) {
+				foreach ($act['chapters'] as &$chapter) {
+					if (array_key_exists('beats', $chapter)) {
+						foreach ($chapter['beats'] as &$beat) {
+							foreach ($beat as $key => &$content) {
+								if (is_string($content)) {
+									$content = str_replace("<BR><BR>", "\n", $content);
+									$content = str_replace("<BR>", "\n", $content);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if ($selectedChapter === 'all-chapters') {
+				$selectedChapter = '';
+			}
+
 			return view('playground.all-beats', [
 				'book' => $bookData,
 				'book_slug' => $bookSlug,
+				'selected_chapter' => $selectedChapter ?? '',
+				'selected_chapter_index' => $selectedChapterIndex,
 				'json_translations' => $this->write_js_translations(),
 			]);
 		}

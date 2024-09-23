@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>{{__('default.Playground - The Book')}}</title>
-
+	
 	<!-- FAVICON AND TOUCH ICONS -->
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
@@ -15,16 +15,17 @@
 	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 	<link rel="icon" href="/images/apple-touch-icon.png" type="image/x-icon">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
+	
 	<!-- Bootstrap CSS -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-icons.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="/css/custom.css" rel="stylesheet"> <!-- If you have custom CSS -->
-
+	
 	<script>
 		{!! $json_translations !!}
-		let bookData = @json($book);
+			let
+		bookData = @json($book);
 		let bookSlug = "{{$book_slug}}";
 		let colorOptions = @json($colorOptions);
 	</script>
@@ -33,11 +34,11 @@
 <body>
 
 <main class="py-1">
-
+	
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
-
-
+		
+		
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
 			</div>
@@ -46,7 +47,7 @@
 				<div class="row">
 					<div class="col-lg-5 col-12 mb-3">
 						<img
-								src="{{$book['cover_filename']}}"
+							src="{{$book['cover_filename']}}"
 							alt="{{__('default.Book Cover')}}"
 							style="width: 100%; object-fit: cover;"
 							id="bookCover">
@@ -105,12 +106,13 @@
 						</select>
 						
 						
-						
-						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn" title="{{__('default.Write All Beats')}}"><i
+						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn"
+						        title="{{__('default.Write All Beats')}}"><i
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
 						</button>
 						
-						<a href="{{route('playground.book-all-beats',$book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
+						<a href="{{route('playground.book-beats',[$book_slug, 'all-chapters','3'])}}"
+						   class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
 							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
 						</a>
 						
@@ -122,16 +124,19 @@
 							<i class="bi bi-file-earmark-word"></i> {{__('default.Export as DocX')}}
 						</button>
 						
-						<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn" title="{{__('default.Read Book')}}">
+						<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn"
+						        title="{{__('default.Read Book')}}">
 							<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
 						</button>
 						
-						<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
-
+						<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
+								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
+					
 					</div>
 					<!-- Text Blocks Div -->
 					<div class="col-lg-7 col-12">
-						<span style="font-size: 16px; font-weight: normal; font-style: italic;" id="bookBlurb">{{$book['blurb']}}</span>
+						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
+						      id="bookBlurb">{{$book['blurb']}}</span>
 						<br><br>
 						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
 						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
@@ -146,16 +151,16 @@
 								</button>
 							@endif
 						@endif
-						
+					
 					</div>
 				</div>
-
+			
 			</div>
 		</div>
-
+		
 		<div class="book-chapter-board" id="bookBoard">
 		</div>
-
+	
 	</div>
 </main>
 
@@ -235,19 +240,23 @@
 			<div class="modal-body modal-body-color">
 				<div class="row">
 					<div class="col-md-8">
-						<textarea class="form-control" id="coverPrompt" rows="5" placeholder="{{__('default.Enter cover description')}}"></textarea>
+						<textarea class="form-control" id="coverPrompt" rows="5"
+						          placeholder="{{__('default.Enter cover description')}}"></textarea>
 						<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="{{__('default.Book Title')}}">
-						<input type="text" id="coverBookAuthor" class="form-control mt-2" placeholder="{{__('default.Book Author')}}">
+						<input type="text" id="coverBookAuthor" class="form-control mt-2"
+						       placeholder="{{__('default.Book Author')}}">
 						<div class="mb-1 form-check mt-2">
 							<input type="checkbox" class="form-check-input" id="enhancePrompt" checked>
 							<label class="form-check-label" for="enhancePrompt">
 								{{__('default.Enhance Prompt')}}
 							</label>
 						</div>
-						<span style="font-size: 14px; margin-left:24px;">{{__('default.AI will optimize for creative visuals')}}</span>
+						<span
+							style="font-size: 14px; margin-left:24px;">{{__('default.AI will optimize for creative visuals')}}</span>
 					</div>
 					<div class="col-md-4">
-						<img src="/images/placeholder-cover.jpg" alt="{{__('default.Generated Cover')}}" style="width: 100%; height: auto;"
+						<img src="/images/placeholder-cover.jpg" alt="{{__('default.Generated Cover')}}"
+						     style="width: 100%; height: auto;"
 						     id="generatedCover">
 					</div>
 				</div>

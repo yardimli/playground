@@ -1,0 +1,10 @@
+Book Title: ##book_title##
+Back Cover Text: ##back_cover_text##
+Book Blurb: ##book_blurb##
+Book Language: ##language##
+
+Beat Text: ##beat_text##
+
+Existing Lore Book: ##previous_lore_book##
+
+Go over the Beat Text and update or add to the existing Lore Book with the new information. Add character development, world-building, or plot progression. Only add content that adds value to the story. Do not add filler content.

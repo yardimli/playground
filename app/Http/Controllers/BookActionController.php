@@ -523,7 +523,7 @@ Prompt:";
 			}
 
 			$previous_chapter_beats = $current_chapter['from_previous_chapter'];
-			if ($previous_chapter) {
+			if ($previous_chapter && array_key_exists('beats', $previous_chapter)) {
 				if ($previous_chapter['beats']) {
 					$previous_chapter_beats = '';
 					foreach ($previous_chapter['beats'] as $beat) {
@@ -733,6 +733,7 @@ Prompt:";
 
 			$previous_beat_summaries = '';
 			$last_beat_full_text = '';
+			$last_beat_lore_book = '';
 			$next_beat = '';
 
 			// Get the current beat
@@ -747,6 +748,7 @@ Prompt:";
 				for ($i = 0; $i < $beatIndex; $i++) {
 					if ($i === $beatIndex - 1) {
 						$last_beat_full_text = $current_chapter['beats'][$i]['beat_text'] ?? '';
+						$last_beat_lore_book = $current_chapter['beats'][$i]['beat_lore_book'] ?? '';
 					} else {
 						$current_beat_summary = $current_chapter['beats'][$i]['beat_summary'] ?? $current_chapter['beats'][$i]['description'] ?? '';
 						$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -761,6 +763,7 @@ Prompt:";
 					for ($i = 0; $i < $prev_beats_count; $i++) {
 						if ($i === $prev_beats_count - 1) {
 							$last_beat_full_text = $prev_chapter_beats[$i]['beat_text'] ?? '';
+							$last_beat_lore_book = $prev_chapter_beats[$i]['beat_lore_book'] ?? '';
 						} else {
 							$current_beat_summary = $prev_chapter_beats[$i]['beat_summary'] ?? $prev_chapter_beats[$i]['description'] ?? '';
 							$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -802,13 +805,46 @@ Prompt:";
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##previous_beat_summaries##' => $previous_beat_summaries,
 				'##last_beat_full_text##' => $last_beat_full_text,
+				'##beat_lore_book##' => $last_beat_lore_book,
 				'##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
 			];
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
-			$resultData = MyHelper::llm_no_tool_call($llm, $current_chapter['example_question'], $current_chapter['example_answer'], $beatPrompt, false);
+			$example_question = '';
+			$example_answer = '';
+
+			if (array_key_exists('example_question', $current_chapter) && array_key_exists('example_answer', $current_chapter)) {
+				$example_question = $current_chapter['example_question'];
+				$example_answer = $current_chapter['example_answer'];
+			} else {
+				$similar_prompts = MyHelper::getEmbeddingSimilarity($current_chapter['short_description'], 0.1, 2, 5);
+				if ($similar_prompts === []) {
+					$similar_prompts = MyHelper::getEmbeddingSimilarity($current_chapter['short_description'], 0.1, 1, 5);
+				}
+
+				if ($similar_prompts !== []) {
+					$question_index = 0;
+					$question = null;
+					shuffle($similar_prompts);
+					while ($question_index < count($similar_prompts)) {
+						$question_id = $similar_prompts[$question_index]->questions_id;
+						$question = SentencesTable::where('id', $question_id)->first();
+						if ($question) {
+							break;
+						}
+						$question_index++;
+					}
+					if ($question) {
+						$example_question = $question['prompt'];
+						$example_answer = $question['sentences'];
+					}
+				}
+			}
+
+
+			$resultData = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $beatPrompt, false);
 
 			$resultData = str_replace('<BR>', "\n", $resultData);
 
@@ -898,6 +934,138 @@ Prompt:";
 			echo json_encode(['success' => true, 'prompt' => $resultData]);
 		}
 
+		public function updateBeatLoreBook(Request $request, $bookSlug, $chapterFilename)
+		{
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
+			if (!$verified['success']) {
+				return response()->json($verified);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$bookJsonPath = "{$bookPath}/book.json";
+			$actsJsonPath = "{$bookPath}/acts.json";
+
+			$bookData = json_decode(File::get($bookJsonPath), true);
+			$actsData = json_decode(File::get($actsJsonPath), true);
+
+			$currentBeatDescription = $request->input('currentBeatDescription') ?? '';
+			$currentBeatText = $request->input('currentBeatText') ?? '';
+			$beatIndex = $request->input('beatIndex', 0);
+			$save_results = ($request->input('save_results', 'true') === 'true');
+
+			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
+
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
+				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
+			} elseif ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
+				$model = $llm === 'open-ai-gpt-4o' ? env('OPEN_AI_GPT4_MODEL') : env('OPEN_AI_GPT4_MINI_MODEL');
+			} else {
+				$model = $llm;
+			}
+
+			// Reconstruct the chapter structure
+			$acts = [];
+			foreach ($actsData as $act) {
+				$actChapters = [];
+				$chapterFiles = File::glob("{$bookPath}/*.json");
+				foreach ($chapterFiles as $chapterFile) {
+					$chapterData = json_decode(File::get($chapterFile), true);
+					if (!isset($chapterData['row'])) {
+						continue;
+					}
+					$chapterData['chapterFilename'] = basename($chapterFile);
+
+					if ($chapterData['row'] === $act['id']) {
+						$actChapters[] = $chapterData;
+					}
+				}
+
+				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
+				$acts[] = [
+					'id' => $act['id'],
+					'title' => $act['title'],
+					'chapters' => $actChapters
+				];
+			}
+
+			// Find current, previous, and next chapters
+			$current_chapter = null;
+			$previous_chapter = null;
+			$next_chapter = null;
+			foreach ($acts as $act) {
+				foreach ($act['chapters'] as $chapter) {
+					if ($current_chapter && !$next_chapter) {
+						$next_chapter = $chapter;
+						break;
+					}
+
+					if ($chapter['chapterFilename'] === $chapterFilename) {
+						$current_chapter = $chapter;
+					}
+
+					if (!$current_chapter) {
+						$previous_chapter = $chapter;
+					}
+				}
+			}
+
+			// Get previous chapter's lore book
+			$previous_lore_book = '';
+			if ($beatIndex > 0) {
+				// If not the first beat, get the previous beat's lore book from the same chapter
+				$previous_lore_book = $current_chapter['beats'][$beatIndex - 1]['beat_lore_book'] ?? '';
+			} elseif ($previous_chapter !== null && isset($previous_chapter['beats'])) {
+				// If it's the first beat of the chapter, get the last beat's lore book from the previous chapter
+				$prev_chapter_beats = $previous_chapter['beats'];
+				$prev_beats_count = count($prev_chapter_beats);
+				if ($prev_beats_count > 0) {
+					$previous_lore_book = $prev_chapter_beats[$prev_beats_count - 1]['beat_lore_book'] ?? '';
+				}
+			}
+
+			// Load the beat prompt template
+			$beatPromptTemplate = File::get(resource_path('prompts/beat_lore_book.txt'));
+
+			$replacements = [
+				'##book_title##' => $bookData['title'] ?? 'no title',
+				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
+				'##book_blurb##' => $bookData['blurb'] ?? 'no blurb',
+				'##language##' => $bookData['language'] ?? 'English',
+				'##act##' => $current_chapter['row'] ?? 'no act',
+				'##chapter##' => $current_chapter['name'] ?? 'no name',
+				'##description##' => $current_chapter['short_description'] ?? 'no description',
+				'##events##' => $current_chapter['events'] ?? 'no events',
+				'##people##' => $current_chapter['people'] ?? 'no people',
+				'##places##' => $current_chapter['places'] ?? 'no places',
+				'##beat_summary##' => $currentBeatDescription ?? '',
+				'##beat_text##' => $currentBeatText ?? '',
+				'##previous_lore_book##' => $previous_lore_book,
+			];
+
+			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
+
+			$resultData = MyHelper::llm_no_tool_call($llm, '', '', $beatPrompt, false);
+
+			if ($save_results) {
+				$chapterFilePath = "{$bookPath}/{$chapterFilename}";
+
+				if (file_exists($chapterFilePath)) {
+					$chapterData = json_decode(file_get_contents($chapterFilePath), true);
+					$chapterData['beats'][$beatIndex]['beat_lore_book'] = $resultData;
+
+					if (file_put_contents($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+						return response()->json(['success' => true, 'message' => 'Wrote beat lore book to file.', 'prompt' => $resultData]);
+					} else {
+						return response()->json(['success' => false, 'message' => __('Failed to write to file')]);
+					}
+				} else {
+					return response()->json(['success' => false, 'message' => __('Chapter file not found')]);
+				}
+			}
+
+			echo json_encode(['success' => true, 'prompt' => $resultData]);
+		}
+
 		public function saveChapterBeats(Request $request, $bookSlug, $chapterFilename)
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
@@ -962,10 +1130,12 @@ Prompt:";
 			$beatDescription = $request->input('beatDescription', '');
 			$beatText = $request->input('beatText', '');
 			$beatSummary = $request->input('beatSummary', '');
+			$beatLoreBook = $request->input('beatLoreBook', '');
 
 			$chapterData['beats'][$beatIndex]['description'] = $beatDescription;
 			$chapterData['beats'][$beatIndex]['beat_text'] = $beatText;
 			$chapterData['beats'][$beatIndex]['beat_summary'] = $beatSummary;
+			$chapterData['beats'][$beatIndex]['beat_lore_book'] = $beatLoreBook;
 
 			if (File::put($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
 				return response()->json(['success' => true, 'message' => 'Beats saved.']);

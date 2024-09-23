@@ -561,6 +561,12 @@
 		'Save Beat' => 'Save Beat',
 		'Write Beat Text' => 'Write Beat Text',
 		'Write Summary' => 'Write Summary',
+		'Beat Lore Book' => 'Beat Lore Book',
+		'Update Beat Lore Book' => 'Update Beat Lore Book',
+		'Save Beat Lore Book' => 'Save Beat Lore Book',
+		'Updating Lore Book...' => 'Updating Lore Book...',
+		'Beat lore book updated successfully!' => 'Beat lore book updated successfully!',
+
 		'Beat' => 'Beat',
 		'Failed to create beats: ' => 'Failed to create beats: ',
 		'An error occurred while creating beats.' => 'An error occurred while creating beats.',
@@ -608,6 +614,7 @@
 		'Failed to generate cover: ' => 'Failed to generate cover: ',
 		'Cover saved successfully!' => 'Cover saved successfully!',
 		'Failed to save cover: ' => 'Failed to save cover: ',
+		'Number of beats per chapter:' => 'Number of beats per chapter:',
 
 		'This process will write the texts and the summaries for all beats in all chapters. Please wait...' => 'This process will write the texts and the summaries for all beats in all chapters. Please wait...',
 		'Processing chapter: ${chapterName}' => 'Processing chapter: ${chapterName}',

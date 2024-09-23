@@ -98,7 +98,7 @@ function createChapter(chapter) {
 				<div class="btn bt-lg btn-info w-100" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" >${__e('Edit Chapter')}</div>
 			</div>
     <div class="col-12 col-lg-6 mb-2 zero-left-padding-on-mobile">
-			<a class="btn bt-lg btn-primary w-100" href="/book-beats/${bookSlug}/${chapter.chapterFilename.replace('.json', '')}">${__e('Open Beats')}</a>
+			<a class="btn bt-lg btn-primary w-100 editBeatsLink" href="/book-beats/${bookSlug}/${chapter.chapterFilename.replace('.json', '')}/3">${__e('Open Beats')}</a>
 	    </div>
     </div>
   </div>
@@ -419,5 +419,15 @@ $(document).ready(function () {
 	
 	$('#chapterModal').on('shown.bs.modal', function () {
 		$('#chapterName').focus();
+	});
+	
+	$('#beatsPerChapter').on('change', function() {
+		let selectedBeats = $(this).val();
+		$('.editBeatsLink').each(function() {
+			let currentHref = $(this).attr('href');
+			console.log(currentHref);
+			let newHref = currentHref.replace(/\/\d+$/, '/' + selectedBeats);
+			$(this).attr('href', newHref);
+		});
 	});
 });

@@ -29,6 +29,8 @@
 	<script>
 		let bookData = @json($book);
 		let bookSlug = "{{$book_slug}}";
+		let selectedChapter = "{{$selected_chapter}}";
+		let selectedChapterIndex = "{{$selected_chapter_index}}";
 	</script>
 
 </head>
@@ -53,66 +55,76 @@
 							style="width: 100%; object-fit: cover;"
 							id="bookCover">
 						<br>
-						<button class="btn btn-primary mb-3 mt-1 w-100" title="{{__('default.Cover Image')}}" id="createCoverBtn">
-							<i class="bi bi-image"></i> {{__('default.Cover Image')}}
-						</button>
-							
-							<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
-							<select id="llmSelect" class="form-select mx-auto mb-1">
-								<?php
-								if (Auth::user() && Auth::user()->isAdmin()) {
-									?>
-								<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-								<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-								<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
-									<?php
-								} else {
-									?>
-								<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-									<?php
-								}
+						
+						<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
+						<select id="llmSelect" class="form-select mx-auto mb-1">
+							<?php
+							if (Auth::user() && Auth::user()->isAdmin()) {
 								?>
-								{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
-								{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
-								{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
-								{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
-								<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-								<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-								<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-								<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-								{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
-								{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
-								{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
-								{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
-								<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-								{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
-								{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
-								{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
-							
-							</select>
-							
-							<button type="button" class="btn btn-primary mt-2 mb-1 w-100" id="writeAllBeatsBtn"
-							        title="{{__('default.Write All Beats')}}"><i
-									class="bi bi-lightning-charge"></i> {{__('default.Write All Beat Contents')}}
-							</button>
-							
-							<button class="btn btn-primary mb-3 mt-1 w-100" id="showchapterBeatsBtn"
-							        title="{{__('default.Read all beats')}}">
-								<i class="bi bi-book-half"></i> {{__('default.Read all beats')}}
-							</button>
-							
-							<a href="{{route('playground.book-details', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
-							   title="{{__('default.Back to Chapters')}}"><i
-									class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
-							<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
-									class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
+							<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
+							<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+							<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
+								<?php
+							} else {
+								?>
+							<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
+								<?php
+							}
+							?>
+							{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
+							{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
+							{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
+							{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
+							<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+							<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+							<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+							<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+							{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
+							{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
+							{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
+							{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
+							<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+							{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
+							{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
+							{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+						
+						</select>
+						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
+						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
+							<option value="2">2</option>
+							<option value="3" selected>3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+						<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
+								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
+						<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
+						        id="saveBeatsBtn"><i
+								class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
+						
+						<button type="button" class="btn btn-primary mt-2 mb-1 w-100" id="writeAllBeatsBtn"
+						        title="{{__('default.Write All Beats')}}"><i
+								class="bi bi-lightning-charge"></i> {{__('default.Write All Beat Contents')}}
+						</button>
+						
+						<a href="{{route('playground.book-details', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
+						   title="{{__('default.Back to Chapters')}}"><i
+								class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
+						<a href="{{route('playground.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
+								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 					
 					</div>
 					<!-- Text Blocks Div -->
 					<div class="col-lg-7 col-12">
-						<span style="font-size: 16px; font-weight: normal; font-style: italic;" id="bookBlurb">{{$book['blurb']}}</span>
+						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
+						      id="bookBlurb">{{$book['blurb']}}</span>
 						<br><br>
-
+						
 						
 						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
 						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
@@ -130,6 +142,9 @@
 		@php
 			//dd($book);
 			$chapter_index = 0;
+			if ($selected_chapter_index !== 0) {
+				$chapter_index = $selected_chapter_index -1;
+			}
 		@endphp
 		
 		<div class="card-header modal-header modal-header-color mb-4">
@@ -170,13 +185,15 @@
 								@php
 									$index++;
 								@endphp
-								<div class="mb-3 beat-outer-container" data-chapter-index="{{$chapter_index}}" data-chapter-filename="{{$chapter['chapterFilename']}}"
+								<div class="mb-3 beat-outer-container" data-chapter-index="{{$chapter_index}}"
+								     data-chapter-filename="{{$chapter['chapterFilename']}}"
 								     data-beat-index="{{$index}}">
 									<h6>{{__('default.Beat')}} {{$index+1}}</h6>
 									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}">
 										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Description')}}</label>
-										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}" class="form-control beat-description-textarea"
+										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
+										          class="form-control beat-description-textarea"
 										          rows="3">{{$beat['description'] ?? ''}}</textarea>
 									</div>
 									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
@@ -192,11 +209,21 @@
 										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
 									</div>
 									
-									<div class="" data-chapter-index="{{$chapter_index}}" data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
-										<button
+									<div id="beatLoreBookArea_{{$chapter_index}}_{{$index}}" class="mt-3">
+										<label for="beatLoreBook_{{$chapter_index}}_{{$index}}"
+										       class="form-label">{{__('default.Beat Lore Book')}}</label>
+										<textarea id="beatLoreBook_{{$chapter_index}}_{{$index}}" class="form-control beat-lore-book-textarea"
+										          rows="6">{{$beat['beat_lore_book'] ?? ''}}</textarea>
+									</div>
+									
+									<div class="" data-chapter-index="{{$chapter_index}}"
+									     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
+										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
 											class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-										<button
+										<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
 											class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
+										<button id="updateBeatLoreBookBtn_{{$chapter_index}}_{{$index}}"
+											class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">{{__('default.Update Beat Lore Book')}}</button>
 										<button class="saveBeatBtn btn btn-success mt-3 me-2">{{__('default.Save Beat')}}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
 									</div>
