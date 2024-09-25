@@ -29,6 +29,92 @@
 
 	class StaticPagesController extends Controller
 	{
+
+		private array $genres_array = array(
+			"Action",
+			"Biography",
+			"Body, Mind & Spirit",
+			"Business & Economics",
+			"Education",
+			"Family & Relationships",
+			"Health & Fitness",
+			"Romance",
+			"Young Adult",
+			"Horror",
+			"Fantasy",
+			"Realistic",
+			"LGBTQ+",
+			"Science Fiction",
+			"Dark Humor",
+			"Mystery",
+			"Thriller",
+			"Historical",
+			"Paranormal",
+			"Adventure",
+			"Crime",
+			"Children's Literature",
+			"Steampunk",
+			"Chick Lit",
+			"Post-Apocalyptic",
+			"Humor",
+			"Drama",
+			"Western",
+			"Space Opera"
+		);
+
+		private array $adult_genres_array = array(
+			"Contemporary Erotica", "Paranormal Erotica", "BDSM Erotica", "Romance Erotica", "LGBT+ Erotica", "Erotic Thriller", "Erotic Fantasy", "Taboo/Forbidden romance", "Polyamory/Menage", "Erotic Science Fiction", "Erotic Mystery", "Erotic Horror", "Erotic Comedy", "Erotic Steampunk", "Erotic Sword and Sorcery", "Erotic Noir");
+
+		private array $writingStyles = [
+			[
+				"value" => "Descriptive",
+				"label" => "Descriptive - Rich, detailed, and imaginative language",
+			],
+			[
+				"value" => "Expository",
+				"label" => "Expository - Informative and straightforward writing style",
+			],
+			[
+				"value" => "Narrative",
+				"label" => "Narrative - Tells a story through a series of events",
+			],
+			[
+				"value" => "Persuasive",
+				"label" => "Persuasive - Aims to convince the reader of a certain viewpoint",
+			],
+			[
+				"value" => "Argumentative",
+				"label" => "Argumentative - Presents a debatable issue with a clear position",
+			],
+			[
+				"value" => "Stream Of Consciousness",
+				"label" => "Stream Of Consciousness",
+			],
+			[
+				"value" => "Satirical",
+				"label" => "Satirical",
+			],
+			[
+				"value" => "Minimalist",
+				"label" => "Minimalist - Uses simple, concise language and avoids unnecessary detail or embellishment",
+			]
+		];
+
+		private array $narrativeStyles = [
+			[
+				"value" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
+				"label" => "<span style=\"font-weight: bold;\">First-person:</span><br>The story is told from the perspective of a single character using \"I\" or \"we\" pronouns, providing direct access to the character's thoughts and feelings.",
+			],
+			[
+				"value" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
+				"label" => "<span style=\"font-weight: bold;\">Second-person:</span><br>The narrator addresses the reader directly using \"you\" pronouns, engaging the reader as an active participant in the story.",
+			],
+			[
+				"value" => "Third Person - The narrator has a godlike perspective",
+				"label" => "<span style=\"font-weight: bold;\">Third-person Omniscient:</span><br>The narrator has a godlike perspective, knowing all characters' thoughts and feelings, as well as past, present, and future events.",
+			],
+		];
+
 		//-------------------------------------------------------------------------
 		// Index
 		public function index(Request $request)
@@ -37,7 +123,10 @@
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
 			$json_translations = $this->write_js_translations();
 
-			return view("playground.index", compact('posts', 'locale', 'json_translations'));
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.index", compact('posts', 'locale', 'json_translations', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -60,7 +149,11 @@
 					$blog_post->category_name = BinshopsCategoryTranslation::where('category_id', $category['category_id'])->first()->category_name ?? '';
 				}
 			}
-			return view("playground.single-post", compact('blog_post'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.single-post", compact('blog_post', 'locale', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function blog(Request $request)
@@ -68,7 +161,11 @@
 			$posts = MyHelper::getBlogData();
 
 			// Return to the existing blog list view with the posts
-			return view("playground.blog-listing", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.blog-listing", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -76,7 +173,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.about-us", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.about-us", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -84,14 +185,22 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.faq", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.faq", compact('posts', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function blogGrid(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.blog-grid", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.blog-grid", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -99,7 +208,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.blog-detail", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.blog-detail", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -107,7 +220,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.my-profile", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.my-profile", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -115,7 +232,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.help-center", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.help-center", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -123,7 +244,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.contact-us", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.contact-us", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -131,7 +256,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.privacy-policy", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.privacy-policy", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -139,7 +268,11 @@
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.terms", compact('posts'));
+
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+			return view("playground.terms", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -244,8 +377,10 @@
 				['background' => '#FFFFFF', 'text' => '#000000']
 			];
 
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions'));
+			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function allBooks(Request $request)
@@ -304,8 +439,10 @@
 				return (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner'] ?? '') === 'admin');
 			});
 
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.all-books', compact('locale', 'json_translations', 'books'));
+			return view('playground.all-books', compact('locale', 'json_translations', 'books', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksList(Request $request)
@@ -377,7 +514,11 @@
 				['path' => $request->url(), 'query' => $request->query()]
 			);
 
-			return view('playground.books-list', compact('locale', 'json_translations', 'paginatedBooks'));
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+
+
+			return view('playground.books-list', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksDetail(Request $request, $slug)
@@ -458,8 +599,10 @@
 				['background' => '#FFFFFF', 'text' => '#000000']
 			];
 
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.books-detail', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions'));
+			return view('playground.books-detail', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function startWriting(Request $request)
@@ -467,9 +610,14 @@
 			$random_int = rand(1, 16);
 			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 
+			$genres_array = $this->genres_array;
+			$adult_genres_array = $this->adult_genres_array;
+			$writingStyles = $this->writingStyles;
+			$narrativeStyles = $this->narrativeStyles;
+
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.start-writing", compact('posts', 'coverFilename'));
+			return view("playground.start-writing", compact('posts', 'coverFilename', 'adult_genres_array', 'genres_array', 'writingStyles', 'narrativeStyles'));
 
 		}
 

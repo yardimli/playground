@@ -50,59 +50,97 @@
 								</select>
 							</div>
 							
-							<div class="mb-3">
-								<label for="language" class="form-label">{{__('default.Book Structure')}}:</label>
+							<div class="row">
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="language" class="form-label">{{__('default.Book Structure')}}:</label>
+									
+									<select class="form-control" id="bookStructure" name="bookStructure" required>
+										<option
+											value="{{__('default.fichtean_curve.txt')}}">{{__('default.Fichtean Curve (3 Acts, 8 Chapters)')}}</option>
+										<option
+											value="{{__('default.freytags_pyramid.txt')}}">{{__('default.Freytag\'s Pyramid (5 Acts, 9 Chapters)')}}</option>
+										<option
+											value="{{__('default.heros_journey.txt')}}">{{__('default.Hero\'s Journey (3 Acts, 12 Chapters)')}}</option>
+										<option
+											value="{{__('default.story_clock.txt')}}">{{__('default.Story Clock (4 Acts, 12 Chapters)')}}</option>
+										<option
+											value="{{__('default.save_the_cat.txt')}}">{{__('default.Save The Cat (4 Acts, 15 Chapters)')}}</option>
+										<option
+											value="{{__('default.dan_harmons_story_circle.txt')}}">{{__('default.Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)')}}</option>
+									</select>
+								</div>
 								
-								<select class="form-control" id="bookStructure" name="bookStructure" required>
-									<option
-										value="{{__('default.fichtean_curve.txt')}}">{{__('default.Fichtean Curve (3 Acts, 8 Chapters)')}}</option>
-									<option
-										value="{{__('default.freytags_pyramid.txt')}}">{{__('default.Freytag\'s Pyramid (5 Acts, 9 Chapters)')}}</option>
-									<option
-										value="{{__('default.heros_journey.txt')}}">{{__('default.Hero\'s Journey (3 Acts, 12 Chapters)')}}</option>
-									<option
-										value="{{__('default.story_clock.txt')}}">{{__('default.Story Clock (4 Acts, 12 Chapters)')}}</option>
-									<option
-										value="{{__('default.save_the_cat.txt')}}">{{__('default.Save The Cat (4 Acts, 15 Chapters)')}}</option>
-									<option
-										value="{{__('default.dan_harmons_story_circle.txt')}}">{{__('default.Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)')}}</option>
-								</select>
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}</label>
+									<select id="llmSelect" class="form-select mx-auto mb-3">
+										<?php
+										if (Auth::user() && Auth::user()->isAdmin()) {
+											?>
+										<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
+										<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
+										<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
+											<?php
+										} else {
+											?>
+										<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
+											<?php
+										}
+										?>
+										{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
+										{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
+										{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
+										{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
+										<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
+										<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
+										<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
+										<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
+										{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
+										{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
+										{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
+										{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
+										<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
+										{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
+										{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
+										{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+									
+									</select>
+								</div>
 							</div>
 							
-							<div class="mb-3">
-								<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}</label>
-								<select id="llmSelect" class="form-select mx-auto mb-3">
-									<?php
-									if (Auth::user() && Auth::user()->isAdmin()) {
-										?>
-									<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-									<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-									<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
-										<?php
-									} else {
-										?>
-									<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-										<?php
-									}
-									?>
-									{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
-									{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
-									{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
-									{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
-									<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-									<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-									<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-									<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-									{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
-									{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
-									{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
-									{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
-									<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-									{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
-									{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
-									{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+							<div class="row">
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="adultContent" class="form-label">{{__('default.Content Type')}}:</label>
+									<select class="form-control" id="adultContent" name="adultContent" required>
+										<option value="non-adult">{{__('default.Non-Adult')}}</option>
+										<option value="adult">{{__('default.Adult')}}</option>
+									</select>
+								</div>
 								
-								</select>
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="genre" class="form-label">{{__('default.Genre')}}:</label>
+									<select class="form-control" id="genre" name="genre" required>
+										<!-- Options will be populated dynamically -->
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
+									<select class="form-control" id="writingStyle" name="writingStyle" required>
+										@foreach($writingStyles as $style)
+											<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
+										@endforeach
+									</select>
+								</div>
+								
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
+									<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
+										@foreach($narrativeStyles as $style)
+											<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
+										@endforeach
+									</select>
+								</div>
 							</div>
 							
 							<div class="mb-3" style="font-size: 14px;" id="hint_1">
@@ -160,7 +198,34 @@
 	let exampleQuestion = '';
 	let exampleAnswer = '';
 	
+	// Function to update genre dropdown
+	function updateGenreDropdown(genres) {
+		const genreDropdown = $('#genre');
+		genreDropdown.empty();
+		genres.forEach(genre => {
+			genreDropdown.append($('<option></option>').val(genre).text(genre));
+		});
+	}
+	
 	$(document).ready(function () {
+		// Define genre arrays
+		const adultGenres = {!! json_encode($adult_genres_array) !!};
+		const nonAdultGenres = {!! json_encode($genres_array) !!};
+		
+		// Initial genre dropdown population
+		updateGenreDropdown(nonAdultGenres);
+		
+		// Handle adult content dropdown change
+		$('#adultContent').on('change', function () {
+			const selectedValue = $(this).val();
+			if (selectedValue === 'adult') {
+				updateGenreDropdown(adultGenres);
+			} else {
+				updateGenreDropdown(nonAdultGenres);
+			}
+		});
+		
+		
 		$("#llmSelect").on('change', function () {
 			localStorage.setItem('llm', $(this).val());
 			savedLlm = $(this).val();
@@ -190,8 +255,12 @@
 				data: {
 					user_blurb: $('#user_blurb').val(),
 					language: $('#language').val(),
-					bookStructure: $('#bookStructure').val(),
+					book_structure: $('#bookStructure').val(),
 					llm: savedLlm,
+					adultContent: $('#adultContent').val(),
+					genre: $('#genre').val(),
+					writingStyle: $('#writingStyle').val(),
+					narrativeStyle: $('#narrativeStyle').val(),
 				},
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -242,7 +311,7 @@
 				data: {
 					user_blurb: $('#user_blurb').val(),
 					language: $('#language').val(),
-					bookStructure: $('#bookStructure').val(),
+					book_structure: $('#bookStructure').val(),
 					book_title: $('#book_title').val(),
 					book_blurb: $('#book_blurb').val(),
 					back_cover_text: $('#back_cover_text').val(),
@@ -250,6 +319,10 @@
 					example_question: exampleQuestion,
 					example_answer: exampleAnswer,
 					llm: savedLlm,
+					adult_content: $('#adultContent').val(),
+					genre: $('#genre').val(),
+					writing_style: $('#writingStyle').val(),
+					narrative_style: $('#narrativeStyle').val(),
 				},
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

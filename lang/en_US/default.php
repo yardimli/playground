@@ -619,5 +619,12 @@
 		'This process will write the texts and the summaries for all beats in all chapters. Please wait...' => 'This process will write the texts and the summaries for all beats in all chapters. Please wait...',
 		'Processing chapter: ${chapterName}' => 'Processing chapter: ${chapterName}',
 		'Error processing chapter ${chapterName}: ${error}' => 'Error processing chapter ${chapterName}: ${error}',
+
+		'Content Type' => 'Content Type',
+		'Non-Adult' => 'Non-Adult',
+		'Adult' => 'Adult',
+		'Genre' => 'Genre',
+		'Writing Style' => 'Writing Style',
+		'Narrative Style' => 'Narrative Style',
 	];
 

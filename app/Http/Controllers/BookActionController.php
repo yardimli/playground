@@ -26,6 +26,10 @@
 			$language = $request->input('language', __('Default Language'));
 			$userBlurb = $request->input('user_blurb', '');
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
+			$adultContent = $request->input('adult_content', 'false');
+			$genre = $request->input('genre', 'fantasy');
+			$writingStyle = $request->input('writing_style', 'Minimalist');
+			$narrativeStyle = $request->input('narrative_style', 'Third Person - The narrator has a godlike perspective');
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
@@ -69,8 +73,7 @@
 				}
 			}
 
-			$prompt = str_replace(['##user_blurb##', '##language##'], [$userBlurb, $language], $prompt);
-
+			$prompt = str_replace(['##user_blurb##', '##language##', '##adult_content""', '##genre##', '##writing_style##', '##narrative_style##'], [$userBlurb, $language, $adultContent, $genre, $writingStyle, $narrativeStyle], $prompt);
 			$results = $schema === []
 				? MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true, $language)
 				: MyHelper::function_call($llm, $example_question, $example_answer, $prompt, $schema, $language);
@@ -109,7 +112,7 @@
 			}
 
 			$language = $request->input('language', __('Default Language'));
-			$bookStructure = $request->input('bookStructure', __('Default Structure'));
+			$bookStructure = $request->input('book_structure', __('Default Structure'));
 			$userBlurb = $request->input('user_blurb', '');
 			$bookTitle = $request->input('book_title', '');
 			$bookBlurb = $request->input('book_blurb', '');
@@ -117,6 +120,11 @@
 			$characterProfiles = $request->input('character_profiles', '');
 			$exampleQuestion = $request->input('example_question', '');
 			$exampleAnswer = $request->input('example_answer', '');
+
+			$adultContent = $request->input('adult_content', 'false');
+			$genre = $request->input('genre', 'fantasy');
+			$writingStyle = $request->input('writing_style', 'Minimalist');
+			$narrativeStyle = $request->input('narrative_style', 'Third Person - The narrator has a godlike perspective');
 
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
 
@@ -141,6 +149,10 @@
 				'##book_blurb##' => $bookBlurb,
 				'##back_cover_text##' => $backCoverText,
 				'##character_profiles##' => $characterProfiles,
+				'##genre##' => $genre,
+				'##adult_content##' => $adultContent,
+				'##writing_style##' => $writingStyle,
+				'##narrative_style##' => $narrativeStyle,
 			];
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
@@ -171,6 +183,10 @@
 					'character_profiles' => $characterProfiles,
 					'prompt' => $userBlurb,
 					'language' => $language,
+					'adult_content' => $adultContent,
+					'genre' => $genre,
+					'writing_style' => $writingStyle,
+					'narrative_style' => $narrativeStyle,
 					'model' => $model,
 					'example_question' => $exampleQuestion,
 					'example_answer' => $exampleAnswer,
@@ -578,6 +594,10 @@ Prompt:";
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##beats_per_chapter##' => $beats_per_chapter,
 				'##beats_per_chapter_list##' => $beats_per_chapter_list,
+				'##character_profiles##' => $bookData['character_profiles'] ?? 'no character profiles',
+				'##genre##' => $bookData['genre'] ?? 'fantasy',
+				'##writing_style##' => $bookData['writing_style'] ?? 'Minimalist',
+				'##narrative_style##' => $bookData['narrative_style'] ?? 'Third Person - The narrator has a godlike perspective',
 			];
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
@@ -808,6 +828,9 @@ Prompt:";
 				'##beat_lore_book##' => $last_beat_lore_book,
 				'##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
+				'##genre##' => $bookData['genre'] ?? 'fantasy',
+				'##writing_style##' => $bookData['writing_style'] ?? 'Minimalist',
+				'##narrative_style##' => $bookData['narrative_style'] ?? 'Third Person - The narrator has a godlike perspective',
 			];
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);

@@ -1,6 +1,11 @@
 The subject of the book is:
 ##user_blurb##
 it is written in ##language##.
+genre is ##genre##.
+adult content is ##adult_content##.
+try writing as ##writing_style##.
+write as ##narrative_style##.
+it is written in ##language##.
 
 Output should be as follows:
 {

@@ -4,6 +4,9 @@ Book Blurb: ##book_blurb##
 Book Language: ##language##
 Character Profiles:
 ##character_profiles##
+genre is ##genre##.
+try writing as ##writing_style##.
+write as ##narrative_style##.
 
 What has happened so far:
 ##previous_chapter##

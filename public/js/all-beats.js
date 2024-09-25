@@ -300,9 +300,16 @@ function writeAllBeats() {
 						return writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, false, true);
 					})
 					.then(() => {
+						let beatText = $(`#beatText_${chapterIndex}_${beatIndex}`).val();
+						return updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, false, true);
+					})
+					.then(() => {
 						//add the newly written summary to the log
 						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
 						$('#writeAllBeatsLog').append('<br>' + $(`#beatSummary_${chapterIndex}_${beatIndex}`).val());
+						
+						$('#writeAllBeatsLog').append('<br><em>' + __e('Lore Book for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
+						$('#writeAllBeatsLog').append('<br>' + $(`#beatLoreBook_${chapterIndex}_${beatIndex}`).val());
 						
 						processedBeats++;
 						let progress = Math.round((processedBeats / totalBeats) * 100);

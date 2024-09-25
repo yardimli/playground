@@ -1,5 +1,10 @@
 The subject of the book is:
 ##user_blurb##
+genre is ##genre##.
+adult content is ##adult_content##.
+try writing as ##writing_style##.
+write as ##narrative_style##.
+it is written in ##language##.
 
 Book Title: ##book_title##
 Book Blurb: ##book_blurb##

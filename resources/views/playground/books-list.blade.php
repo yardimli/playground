@@ -23,126 +23,16 @@
 			</div>
 			<div class="acod-content collapse book-list-small-container-color" id="collapseExample">
 				<div class="widget widget_services">
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Action" id="productRadio3" name="category">
-						<label class="form-check-label" for="productRadio3">
-							Action
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Biography & Autobiography" id="productRadio4" name="category">
-						<label class="form-check-label" for="productRadio4">
-							Biography & Autobiography
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Body, Mind & Spirit" id="productRadio5" name="category">
-						<label class="form-check-label" for="productRadio5">
-							Body, Mind & Spirit
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Business & Economics" id="productRadio6" name="category">
-						<label class="form-check-label" for="productRadio6">
-							Business & Economics
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Children Fiction" id="productRadio7" name="category">
-						<label class="form-check-label" for="productRadio7">
-							Children Fiction
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Children Non-Fiction" id="productRadio8" name="category">
-						<label class="form-check-label" for="productRadio8">
-							Children Non-Fiction
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Cooking" id="productRadio10" name="category">
-						<label class="form-check-label" for="productRadio10">
-							Cooking
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Crafts & Hobbies" id="productRadio11" name="category">
-						<label class="form-check-label" for="productRadio11">
-							Crafts & Hobbies
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Design" id="productRadio12" name="category">
-						<label class="form-check-label" for="productRadio12">
-							Design
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Drama" id="productRadio13" name="category">
-						<label class="form-check-label" for="productRadio13">
-							Drama
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Education" id="productRadio14" name="category">
-						<label class="form-check-label" for="productRadio14">
-							Education
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Family & Relationships" id="productRadio15" name="category">
-						<label class="form-check-label" for="productRadio15">
-							Family & Relationships
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Fiction" id="productRadio16" name="category">
-						<label class="form-check-label" for="productRadio16">
-							Fiction
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Foreign Language Study" id="productRadio17" name="category">
-						<label class="form-check-label" for="productRadio17">
-							Foreign Language Study
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Games" id="productRadio18" name="category">
-						<label class="form-check-label" for="productRadio18">
-							Games
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Gardening" id="productRadio19" name="category">
-						<label class="form-check-label" for="productRadio19">
-							Gardening
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Health & Fitness" id="productRadio20" name="category">
-						<label class="form-check-label" for="productRadio20">
-							Health & Fitness
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="History" id="productRadio21" name="category">
-						<label class="form-check-label" for="productRadio21">
-							History
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Humor" id="productRadio23" name="category">
-						<label class="form-check-label" for="productRadio23">
-							Humor
-						</label>
-					</div>
-					<div class="form-check search-content">
-						<input class="form-check-input" type="radio" value="Mathematics" id="productRadio25" name="category">
-						<label class="form-check-label" for="productRadio25">
-							Mathematics
-						</label>
-					</div>
+					@foreach($genres_array as $genre)
+						@php $genre_slug = Str::slug($genre); @endphp
+						<div class="form-check search-content">
+							<input class="form-check-input" type="radio" value="{{$genre}}" id="genre_{{$genre_slug}}" name="category">
+							<label class="form-check-label" for="genre_{{$genre_slug}}">
+								{{$genre}}
+							</label>
+						</div>
+					@endforeach
+					
 				</div>
 			</div>
 			
