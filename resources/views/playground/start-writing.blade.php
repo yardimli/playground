@@ -125,6 +125,15 @@
 							</div>
 							<div class="row">
 								<div class="mb-3 col-12 col-xl-6">
+									<label for="authorName" class="form-label">{{__('default.Author Name')}}:</label>
+									<input type="text" class="form-control" id="authorName" name="authorName" required value="{{ Auth::user()->username ?? 'Noname Penname' }}">
+								</div>
+								<div class="mb-3 col-12 col-xl-6">
+									<label for="publisherName" class="form-label">{{__('default.Publisher Name')}}:</label>
+									<input type="text" class="form-control" id="publisherName" name="publisherName" required value="WBWAI Publishing">
+							</div>
+							<div class="row">
+								<div class="mb-3 col-12 col-xl-6">
 									<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
 									<select class="form-control" id="writingStyle" name="writingStyle" required>
 										@foreach($writingStyles as $style)
@@ -256,6 +265,8 @@
 					user_blurb: $('#user_blurb').val(),
 					language: $('#language').val(),
 					book_structure: $('#bookStructure').val(),
+					author_name: $('#authorName').val(),
+					publisher_name: $('#publisherName').val(),
 					llm: savedLlm,
 					adultContent: $('#adultContent').val(),
 					genre: $('#genre').val(),
@@ -312,6 +323,8 @@
 					user_blurb: $('#user_blurb').val(),
 					language: $('#language').val(),
 					book_structure: $('#bookStructure').val(),
+					author_name: $('#authorName').val(),
+					publisher_name: $('#publisherName').val(),
 					book_title: $('#book_title').val(),
 					book_blurb: $('#book_blurb').val(),
 					back_cover_text: $('#back_cover_text').val(),

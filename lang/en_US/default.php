@@ -391,6 +391,7 @@
 		'dan_harmons_story_circle.txt' => 'dan_harmons_story_circle.txt',
 
 		//index.php
+		'Language' => 'Language',
 		'Default Language' => 'English',
 		'Default Structure' => 'fichtean_curve.txt',
 		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
@@ -626,5 +627,8 @@
 		'Genre' => 'Genre',
 		'Writing Style' => 'Writing Style',
 		'Narrative Style' => 'Narrative Style',
+		'Publisher Name' => 'Publisher Name',
+		'Author Name' => 'Author Name',
+		'Book Description' => 'Book Description',
 	];
 

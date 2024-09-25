@@ -33,17 +33,12 @@
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/book_schema_anthropic_1.json')), true);
-				$prompt = File::get(resource_path('prompts/book_prompt_anthropic_1.txt'));
 			} elseif ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$model = $llm === 'open-ai-gpt-4o' ? env('OPEN_AI_GPT4_MODEL') : env('OPEN_AI_GPT4_MINI_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/book_schema_openai_1.json')), true);
-				$prompt = File::get(resource_path('prompts/book_prompt_openai_1.txt'));
 			} else {
 				$model = $llm;
-				$prompt = File::get(resource_path('prompts/book_prompt_no_function_calling_1.txt'));
-				$schema = [];
 			}
+			$prompt = File::get(resource_path('prompts/book_prompt.txt'));
 
 			$example_question = '';
 			$example_answer = '';
@@ -74,9 +69,7 @@
 			}
 
 			$prompt = str_replace(['##user_blurb##', '##language##', '##adult_content""', '##genre##', '##writing_style##', '##narrative_style##'], [$userBlurb, $language, $adultContent, $genre, $writingStyle, $narrativeStyle], $prompt);
-			$results = $schema === []
-				? MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true, $language)
-				: MyHelper::function_call($llm, $example_question, $example_answer, $prompt, $schema, $language);
+			$results = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true, $language);
 
 			if (!empty($results['title']) && !empty($results['blurb']) && !empty($results['back_cover_text']) && !empty($results['character_profiles'])) {
 
@@ -121,6 +114,9 @@
 			$exampleQuestion = $request->input('example_question', '');
 			$exampleAnswer = $request->input('example_answer', '');
 
+			$authorName = $request->input('author_name', '');
+			$publisherName = $request->input('publisher_name', '');
+
 			$adultContent = $request->input('adult_content', 'false');
 			$genre = $request->input('genre', 'fantasy');
 			$writingStyle = $request->input('writing_style', 'Minimalist');
@@ -130,17 +126,12 @@
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/book_schema_anthropic_1.json')), true);
-				$prompt = File::get(resource_path('prompts/book_prompt_anthropic_1.txt'));
 			} elseif ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$model = $llm === 'open-ai-gpt-4o' ? env('OPEN_AI_GPT4_MODEL') : env('OPEN_AI_GPT4_MINI_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/book_schema_openai_1.json')), true);
-				$prompt = File::get(resource_path('prompts/book_prompt_openai_1.txt'));
 			} else {
 				$model = $llm;
-				$prompt = File::get(resource_path("prompts/{$bookStructure}"));
-				$schema = [];
 			}
+			$prompt = File::get(resource_path("prompts/{$bookStructure}"));
 
 			$replacements = [
 				'##user_blurb##' => $userBlurb,
@@ -157,9 +148,7 @@
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
-			$results = $schema === []
-				? MyHelper::llm_no_tool_call($llm, $exampleQuestion, $exampleAnswer, $prompt, true, $language)
-				: MyHelper::function_call($llm, $exampleQuestion, $exampleAnswer, $prompt, $schema, $language);
+			$results = MyHelper::llm_no_tool_call($llm, $exampleQuestion, $exampleAnswer, $prompt, true, $language);
 
 			//loop all data fields and replace <BR> with \n
 			foreach ($results as $key => $value) {
@@ -180,6 +169,8 @@
 					'title' => $bookTitle,
 					'back_cover_text' => $backCoverText,
 					'blurb' => $bookBlurb,
+					'author_name' => $authorName,
+					'publisher_name' => $publisherName,
 					'character_profiles' => $characterProfiles,
 					'prompt' => $userBlurb,
 					'language' => $language,
@@ -559,17 +550,12 @@ Prompt:";
 
 			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$model = $llm === 'anthropic-haiku' ? env('ANTHROPIC_HAIKU_MODEL') : env('ANTHROPIC_SONET_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/beat_schema_anthropic_1.json')), true);
-				$prompt = File::get(resource_path('prompts/beat_prompt_anthropic_1.txt'));
 			} elseif ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$model = $llm === 'open-ai-gpt-4o' ? env('OPEN_AI_GPT4_MODEL') : env('OPEN_AI_GPT4_MINI_MODEL');
-				$schema = json_decode(File::get(resource_path('prompts/beat_schema_openai_1.json')), true);
-				$prompt = File::get(resource_path('prompts/beat_prompt_openai_1.txt'));
 			} else {
 				$model = $llm;
-				$prompt = File::get(resource_path('prompts/beat_prompt_no_function_calling_1.txt'));
-				$schema = [];
 			}
+			$prompt = File::get(resource_path('prompts/beat_prompt.txt'));
 
 			$beats_per_chapter_list = '';
 			for ($i = 0; $i < $beats_per_chapter; $i++) {
@@ -627,9 +613,7 @@ Prompt:";
 				}
 			}
 
-			$resultData = $schema === []
-				? MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true)
-				: MyHelper::function_call($llm, $example_question, $example_answer, $prompt, $schema);
+			$resultData = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true);
 
 			//loop all data fields and replace <BR> with \n
 			foreach ($resultData as $key => $value) {
