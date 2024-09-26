@@ -201,30 +201,40 @@
 										       class="form-label">{{__('default.Beat Text')}}</label>
 										<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 										          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
+										<br>
+										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}" data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
 									</div>
 									<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-3">
 										<label for="beatSummary_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Summary')}}</label>
 										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}" class="form-control beat-summary-textarea"
 										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
+										<br>
+										<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
 									</div>
 									
 									<div id="beatLoreBookArea_{{$chapter_index}}_{{$index}}" class="mt-3">
 										<label for="beatLoreBook_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Lore Book')}}</label>
-										<textarea id="beatLoreBook_{{$chapter_index}}_{{$index}}" class="form-control beat-lore-book-textarea"
+										<textarea id="beatLoreBook_{{$chapter_index}}_{{$index}}"
+										          class="form-control beat-lore-book-textarea"
 										          rows="6">{{$beat['beat_lore_book'] ?? ''}}</textarea>
+										<br>
+										<button id="updateBeatLoreBookBtn_{{$chapter_index}}_{{$index}}"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">{{__('default.Update Beat Lore Book')}}</button>
 									</div>
 									
-									<div class="" data-chapter-index="{{$chapter_index}}"
-									     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
-										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
-											class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-										<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
-											class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
-										<button id="updateBeatLoreBookBtn_{{$chapter_index}}_{{$index}}"
-											class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">{{__('default.Update Beat Lore Book')}}</button>
-										<button class="saveBeatBtn btn btn-success mt-3 me-2">{{__('default.Save Beat')}}</button>
+									<div>
+										<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}"
+										        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
 									</div>
 								</div>

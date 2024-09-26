@@ -64,28 +64,28 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                        class="form-label">${__e('Beat Text')}</label>
                 <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
                           rows="10"></textarea>
+                <br>
+               <button id="writeBeatTextBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatTextBtn btn btn-primary mt-3 me-2">${__e('Write Beat Text')}</button>
             </div>
             <div id="beatSummaryArea_${chapterIndex}_${beatIndex}" class="mt-3">
                 <label for="beatSummary_${chapterIndex}_${beatIndex}"
                        class="form-label">${__e('Beat Summary')}</label>
                 <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
                           rows="3"></textarea>
+                <br>
+                 <button id="writeBeatSummaryBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${__e('Write Summary')}</button>
             </div>
             <div id="beatLoreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
                 <label for="beatLoreBook_${chapterIndex}_${beatIndex}"
                        class="form-label">${__e('Beat Lore Book')}</label>
                 <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
                           rows="6"></textarea>
+                <br>
+								<button id="updateBeatLoreBookBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">${__e('Update Beat Lore Book')}</button>
             </div>
-            <div class="" data-chapter-index="${chapterIndex}"
-                 data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}">
-                <button id="writeBeatTextBtn_${chapterIndex}_${beatIndex}"
-                    class="writeBeatTextBtn btn btn-primary mt-3 me-2">${__e('Write Beat Text')}</button>
-                <button id="writeBeatSummaryBtn_${chapterIndex}_${beatIndex}"
-                    class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${__e('Write Summary')}</button>
-                <button id="updateBeatLoreBookBtn_${chapterIndex}_${beatIndex}"
-                    class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">${__e('Update Beat Lore Book')}</button>
-                <button class="saveBeatBtn btn btn-success mt-3 me-2">${__e('Save Beat')}</button>
+            <div>
+             <button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="${chapterIndex}"
+                 data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}">${__e('Save Beat')}</button>
                 <div class="me-auto d-inline-block" id="beatDetailModalResult_${chapterIndex}_${beatIndex}"></div>
             </div>
         </div>
@@ -368,9 +368,9 @@ $(document).ready(function () {
 	});
 	
 	$('.saveBeatBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-beat-index'));
-		let chapterIndex = Number($(this).parent().attr('data-chapter-index'));
-		let chapterFilename = $(this).parent().attr('data-chapter-filename');
+		let beatIndex = Number($(this).attr('data-beat-index'));
+		let chapterIndex = Number($(this).attr('data-chapter-index'));
+		let chapterFilename = $(this).attr('data-chapter-filename');
 		
 		let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
@@ -381,9 +381,9 @@ $(document).ready(function () {
 	});
 	
 	$('.writeBeatTextBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-beat-index'));
-		let chapterIndex = Number($(this).parent().attr('data-chapter-index'));
-		let chapterFilename = $(this).parent().attr('data-chapter-filename');
+		let beatIndex = Number($(this).attr('data-beat-index'));
+		let chapterIndex = Number($(this).attr('data-chapter-index'));
+		let chapterFilename = $(this).attr('data-chapter-filename');
 		
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 		
@@ -391,9 +391,9 @@ $(document).ready(function () {
 	});
 	
 	$('.writeBeatSummaryBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-beat-index'));
-		let chapterIndex = Number($(this).parent().attr('data-chapter-index'));
-		let chapterFilename = $(this).parent().attr('data-chapter-filename');
+		let beatIndex = Number($(this).attr('data-beat-index'));
+		let chapterIndex = Number($(this).attr('data-chapter-index'));
+		let chapterFilename = $(this).attr('data-chapter-filename');
 		
 		let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
@@ -401,9 +401,9 @@ $(document).ready(function () {
 	});
 	
 	$('.updateBeatLoreBookBtn').off('click').on('click', function () {
-		let beatIndex = Number($(this).parent().attr('data-beat-index'));
-		let chapterIndex = Number($(this).parent().attr('data-chapter-index'));
-		let chapterFilename = $(this).parent().attr('data-chapter-filename');
+		let beatIndex = Number($(this).attr('data-beat-index'));
+		let chapterIndex = Number($(this).attr('data-chapter-index'));
+		let chapterFilename = $(this).attr('data-chapter-filename');
 		
 		let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
