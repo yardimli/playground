@@ -3,10 +3,10 @@
 
 	=========================================================
 
-	* Song Page: https://mindful-enlightenment.com/product
-	* Copyright 2018 mindful-enlightenment.com (https://mindful-enlightenment.com)
+	* Song Page: https://writebookswithai.com/product
+	* Copyright 2018 writebookswithai.com (https://writebookswithai.com)
 
-	* Coded by mindful-enlightenment.com
+	* Coded by writebookswithai.com
 
 	=========================================================
 

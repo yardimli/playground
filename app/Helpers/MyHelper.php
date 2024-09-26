@@ -841,11 +841,6 @@
 				}
 			}
 
-			$prompt_tokens = 0;
-			foreach ($messages as $message) {
-				$prompt_tokens += round(str_word_count($message['content']) * 1.25);
-			}
-			$prompt_tokens = (int)$prompt_tokens;
 
 			$data = array(
 				'model' => $llm_engine, // 'gpt-3.5-turbo', 'gpt-4',

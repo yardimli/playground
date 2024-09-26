@@ -131,6 +131,7 @@
 								<div class="mb-3 col-12 col-xl-6">
 									<label for="publisherName" class="form-label">{{__('default.Publisher Name')}}:</label>
 									<input type="text" class="form-control" id="publisherName" name="publisherName" required value="WBWAI Publishing">
+								</div>
 							</div>
 							<div class="row">
 								<div class="mb-3 col-12 col-xl-6">
@@ -186,8 +187,8 @@
 							
 							
 							</div>
-							<button id="addBookStepOneBtn" class="btn btn-primary btnhover">{{__('default.Submit')}}</button>
-							<button id="addBookStepTwoBtn" class="btn btn-primary btnhover d-none">{{__('default.Submit')}}</button>
+							<button id="addBookStepOneBtn" class="btn btn-primary btnhover" style="min-width: 180px;">{{__('default.Submit')}}</button>
+							<button id="addBookStepTwoBtn" class="btn btn-primary btnhover d-none" style="min-width: 180px;">{{__('default.Submit')}}</button>
 						
 						
 						</div>
@@ -206,6 +207,7 @@
 	
 	let exampleQuestion = '';
 	let exampleAnswer = '';
+	let bookKeywords = '';
 	
 	// Function to update genre dropdown
 	function updateGenreDropdown(genres) {
@@ -294,6 +296,7 @@
 						
 						exampleQuestion = data.data.example_question;
 						exampleAnswer = data.data.example_answer;
+						bookKeywords = data.data.keywords;
 						
 						let characterProfiles = '';
 						data.data.character_profiles.forEach(function (profile) {
@@ -331,6 +334,7 @@
 					character_profiles: $('#character_profiles').val(),
 					example_question: exampleQuestion,
 					example_answer: exampleAnswer,
+					book_keywords: bookKeywords,
 					llm: savedLlm,
 					adult_content: $('#adultContent').val(),
 					genre: $('#genre').val(),
@@ -346,7 +350,7 @@
 					if (data.success) {
 						alert('{{ __('default.Book created successfully.') }}');
 						//set url to book details
-						window.location.href = '{{ route("playground.book-details", "") }}/' + data.bookSlug;
+						window.location.href = '{{ route("playground.edit-book", "") }}/' + data.bookSlug;
 					} else {
 						alert('Error: ' + data.message);
 					}

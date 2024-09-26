@@ -22,6 +22,10 @@
 
 		public function render($request, Throwable $exception)
 		{
+			if ($exception instanceof NotFoundHttpException) {
+				return response()->view('errors.error-404', [], 404);
+			}
+
 			if ($exception instanceof HttpException && $exception->getStatusCode() === 419) {
 				return response()->view('errors.error-419', [], 419);
 			}

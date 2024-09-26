@@ -23,8 +23,8 @@
 	<title>Discover a new beginning.</title>
 	
 	<!-- FAVICON AND TOUCH ICONS -->
-	<link rel="shortcut icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" sizes="152x152" href="/assets/v2/images/apple-touch-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="120x120" href="/assets/v2/images/apple-touch-icon-120x120.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="/assets/v2/images/apple-touch-icon-76x76.png">
@@ -82,7 +82,7 @@
 					
 					<!-- LOGO -->
 					<div style="text-align: center; margin-bottom: 20px">
-						<img style="width: auto; max-height: 90px;" src="/images/logo.png" alt="logo-image">
+						<img style="width: auto; max-height: 90px;" src="/images/logo.png" id="site_logo" alt="logo-image">
 					</div>
 					
 					

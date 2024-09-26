@@ -28,7 +28,7 @@
 											</div>
 											<div class="content-btn" data-swiper-parallax="-60">
 												<a class="btn btn-primary btnhover" href="{{route('playground.books-list')}}">Buy Now</a>
-												<a class="btn border btnhover ms-4 text-white" href="books-detail.php">See Details</a>
+												<a class="btn border btnhover ms-4 text-white" href="book-details.php">See Details</a>
 											</div>
 										</div>
 										<div class="partner">
@@ -74,7 +74,7 @@
 											</div>
 											<div class="content-btn" data-swiper-parallax="-50">
 												<a class="btn btn-primary btnhover" href="{{route('playground.books-list')}}">Buy Now</a>
-												<a class="btn border btnhover ms-4 text-white" href="books-detail.php">See Details</a>
+												<a class="btn border btnhover ms-4 text-white" href="book-details.php">See Details</a>
 											</div>
 										</div>
 										<div class="partner">
@@ -563,7 +563,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>
@@ -590,7 +590,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>
@@ -617,7 +617,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>
@@ -644,7 +644,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>
@@ -671,7 +671,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>
@@ -698,7 +698,7 @@
 								</div>
 								<div class="bookcard-footer">
 									<a href="read.php" class="btn btn-primary btnhover m-t15 m-r10">Read Now</a>
-									<a href="books-detail.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
+									<a href="book-details.php" class="btn btn-outline-secondary btnhover m-t15">See Details</a>
 								</div>
 							</div>
 						</div>

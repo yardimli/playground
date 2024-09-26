@@ -31,15 +31,17 @@
 
 	//-------------------------------------------------------------------------
 
-	Route::get('/all-books', [StaticPagesController::class, 'allBooks'])->name('playground.all-books');
-	Route::get('/book-details/{slug}', [StaticPagesController::class, 'bookDetails'])->name('playground.book-details');
+	Route::get('/read-book/{slug}', [StaticPagesController::class, 'readBook'])->name('playground.read-book');
+	Route::get('/edit-book/{slug}', [StaticPagesController::class, 'editBook'])->name('playground.edit-book');
 
 	Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [StaticPagesController::class, 'bookBeats'])->name('playground.book-beats');
 
 	Route::get('/', [StaticPagesController::class, 'index'])->name('index');
 
+	Route::get('/books-list/genre/{genre}', [StaticPagesController::class, 'booksList'])->name('playground.books-list-genre');
+	Route::get('/books-list/keyword/{keyword}', [StaticPagesController::class, 'booksList'])->name('playground.books-list-keyword');
 	Route::get('/books-list', [StaticPagesController::class, 'booksList'])->name('playground.books-list');
-	Route::get('/books-detail/{slug}', [StaticPagesController::class, 'booksDetail'])->name('playground.books-detail');
+	Route::get('/book-details/{slug}', [StaticPagesController::class, 'booksDetail'])->name('playground.book-details');
 
 	Route::get('/my-profile', [StaticPagesController::class, 'myProfile'])->name('my-profile');
 	Route::get('/start-writing', [StaticPagesController::class, 'startWriting'])->name('start-writing');

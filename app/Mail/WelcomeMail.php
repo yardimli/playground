@@ -38,7 +38,7 @@
 			}
 
 
-			return $this->from(env('MAIL_FROM_ADDRESS','support@fictionfusion.io'), env('MAIL_FROM_NAME', 'mindful-enlightenment.com Support'))
+			return $this->from(env('MAIL_FROM_ADDRESS','support@fictionfusion.io'), env('MAIL_FROM_NAME', 'writebookswithai.com Support'))
 				->subject($subject)
 				->view($email_view)
 				->with(['name' => $this->name, 'email' => $this->email]);

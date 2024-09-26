@@ -175,7 +175,7 @@
                                         <tbody>
                                         <tr>
                                             <td style="width:150px;">
-                                                <img height="auto" src="https://mindful-enlightenment.com/assets/logos/zhiyin_dark.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150" />
+                                                <img height="auto" src="https://writebookswithai.com/assets/logos/zhiyin_dark.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150" />
                                             </td>
                                         </tr>
                                         </tbody>
@@ -206,7 +206,7 @@
                             </tr>
                             <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                    <div style="font-family:Roboto, Helvetica, Arial, sans-serif;font-size:16px;font-weight:300;line-height:20px;text-align:left;color:#000000;">請點擊下面按鈕完成電子信箱認證。如果您沒有在<a href="https://mindful-enlightenment.com" style="color: #601E0C; text-decoration: none; font-weight: 600;">織音</a>創建帳戶，您可以放心的刪除此封信件。</div>
+                                    <div style="font-family:Roboto, Helvetica, Arial, sans-serif;font-size:16px;font-weight:300;line-height:20px;text-align:left;color:#000000;">請點擊下面按鈕完成電子信箱認證。如果您沒有在<a href="https://writebookswithai.com" style="color: #601E0C; text-decoration: none; font-weight: 600;">織音</a>創建帳戶，您可以放心的刪除此封信件。</div>
                                 </td>
                             </tr>
                             <tr>
@@ -292,7 +292,7 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:24px;">
                                                     <tbody><tr>
                                                         <td style="font-size:0;height:24px;vertical-align:middle;width:24px;">
-                                                            <a href="https://www.facebook.com/mindful-enlightenment.com" target="_blank" style="color: #2e58ff; text-decoration: none; font-weight: 400;">
+                                                            <a href="https://www.facebook.com/writebookswithai.com" target="_blank" style="color: #2e58ff; text-decoration: none; font-weight: 400;">
                                                                 <img alt="facebook-logo" height="24" src="https://codedmails.com/images/social/white/facebook-logo-transparent-white.png" style="border-radius:3px;display:block;" width="24" />
                                                             </a>
                                                         </td>
@@ -312,7 +312,7 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:24px;">
                                                     <tbody><tr>
                                                         <td style="font-size:0;height:24px;vertical-align:middle;width:24px;">
-                                                            <a href="https://www.instagram.com/mindful-enlightenment.com/" target="_blank" style="color: #2e58ff; text-decoration: none; font-weight: 400;">
+                                                            <a href="https://www.instagram.com/writebookswithai.com/" target="_blank" style="color: #2e58ff; text-decoration: none; font-weight: 400;">
                                                                 <img alt="instagram-logo" height="24" src="https://codedmails.com/images/social/white/instagram-logo-transparent-white.png" style="border-radius:3px;display:block;" width="24" />
                                                             </a>
                                                         </td>

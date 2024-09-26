@@ -233,7 +233,6 @@
 
 <!-- Footer -->
 <footer class="site-footer style-1">
-	@include('playground.footer-categories')
 	@include('playground.footer')
 </footer>
 <!-- Footer End -->

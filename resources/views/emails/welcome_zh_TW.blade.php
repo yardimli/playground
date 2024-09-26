@@ -134,7 +134,7 @@
 										<tbody>
 										<tr>
 											<td style="width:150px;">
-												<img height="auto" src="https://mindful-enlightenment.com/assets/logos/zhiyin_light.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150" />
+												<img height="auto" src="https://writebookswithai.com/assets/logos/zhiyin_light.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150" />
 											</td>
 										</tr>
 										</tbody>
@@ -166,13 +166,13 @@
 		<tr>
 			<td  style="line-height:0;font-size:0;mso-line-height-rule:exactly;">
 				<v:image
-						style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="https://mindful-enlightenment.com/assets/img/header/welcome_landscape.jpeg" xmlns:v="urn:schemas-microsoft-com:vml"
+						style="border:0;mso-position-horizontal:center;position:absolute;top:0;width:600px;z-index:-3;" src="https://writebookswithai.com/assets/img/header/welcome_landscape.jpeg" xmlns:v="urn:schemas-microsoft-com:vml"
 				/>
 	<![endif]-->
 	<div style="margin:0 auto;max-width:600px;">
 		<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
 			<tbody><tr style="vertical-align:top;">
-				<td background="https://images.unsplash.com/photo-1573376670774-4427757f7963?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" style="background:#2a3448 url(https://mindful-enlightenment.com/assets/img/header/welcome_landscape.jpeg) no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="300">
+				<td background="https://images.unsplash.com/photo-1573376670774-4427757f7963?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" style="background:#2a3448 url(https://writebookswithai.com/assets/img/header/welcome_landscape.jpeg) no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:0px;vertical-align:top;" height="300">
 					<!--[if mso | IE]>
 					<table
 							border="0" cellpadding="0" cellspacing="0" style="width:600px;" width="600"
@@ -393,7 +393,7 @@
 								<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:24px;">
 									<tbody><tr>
 										<td style="font-size:0;height:24px;vertical-align:middle;width:24px;">
-											<a href="https://www.facebook.com/mindful-enlightenment.com" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">
+											<a href="https://www.facebook.com/writebookswithai.com" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">
 												<img alt="facebook-logo" height="24" src="https://codedmails.com/images/social/light/facebook-logo-transparent-light.png" style="border-radius:3px;display:block;" width="24" />
 											</a>
 										</td>
@@ -413,7 +413,7 @@
 								<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:3px;width:24px;">
 									<tbody><tr>
 										<td style="font-size:0;height:24px;vertical-align:middle;width:24px;">
-											<a href="https://www.instagram.com/mindful-enlightenment.com/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">
+											<a href="https://www.instagram.com/writebookswithai.com/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold;">
 												<img alt="instagram-logo" height="24" src="https://codedmails.com/images/social/light/instagram-logo-transparent-light.png" style="border-radius:3px;display:block;" width="24" />
 											</a>
 										</td>
@@ -450,7 +450,7 @@
 									</div>
 									<div style="font-family:Muli, Arial, sans-serif;font-size:14px;font-weight:400;line-height:20px;text-align:center;color:#616161;">如果您沒有在織音註冊帳號，您可以放心的刪除此封信件。</div>
 
-{{--									如果不想再收到這些信件，您可以隨時 <a href="https://mindful-enlightenment.com/unsubscribe" target="_blank" style="color: #AC7B4C; text-decoration: none;">取消訂閱</a>--}}
+{{--									如果不想再收到這些信件，您可以隨時 <a href="https://writebookswithai.com/unsubscribe" target="_blank" style="color: #AC7B4C; text-decoration: none;">取消訂閱</a>--}}
 								</td>
 							</tr>
 							</tbody></table>

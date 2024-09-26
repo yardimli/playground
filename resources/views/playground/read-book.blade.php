@@ -17,11 +17,6 @@
 							<img src="{{$book['cover_filename']}}" alt="book">
 						</div>
 					</div>
-					<br>
-					<a href="{{route('playground.read-book',$book_slug)}}" class="btn btn-primary">{{__('Read Book')}}</a>
-					@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
-					<a href="{{route('playground.edit-book',$book_slug)}}" class="btn btn-danger">{{__('Edit Book')}}</a>
-					@endif
 				</div>
 				<div class="col-xl-8 col-lg-7 col-12">
 					<div class="dz-box">
@@ -91,7 +86,33 @@
 			
 			</div>
 			
-		</div>
+			
+			<div class="row book-grid-row style-4 m-b60 pt-3 pb-5 book-list-small-container-color" style="max-width: 640px; margin:0 auto;">
+				@php
+					$chapter_counter = 0;
+				@endphp
+				@foreach ($book['acts'] as $act)
+					@php
+						#chapter_counter++;
+					@endphp
+					<h3>{{$act['title'] ?? 'Act'}}</h3>
+					@foreach ($act['chapters'] as $chapter)
+						<h4>{{$chapter['name'] ?? 'Chapter '.$chapter_counter}}</h4>
+						<p>{{$chapter['short_description'] ?? ''}}</p>
+						<ul>
+							<li><i>{{__('Events')}}</i>: {{$chapter['events'] ?? ''}}</li>
+							<li><i>{{__('People')}}</i>: {{$chapter['people'] ?? ''}}</li>
+							<li><i>{{__('Places')}}</i>: {{$chapter['places'] ?? ''}}</li>
+						</ul>
+						@if (isset($chapter['beats']))
+							@foreach ($chapter['beats'] as $beat)
+								<p>{!! str_replace("\n","<br>",$beat['beat_text'] ?? '') !!}</p>
+							@endforeach
+						@endif
+					@endforeach
+				@endforeach
+			</div>
+	
 	</section>
 	
 	<!-- Newsletter -->

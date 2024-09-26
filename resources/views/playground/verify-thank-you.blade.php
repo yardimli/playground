@@ -25,7 +25,7 @@
 						<br>
 						<br>
 						<div style="text-align: center; ">
-							<img src="{{ asset('/images/logo.png') }}"
+							<img src="{{ asset('/images/logo.png') }}" id="site_logo"
 							     style="max-width: 300px;" alt="Thank You" class="img-fluid">
 						</div>
 					</div>

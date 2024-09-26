@@ -23,8 +23,8 @@
 	<title>Discover a new beginning.</title>
 	
 	<!-- FAVICON AND TOUCH ICONS -->
-	<link rel="shortcut icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/assets/v2/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" sizes="152x152" href="/assets/v2/images/apple-touch-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="120x120" href="/assets/v2/images/apple-touch-icon-120x120.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="/assets/v2/images/apple-touch-icon-76x76.png">
@@ -84,7 +84,7 @@
 							<!-- SIGN UP FORM -->
 							<div class="col-md-6">
 								<div class="text-center mt-2">
-									<a href="/" class="logo-black"><img src="/images/logo.png" alt="logo" style="max-height: 80px;"></a>
+									<a href="/" class="logo-black"><img src="/images/logo.png" id="site_logo" alt="logo" style="max-height: 80px;"></a>
 								</div>
 								<div class="register-page-form" style="margin-top: 5px; padding-top: 5px;">
 									
@@ -213,7 +213,7 @@
 									
 									<!-- Copyright -->
 									<div class="register-page-copyright">
-										<p class="p-sm">&copy; 2024 mindful-enlightenment.com <span>All rights reserved</span></p>
+										<p class="p-sm">&copy; 2024 writebookswithai.com <span>All rights reserved</span></p>
 									</div>
 								
 								</div>

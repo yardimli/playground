@@ -68,7 +68,7 @@
 				}
 			}
 
-			$prompt = str_replace(['##user_blurb##', '##language##', '##adult_content""', '##genre##', '##writing_style##', '##narrative_style##'], [$userBlurb, $language, $adultContent, $genre, $writingStyle, $narrativeStyle], $prompt);
+			$prompt = str_replace(['##user_blurb##', '##language##', '##adult_content##', '##genre##', '##writing_style##', '##narrative_style##'], [$userBlurb, $language, $adultContent, $genre, $writingStyle, $narrativeStyle], $prompt);
 			$results = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true, $language);
 
 			if (!empty($results['title']) && !empty($results['blurb']) && !empty($results['back_cover_text']) && !empty($results['character_profiles'])) {
@@ -109,6 +109,7 @@
 			$userBlurb = $request->input('user_blurb', '');
 			$bookTitle = $request->input('book_title', '');
 			$bookBlurb = $request->input('book_blurb', '');
+			$bookKeywords = $request->input('book_keywords', '');
 			$backCoverText = $request->input('back_cover_text', '');
 			$characterProfiles = $request->input('character_profiles', '');
 			$exampleQuestion = $request->input('example_question', '');
@@ -138,6 +139,7 @@
 				'##language##' => $language,
 				'##book_title##' => $bookTitle,
 				'##book_blurb##' => $bookBlurb,
+				'##book_keywords##' => implode(', ', $bookKeywords),
 				'##back_cover_text##' => $backCoverText,
 				'##character_profiles##' => $characterProfiles,
 				'##genre##' => $genre,
@@ -169,6 +171,7 @@
 					'title' => $bookTitle,
 					'back_cover_text' => $backCoverText,
 					'blurb' => $bookBlurb,
+					'keywords' => $bookKeywords,
 					'author_name' => $authorName,
 					'publisher_name' => $publisherName,
 					'character_profiles' => $characterProfiles,
@@ -239,15 +242,11 @@
 				$coverImageRequest = new Request([
 					'theme' => __('An image describing: ') . $bookBlurb,
 					'title_1' => $bookTitle,
-					'author_1' => Auth::user()->name,
+					'author_1' => $authorName,
 					'creative' => 'more'
 				]);
 
-				Log::info('coverImageRequest');
-				Log::info($coverImageRequest);
 				$coverImageResponse = $this->makeCoverImage($coverImageRequest, $bookSlug);
-				Log::info('coverImageResponse');
-				Log::info($coverImageResponse);
 				$coverImageData = json_decode($coverImageResponse, true);
 				Log::info('coverImageData');
 				Log::info($coverImageData);
@@ -255,6 +254,7 @@
 				if ($coverImageData['success']) {
 					// Update book.json with cover image information
 					$bookData['cover_filename'] = $coverImageData['output_filename'];
+					$bookData['cover_prompt'] = $coverImageData['prompt'];
 
 					File::put("{$bookPath}/book.json", json_encode($bookData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 				}
@@ -353,7 +353,7 @@
 			}
 
 			$theme = $request->input('theme', 'an ocean in space');
-			$title1 = $request->input('title_1', 'Playground Computer');
+			$title1 = $request->input('title_1', 'Write Books With AI');
 			$author1 = $request->input('author_1', 'I, Robot');
 			$model = 'fast'; //$request->input('model', 'fast');
 			$creative = $request->input('creative', 'no');
@@ -363,6 +363,9 @@
 			}
 
 			$prompt = $theme . ' the book covers title is "' . $title1 . '" and the author is "' . $author1 . '" include the text lines on the cover.';
+
+			Log::info('Cover Image Prompt');
+			Log::info($prompt);
 
 			if ($creative === 'more') {
 
@@ -376,22 +379,10 @@ With the above information, compose a book cover. Write it as a single paragraph
 
 Prompt:";
 
-				$single_request = [
-					[
-						"role" => "system",
-						"content" => "You write prompts for making book covers. Follow the format of the examples."
-					],
-					[
-						"role" => "user",
-						"content" => $gpt_prompt
-					]
-				];
-
-				$prompt = MyHelper::openAI_no_stream($single_request, 1, 256, 'gpt-4o');
-				$gpt_results = $prompt;
+				$prompt = MyHelper::llm_no_tool_call('open-ai-gpt-4o-mini', '', '', $gpt_prompt, false, 'english');
+				Log::info('Enhanced Cover Image Prompt');
+				Log::info($prompt);
 			}
-			Log::info('prompt');
-			Log::info($prompt);
 
 			if (!Storage::disk('public')->exists('ai-images')) {
 				Storage::disk('public')->makeDirectory('ai-images');
@@ -424,33 +415,18 @@ Prompt:";
 					'Content-Type' => 'application/json',
 				],
 				'json' => [
-					'prompt' => $prompt['message_text'],
+					'prompt' => $prompt,
 					'image_size' => 'portrait_4_3',
 					'safety_tolerance' => '5',
 				]
 			]);
-			Log::info('response');
+			Log::info('FLUX image response');
 			Log::info($response->getBody());
 
 			$body = $response->getBody();
 			$data = json_decode($body, true);
 
-//add to render log file
-			$renderLog = [
-				'prompt' => $prompt,
-				'image_size' => 'portrait_4_3',
-				'safety_tolerance' => '5',
-				'output_file' => $filename,
-				'status_code' => $response->getStatusCode(),
-				'body' => $body,
-				'data' => $data
-			];
-
-			Log::info('renderLog');
-			Log::info($renderLog);
-
 			if ($response->getStatusCode() == 200) {
-
 
 				if (isset($data['images'][0]['url'])) {
 					$image_url = $data['images'][0]['url'];
@@ -459,7 +435,7 @@ Prompt:";
 					$image = file_get_contents($image_url);
 					file_put_contents($outputFile, $image);
 
-					return json_encode(['success' => true, 'message' => __('Image generated successfully'), 'output_filename' => $filename, 'output_path' => $outputFile, 'data' => json_encode($data), 'seed' => $data['seed'], 'status_code' => $response->getStatusCode()]);
+					return json_encode(['success' => true, 'message' => __('Image generated successfully'), 'output_filename' => $filename, 'output_path' => $outputFile, 'data' => json_encode($data), 'seed' => $data['seed'], 'status_code' => $response->getStatusCode(), 'prompt' => $prompt]);
 				} else {
 					return json_encode(['success' => false, 'message' => __('Error (2) generating image'), 'status_code' => $response->getStatusCode()]);
 				}

@@ -20,7 +20,7 @@
 		'Forum' => 'Forum',
 		'Teaching' => 'Teaching',
 		'How to guide' => 'How-to Guide',
-		'mindful-enlightenment.com' => 'The Melody of Mindful Enlightenment',
+		'writebookswithai.com' => 'The Melody of Mindful Enlightenment',
 		'Terms & Conditions' => 'Terms & Conditions',
 		'I agree to the Terms and Conditions.' => '<a href=":url" target="_blank">I agree to the Terms and Conditions</a>',
 		'NAME' => 'Name',
@@ -29,7 +29,7 @@
 		'RELEASE DATE' => 'Release Date',
 		'LABEL' => 'Label',
 		'FORMAT' => 'Format',
-		'© 2024 mindful-enlightenment.com. All rights reserved.' => '© 2024 mindful-enlightenment.com. All rights reserved.',
+		'© 2024 writebookswithai.com. All rights reserved.' => '© 2024 writebookswithai.com. All rights reserved.',
 		'Create Account' => 'Create Account',
 		'Purchase History' => 'Purchase History',
 		'Account' => 'Account',
@@ -102,7 +102,7 @@
 		'If you have not received the verification email, please click the button below.' => 'If you have not received the verification email, please click the button below.',
 		'Resend Verification Email' => 'Resend Verification Email',
 
-		'Welcome to mindful-enlightenment.com!' => 'Welcome to mindful-enlightenment.com!',
+		'Welcome to writebookswithai.com!' => 'Welcome to writebookswithai.com!',
 		'Let\'s learn something new today!' => 'Let\'s learn something new today!',
 		'Its your turn to join.' => 'Hundreds of students have already joined us, now it\'s your turn.',
 		'signup_terms' => 'By signing up, you agree to <a href=":url" target="_blank">Terms and Conditions</a>',
@@ -395,7 +395,8 @@
 		'Default Language' => 'English',
 		'Default Structure' => 'fichtean_curve.txt',
 		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
-		'Playground - The Book - Index' => 'Playground - The Book - Index',
+		'Write Books With AI - Index' => 'Write Books With AI - Index',
+		'Write Books With AI' => 'Write Books With AI',
 		'Toggle Mode' => '',
 		'Toggle Mode Text' => 'Toggle Dark/Light',
 		'Add Book' => 'Add Book',
@@ -431,7 +432,7 @@
 		'Book created successfully.' => 'Book created successfully.',
 
 		//login.php
-		'Playground Books - Login' => 'Playground Books - Login',
+		'Write Books With AI - Login' => 'Write Books With AI - Login',
 		'Login / Register' => 'Login / Register',
 		'username' => 'username',
 		'password' => 'password',
@@ -439,7 +440,7 @@
 		'You can login with any username and password. If the username doesn\'t exist, it will be created. The password will be hashed. If the username exists, the password will be verified. If the password is incorrect, you will be told so.' => 'You can login with any username and password. If the username doesn\'t exist, it will be created. The password will be hashed. If the username exists, the password will be verified. If the password is incorrect, you will be told so.',
 
 
-		//book-details.php
+		//edit-book.php
 		'Select an AI Engine' => 'Select an AI Engine',
 		'Write All Beats' => 'Write All Beats',
 		'Cover Image' => 'Cover Image',
@@ -451,7 +452,7 @@
 		'Back to Books' => 'Back to Books',
 		'Log out' => 'Log out',
 		'Login/Sign up' => 'Login/Sign up',
-		'Playground Book' => 'Playground Book',
+		'Write Books With AI Book' => 'Write Books With AI Book',
 		'About Book' => 'About Book',
 		'Book Cover' => 'Book Cover',
 		'Edit Chapter' => 'Edit Chapter',
@@ -483,11 +484,11 @@
 
 		'Book Structure' => 'Book Structure',
 		'Generating Beats for All Chapters' => 'Generating Beats for All Chapters',
-		'Playground - The Book' => 'Playground - The Book',
+		'Write Books With AI - The Book' => 'Write Books With AI - The Book',
 		'Visitor' => 'Visitor',
 
 		//chapter-beats.php
-		'Playground - The Book - Beats' => 'Playground - The Book - Beats',
+		'Write Books With AI - Book Beats' => 'Write Books With AI - Book Beats',
 		'Write All Beat Contents' => 'Write All Beat Contents',
 		'Recreate Beats' => 'Recreate Beats',
 		'Read all beats' => 'Read all beats',

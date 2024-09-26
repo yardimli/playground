@@ -20,7 +20,7 @@
 		'Forum' => '論壇',
 		'Teaching' => '教學',
 		'How to guide' => '如何指南',
-		'mindful-enlightenment.com' => '織音之旋律',
+		'writebookswithai.com' => '織音之旋律',
 		'Terms & Conditions' => '條款和條件',
 		'I agree to the Terms and Conditions.' => '<a href=":url" target="_blank">我同意條款和條件</a>',
 		'NAME' => '名字',
@@ -29,7 +29,7 @@
 		'RELEASE DATE' => '發行日期',
 		'LABEL' => '標籤',
 		'FORMAT' => '格式',
-		'© 2024 mindful-enlightenment.com. All rights reserved.' => '© 2024 mindful-enlightenment.com.',
+		'© 2024 writebookswithai.com. All rights reserved.' => '© 2024 writebookswithai.com.',
 		'Create Account' => '創建帳戶',
 		'Purchase History' => '訂單記錄',
 		'Account' => '個人檔案',
@@ -102,7 +102,7 @@
 		'If you have not received the verification email, please click the button below.' => '如果您沒有收到驗證電子郵件，請點擊下面的按鈕。',
 		'Resend Verification Email' => '重新發送驗證電子郵件',
 
-		'Welcome to mindful-enlightenment.com!' => '歡迎來到 mindful-enlightenment.com！',
+		'Welcome to writebookswithai.com!' => '歡迎來到 writebookswithai.com！',
 		'Let\'s learn something new today!' => '讓我們今天學點新東西吧!',
 		'Its your turn to join.' => '已經有數百名學生加入我們，現在輪到你了。', //Hundreds of Bots have already joined us, now it\'s your turn.
 		'signup_terms' => '註冊即表示您同意 <a href=":url" target="_blank">條款和條件</a>', //By signing up, you agree to the <a href="{{route('terms')}}" target="_blank" class="">Terms and Conditions</a>

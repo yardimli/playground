@@ -3557,7 +3557,7 @@
   .txt-block.legal-info h4 span, .txt-block.legal-info h5 span { margin-right: 2px; }
 
   /* SIGN IN / SIGN UP */
-  #login, #signup, #reset-password { padding-top: 70px; padding-bottom: 70px; }
+  #login, #signup, #reset-password { padding-top: 20px; padding-bottom: 70px; }
   #login .register-page-wrapper:after, #signup .register-page-wrapper:after { width: 100%; left: 0; }
 
   .register-form-title { margin-bottom: 30px; }
@@ -9237,7 +9237,7 @@
   .pagination.ico-20 [class*="flaticon-"]:before, .pagination.ico-20 [class*="flaticon-"]:after { font-size: 0.75rem; }
 
   /* SIGN IN / SIGN UP */
-  #login, #signup, #reset-password { padding-top: 70px; padding-bottom: 70px; }
+  #login, #signup, #reset-password { padding-top: 20px; padding-bottom: 70px; }
   .login-page-logo { margin-bottom: 38px; }
   .login-page-logo img { max-height: 36px; }
 

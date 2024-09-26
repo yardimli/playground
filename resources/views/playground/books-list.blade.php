@@ -42,58 +42,47 @@
 						<div class="dz-shop-card book-list-small-container-color style-2">
 							<div class="dz-media">
 								<a
-									href="{{route('playground.books-detail',$book['id'])}}"><img src="{{$book['cover_filename']}}" alt="book"></a>
+									href="{{route('playground.book-details',$book['id'] ?? '0')}}"><img src="{{$book['cover_filename'] ?? ''}}" alt="book"></a>
 							</div>
 							<div class="dz-content" style="width: 100%">
 								<div class="dz-header">
 									<div>
-										<ul class="dz-tags">
-											<li><a href="{{route('playground.books-list')}}">ADVANTURE,</a></li>
-											<li><a href="{{route('playground.books-list')}}">SCIENCE,</a></li>
-											<li><a href="{{route('playground.books-list')}}">COMEDY</a></li>
-										</ul>
+										<i class="fas fa-book fa-fw m-r10"></i><a href="{{route('playground.books-list-genre',[$book['genre'] ?? ''])}}" class="modal-body-color">{{$book['genre'] ?? ''}}</a>
 										<h4 class="title mb-0"><a
-												href="{{route('playground.books-detail',$book['id'])}}">{{$book['title']}}</a></h4>
+												href="{{route('playground.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a></h4>
 									</div>
+									
+									<div class="d-flex">
+										
+										<div class="bookmark-btn style-1">
+											<input class="form-check-input" type="checkbox" id="flexCheckDefault1">
+											<label class="form-check-label" for="flexCheckDefault1">
+												<i class="flaticon-heart"></i>
+											</label>
+										</div>
+									</div>
+									
 								</div>
 								
 								<div class="dz-body" style="width: 100%">
 									<div class="dz-rating-box" style="width: 100%">
 										<div style="width: 100%">
-											<p class="dz-para">{{$book['blurb']}}</p>
+											<p class="dz-para">{{$book['blurb'] ?? ''}}</p>
 											<div>
-												<a href="" class="badge">Get 20% Discount for today</a>
-												<a href="" class="badge">50% OFF Discount</a>
-												<a href="" class="badge next-badge">See 2+ promos</a>
+												@if (isset($book['keywords']))
+													@foreach ($book['keywords'] as $keyword)
+														<a href="{{route('playground.books-list-keyword',[$keyword])}}" class="badge">{{$keyword}}</a>
+													@endforeach
+												@endif
 											</div>
-										</div>
-										<div class="review-num">
-											<h4>4.0</h4>
-											<ul class="dz-rating">
-												<li><i class="flaticon-star text-yellow"></i></li>
-												<li><i class="flaticon-star text-yellow"></i></li>
-												<li><i class="flaticon-star text-yellow"></i></li>
-												<li><i class="flaticon-star text-yellow"></i></li>
-												<li><i class="flaticon-star text-muted"></i></li>
-											</ul>
-											<span><a href="javascript:void(0);"> 235 Reviews</a></span>
 										</div>
 									</div>
 									<div class="rate">
 										<ul class="book-info">
-											<li><span>Writen by</span>{{$book['owner']}}</li>
-											<li><span>Publisher</span>Printarea Studios</li>
-											<li><span>Year</span>2019</li>
+											<li><span>Writen by</span>{{$book['author_name'] ?? ''}}</li>
+											<li><span>Publisher</span>{{$book['publisher_name'] ?? ''}}</li>
+											<li><span>Year</span>{{date("Y", $book['file_time'] ?? 123456789)}}</li>
 										</ul>
-										<div class="d-flex">
-											
-											<div class="bookmark-btn style-1">
-												<input class="form-check-input" type="checkbox" id="flexCheckDefault1">
-												<label class="form-check-label" for="flexCheckDefault1">
-													<i class="flaticon-heart"></i>
-												</label>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>

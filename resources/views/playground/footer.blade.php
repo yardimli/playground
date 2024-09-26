@@ -5,9 +5,9 @@
 				<div class="col-xl-3 col-lg-12">
 					<div class="widget widget_about">
 						<div class="footer-logo logo-white">
-							<a href="{{route('index')}}"><img src="/images/logo.png" alt=""></a>
+							<a href="{{route('index')}}"><img src="/images/logo.png" id="site_logo" alt="logo"></a>
 						</div>
-						<p class="text">Playground is a Book Store Ecommerce Website Template by playground-computer lorem ipsum dolor sit</p>
+						<p class="text">Write Books With AI is a SAAS for writing full length books with AI</p>
 						<div class="dz-social-icon style-1">
 							<ul>
 								<li><a href="https://www.facebook.com/playground-computer" target="_blank" ><i class="fa-brands fa-facebook-f"></i></a></li>
@@ -18,7 +18,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4">
+				<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
 					<div class="widget widget_services">
 						<h5 class="footer-title">Our Links</h5>
 						<ul>
@@ -30,20 +30,13 @@
 						</ul>
 					</div>
 				</div>
-				<div class="col-xl-2 col-lg-3 col-sm-4 col-4">
-					<div class="widget widget_services">
-						<h5 class="footer-title">Playground ?</h5>
-						<ul>
-							<li><a href="{{route('index')}}">Playground</a></li>
-							<li><a href="{{route('playground.books-list')}}">Books List</a></li>
-							<li><a href="{{route('blog-detail')}}">Blog Details</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4">
+				<div class="col-xl-3 col-lg-3 col-sm-6 col-6">
 					<div class="widget widget_services">
 						<h5 class="footer-title">Resources</h5>
 						<ul>
+							<li><a href="{{route('index')}}">What is WBWAI</a></li>
+							<li><a href="{{route('playground.books-list')}}">Books List</a></li>
+							<li><a href="{{route('blog-detail')}}">Blog Details</a></li>
 							<li><a href="{{route('login')}}">Login</a></li>
 							<li><a href="{{route('about-us')}}">Partner</a></li>
 						</ul>
@@ -78,7 +71,7 @@
 		<div class="container">
 			<div class="row fb-inner">
 				<div class="col-lg-6 col-md-12 text-start">
-					<p class="copyright-text">Playground Book Store Ecommerce Website - © 2022 All Rights Reserved</p>
+					<p class="copyright-text">Write Books With AI - © 2024 All Rights Reserved</p>
 				</div>
 				<div class="col-lg-6 col-md-12 text-end">
 

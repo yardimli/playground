@@ -117,8 +117,8 @@
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
 				<tr>
 					<td align="center" valign="top" style="padding: 12px 24px;">
-						<a href="https://mindful-enlightenment.com" target="_blank" style="display: inline-block;">
-							<img src="https://mindful-enlightenment.com//images/logo.png" alt="ZhiYin Logo" border="0" width="200" style="display: block; width: 200px; max-width: 200px; min-width: 200px;">
+						<a href="https://writebookswithai.com" target="_blank" style="display: inline-block;">
+							<img src="https://writebookswithai.com/images/logo.png" id="site_logo" alt="Logo" border="0" width="200" style="display: block; width: 200px; max-width: 200px; min-width: 200px;">
 						</a>
 					</td>
 				</tr>
@@ -169,7 +169,7 @@
 				<!-- start copy -->
 				<tr>
 					<td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-						<p style="margin: 0;">Tap the button below to reset your password. If you didn't create an account with <a href="https://mindful-enlightenment.com">mindful-enlightenment.com</a>, or request a password reset you can safely delete this email.</p>
+						<p style="margin: 0;">Tap the button below to reset your password. If you didn't create an account with <a href="https://writebookswithai.com">writebookswithai.com</a>, or request a password reset you can safely delete this email.</p>
 					</td>
 				</tr>
 				<!-- end copy -->
@@ -206,7 +206,7 @@
 				<!-- start copy -->
 				<tr>
 					<td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf">
-						<p style="margin: 0;">Cheers,<br> mindful-enlightenment.com</p>
+						<p style="margin: 0;">Cheers,<br> writebookswithai.com</p>
 					</td>
 				</tr>
 				<!-- end copy -->
@@ -234,7 +234,7 @@
 				<!-- start permission -->
 				<tr>
 					<td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-						<p style="margin: 0;">You received this email because we received a request for reseting password on mindful-enlightenment.com. If you didn't request reseting your password on mindful-enlightenment.com you can safely delete this email.</p>
+						<p style="margin: 0;">You received this email because we received a request for reseting password on writebookswithai.com. If you didn't request reseting your password on writebookswithai.com you can safely delete this email.</p>
 					</td>
 				</tr>
 				<!-- end permission -->
@@ -242,7 +242,7 @@
 				<!-- start unsubscribe -->
 				<tr>
 					<td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-						<p style="margin: 0;">To stop receiving these emails, you can <a href="https://mindful-enlightenment.com/unsubscribe" target="_blank">unsubscribe</a> at any time.</p>
+						<p style="margin: 0;">To stop receiving these emails, you can <a href="https://writebookswithai.com/unsubscribe" target="_blank">unsubscribe</a> at any time.</p>
 					</td>
 				</tr>
 				<!-- end unsubscribe -->

@@ -335,7 +335,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 		$("#coverBookTitle").val(bookData.title);
-		$("#coverBookAuthor").val(currentUserName);
+		$("#coverBookAuthor").val(bookData.author_name);
 		$("#coverPrompt").val(__e('An image describing: ') + bookData.blurb);
 	});
 	

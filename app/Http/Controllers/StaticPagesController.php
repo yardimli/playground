@@ -299,7 +299,7 @@
 			return $output;
 		}
 
-		public function bookDetails(Request $request, $slug)
+		public function readBook(Request $request, $slug)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
 			$json_translations = $this->write_js_translations();
@@ -380,70 +380,93 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('playground.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
-
-		public function allBooks(Request $request)
+		public function editBook(Request $request, $slug)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
 			$json_translations = $this->write_js_translations();
 
-			$booksDir = Storage::disk('public')->path('books');
+			$bookPath = Storage::disk('public')->path("books/{$slug}");
+			$bookJsonPath = "{$bookPath}/book.json";
+			$actsFile = "{$bookPath}/acts.json";
 
-			$books = [];
-			if ($handle = opendir($booksDir)) {
-				while (false !== ($subDir = readdir($handle))) {
-					if ($subDir !== '.' && $subDir !== '..') {
-						$bookJsonPath = "$booksDir/$subDir/book.json";
-						if (file_exists($bookJsonPath)) {
-							$bookJson = file_get_contents($bookJsonPath);
-							$bookData = json_decode($bookJson, true);
-							if ($bookData) {
-
-								//search $book['owner'] in users table name column
-								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
-								if ($user) {
-									$bookData['owner'] = $user->name;
-								}
-
-								$random_int = rand(1, 16);
-								$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
-								$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
-
-								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
-									$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
-								}
-
-								$books[] = [
-									'id' => $subDir,
-									'title' => $bookData['title'],
-									'blurb' => $bookData['blurb'],
-									'owner' => $bookData['owner'] ?? 'admin',
-									'back_cover_text' => $bookData['back_cover_text'],
-									'cover_filename' => $coverFilename,
-									'file_time' => filemtime($bookJsonPath)
-								];
-							}
-						}
-					}
-				}
-				closedir($handle);
+			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
+				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
 			}
 
-			usort($books, function ($a, $b) {
-				return $b['file_time'] - $a['file_time'];
-			});
+			$book = json_decode(File::get($bookJsonPath), true);
 
-			//remove books whose owner is not the current user or admin
-			$books = array_filter($books, function ($book) {
-				return (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner'] ?? '') === 'admin');
-			});
+			//search $book['owner'] in users table name column
+			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
+			if ($user) {
+				$book['owner'] = $user->name;
+			}
+
+			$actsData = json_decode(File::get($actsFile), true);
+
+			$acts = [];
+			foreach ($actsData as $act) {
+				$actChapters = [];
+				$chapterFiles = File::glob("{$bookPath}/*.json");
+				foreach ($chapterFiles as $chapterFile) {
+					$chapterData = json_decode(File::get($chapterFile), true);
+					if (!isset($chapterData['row'])) {
+						continue;
+					}
+					$chapterData['chapterFilename'] = basename($chapterFile);
+
+					if ($chapterData['row'] === $act['id']) {
+						$actChapters[] = $chapterData;
+
+					}
+				}
+
+				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
+				$acts[] = [
+					'id' => $act['id'],
+					'title' => $act['title'],
+					'chapters' => $actChapters
+				];
+			}
+
+
+			$random_int = rand(1, 16);
+			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
+			$book['cover_filename'] = $book['cover_filename'] ?? '';
+
+			$book_slug = $slug;
+
+			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
+				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
+			}
+
+			$book['cover_filename'] = $coverFilename;
+
+			$book['acts'] = $acts;
+
+			$colorOptions = [
+				['background' => '#F28B82', 'text' => '#000000'],
+				['background' => '#FBBC04', 'text' => '#000000'],
+				['background' => '#FFF475', 'text' => '#000000'],
+				['background' => '#CCFF90', 'text' => '#000000'],
+				['background' => '#A7FFEB', 'text' => '#000000'],
+				['background' => '#CBF0F8', 'text' => '#000000'],
+				['background' => '#AECBFA', 'text' => '#000000'],
+				['background' => '#D7AEFB', 'text' => '#000000'],
+				['background' => '#FDCFE8', 'text' => '#000000'],
+				['background' => '#E6C9A8', 'text' => '#000000'],
+				['background' => '#E8EAED', 'text' => '#000000'],
+				['background' => '#FFFFFF', 'text' => '#000000']
+			];
 
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.all-books', compact('locale', 'json_translations', 'books', 'genres_array', 'adult_genres_array'));
+			return view('playground.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
+
+
 
 		public function booksList(Request $request)
 		{
@@ -475,16 +498,11 @@
 									$bookData['owner'] = $user->name;
 								}
 
-
-								$books[] = [
-									'id' => $subDir,
-									'title' => $bookData['title'],
-									'blurb' => $bookData['blurb'],
-									'owner' => $bookData['owner'] ?? 'admin',
-									'back_cover_text' => $bookData['back_cover_text'],
-									'cover_filename' => $coverFilename,
-									'file_time' => filemtime($bookJsonPath)
-								];
+								$bookData['id'] = $subDir;
+								$bookData['cover_filename'] = $coverFilename;
+								$bookData['file_time'] = filemtime($bookJsonPath);
+								$bookData['owner'] = $bookData['owner'] ?? 'admin';
+								$books[] = $bookData;
 							}
 						}
 					}
@@ -498,7 +516,7 @@
 
 			//remove books whose owner is not the current user or admin
 			$books = array_filter($books, function ($book) {
-				return (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email || Auth::user()->isAdmin())) || (($book['owner'] ?? '') === 'admin');
+				return ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) || (($book['public-domain'] ?? 'yes') === 'yes'));
 			});
 
 
@@ -602,7 +620,7 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.books-detail', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function startWriting(Request $request)

@@ -462,7 +462,8 @@
 		'Default Language' => 'Türkçe',
 		'Default Structure' => 'fichtean_curve_tr.txt',
 		'You must be logged in to create a book.' => 'Kitap oluşturmak için giriş yapmalısınız.',
-		'Playground - The Book - Index' => 'Netkitap - Ana Sayfa',
+		'Write Books With AI - Index' => 'Netkitap - Ana Sayfa',
+		'Write Books With AI' => 'Netkitap',
 		'Toggle Mode' => '',
 		'Toggle Mode Text' => 'Toggle Dark/Light',
 		'Add Book' => 'Kitap Ekle',
@@ -501,7 +502,7 @@
 		'Book created successfully.' => 'Kitap başarıyla oluşturuldu.',
 
 		//login.php
-		'Playground Books - Login' => 'Netkitap - Giriş',
+		'Write Books With AI - Login' => 'Netkitap - Giriş',
 		'Login / Register' => 'Giriş / Kayıt Ol',
 		'username' => 'kullanıcı adı',
 		'password' => 'şifre',
@@ -509,7 +510,7 @@
 		'You can login with any username and password. If the username doesn\'t exist, it will be created. The password will be hashed. If the username exists, the password will be verified. If the password is incorrect, you will be told so.' => 'Herhangi bir kullanıcı adı ve şifre ile giriş yapabilirsiniz. Kullanıcı adı mevcut değilse, oluşturulacaktır. Şifre şifrelenecektir. Kullanıcı adı mevcutsa, şifre doğrulanacaktır. Şifre yanlışsa, size bildirilecektir.',
 
 
-		//book-details.php
+		//edit-book.php
 		'Select an AI Engine' => 'Bir YZ Motoru Seçin',
 		'Write All Beats' => 'Tüm Sekansları Yaz',
 		'Cover Image' => 'Kapak Resmi',
@@ -521,7 +522,7 @@
 		'Back to Books' => 'Kitaplara Geri Dön',
 		'Log out' => 'Çıkış Yap',
 		'Login/Sign up' => 'Giriş Yap/Kaydol',
-		'Playground Book' => 'Netkitap',
+		'Write Books With AI Book' => 'Netkitap',
 		'About Book' => 'Kitap Hakkında',
 		'Book Cover' => 'Kitap Kapağı',
 		'Edit Chapter' => 'Düzenle',
@@ -554,11 +555,11 @@
 
 		'Book Structure' => 'Kitap Yapısı',
 		'Generating Beats for All Chapters' => 'Tüm Bölümler İçin Sekanslar Oluşturuluyor',
-		'Playground - The Book' => 'Netkitap - Kitap',
+		'Write Books With AI' => 'NetKitap',
 		'Visitor' => 'Ziyaretçi',
 
 		//chapter-beats.php
-		'Playground - The Book - Beats' => 'Netkitap - Sekanslar',
+		'Write Books With AI - Book Beats' => 'Netkitap - Sekanslar',
 		'Write All Beat Contents' => 'Tüm Sekans İçeriklerini Yaz',
 		'Recreate Beats' => 'Sekansları Yeniden Oluştur',
 		'Read all beats' => 'Tüm Sekansları oku',
