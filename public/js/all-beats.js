@@ -65,7 +65,6 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                 <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
                           rows="10"></textarea>
 								<div id="beatTextResult_${chapterIndex}_${beatIndex}"></div>
-                <br>
                <button id="writeBeatTextBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatTextBtn btn btn-primary mt-3 me-2">${__e('Write Beat Text')}</button>
             </div>
             <div id="beatSummaryArea_${chapterIndex}_${beatIndex}" class="mt-3">
@@ -74,7 +73,6 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                 <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
                           rows="3"></textarea>
 								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
-                <br>
                  <button id="writeBeatSummaryBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${__e('Write Summary')}</button>
             </div>
             <div id="beatLoreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
@@ -83,7 +81,6 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                 <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
                           rows="6"></textarea>
 								<div id="beatLoreResult_${chapterIndex}_${beatIndex}"></div>
-                <br>
 								<button id="updateBeatLoreBookBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">${__e('Update Beat Lore Book')}</button>
             </div>
             <div>

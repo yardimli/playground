@@ -202,7 +202,6 @@
 										<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 										          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
 										<div id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
-										<br>
 										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}" data-chapter-index="{{$chapter_index}}"
 										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
 										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
@@ -213,7 +212,6 @@
 										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}" class="form-control beat-summary-textarea"
 										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
 										<div id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
-										<br>
 										<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
 										        data-chapter-index="{{$chapter_index}}"
 										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
@@ -227,7 +225,6 @@
 										          class="form-control beat-lore-book-textarea"
 										          rows="6">{{$beat['beat_lore_book'] ?? ''}}</textarea>
 										<div id="beatLoreResult_{{$chapter_index}}_{{$index}}"></div>
-										<br>
 										<button id="updateBeatLoreBookBtn_{{$chapter_index}}_{{$index}}"
 										        data-chapter-index="{{$chapter_index}}"
 										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
