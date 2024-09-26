@@ -64,6 +64,7 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                        class="form-label">${__e('Beat Text')}</label>
                 <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
                           rows="10"></textarea>
+								<div id="beatTextResult_${chapterIndex}_${beatIndex}"></div>
                 <br>
                <button id="writeBeatTextBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatTextBtn btn btn-primary mt-3 me-2">${__e('Write Beat Text')}</button>
             </div>
@@ -72,6 +73,7 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                        class="form-label">${__e('Beat Summary')}</label>
                 <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
                           rows="3"></textarea>
+								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
                 <br>
                  <button id="writeBeatSummaryBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${__e('Write Summary')}</button>
             </div>
@@ -80,6 +82,7 @@ function addEmptyBeat(chapterIndex, beatIndex, description) {
                        class="form-label">${__e('Beat Lore Book')}</label>
                 <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
                           rows="6"></textarea>
+								<div id="beatLoreResult_${chapterIndex}_${beatIndex}"></div>
                 <br>
 								<button id="updateBeatLoreBookBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">${__e('Update Beat Lore Book')}</button>
             </div>
@@ -102,7 +105,7 @@ function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename
 		}
 		
 		$("#writeBeatTextBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
-		$("#beatDetailModalResult_" + chapterIndex + '_' + beatIndex).html(__e('Writing beat text...'));
+		$("#beatTextResult_" + chapterIndex + '_' + beatIndex).html(__e('Writing beat text...'));
 		
 		$.ajax({
 			url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
@@ -121,17 +124,17 @@ function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename
 				$('#fullScreenOverlay').addClass('d-none');
 				if (response.success) {
 					$('#beatText_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat text generated successfully!'));
+					$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat text generated successfully!'));
 					$('#writeBeatTextBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 					resolve(response.prompt);
 				} else {
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat text: ') + response.message);
+					$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat text: ') + response.message);
 					reject(__e('Failed to write beat text: ') + response.message);
 				}
 			},
 			error: function () {
 				$('#fullScreenOverlay').addClass('d-none');
-				$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat text.'));
+				$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat text.'));
 				reject(__e('Failed to write beat text.'));
 			}
 		});
@@ -145,7 +148,7 @@ function writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, ch
 			$('#fullScreenOverlay').removeClass('d-none');
 		}
 		$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
-		$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Writing beat summary...'));
+		$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html(__e('Writing beat summary...'));
 		
 		$.ajax({
 			url: `/book/write-beat-summary/${bookSlug}/${chapterFilename}`,
@@ -165,17 +168,17 @@ function writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, ch
 				$('#fullScreenOverlay').addClass('d-none');
 				if (response.success) {
 					$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat summary generated successfully!'));
+					$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat summary generated successfully!'));
 					$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 					resolve(response.prompt);
 				} else {
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write summary: ') + response.message);
+					$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write summary: ') + response.message);
 					reject(__e('Failed to write summary: ') + response.message);
 				}
 			},
 			error: function () {
 				$('#fullScreenOverlay').addClass('d-none');
-				$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat summary.'));
+				$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat summary.'));
 				reject(__e('Failed to write beat summary.'));
 			}
 		});
@@ -188,7 +191,7 @@ function updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, 
 			$('#fullScreenOverlay').removeClass('d-none');
 		}
 		$('#updateBeatLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
-		$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Updating Lore Book...'));
+		$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Updating Lore Book...'));
 		
 		$.ajax({
 			url: `/book/update-beat-lore-book/${bookSlug}/${chapterFilename}`,
@@ -208,17 +211,17 @@ function updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, 
 				$('#fullScreenOverlay').addClass('d-none');
 				if (response.success) {
 					$('#beatLoreBook_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat lore book updated successfully!'));
+					$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat lore book updated successfully!'));
 					$('#updateBeatLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 					resolve(response.prompt);
 				} else {
-					$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book: ') + response.message);
+					$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book: ') + response.message);
 					reject(__e('Failed to update lore book: ') + response.message);
 				}
 			},
 			error: function () {
 				$('#fullScreenOverlay').addClass('d-none');
-				$('#beatDetailModalResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book.'));
+				$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book.'));
 				reject(__e('Failed to update lore book.'));
 			}
 		});
