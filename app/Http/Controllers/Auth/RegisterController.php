@@ -72,7 +72,7 @@
 		protected function validator(array $data)
 		{
 			// Load the blacklist of domains
-//			$blacklist = array_map('trim', file(public_path('texts/free-domains-2.csv'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
+//			$blacklist = array_map('trim', file(resource_path('texts/free-domains-2.csv'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
 //
 //			Validator::extend('not_in_domain_blacklist', function ($attribute, $value, $parameters, $validator) use ($blacklist) {
 //				// Extract the domain from the email
@@ -119,6 +119,6 @@
 		protected function registered(Request $request, $user)
 		{
 			Mail::to($request->input('email'))->send(new WelcomeMail($user->name, $user->email));
-			return redirect()->route('my-profile');
+			return redirect()->route('my-books');
 		}
 	}

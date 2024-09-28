@@ -3,7 +3,11 @@
 	namespace App\Http\Controllers;
 
 	use Illuminate\Http\Request;
+	use App\Models\ChatHeader;
+	use App\Models\ChatBody;
 	use App\Models\User;
+	use App\Models\TokenUsage;
+	use App\Models\PaypalOrder;
 	use Illuminate\Support\Facades\Auth;
 	use Illuminate\Support\Facades\DB;
 	use Illuminate\Support\Facades\Log;
@@ -37,7 +41,7 @@
 			// Validate input
 			$validator = Validator::make($request->all(), [
 				'current_password' => ['nullable', 'string'],
-				'new_password' => ['required', 'string', 'min:8', 'confirmed'],
+				'new_password' => ['required', 'string', 'min:6', 'confirmed'],
 			]);
 
 			if ($validator->fails()) {
@@ -49,7 +53,7 @@
 			// Check if the current password is correct
 			if (!Hash::check($current_password, $user->password)) {
 				throw ValidationException::withMessages([
-					'current_password' => ['當前密碼輸入錯誤'],
+					'current_password' => ['Current password is incorrect.'],
 				]);
 			}
 
@@ -58,8 +62,25 @@
 			$user->save();
 
 			// Redirect back with success message
-			Session::flash('success', '您的密碼已成功更新');
+			Session::flash('success', 'Your password has been updated successfully.');
 			return redirect()->back();
+		}
+
+		//-------------------------------------------------------------------------
+		// privacy
+		public function buyPackages(Request $request)
+		{
+			if (Auth::check()) {
+			$checkout_starter = 'starter';
+			$checkout_novella = 'novella';
+			$checkout_novel = 'novel';
+		} else {
+			$checkout_starter = null;
+			$checkout_novella = null;
+			$checkout_novel = null;
+		}
+
+			return view('user.buy-packages', compact('checkout_starter', 'checkout_novella', 'checkout_novel'));
 		}
 
 
@@ -72,11 +93,10 @@
 			// Get the authenticated user
 			$user = $request->user();
 
-			$user_order_and_tokens = [];
+			$user_order_and_tokens = MyHelper::getUserOrdersAndTokens(Auth::user()->id);
 
-			return view('playground.my-profile', compact('user', 'user_order_and_tokens'));
+			return view('user.settings', compact('user', 'user_order_and_tokens'));
 		}
-
 
 // Update user settings
 		public function updateSettings(Request $request)
@@ -95,7 +115,9 @@
 					'required', 'string', 'email', 'max:255',
 					Rule::unique('users')->ignore($user->id),
 				],
+				'about_me_input' => ['nullable', 'string', 'max:500'],
 				'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
+				'background_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
 			]);
 
 			if ($validator->fails()) {
@@ -111,14 +133,26 @@
 				$user->avatar = $avatarPath;
 			}
 
+// Handle background upload
+			if ($request->hasFile('background_image')) {
+				$background = $request->file('background_image');
+				$backgroundContents = file_get_contents($background->getRealPath());
+				$backgroundName = $user->id . '_bg.jpg';
+				$backgroundPath = 'public/user_avatars/' . $backgroundName;
+				Storage::put($backgroundPath, $backgroundContents);
+				$user->background_image = $backgroundPath;
+			}
+
+
 			// Update user
 			$user->name = $request->input('name');
 			$user->username = $request->input('username');
 			$user->email = $request->input('email');
+			$user->about_me = $request->input('about_me_input');
 			$user->save();
 
 			// Redirect back with success message
-			Session::flash('success', '您的設定已成功更新');
+			Session::flash('success', 'Your settings have been updated successfully.');
 			return redirect()->back();
 		}
 

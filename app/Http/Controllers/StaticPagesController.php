@@ -126,59 +126,18 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view("playground.index", compact('posts', 'locale', 'json_translations', 'genres_array', 'adult_genres_array'));
+			return view("user.index", compact('posts', 'locale', 'json_translations', 'genres_array', 'adult_genres_array'));
 
 		}
 
-		public function blogArticle(Request $request, $slug)
+		public function landing(Request $request)
 		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-
-			$blog_post = BinshopsPostTranslation::where("slug", $slug)->first(); //->where('lang_id', 2)->first();
-
-			$blog_post->category_name = '';
-			//get post categories
-			$categories = BinshopsCategory::join('binshops_post_categories', 'binshops_categories.id', '=', 'binshops_post_categories.category_id')
-				->where('binshops_post_categories.post_id', $blog_post->post_id)
-				->get();
-
-			//get category translations
-			$categories = json_decode(json_encode($categories), true);
-			foreach ($categories as $category) {
-				if ($blog_post->category_name == '' || $blog_post->category_name == null) {
-					$blog_post->category_name = BinshopsCategoryTranslation::where('category_id', $category['category_id'])->first()->category_name ?? '';
-				}
-			}
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.single-post", compact('blog_post', 'locale', 'genres_array', 'adult_genres_array'));
+			return view('landing.landing');
 		}
 
-		public function blog(Request $request)
+		public function about(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.blog-listing", compact('posts', 'genres_array', 'adult_genres_array'));
-
-		}
-
-		public function about_us(Request $request)
-		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.about-us", compact('posts', 'genres_array', 'adult_genres_array'));
-
+			return view('user.about');
 		}
 
 		public function faq(Request $request)
@@ -189,57 +148,83 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view("playground.faq", compact('posts', 'genres_array', 'adult_genres_array'));
+			return view("user.faq", compact('posts', 'genres_array', 'adult_genres_array'));
 		}
 
-		public function blogGrid(Request $request)
+
+		public function myBooks(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
+			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
+			$json_translations = $this->write_js_translations();
+
+			$booksDir = Storage::disk('public')->path('books');
+
+			$books = [];
+			if ($handle = opendir($booksDir)) {
+				while (false !== ($subDir = readdir($handle))) {
+					if ($subDir !== '.' && $subDir !== '..') {
+						$bookJsonPath = "$booksDir/$subDir/book.json";
+						if (file_exists($bookJsonPath)) {
+							$bookJson = file_get_contents($bookJsonPath);
+							$bookData = json_decode($bookJson, true);
+							if ($bookData) {
+								$random_int = rand(1, 16);
+								$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
+								$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
+
+								if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
+									$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
+								}
+
+								//search $book['owner'] in users table name column
+								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
+								if ($user) {
+									$bookData['owner'] = $user->name;
+								}
+
+								$bookData['id'] = $subDir;
+								$bookData['cover_filename'] = $coverFilename;
+								$bookData['file_time'] = filemtime($bookJsonPath);
+								$bookData['owner'] = $bookData['owner'] ?? 'admin';
+								$books[] = $bookData;
+							}
+						}
+					}
+				}
+				closedir($handle);
+			}
+
+			usort($books, function ($a, $b) {
+				return $b['file_time'] - $a['file_time'];
+			});
+
+			//remove books whose owner is not the current user or admin
+			$books = array_filter($books, function ($book) {
+				return ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) || (($book['public-domain'] ?? 'yes') === 'yes'));
+			});
 
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view("playground.blog-grid", compact('posts', 'genres_array', 'adult_genres_array'));
+
+			return view("user.my-books", compact('books', 'genres_array', 'adult_genres_array'));
 
 		}
 
-		public function blogDetail(Request $request)
+		public function onboarding(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.blog-detail", compact('posts', 'genres_array', 'adult_genres_array'));
-
-		}
-
-		public function myProfile(Request $request)
-		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.my-profile", compact('posts', 'genres_array', 'adult_genres_array'));
-
+			return view('user.onboarding');
 		}
 
 		public function help(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.help-center", compact('posts', 'genres_array', 'adult_genres_array'));
-
+			return view('help.help');
 		}
 
+		public function helpDetails(Request $request, $topic)
+		{
+			return view('help.help-details', ['topic' => $topic]);
+		}
 		public function contact_us(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
@@ -248,33 +233,25 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view("playground.contact-us", compact('posts', 'genres_array', 'adult_genres_array'));
+			return view("user.contact-us", compact('posts', 'genres_array', 'adult_genres_array'));
 
 		}
 
 		public function privacy(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.privacy-policy", compact('posts', 'genres_array', 'adult_genres_array'));
-
+			return view('user.privacy');
 		}
 
 		public function terms(Request $request)
 		{
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			return view("playground.terms", compact('posts', 'genres_array', 'adult_genres_array'));
-
+			return view('user.terms');
 		}
+
+		public function changeLog(Request $request)
+		{
+			return view('user.change-log');
+		}
+
 
 		//------------------------------------------------------------------------------
 
@@ -380,7 +357,7 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('user.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 		public function editBook(Request $request, $slug)
 		{
@@ -463,7 +440,7 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('user.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 
 
@@ -536,7 +513,7 @@
 			$adult_genres_array = $this->adult_genres_array;
 
 
-			return view('playground.books-list', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
+			return view('user.books-list', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksDetail(Request $request, $slug)
@@ -620,7 +597,7 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('playground.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('user.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function startWriting(Request $request)
@@ -635,7 +612,7 @@
 
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
-			return view("playground.start-writing", compact('posts', 'coverFilename', 'adult_genres_array', 'genres_array', 'writingStyles', 'narrativeStyles'));
+			return view("user.start-writing", compact('posts', 'coverFilename', 'adult_genres_array', 'genres_array', 'writingStyles', 'narrativeStyles'));
 
 		}
 
@@ -643,7 +620,7 @@
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
-				return redirect()->route('playground.books')->with('error', $verified['message']);
+				return redirect()->route('user.books')->with('error', $verified['message']);
 			}
 
 			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
@@ -740,7 +717,7 @@
 				$selectedChapter = '';
 			}
 
-			return view('playground.all-beats', [
+			return view('user.all-beats', [
 				'book' => $bookData,
 				'book_slug' => $bookSlug,
 				'selected_chapter' => $selectedChapter ?? '',

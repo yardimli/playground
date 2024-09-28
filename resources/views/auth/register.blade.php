@@ -169,8 +169,8 @@
 												       style="float: left; margin-right: 5px;"
 												       value="1" {{ old('policy', 0) ? 'checked' : '' }}>
 												<span>I Agree with the
-															<a href="{{route('terms')}}">Terms</a> and
-															<a href="{{route('privacy-policy')}}"> Privacy</a>
+															<a href="{{route('terms.page')}}">Terms</a> and
+															<a href="{{route('privacy.page')}}"> Privacy</a>
 														</span>
 											</div>
 										</div>
@@ -204,11 +204,11 @@
 								<div class="register-page-txt color--white">
 									
 									<!-- Title -->
-									<h2 class="s-48 w-700">immediately</h2>
-									<h2 class="s-48 w-700">Open an account</h2>
+									<h2 class="s-40 w-700">immediately</h2>
+									<h2 class="s-30 w-700">Open an account</h2>
 									
 									<!-- Text -->
-									<p class="p-md mt-25">Start your sound-weaving journey and experience the charm of AI music creation!
+									<p class="p-md mt-25">Your Story, Our AI - Write Books Faster, Smarter, Better with AI
 									</p>
 									
 									<!-- Copyright -->

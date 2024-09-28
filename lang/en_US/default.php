@@ -2,6 +2,7 @@
 
 	return [
 		'home' => 'home',
+		'WBWAI Blog' => 'WBWAI Blog',
 		'make my song' => 'make my song',
 		'sample songs' => 'Samples',
 		'order list' => 'order list',
@@ -306,7 +307,7 @@
 		'Success' => 'Success',
 		'Failure' => 'Failure',
 		'RESPONSE FROM GATEWAY:' => 'RESPONSE FROM GATEWAY:',
-		'If you have any questions, please contact us at <a href="mailto:support@everperfectassistant.com">support@everperfectassistant.com</a>. Include the above information in your email. Thank you.' => 'If you have any questions, please contact us at <a href="mailto:support@everperfectassistant.com">support@everperfectassistant.com</a>. Include the above information in your email. Thank you.',
+		'If you have any questions, please contact us at <a href="mailto:support@writebookswitai.com">support@writebookswitai.com</a>. Include the above information in your email. Thank you.' => 'If you have any questions, please contact us at <a href="mailto:support@writebookswitai.com">support@writebookswitai.com</a>. Include the above information in your email. Thank you.',
 
 		'Write a Location' => 'Write a Location',
 		'Profile Picture' => 'Profile Picture',

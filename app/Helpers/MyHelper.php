@@ -23,6 +23,14 @@
 	class MyHelper
 	{
 
+		public static function getUserOrdersAndTokens($user_id)
+		{
+			$userId = $user_id;
+			$orders = [];
+			$token_usages = [];
+			return ['orders' => $orders, 'token_usages' => $token_usages, 'gpt4_credits' => 0, 'gpt3_5_credits' => 0, 'gpt4_credits_used' => 0, 'gpt3_5_credits_used' => 0];		}
+
+
 		public static function getBlogData()
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -405,7 +413,7 @@
 			}
 
 
-			$temperature =  rand(80, 100) / 100;
+			$temperature = rand(80, 100) / 100;
 			$max_tokens = 4000;
 
 			$tool_name = 'auto';
@@ -552,7 +560,7 @@
 			} else {
 				$chat_messages[] = [
 					'role' => 'system',
-					'content' => 'You are an expert writer. As an example given the following prompt: '.$example_question.' you wrote: '.$example_answer];
+					'content' => 'You are an expert writer. As an example given the following prompt: ' . $example_question . ' you wrote: ' . $example_answer];
 
 //					$chat_messages[] = [
 //						'role' => 'system',

@@ -101,7 +101,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'support@fictionfusion.io'),
+        'address' => env('MAIL_FROM_ADDRESS', 'support@writebookswithai.com'),
         'name' => env('MAIL_FROM_NAME', 'Mindful Enlightenment Support'),
     ],
 

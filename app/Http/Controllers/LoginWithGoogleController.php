@@ -3,10 +3,8 @@
 	namespace App\Http\Controllers;
 
 	use App\Helpers\MyHelper;
-	use App\Mail\WelcomeMail;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Hash;
-	use Illuminate\Support\Facades\Mail;
 	use Laravel\Socialite\Facades\Socialite;
 	use App\Models\User;
 	use Illuminate\Support\Facades\Auth;
@@ -39,30 +37,17 @@
 				$user = Socialite::driver('google')->user();
 
 				$finduser = User::where('google_id', $user->id)->first();
-				$finduser_email = User::where('email', $user->email)->first();
 
-				if ($finduser || $finduser_email) {
+				if ($finduser) {
 
-					if ($finduser_email && $finduser_email->google_id == null) {
-						$finduser_email->update([
-							'google_id' => $user->id,
-							'picture' => $user['picture']
-						]);
-						Auth::login($finduser_email);
-					}
-
-					if ($finduser) {
-
-						// Update the user's information
-						$finduser->update([
+					// Update the user's information
+					$finduser->update([
 //						'name' => $user->name,
 //						'username' => $user->getNickname() ?? Str::slug($user->name),
-							'email' => $user->email,
+						'email' => $user->email,
 //						'picture' => $user['picture']
-							// Any other fields you want to update
-						]);
-						Auth::login($finduser);
-					}
+						// Any other fields you want to update
+					]);
 
 					// Save and update the avatar image locally
 
@@ -77,8 +62,9 @@
 //						'avatar' => $avatarPath
 //					]);
 
+					Auth::login($finduser);
 
-					return redirect()->route('my-profile');
+					return redirect()->intended('/settings');
 
 				} else {
 					$username = $user->getNickname() ?? Str::slug($user->name);
@@ -96,13 +82,13 @@
 						'picture' => $user['picture'],
 						'username' => $username,
 						'about_me' => 'I am a new writer!',
-						'tokens_left' => 30000,
+						'tokens_left' => 100000,
 						'member_status' => 1,
 						'member_type' => 2,
 						'last_ip' => request()->ip(),
 						'background_image' => '',
 						'google_id' => $user->id,
-						'email_verified_at' => null, //now(), // Set the email as verified for Google signups
+						'email_verified_at' => now(), // Set the email as verified for Google signups
 					]);
 
 					// Save the avatar image locally with user_id in the filename
@@ -117,12 +103,12 @@
 						'avatar' => $avatarPath
 					]);
 
+					MyHelper::addStarterPackage($new_user->id);
+					///-------------- ADD NEW USER TOKENS
+
 					Auth::login($new_user);
 
-					Mail::to($user->email)->send(new WelcomeMail($user->name, $user->email));
-					$new_user->sendEmailVerificationNotification();
-
-					return redirect()->route('my-profile');
+					return redirect()->intended('/settings');
 				}
 
 			} catch

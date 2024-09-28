@@ -4,7 +4,7 @@
 		'Home' => 'Ana Sayfa',
 		'About' => 'Hakkımızda',
 		'Blog' => 'Blog',
-		'Ever Perfect Assistant Blog' => 'Ever Perfect Assistant Blog',
+		'WBWAI Blog' => 'WBWAI Blog',
 		'Pricing' => 'Fiyatlar',
 		'Help' => 'Yardım',
 		'Contact' => 'İletişim',
@@ -22,7 +22,7 @@
 		'Welcome to Ever Perfect Assistant!' => 'Minik Dersler\'e Hoşgeldiniz!',
 		'Let\'s learn something new today!' => 'Bugün yeni bir şeyler öğrenelim!',
 		'Its your turn to join.' => 'Yüzlerce öğrenci bize katıldı, şimdi sıra sizde.', //Hundreds of Bots have already joined us, now it\'s your turn.
-		'signup_terms' => 'Kaydolmak, <a href=":url" target="_blank">şartlar ve koşullar</a>ı kabul ettiğiniz anlamına gelir.', //By signing up, you agree to the <a href="{{route('terms')}}" target="_blank" class="">Terms and Conditions</a>
+		'signup_terms' => 'Kaydolmak, <a href=":url" target="_blank">şartlar ve koşullar</a>ı kabul ettiğiniz anlamına gelir.', //By signing up, you agree to the <a href="{{route('terms.page')}}" target="_blank" class="">Terms and Conditions</a>
 		'Or' => '或',
 		'Already Have Account Sign In' => 'Hesabınız var mı? <a href=":url">Buradan giriş yapın</a>', //'Already Have an Account? Sign in here'
 		'Or Continue With' => 'Ya da Google İle Devam Et',
@@ -37,7 +37,7 @@
 		'site_domain' => 'minikdersler.com',
 		'site_url' => 'https://minikdersler.com/',
 		'Login Script' => 'Minik Derseler',
-		'© 2023 everperfectassistant.com. All rights reserved.' => '© 2023 everperfectassistant.com. Tüm hakları saklıdır.',
+		'© 2024 writebookswitai.com. All rights reserved.' => '© 2024 writebookswitai.com. Tüm hakları saklıdır.',
 		'Progress' => 'İlerleme Raporu',
 		'View all lessons with a concise status overview, tracking achievements and growth in a snap.' => 'Tüm dersleri kapsamlı bir durum özetiyle görüntüleyin, başarıları ve büyümeyi anında izleyin.',
 		'Questions Log' => 'Ders Geçmişi',
@@ -412,7 +412,7 @@
 		'Success' => 'Başarı',
 		'Failure' => 'Başarısızlık',
 		'RESPONSE FROM GATEWAY:' => 'GATEWAY\'DEN CEVAP:',
-		'If you have any questions, please contact us at <a href="mailto:support@everperfectassistant.com">support@everperfectassistant.com</a>. Include the above information in your email. Thank you.' => 'Herhangi bir sorunuz varsa, lütfen <a href="mailto:destek@minikdersler.com">destek@minikdersler.com</a>. Yukarıdaki bilgileri e-postanıza dahil edin. Teşekkür ederiz.',
+		'If you have any questions, please contact us at <a href="mailto:support@writebookswitai.com">support@writebookswitai.com</a>. Include the above information in your email. Thank you.' => 'Herhangi bir sorunuz varsa, lütfen <a href="mailto:destek@minikdersler.com">destek@minikdersler.com</a>. Yukarıdaki bilgileri e-postanıza dahil edin. Teşekkür ederiz.',
 
 		'Add New Support Bot' => 'Yeni Öğrenci Ekle',
 

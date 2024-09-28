@@ -14,7 +14,7 @@
 		use ResetsPasswords;
 
 		// Set the redirectTo property
-		protected $redirectTo = '/my-profile';
+		protected $redirectTo = '/my-books';
 
 
 		protected function resetPassword($user, $password)
@@ -27,8 +27,8 @@
 			Auth::login($user);
 //			$this->guard()->login($user);
 
-			// Redirect the user to the /my-profile page with a success message.
-			return redirect('/my-profile')->with('status', 'Your password has been changed.');
+			// Redirect the user to the /my-books page with a success message.
+			return redirect('/my-books')->with('status', 'Your password has been changed.');
 		}
 
 		public function showResetPasswordForm(Request $request, $token = null)

@@ -145,7 +145,7 @@
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
 				<tr>
 					<td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-						<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Welcome to writebookswithai.com: Mindful Enlightenment - Unleash the Songs Within</h1>
+						<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Welcome to writebookswithai.com: Your Story, Our AI - Write Books Faster, Smarter, Better with AI</h1>
 					</td>
 				</tr>
 			</table>
@@ -180,7 +180,7 @@
 							<br><br>
 							As you explore <a href="https://writebookswithai.com">writebookswithai.com</a>, you'll find an extensive range of genres and writing styles, along with valuable insights from fellow members to help you evolve as a writer. Our team is committed to ensuring that you feel inspired, supported, and encouraged as you embark on this thrilling adventure.
 							<br><br>
-							Let's collectively Mindful Enlightenment - Unleash the Songs Within!
+							Your Story, Our AI - Write Books Faster, Smarter, Better with AI
 							</p>
 					</td>
 				</tr>
@@ -194,7 +194,7 @@
 							<br><br>
 							The writebookswithai.com Team
 							<br><br>
-							"Mindful Enlightenment - Unleash the Songs Within: Where Human Ingenuity and AI Creativity Converge"</p>
+							Your Story, Our AI - Write Books Faster, Smarter, Better with AI</p>
 					</td>
 				</tr>
 				<!-- end copy -->

@@ -39,3 +39,4 @@ php_errors.log
 /storage/app/public/books/[A-z]*
 storage/app/public/ai-images/render-log.json
 storage/app/public/ai-images/*-*-*-*-*.jpg
+/storage/app/public

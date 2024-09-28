@@ -38,7 +38,7 @@
 				$email_view = 'emails.reset_password_tr';
 			}
 
-			return $this->from(env('MAIL_FROM_ADDRESS','support@fictionfusion.io'), env('MAIL_FROM_NAME', 'Mindful Enlightenment Support'))
+			return $this->from(env('MAIL_FROM_ADDRESS','support@writebookswithai.com'), env('MAIL_FROM_NAME', 'Mindful Enlightenment Support'))
 				->subject($subject)
 				->view($email_view)
 				->with(['token' => $this->token, 'email' => $this->email]);

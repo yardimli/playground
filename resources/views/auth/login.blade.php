@@ -96,11 +96,11 @@
 											<img class="img-fluid" src="/images/logo.png" id="site_logo" alt="logo-image">
 
 											<!-- Title -->
-											<h2 class="s-42 w-700">Welcome</h2>
+											<h2 class="s-32 w-700">Welcome</h2>
 											<h2 class="s-42 w-700">Back</h2>
 
 											<!-- Text -->
-											<p class="p-md mt-25">Continue your journey with us.
+											<p class="p-md mt-25">Your Story, Our AI - Write Books Faster, Smarter, Better with AI
 											</p>
 
 											<!-- Copyright -->
