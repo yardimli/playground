@@ -47,97 +47,98 @@
 									<!-- Card feed item START -->
 									<div class="card h-100">
 										<a class="text-body" href="{{route('user.book-details',$book['id'] ?? '0')}}"><img
-												class="card-img-top"
+												class="card-img-top" style="min-height: 300px"
 												src="{{$book['cover_filename'] ?? ''}}"
 												alt="Book"></a>
 										@if ($book['language'] !== 'English')
-											<div class="badge bg-info text-white mt-2 ms-2 me-2 position-absolute top-0 start-0"
+											<div class="badge bg-info text-white mt-2 ms-2 me-2 position-absolute top-0 end-0"
 											     style="z-index: 9">
 												<span class="badge text-bg-info">{{ $book['language'] }}</span>
 											</div>
 										@endif
+										<div class="position-absolute ms-2 mt-2 top-0 start-0"
+										     style="z-index: 9"><a
+											href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
+											class="badge bg-primary">{{$book['genre'] ?? ''}}</a>
+										</div>
+										
 										
 										<!-- Card body START -->
 										<div class="card-body">
 											<!-- Info -->
-											<a class="text-body"
-											   href="{{route('user.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
-											<!-- Feed react START -->
-											<div class="d-flex justify-content-between">
-												<h6 class="mb-0"><a
-														href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
-														class="modal-body-color">{{$book['genre'] ?? ''}}</a>
-												</h6>
-												<span class="small">{{ Illuminate\Support\Carbon::parse($book['file_time'])->diffForHumans() }}</span>
-											</div>
-											<p class="dz-para">{{$book['blurb'] ?? ''}}</p>
 											
-											<div>
-												@if (isset($book['keywords']))
-													@foreach ($book['keywords'] as $keyword)
-														<a href="{{route('user.books-list-keyword',[$keyword])}}"
-														   class="badge">{{$keyword}}</a>
-													@endforeach
-												@endif
+											<h3 class="title mb-0"><a href="{{route('user.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
+											</h3>
+											
+											<div class="d-flex align-items-center justify-content-between my-3">
+												<div class="d-flex align-items-center">
+													<!-- Avatar -->
+													<div class="avatar avatar-story me-2">
+														<a href=""> <img
+																class="avatar-img rounded-circle"
+																src="/assets/images/avatar/01.jpg"
+																alt=""> </a>
+													</div>
+													<!-- Info -->
+													<div>
+														<div class="nav nav-divider">
+															<h6 class="card-title mb-0 w-100"><a
+																	href=""> {{$book['author_name'] ?? ''}} </a>
+															</h6>
+															
+															<span class="small me-2">{{$book['publisher_name'] ?? ''}}</span>
+															<span class="small me-2"> <i class="bi bi-clock pe-1"></i>55 min read</span>
+															<span class="small">{{ Illuminate\Support\Carbon::parse($book['file_time'])->diffForHumans() }}</span>
+														</div>
+													</div>
+												</div>
 											</div>
 											
-											<ul class="book-info">
-												<li><span>Written by</span> {{$book['author_name'] ?? ''}}</li>
-												<li><span>Publisher</span> {{$book['publisher_name'] ?? ''}}</li>
-												<li><span>Year</span> {{date("Y", $book['file_time'] ?? 123456789)}}</li>
-											</ul>
+											<p>{{$book['blurb'] ?? ''}}</p>
 										</div>
 										<!-- Card body END -->
 									</div>
 								</div>
 							@endforeach
 						</div>
-						<div class="row page mt-0">
-							<div class="col-md-6">
-								<p class="page-text">Showing {{ $paginatedBooks->firstItem() }} to {{ $paginatedBooks->lastItem() }}
-									from {{ $paginatedBooks->total() }} data</p>
-							</div>
-							<div class="col-md-6">
-								<nav aria-label="Blog Pagination">
-									<ul class="pagination style-1 p-t20">
-										@if ($paginatedBooks->onFirstPage())
-											<li class="page-item disabled"><span class="page-link modal-header-color prev">Prev</span></li>
-										@else
-											<li class="page-item"><a class="page-link modal-header-color prev"
-											                         href="{{ $paginatedBooks->previousPageUrl() }}">Prev</a></li>
-										@endif
-										
-										@php
-											$currentPage = $paginatedBooks->currentPage();
-											$lastPage = $paginatedBooks->lastPage();
-											$desktopRange = 2; // Show 5 pages on desktop (current + 2 on each side)
-											$mobileRange = 1;  // Show 3 pages on mobile (current + 1 on each side)
-										@endphp
-										
-										@foreach (range(1, $lastPage) as $page)
-											@php
-												$isDesktopVisible = abs($page - $currentPage) <= $desktopRange;
-												$isMobileVisible = abs($page - $currentPage) <= $mobileRange;
-											@endphp
-											
-											@if ($isDesktopVisible || $isMobileVisible)
-												<li class="page-item {{ $isMobileVisible ? '' : 'desktop-only' }}">
-													<a class="page-link modal-header-color {{ $page == $currentPage ? 'active' : '' }}"
-													   href="{{ $paginatedBooks->url($page) }}">{{ $page }}</a>
-												</li>
-											@endif
-										@endforeach
-										
-										@if ($paginatedBooks->hasMorePages())
-											<li class="page-item"><a class="page-link modal-header-color next"
-											                         href="{{ $paginatedBooks->nextPageUrl() }}">Next</a></li>
-										@else
-											<li class="page-item disabled"><span class="page-link modal-header-color next">Next</span></li>
-										@endif
-									</ul>
-								</nav>
-							</div>
+						
+						<div class="d-flex justify-content-start mt-5">
+							@if ($paginatedBooks->onFirstPage())
+								<button class="btn btn-secondary mx-1" disabled>First</button>
+							@else
+								<a href="{{ $paginatedBooks->url(1) }}" class="btn btn-primary mx-1">First</a>
+							@endif
+							
+{{--							@if ($paginatedBooks->onFirstPage())--}}
+{{--								<button class="btn btn-secondary mx-1" disabled>Previous</button>--}}
+{{--							@else--}}
+{{--								<a href="{{ $paginatedBooks->previousPageUrl() }}" class="btn btn-primary mx-1">Previous</a>--}}
+{{--							@endif--}}
+							
+							@foreach(range(1, $paginatedBooks->lastPage()) as $i)
+								@if ($i >= $paginatedBooks->currentPage() - 2 && $i <= $paginatedBooks->currentPage() + 2)
+									@if ($i == $paginatedBooks->currentPage())
+										<button class="btn btn-secondary mx-1">{{ $i }}</button>
+									@else
+										<a href="{{ $paginatedBooks->url($i) }}" class="btn btn-primary mx-1">{{ $i }}</a>
+									@endif
+								@endif
+							@endforeach
+							
+{{--							@if ($paginatedBooks->hasMorePages())--}}
+{{--								<a href="{{ $paginatedBooks->nextPageUrl() }}" class="btn btn-primary mx-1">Next</a>--}}
+{{--							@else--}}
+{{--								<button class="btn btn-secondary mx-1" disabled>Next</button>--}}
+{{--							@endif--}}
+							
+							@if ($paginatedBooks->currentPage() === $paginatedBooks->lastPage())
+								<button class="btn btn-secondary mx-1" disabled>Last</button>
+							@else
+								<a href="{{ $paginatedBooks->url($paginatedBooks->lastPage()) }}" class="btn btn-primary mx-1">Last</a>
+							@endif
 						</div>
+						
+						<div class="mt-2">Viewing {{ $paginatedBooks->firstItem() }} - {{ $paginatedBooks->lastItem() }} out of {{ $paginatedBooks->total() }}</div>
 					</div>
 				</div>
 			</div>

@@ -328,6 +328,7 @@
 			$random_int = rand(1, 16);
 			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
 			$book['cover_filename'] = $book['cover_filename'] ?? '';
+			$book['file_time'] = filemtime($bookJsonPath);
 
 			$book_slug = $slug;
 
@@ -336,29 +337,15 @@
 			}
 
 			$book['cover_filename'] = $coverFilename;
-
 			$book['acts'] = $acts;
-
-			$colorOptions = [
-				['background' => '#F28B82', 'text' => '#000000'],
-				['background' => '#FBBC04', 'text' => '#000000'],
-				['background' => '#FFF475', 'text' => '#000000'],
-				['background' => '#CCFF90', 'text' => '#000000'],
-				['background' => '#A7FFEB', 'text' => '#000000'],
-				['background' => '#CBF0F8', 'text' => '#000000'],
-				['background' => '#AECBFA', 'text' => '#000000'],
-				['background' => '#D7AEFB', 'text' => '#000000'],
-				['background' => '#FDCFE8', 'text' => '#000000'],
-				['background' => '#E6C9A8', 'text' => '#000000'],
-				['background' => '#E8EAED', 'text' => '#000000'],
-				['background' => '#FFFFFF', 'text' => '#000000']
-			];
 
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('user.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('user.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
+
+
 		public function editBook(Request $request, $slug)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
@@ -576,28 +563,14 @@
 			}
 
 			$book['cover_filename'] = $coverFilename;
+			$book['file_time'] = filemtime($bookJsonPath);
 
 			$book['acts'] = $acts;
-
-			$colorOptions = [
-				['background' => '#F28B82', 'text' => '#000000'],
-				['background' => '#FBBC04', 'text' => '#000000'],
-				['background' => '#FFF475', 'text' => '#000000'],
-				['background' => '#CCFF90', 'text' => '#000000'],
-				['background' => '#A7FFEB', 'text' => '#000000'],
-				['background' => '#CBF0F8', 'text' => '#000000'],
-				['background' => '#AECBFA', 'text' => '#000000'],
-				['background' => '#D7AEFB', 'text' => '#000000'],
-				['background' => '#FDCFE8', 'text' => '#000000'],
-				['background' => '#E6C9A8', 'text' => '#000000'],
-				['background' => '#E8EAED', 'text' => '#000000'],
-				['background' => '#FFFFFF', 'text' => '#000000']
-			];
 
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('user.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			return view('user.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function startWriting(Request $request)

@@ -33,17 +33,10 @@
 				<section class="content-inner site-theme-div">
 					<div class="container">
 						<div class="row">
-							<div class="col-xl-3 col-lg-4 m-b30">
-								<div class="sticky-top">
-									<div class="shop-account">
-										<div class="account-detail text-center" style="padding-top:10px;">
-											<img alt="" src="{{$coverFilename}}" style="width: 90%;">
-										
-										</div>
-									</div>
-								</div>
+							<div class="col-xl-3 col-lg-4 mb-5">
+								<img alt="" src="{{$coverFilename}}">
 							</div>
-							<div class="col-xl-9 col-lg-8 m-b30">
+							<div class="col-xl-9 col-lg-8 mb-5">
 								<div class="shop-bx shop-profile">
 									<div class="shop-bx-title clearfix">
 										<h5 class="text-uppercase">{{__('default.Add Book')}}</h5>
