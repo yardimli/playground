@@ -37,8 +37,9 @@
 	
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
-		
-		
+		<div class="mb-1 mt-1 w-100" style="text-align: right;">
+			<a href="{{route('user.books-list')}}">{{__('default.Back to Books')}}</a>
+		</div>
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
 			</div>
@@ -95,8 +96,8 @@
 						
 						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
-							<option value="2">2</option>
-							<option value="3" selected>3</option>
+							<option value="2" selected>2</option>
+							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 							<option value="6">6</option>
@@ -112,7 +113,11 @@
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
 						</button>
 						
-						<a href="{{route('user.book-beats',[$book_slug, 'all-chapters','3'])}}"
+						<button class="btn btn-primary mb-3 mt-1 w-100" id="openLlmPromptModalBtn">
+							<i class="bi bi-chat-dots"></i> {{__('default.Send Prompt to LLM')}}
+						</button>
+						
+						<a href="{{route('user.book-beats',[$book_slug, 'all-chapters','2'])}}"
 						   class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
 							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
 						</a>
@@ -130,7 +135,7 @@
 							<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
 						</button>
 						
-						<a href="{{route('user.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
+						<a href="{{route('user.books-list')}}" class="mb-1 mt-1 btn btn-secondary w-100"><i
 								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 					
 					</div>
@@ -147,8 +152,13 @@
 						
 						@if (Auth::user())
 							@if (Auth::user()->email === $book['owner'] || Auth::user()->name === $book['owner'])
+								<button class="btn btn-primary mt-3" id="editBookDetailsBtn">
+									<i class="bi bi-pencil-square"></i> {{__('default.Edit Book Details')}}
+								</button>
+								
 								<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
-								        data-book-id="<?php echo urlencode($book_slug); ?>">{{__('default.Delete Book')}}
+								        data-book-id="<?php echo urlencode($book_slug); ?>"><i
+										class="bi bi-trash-fill"></i> {{__('default.Delete Book')}}
 								</button>
 							@endif
 						@endif
@@ -160,74 +170,102 @@
 		</div>
 		
 		<div class="book-chapter-board" id="bookBoard">
+			@foreach ($book['acts'] as $act)
+				<div class="card general-card">
+					<div class="card-header modal-header modal-header-color">
+						<h5 class="card-title">{{__('default.Act with Number', ['id' => $act['id']])}} --- {{$act['title']}}</h5>
+					</div>
+					<div class="card-body modal-content modal-content-color">
+						@foreach ($act['chapters'] as $chapter)
+							<div class="card general-card">
+								<div class="card-header modal-header modal-header-color">
+									<h5 class="card-title">{{__('default.Chapter with Number', ['order' => $chapter['order']])}}
+										--- {{$chapter['name']}}</h5>
+								</div>
+								<div class="card-body modal-content modal-content-color">
+									<div class="row">
+										<div class="col-9">
+											<div class="mb-3">
+												<label for="chapterName" class="form-label">{{__('default.Name')}}</label>
+												<input type="text" class="form-control chapterName" value="{{$chapter['name']}}">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="mb-3">
+												<label for="chapterOrder" class="form-label">{{__('default.Order')}}</label>
+												<input type="text" class="form-control chapterOrder" value="{{$chapter['order']}}">
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterShortDescription"
+												       class="form-label">{{__('default.Short Description')}}</label>
+												<textarea class="form-control chapterShortDescription"
+												          rows="3">{{$chapter['short_description']}}</textarea>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterEvents" class="form-label"> {{__('default.Events')}}</label>
+												<input type="text" class="form-control chapterEvents" value="{{$chapter['events']}}">
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterPeople" class="form-label">{{__('default.People')}}</label>
+												<input type="text" class="form-control chapterPeople" value="{{$chapter['people']}}">
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterPlaces" class="form-label"> {{__('default.Places')}}</label>
+												<input type="text" class="form-control chapterPlaces" value="{{$chapter['places']}}">
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterFromPreviousChapter"
+												       class="form-label">{{__('default.Previous Chapter')}}</label>
+												<input type="text" class="form-control chapterFromPreviousChapter"
+												       value="{{$chapter['from_previous_chapter']}}">
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<label for="chapterToNextChapter" class="form-label"> {{__('default.Next Chapter')}}</label>
+												<input type="text" class="form-control chapterToNextChapter"
+												       value="{{$chapter['to_next_chapter']}}">
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-left: -15px; margin-right: -15px;">
+										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+											<button class="btn bt-lg btn-secondary w-100 update-chapter-btn"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}">
+												{{__('default.Update Chapter')}}
+											</button>
+										</div>
+										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+											<a class="btn bt-lg btn-primary w-100 editBeatsLink"
+											   href="/book-beats/{{$book_slug}}/{{str_replace('.json','', $chapter['chapterFilename'])}}/2">{{__('default.Open Beats')}}</a>
+										</div>
+										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+											<div class="btn bt-lg btn-warning w-100"
+											     onclick="rewriteChapter('{{$chapter['chapterFilename']}}')">{{__('default.Rewrite Chapter')}}</div>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+						@endforeach
+					</div>
+				</div>
+			@endforeach
+		
 		</div>
 	
 	</div>
 </main>
-
-
-<!-- Modal for Adding/Editing Stories -->
-<div class="modal  fade" id="chapterModal" tabindex="-1" aria-labelledby="chapterModalLabel"
-     aria-hidden="true">
-	<div class="modal-dialog modal-lg modal-dialog-scrollable">
-		<div class="modal-content modal-content-color">
-			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="chapterModalLabel">{{__('default.Edit Chapter')}}</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
-			</div>
-			<div class="modal-body modal-body-color">
-				<form id="chapterForm" enctype="multipart/form-data">
-					<input type="hidden" id="chapterFilename">
-					<div class="mb-3">
-						<label for="chapterName" class="form-label">{{__('default.Name')}}</label>
-						<input type="text" class="form-control" id="chapterName" required>
-					</div>
-					<div class="mb-3">
-						<label for="chapterText" class="form-label">{{__('default.Text')}}</label>
-						<textarea class="form-control" id="chapterText" rows="3" required></textarea>
-					</div>
-					
-					<div class="mb-3">
-						<label for="chapterEvents" class="form-label"> {{__('default.Events')}}</label>
-						<input type="text" class="form-control" id="chapterEvents">
-					</div>
-					<div class="mb-3">
-						<label for="chapterPeople" class="form-label">{{__('default.People')}}</label>
-						<input type="text" class="form-control" id="chapterPeople">
-					</div>
-					<div class="mb-3">
-						<label for="chapterPlaces" class="form-label"> {{__('default.Places')}}</label>
-						<input type="text" class="form-control" id="chapterPlaces">
-					</div>
-					<div class="mb-3">
-						<label for="chapterFromPreviousChapter" class="form-label">{{__('default.Previous Chapter')}}</label>
-						<input type="text" class="form-control" id="chapterFromPreviousChapter">
-					</div>
-					<div class="mb-3">
-						<label for="chapterToNextChapter" class="form-label"> {{__('default.Next Chapter')}}</label>
-						<input type="text" class="form-control" id="chapterToNextChapter">
-					</div>
-					
-					<div class="mb-3">
-						<label class="form-label">{{__('default.Background Color')}}</label>
-						<div id="colorPalette" class="d-flex flex-wrap">
-							<!-- Color buttons will be inserted here dynamically -->
-						</div>
-					</div>
-					<input type="hidden" id="chapterBackgroundColor">
-					<input type="hidden" id="chapterTextColor">
-					
-					<div id="save_result"></div>
-				</form>
-			</div>
-			<div class="modal-footer modal-footer-color">
-				<button class="btn btn-primary" id="saveChapter">{{__('default.Save Chapter')}}</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> {{__('default.Close')}}</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <!-- Modal for Creating Book Cover -->
 <div class="modal fade" id="createCoverModal" tabindex="-1" aria-labelledby="createCoverModalLabel"
@@ -322,18 +360,117 @@
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
 				<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
+				<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
+				        aria-label="{{__('default.Close')}}"></button>
 			</div>
 			<div class="modal-body modal-body-color">
 				<div id="alertModalContent"></div>
 			</div>
 			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				<button type="button" class="btn btn-secondary alert-modal-close-button"
+				        data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+
+<!-- Modal for Editing Book Details -->
+<div class="modal fade" id="editBookDetailsModal" tabindex="-1" aria-labelledby="editBookDetailsModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="editBookDetailsModalLabel">{{__('default.Edit Book Details')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<form id="editBookDetailsForm">
+					<div class="mb-3">
+						<label for="editBlurb" class="form-label">{{__('default.Blurb')}}</label>
+						<textarea class="form-control" id="editBlurb" rows="3"></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="editBackCoverText" class="form-label">{{__('default.Back Cover Text')}}</label>
+						<textarea class="form-control" id="editBackCoverText" rows="5"></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="editCharacterProfiles" class="form-label">{{__('default.Character Profiles')}}</label>
+						<textarea class="form-control" id="editCharacterProfiles" rows="5"></textarea>
+					</div>
+					<div class="mb-3">
+						<label for="editAuthorName" class="form-label">{{__('default.Author Name')}}</label>
+						<input type="text" class="form-control" id="editAuthorName">
+					</div>
+					<div class="mb-3">
+						<label for="editPublisherName" class="form-label">{{__('default.Publisher Name')}}</label>
+						<input type="text" class="form-control" id="editPublisherName">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				<button type="button" class="btn btn-primary" id="saveBookDetailsBtn">{{__('default.Save Changes')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- LLM Prompt Modal -->
+<div class="modal fade" id="llmPromptModal" tabindex="-1" aria-labelledby="llmPromptModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="llmPromptModalLabel">{{__('default.Send Prompt to LLM')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div class="mb-3">
+					<label for="userPrompt" class="form-label">{{__('default.User Prompt')}}</label>
+					<textarea class="form-control" id="userPrompt" rows="8"></textarea>
+				</div>
+				<div class="mb-3">
+					<label for="llmResponse" class="form-label">{{__('default.LLM Response')}}</label>
+					<textarea class="form-control" id="llmResponse" rows="10" readonly></textarea>
+				</div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				<button type="button" class="btn btn-primary" id="sendPromptBtn">{{__('default.Send Prompt')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Rewrite Chapter Modal -->
+<div class="modal fade" id="rewriteChapterModal" tabindex="-1" aria-labelledby="rewriteChapterModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="rewriteChapterModalLabel">{{__('default.Rewrite Chapter')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div class="mb-3">
+					<label for="rewriteUserPrompt" class="form-label">{{__('default.User Prompt')}}</label>
+					<textarea class="form-control" id="rewriteUserPrompt" rows="10"></textarea>
+				</div>
+				<div class="mb-3">
+					<h6>{{__('default.Rewritten Chapter:')}}</h6>
+					<textarea class="form-control" id="rewriteResult" rows="10"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				<button type="button" class="btn btn-primary"
+				        id="sendRewritePromptBtn">{{__('default.Rewrite Chapter')}}</button>
+				<button type="button" class="btn btn-success" id="acceptRewriteBtn"
+				        style="display: none;">{{__('default.Accept Rewrite')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 	window.currentUserName = "<?php echo htmlspecialchars(Auth::user()->email ?? __('Visitor')); ?>";

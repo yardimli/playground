@@ -1,3 +1,5 @@
+let reload_window = false;
+
 function showBookStructureModal() {
 	
 	
@@ -52,87 +54,22 @@ function showBookStructureModal() {
 	$('#bookStructureModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 }
 
-
-function createChapter(chapter) {
-	let truncatedText;
-	if (chapter.short_description.length > 128) {
-		const words = chapter.short_description.split(' ');
-		let charCount = 0;
-		truncatedText = '';
-		for (const word of words) {
-			if ((charCount + word.length + 1) > 128) {
-				truncatedText += '...';
-				break;
-			}
-			truncatedText += (truncatedText.length ? ' ' : '') + word;
-			charCount += word.length + 1;
-		}
-	} else {
-		truncatedText = chapter.short_description;
-	}
-	
-	var chapter_events = chapter.events;
-	if (Array.isArray(chapter.events)) {
-		chapter_events = chapter.events.join(', ');
-	}
-	var chapter_people = chapter.people;
-	if (Array.isArray(chapter.people)) {
-		chapter_people = chapter.people.join(', ');
-	}
-	var chapter_places = chapter.places;
-	if (Array.isArray(chapter.places)) {
-		chapter_places = chapter.places.join(', ');
-	}
-	
-	return `<div class="col-xl-3 col-lg-3 col-12 mb-5 book-chapter-card-col" data-chapter-filename="${chapter.chapterFilename}"><div class="book-chapter-card" style="background-color: ${chapter.backgroundColor}; color: ${chapter.textColor}">
-        <div style="font-size: 18px; margin-bottom: 15px;">${chapter.name}</div>
-        <div class="mb-2">${truncatedText}</div>
-        <strong>${__e('Events')}:</strong> ${chapter_events}
-        <br><strong>${__e('People')}:</strong> ${chapter_people}
-        <br><strong>${__e('Places')}:</strong> ${chapter_places}
-        <br><strong>${__e('Prev')}:</strong> ${chapter.from_previous_chapter}
-        <br><strong>${__e('Next')}:</strong> ${chapter.to_next_chapter}
-    </div>
-    <div class="row" style="margin: 0px;">
-	    <div class="col-12 col-lg-6 mb-2 zero-right-padding-on-mobile">
-				<div class="btn bt-lg btn-info w-100" data-chapter-filename="${chapter.chapterFilename}" onclick="editChapter('${chapter.chapterFilename}')" >${__e('Edit Chapter')}</div>
-			</div>
-    <div class="col-12 col-lg-6 mb-2 zero-left-padding-on-mobile">
-			<a class="btn bt-lg btn-primary w-100 editBeatsLink" href="/book-beats/${bookSlug}/${chapter.chapterFilename.replace('.json', '')}/3">${__e('Open Beats')}</a>
-	    </div>
-    </div>
-  </div>
-`;
-}
-
-function saveChapter() {
+function saveChapter(chapterData) {
 	$.ajax({
 		url: `/book/${bookSlug}/chapter`,
 		type: 'POST',
-		data: {
-			chapterFilename: $('#chapterFilename').val(),
-			name: $('#chapterName').val(),
-			short_description: $('#chapterText').val(),
-			events: $('#chapterEvents').val(),
-			people: $('#chapterPeople').val(),
-			places: $('#chapterPlaces').val(),
-			from_previous_chapter: $('#chapterFromPreviousChapter').val(),
-			to_next_chapter: $('#chapterToNextChapter').val(),
-			backgroundColor: $('#chapterBackgroundColor').val(),
-			textColor: $('#chapterTextColor').val(),
-			llm: savedLlm
-		},
+		data: chapterData,
 		dataType: 'json',
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		success: function (response) {
 			if (response.success) {
+				reload_window = true;
+				
 				$('#save_result').html('<div class="alert alert-success">' + __e('Chapter saved successfully!') + '</div>');
 				$("#alertModalContent").html(__e('Chapter saved successfully!'));
 				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-				// Refresh the page
-				location.reload();
 			} else {
 				console.log(response);
 				$("#alertModalContent").html(__e('Failed to save chapter: ') + response.message);
@@ -145,47 +82,6 @@ function saveChapter() {
 			$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		}
 	});
-}
-
-function editChapter(chapterFilename) {
-	let chapter = null;
-	for (let bookAct of bookData['acts']) {
-		for (let bookChapter of bookAct['chapters']) {
-			if (bookChapter.chapterFilename == chapterFilename) {
-				chapter = bookChapter;
-				break
-				2;
-			}
-		}
-	}
-	console.log(chapter);
-	
-	var chapter_events = chapter.events;
-	if (Array.isArray(chapter.events)) {
-		chapter_events = chapter.events.join(', ');
-	}
-	var chapter_people = chapter.people;
-	if (Array.isArray(chapter.people)) {
-		chapter_people = chapter.people.join(', ');
-	}
-	var chapter_places = chapter.places;
-	if (Array.isArray(chapter.places)) {
-		chapter_places = chapter.places.join(', ');
-	}
-	
-	$('#save_result').html('');
-	$('#chapterFilename').val(chapterFilename);
-	$('#chapterName').val(chapter.name);
-	$('#chapterText').val(chapter.short_description);
-	$('#chapterEvents').val(chapter_events);
-	$('#chapterPeople').val(chapter_people);
-	$('#chapterPlaces').val(chapter_places);
-	$('#chapterFromPreviousChapter').val(chapter.from_previous_chapter);
-	$('#chapterToNextChapter').val(chapter.to_next_chapter);
-	$('#chapterBackgroundColor').val(chapter.backgroundColor);
-	$('#chapterTextColor').val(chapter.textColor);
-	$('#chapterModal').modal({backdrop: 'static', keyboard: true}).modal('show');
-	
 }
 
 function generateAllBeats(beatsPerChapter = 3) {
@@ -221,18 +117,18 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0
 	$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
 	
 	// Check if the chapter already has beats
-	// if (chapter.beats && chapter.beats.length > 0) {
-	// 	$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
-	//
-	// 	const progressBar = modal.find('.progress-bar');
-	// 	const progress = Math.round((chapter_index / totalChapters) * 100);
-	// 	progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
-	//
-	// 	$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
-	// 	if (chapter_index < totalChapters) {
-	// 		generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
-	// 	}
-	// } else {
+	if (chapter.beats && chapter.beats.length > 0) {
+		$('#generateAllBeatsLog').append('<br>' + __e('Chapter "${chapter}" already has beats. Skipping...', {chapter: chapter.name}));
+		
+		const progressBar = modal.find('.progress-bar');
+		const progress = Math.round((chapter_index / totalChapters) * 100);
+		progressBar.css('width', `${progress}%`).attr('aria-valuenow', progress).text(`${progress}%`);
+		
+		$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
+		if (chapter_index < totalChapters) {
+			generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
+		}
+	} else {
 		
 		$.ajax({
 			url: `/book/write-beats/${bookSlug}/${chapter.chapterFilename}`,
@@ -284,49 +180,134 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0
 				//break loop
 			}
 		});
-	// }
+	}
+}
+
+function rewriteChapter(chapterFilename) {
+	const modal = $('#rewriteChapterModal');
+	const userPromptTextarea = $('#rewriteUserPrompt');
+	
+	let chaptersToInclude = [];
+	let foundCurrentChapter = false;
+	let foundCurrentChapterData = [];
+	for (let act of bookData.acts) {
+		for (let chapter of act.chapters) {
+			if (chapter.chapterFilename === chapterFilename) {
+				foundCurrentChapter = true;
+				foundCurrentChapterData = chapter;
+				break;
+			}
+			chaptersToInclude.push(chapter);
+		}
+		if (foundCurrentChapter) {
+			break;
+		}
+	}
+	
+	// Fetch the rewrite_chapter.txt template
+	$.get('/prompts/rewrite_chapter.txt', function (template) {
+		// Replace placeholders in the template
+		const replacements = {
+			'##user_blurb##': bookData.prompt || '',
+			'##language##': bookData.language || 'English',
+			'##book_title##': bookData.title || '',
+			'##book_blurb##': bookData.blurb || '',
+			'##book_keywords##': bookData.keywords ? bookData.keywords.join(', ') : '',
+			'##back_cover_text##': bookData.back_cover_text || '',
+			'##character_profiles##': bookData.character_profiles || '',
+			'##genre##': bookData.genre || 'fantasy',
+			'##adult_content##': bookData.adult_content || 'non-adult',
+			'##writing_style##': bookData.writing_style || 'Minimalist',
+			'##narrative_style##': bookData.narrative_style || 'Third Person - The narrator has a godlike perspective',
+			'##book_structure##': bookData.book_structure || 'fichtean_curve.txt',
+			'##previous_chapters##': chaptersToInclude.map(ch =>
+				`name: ${ch.name}\nshort description: ${ch.short_description}\nevents: ${ch.events}\npeople: ${ch.people}\nplaces: ${ch.places}\nfrom previous chapter: ${ch.from_previous_chapter}\nto next chapter: ${ch.to_next_chapter}\n\nbeats:\n${ch.beats ? ch.beats.map(b => b.beat_summary || b.description).join('\n') : ''}`
+			).join('\n\n'),
+			'##current_chapter##': `name: ${foundCurrentChapterData.name}\nshort description: ${foundCurrentChapterData.short_description}\nevents: ${foundCurrentChapterData.events}\npeople: ${foundCurrentChapterData.people}\nplaces: ${foundCurrentChapterData.places}\nfrom previous chapter: ${foundCurrentChapterData.from_previous_chapter}\nto next chapter: ${foundCurrentChapterData.to_next_chapter}`
+		};
+		
+		for (const [key, value] of Object.entries(replacements)) {
+			template = template.replace(new RegExp(key, 'g'), value);
+		}
+		
+		userPromptTextarea.val(template.trim());
+		
+		// Show the modal
+		modal.modal('show');
+	});
+	
+	// Handle the rewrite button click
+	$('#sendRewritePromptBtn').off('click').on('click', function () {
+		const userPrompt = userPromptTextarea.val();
+		$('#sendRewritePromptBtn').prop('disabled', true).text(__e('Rewriting...'));
+		
+		$.ajax({
+			url: '/rewrite-chapter',
+			method: 'POST',
+			data: {
+				book_slug: bookSlug,
+				chapters_to_rewrite: JSON.stringify(chaptersToInclude),
+				rewrite_chapter_filename: chapterFilename,
+				llm: savedLlm,
+				user_prompt: userPrompt
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					// Display the rewritten chapter in the modal
+					$('#rewriteResult').val(JSON.stringify(response.rewrittenChapter, null, 2));
+					$('#acceptRewriteBtn').show();
+				} else {
+					$("#alertModalContent").html(__e('Failed to rewrite chapter:') + response.message);
+					$("#alertModal").modal('show');
+				}
+				$('#sendRewritePromptBtn').prop('disabled', false).text(__e('Rewrite Chapter'));
+			},
+			error: function () {
+				$("#alertModalContent").html(__e('Error rewriting chapter'));
+				$("#alertModal").modal('show');
+				$('#sendRewritePromptBtn').prop('disabled', false).text(__e('Rewrite Chapter'));
+			}
+		});
+	});
+	
+	$('#acceptRewriteBtn').off('click').on('click', function () {
+		$.ajax({
+			url: '/accept-rewrite',
+			method: 'POST',
+			data: {
+				book_slug: bookSlug,
+				chapter_filename: chapterFilename,
+				rewritten_content: $('#rewriteResult').val()
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					reload_window = true;
+					$("#alertModalContent").html(__e('Chapter rewritten successfully!'));
+					$("#alertModal").modal('show');
+				} else {
+					$("#alertModalContent").html(__e('Failed to save rewritten chapter:') + response.message);
+					$("#alertModal").modal('show');
+				}
+			},
+			error: function () {
+				$("#alertModalContent").html(__e('Error saving rewritten chapter'));
+				$("#alertModal").modal('show');
+			}
+		});
+	});
+	
 }
 
 
 $(document).ready(function () {
-	
-	// Populate bookActs
-	for (let bookAct of bookData['acts']) {
-		$('#bookBoard').append(`
-	<div class="book-chapter-act">
-	  <h3>${bookAct.title}</h3>
-	  <div class="row book-chapter-act-ul" id="${bookAct.id}-book-act" data-book-act="${bookAct.id}"></div>
-	</div>
-	`);
-	}
-	
-	
-	// Create color buttons
-	const colorPalette = $('#colorPalette');
-	colorOptions.forEach(option => {
-		const button = $(`<button type="button" class="btn m-1" style="background-color: ${option.background}; color: ${option.text};">${option.text}</button>`);
-		button.on('click', function () {
-			$('#chapterBackgroundColor').val(option.background);
-			$('#chapterTextColor').val(option.text);
-			$('#colorPalette button').removeClass('active');
-			$(this).addClass('active');
-		});
-		colorPalette.append(button);
-	});
-	
-	//set default color
-	$('#colorPalette button').first().click();
-	
-	
-	$('.book-chapter-act-ul').empty();
-	
-	for (let bookAct of bookData['acts']) {
-		for (let chapter of bookAct['chapters']) {
-			const chapterCard = createChapter(chapter);
-			$(`#${bookAct.id}-book-act`).append(chapterCard);
-		}
-	}
-	
 	$('.closeAndRefreshButton').on('click', function () {
 		location.reload();
 	});
@@ -387,7 +368,7 @@ $(document).ready(function () {
 				if (data.success) {
 					$("#alertModalContent").html(__e('Cover saved successfully!'));
 					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-
+					
 					$('#bookCover').attr('src', '/storage/ai-images/' + createCoverFileName);
 				} else {
 					$("#alertModalContent").html(__e('Failed to save cover: ') + data.message);
@@ -401,10 +382,22 @@ $(document).ready(function () {
 		});
 	});
 	
-	
-	$('#saveChapter').on('click', function (e) {
-		e.preventDefault();
-		saveChapter();
+	$('.update-chapter-btn').on('click', function () {
+		var chapterFilename = $(this).data('chapter-filename');
+		var chapterCard = $(this).closest('.card');
+		
+		var chapterData = {
+			chapterFilename: chapterFilename,
+			name: chapterCard.find('.chapterName').val(),
+			order: chapterCard.find('.chapterOrder').val(),
+			short_description: chapterCard.find('.chapterShortDescription').val(),
+			events: chapterCard.find('.chapterEvents').val(),
+			people: chapterCard.find('.chapterPeople').val(),
+			places: chapterCard.find('.chapterPlaces').val(),
+			from_previous_chapter: chapterCard.find('.chapterFromPreviousChapter').val(),
+			to_next_chapter: chapterCard.find('.chapterToNextChapter').val()
+		};
+		saveChapter(chapterData);
 	});
 	
 	$('#showBookStructureBtn').on('click', function (e) {
@@ -414,20 +407,125 @@ $(document).ready(function () {
 	
 	$('#generateAllBeatsBtn').on('click', function (e) {
 		e.preventDefault();
-		generateAllBeats( parseInt($('#beatsPerChapter').val()) );
+		generateAllBeats(parseInt($('#beatsPerChapter').val()));
 	});
 	
-	$('#chapterModal').on('shown.bs.modal', function () {
-		$('#chapterName').focus();
+	$('#rewriteChapterModal').on('shown.bs.modal', function () {
+		$('#rewriteUserPrompt').focus();
 	});
 	
-	$('#beatsPerChapter').on('change', function() {
+	$('#beatsPerChapter').on('change', function () {
 		let selectedBeats = $(this).val();
-		$('.editBeatsLink').each(function() {
+		$('.editBeatsLink').each(function () {
 			let currentHref = $(this).attr('href');
 			console.log(currentHref);
 			let newHref = currentHref.replace(/\/\d+$/, '/' + selectedBeats);
 			$(this).attr('href', newHref);
 		});
 	});
+	
+	
+	// Open the edit book details modal
+	$('#editBookDetailsBtn').on('click', function () {
+		$('#editBlurb').val(bookData.blurb);
+		$('#editBackCoverText').val(bookData.back_cover_text);
+		$('#editCharacterProfiles').val(bookData.character_profiles);
+		$('#editAuthorName').val(bookData.author_name);
+		$('#editPublisherName').val(bookData.publisher_name);
+		$('#editBookDetailsModal').modal('show');
+	});
+	
+	$(".alert-modal-close-button").on('click', function () {
+		if (reload_window) {
+			location.reload();
+		}
+	});
+	
+	// Save book details
+	$('#saveBookDetailsBtn').on('click', function () {
+		const updatedBookData = {
+			blurb: $('#editBlurb').val(),
+			back_cover_text: $('#editBackCoverText').val(),
+			character_profiles: $('#editCharacterProfiles').val(),
+			author_name: $('#editAuthorName').val(),
+			publisher_name: $('#editPublisherName').val()
+		};
+		
+		$.ajax({
+			url: `/book/${bookSlug}/details`,
+			type: 'POST',
+			data: updatedBookData,
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function (response) {
+				if (response.success) {
+					// Update the bookData object
+					Object.assign(bookData, updatedBookData);
+					
+					// Update the displayed information
+					$('#bookBlurb').text(bookData.blurb);
+					$('#backCoverText').html(bookData.back_cover_text.replace(/\n/g, '<br>'));
+					$('#bookCharacters').html('<em>' + __e("Character Profiles:") + '</em><br>' + bookData.character_profiles.replace(/\n/g, '<br>'));
+					
+					reload_window = true;
+					$('#editBookDetailsModal').modal('hide');
+					$("#alertModalContent").html(__e("Book details updated successfully!"));
+					$("#alertModal").modal('show');
+				} else {
+					$("#alertModalContent").html(__e("Failed to update book details:") + response.message);
+					$("#alertModal").modal('show');
+				}
+			},
+			error: function () {
+				$("#alertModalContent").html(__e("An error occurred while updating book details."));
+				$("#alertModal").modal('show');
+			}
+		});
+	});
+	
+	
+	// Open LLM Prompt Modal
+	$('#openLlmPromptModalBtn').on('click', function () {
+		$('#llmPromptModal').modal('show');
+	});
+	
+	// Send Prompt to LLM
+	$('#sendPromptBtn').on('click', function () {
+		const userPrompt = $('#userPrompt').val();
+		const llm = savedLlm; // Assuming you have a savedLlm variable
+		
+		// Disable buttons and show loading state
+		$('#sendPromptBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...');
+		$('#llmResponse').val('Processing...');
+		
+		$.ajax({
+			url: '/send-llm-prompt/' + bookSlug,
+			method: 'POST',
+			data: {
+				userPrompt: userPrompt,
+				llm: llm
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					$('#llmResponse').val(response.result);
+				} else {
+					$('#llmResponse').val('Error: ' + response.message);
+				}
+			},
+			error: function (xhr, status, error) {
+				$('#llmResponse').val('An error occurred while processing the request.');
+			},
+			complete: function () {
+				// Re-enable button and restore original text
+				$('#sendPromptBtn').prop('disabled', false).text('Send Prompt');
+			}
+		});
+	});
+	
+	
 });

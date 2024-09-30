@@ -20,7 +20,7 @@ Events: ##events##
 People: ##people##
 Places: ##places##
 
-Write ##beats_per_chapter## ebeats with short and long title to fill in this chapter.
+Write ##beats_per_chapter## beats with short and long title to fill in this chapter.
 Language is: ##language##.
 
 The first beat should be a continuation from the end of the previous chapter.

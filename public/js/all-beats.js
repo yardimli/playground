@@ -22,10 +22,48 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
 			$('#fullScreenOverlay').addClass('d-none');
 			if (response.success) {
 				response.beats.forEach((beat, beatIndex) => {
-					addEmptyBeat(selectedChapterIndex, beatIndex, beat.description);
+					let chapterIndex = selectedChapterIndex;
+					
+					const beatHtml = `
+        <div class="mb-3 beat-outer-container" data-chapter-index="${chapterIndex}"
+             data-chapter-filename="${selectedChapter}"
+             data-beat-index="${beatIndex}">
+            <h6>Beat ${beatIndex + 1}</h6>
+            <div id="beatDescriptionContainer_${chapterIndex}_${beatIndex}">
+                <label for="beatDescription_${chapterIndex}_${beatIndex}"
+                       class="form-label">${__e('Beat Description')}</label>
+                <textarea id="beatDescription_${chapterIndex}_${beatIndex}"
+                          class="form-control beat-description-textarea"
+                          rows="3">${beat.description}</textarea>
+            </div>
+            <div id="beatTextArea_${chapterIndex}_${beatIndex}" class="mt-3">
+                <label for="beatText_${chapterIndex}_${beatIndex}"
+                       class="form-label">${__e('Beat Text')}</label>
+                <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
+                          rows="10"></textarea>
+								<div id="beatTextResult_${chapterIndex}_${beatIndex}"></div>
+            </div>
+            <div id="beatSummaryArea_${chapterIndex}_${beatIndex}" class="mt-3">
+                <label for="beatSummary_${chapterIndex}_${beatIndex}"
+                       class="form-label">${__e('Beat Summary')}</label>
+                <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
+                          rows="3"></textarea>
+								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
+            </div>
+            <div id="beatLoreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
+                <label for="beatLoreBook_${chapterIndex}_${beatIndex}"
+                       class="form-label">${__e('Beat Lore Book')}</label>
+                <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
+                          rows="6"></textarea>
+								<div id="beatLoreResult_${chapterIndex}_${beatIndex}"></div>
+            </div>
+        </div>
+    `;
+					$('#beatsList').append(beatHtml);
+					
 				});
 				
-				$("#alertModalContent").html(__e('All chapter Beat Descriptions generated successfully. Don\'t forget to save!'));
+				$("#alertModalContent").html(__e('All chapter Beat Descriptions generated successfully.')+"<br>"+__e('Please review the beats and click "Save Beats" to save the changes.')+"<br>"+__e('You will need to save the beats before proceeding to write the beat contents.'));
 				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				$("#saveBeatsBtn").show();
 				$('#recreateBeats').prop('disabled', false);
@@ -46,53 +84,49 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
 	});
 }
 
-function addEmptyBeat(chapterIndex, beatIndex, description) {
-	const beatHtml = `
-        <div class="mb-3 beat-outer-container" data-chapter-index="${chapterIndex}"
-             data-chapter-filename="${selectedChapter}"
-             data-beat-index="${beatIndex}">
-            <h6>Beat ${beatIndex + 1}</h6>
-            <div id="beatDescriptionContainer_${chapterIndex}_${beatIndex}">
-                <label for="beatDescription_${chapterIndex}_${beatIndex}"
-                       class="form-label">${__e('Beat Description')}</label>
-                <textarea id="beatDescription_${chapterIndex}_${beatIndex}"
-                          class="form-control beat-description-textarea"
-                          rows="3">${description}</textarea>
-            </div>
-            <div id="beatTextArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatText_${chapterIndex}_${beatIndex}"
-                       class="form-label">${__e('Beat Text')}</label>
-                <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
-                          rows="10"></textarea>
-								<div id="beatTextResult_${chapterIndex}_${beatIndex}"></div>
-               <button id="writeBeatTextBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatTextBtn btn btn-primary mt-3 me-2">${__e('Write Beat Text')}</button>
-            </div>
-            <div id="beatSummaryArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatSummary_${chapterIndex}_${beatIndex}"
-                       class="form-label">${__e('Beat Summary')}</label>
-                <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
-                          rows="3"></textarea>
-								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
-                 <button id="writeBeatSummaryBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">${__e('Write Summary')}</button>
-            </div>
-            <div id="beatLoreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatLoreBook_${chapterIndex}_${beatIndex}"
-                       class="form-label">${__e('Beat Lore Book')}</label>
-                <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
-                          rows="6"></textarea>
-								<div id="beatLoreResult_${chapterIndex}_${beatIndex}"></div>
-								<button id="updateBeatLoreBookBtn_${chapterIndex}_${beatIndex}" data-chapter-index="${chapterIndex}" data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}" class="updateBeatLoreBookBtn btn btn-primary mt-3 me-2">${__e('Update Beat Lore Book')}</button>
-            </div>
-            <div>
-             <button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="${chapterIndex}"
-                 data-chapter-filename="${selectedChapter}" data-beat-index="${beatIndex}">${__e('Save Beat')}</button>
-                <div class="me-auto d-inline-block" id="beatDetailModalResult_${chapterIndex}_${beatIndex}"></div>
-            </div>
-        </div>
-    `;
-	$('#beatsList').append(beatHtml);
+//------------------------------------------------------------
+function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
+	return new Promise((resolve, reject) => {
+		if (showOverlay) {
+			$('#fullScreenOverlay').removeClass('d-none');
+		}
+		
+		$("#writeBeatDescriptionBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
+		$("#beatDescriptionResult_" + chapterIndex + '_' + beatIndex).html(__e('Writing beat description...'));
+		
+		$.ajax({
+			url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				beatIndex: beatIndex,
+				current_beat: beatDescription,
+				save_results: save_results,
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				$('#fullScreenOverlay').addClass('d-none');
+				if (response.success) {
+					$('#beatDescription_' + chapterIndex + '_' + beatIndex).val(response.prompt);
+					$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat description generated successfully!'));
+					$('#writeBeatDescriptionBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
+					resolve(response.prompt);
+				} else {
+					$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat description:') + response.message);
+					reject(__e('Failed to write beat description:') + response.message);
+				}
+			},
+			error: function () {
+				$('#fullScreenOverlay').addClass('d-none');
+				$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to write beat description:'));
+				reject(__e('Failed to write beat description:'));
+			}
+		});
+	});
 }
-
 
 //------------------------------------------------------------
 function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
@@ -359,6 +393,21 @@ $(document).ready(function () {
 		$('#beatsPerChapter').hide();
 	}
 	
+	//check if the beat-description-textarea is empty
+	let emptyBeatDescriptions = true;
+	$('.beat-description-textarea').each(function (index, element) {
+		if ($(element).val().trim() !== '') {
+			emptyBeatDescriptions = false;
+		}
+	});
+	
+	if (emptyBeatDescriptions) {
+		//show the alert modal
+		$("#alertModalContent").html(__e('Click "Recreate Beats" to generate beat descriptions.'));
+		$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+		
+	}
+	
 	$('#writeAllBeatsBtn').on('click', function () {
 		writeAllBeats();
 	});
@@ -378,6 +427,16 @@ $(document).ready(function () {
 		let beatLoreBook = $('#beatLoreBook_' + chapterIndex + '_' + beatIndex).val();
 		
 		saveBeat(beatText, beatSummary, beatLoreBook, beatDescription, beatIndex, chapterIndex, chapterFilename);
+	});
+	
+	$('.writeBeatDescriptionBtn').off('click').on('click', function () {
+		let beatIndex = Number($(this).attr('data-beat-index'));
+		let chapterIndex = Number($(this).attr('data-chapter-index'));
+		let chapterFilename = $(this).attr('data-chapter-filename');
+		
+		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
+		
+		writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
 	});
 	
 	$('.writeBeatTextBtn').off('click').on('click', function () {

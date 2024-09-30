@@ -91,8 +91,8 @@
 						</select>
 						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
-							<option value="2">2</option>
-							<option value="3" selected>3</option>
+							<option value="2" selected>2</option>
+							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 							<option value="6">6</option>
@@ -195,6 +195,10 @@
 										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
 										          class="form-control beat-description-textarea"
 										          rows="3">{{$beat['description'] ?? ''}}</textarea>
+										<div id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
+										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}" data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
 									</div>
 									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
 										<label for="beatText_{{$chapter_index}}_{{$index}}"

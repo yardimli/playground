@@ -405,6 +405,11 @@
 		'Hello' => 'Hello',
 		'Read More' => 'Read More',
 		'Delete Book' => 'Delete Book',
+		'Edit Book Details' => 'Edit Book Details',
+		'Save Changes' => 'Save Changes',
+		'Book details updated successfully!' => 'Book details updated successfully!',
+		'Failed to update book details:' => 'Failed to update book details:',
+		'Character Profiles:' => 'Character Profiles:',
 		'Author:' => 'Author:',
 		'Loading...' => 'Loading...',
 		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.',
@@ -458,6 +463,7 @@
 		'Book Cover' => 'Book Cover',
 		'Edit Chapter' => 'Edit Chapter',
 		'Text' => 'Text',
+		'Order' => 'Order',
 		'Events' => 'Events',
 		'People' => 'People',
 		'Places' => 'Places',
@@ -488,6 +494,23 @@
 		'Write Books With AI - The Book' => 'Write Books With AI - The Book',
 		'Visitor' => 'Visitor',
 
+		'Rewrite Chapter' => 'Rewrite Chapter',
+		'Rewriting chapter. This may take a few minutes...' => 'Rewriting chapter. This may take a few minutes...',
+		'Error rewriting chapter' => 'Error rewriting chapter',
+		'Failed to rewrite chapter:' => 'Failed to rewrite chapter:',
+		'Chapter rewritten successfully' => 'Chapter rewritten successfully',
+		'Rewriting...' => 'Rewriting...',
+		'Failed to save rewritten chapter:' => 'Failed to save rewritten chapter:',
+		'Error saving rewritten chapter' => 'Error saving rewritten chapter',
+		'User Prompt' => 'User Prompt',
+		'Send Prompt to LLM' => 'Send Prompt to LLM',
+		'LLM Response' => 'LLM Response',
+		'Send Prompt' => 'Send Prompt',
+		'Accept Rewrite' => 'Accept Rewrite',
+		'Accept Response' => 'Accept Response',
+		'Rewritten Chapter:' => 'Rewritten Chapter:',
+		'Chapter rewritten successfully!' => 'Chapter rewritten successfully!',
+
 		//chapter-beats.php
 		'Write Books With AI - Book Beats' => 'Write Books With AI - Book Beats',
 		'Write All Beat Contents' => 'Write All Beat Contents',
@@ -500,6 +523,10 @@
 		'Writing All Beats' => 'Writing All Beats',
 		'Read Chapter Beats' => 'Read Chapter Beats',
 		'Edit All Beats' => 'Edit All Beats',
+		'Write Beat Description' => 'Write Beat Description',
+		'Writing beat description...' => 'Writing beat description...',
+		'Beat description generated successfully!' => 'Beat description generated successfully!',
+		'Failed to write beat description:' => 'Failed to write beat description:',
 
 
 		//action-beats.php
@@ -575,9 +602,12 @@
 		'An error occurred while creating beats.' => 'An error occurred while creating beats.',
 		'Writing beat text...' => 'Writing beat text...',
 		'Beat text generated successfully!' => 'Beat text generated successfully!',
-		'All chapter Beat Descriptions generated successfully. Don\'t forget to save!' => 'All chapter Beat Descriptions generated successfully. Don\'t forget to save!',
+		'All chapter Beat Descriptions generated successfully.' => 'All chapter Beat Descriptions generated successfully.',
+		'Please review the beats and click "Save Beats" to save the changes.' => 'Please review the beats and click "Save Beats" to save the changes.',
+		'You will need to save the beats before proceeding to write the beat contents.' => 'You will need to save the beats before proceeding to write the beat contents.',
 		'Processing your request. This may take a few minutes...' => 'Processing your request. This may take a few minutes...',
 		'Click "Save Beats" before proceeding to write all beat contents.' => 'Click "Save Beats" before proceeding to write all beat contents.',
+		'Click "Recreate Beats" to generate beat descriptions.' => 'Click "Recreate Beats" to generate beat descriptions.',
 		'Failed to write beat text: ' => 'Failed to write beat text: ',
 		'Writing beat summary...' => 'Writing beat summary...',
 		'Beat summary generated successfully!' => 'Beat summary generated successfully!',
@@ -591,7 +621,9 @@
 
 
 		//chapter.js
-		'Act ${act}' => 'Act ${act}',
+		'Act' => 'Act',
+		'Act with Number' => 'Act :id',
+		'Chapter with Number' => 'Chapter :order',
 		'Prev' => 'Prev',
 		'Next' => 'Next',
 		'Open Beats' => 'Open Beats',
@@ -618,6 +650,8 @@
 		'Cover saved successfully!' => 'Cover saved successfully!',
 		'Failed to save cover: ' => 'Failed to save cover: ',
 		'Number of beats per chapter:' => 'Number of beats per chapter:',
+		'Short Description' => 'Short Description',
+		'Update Chapter' => 'Update Chapter',
 
 		'This process will write the texts and the summaries for all beats in all chapters. Please wait...' => 'This process will write the texts and the summaries for all beats in all chapters. Please wait...',
 		'Processing chapter: ${chapterName}' => 'Processing chapter: ${chapterName}',

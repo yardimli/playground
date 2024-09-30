@@ -379,6 +379,18 @@
 						continue;
 					}
 					$chapterData['chapterFilename'] = basename($chapterFile);
+					//if chapterData['events'] is an array, convert it to a string
+					if (isset($chapterData['events']) && is_array($chapterData['events'])) {
+						$chapterData['events'] = implode("\n", $chapterData['events']);
+					}
+					//places
+					if (isset($chapterData['places']) && is_array($chapterData['places'])) {
+						$chapterData['places'] = implode("\n", $chapterData['places']);
+					}
+					//people
+					if (isset($chapterData['people']) && is_array($chapterData['people'])) {
+						$chapterData['people'] = implode("\n", $chapterData['people']);
+					}
 
 					if ($chapterData['row'] === $act['id']) {
 						$actChapters[] = $chapterData;

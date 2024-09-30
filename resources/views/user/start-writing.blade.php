@@ -20,6 +20,17 @@
       .overlay-content {
           text-align: center;
       }
+
+
+      #charCount {
+          font-size: 0.9em;
+      }
+      #charCount.valid {
+          color: green;
+      }
+      #charCount.invalid {
+          color: red;
+      }
 	
 	</style>
 	
@@ -48,6 +59,7 @@
 										<textarea class="form-control" id="user_blurb" name="user_blurb" required
 										          placeholder="{{__('default.describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.')}}"
 										          rows="8"></textarea>
+										<div id="charCount" class="mt-2">0/2000</div>
 									</div>
 									<div class="mb-3">
 										<label for="language" class="form-label">{{__('default.Language')}}:</label>
@@ -257,6 +269,30 @@
 		}
 		
 		$(document).ready(function () {
+			
+			const maxChars = 2000;
+			const userBlurb = $('#user_blurb');
+			const charCount = $('#charCount');
+			const addBookStepOneBtn = $('#addBookStepOneBtn');
+			
+			function updateCharCount() {
+				const remaining = maxChars - userBlurb.val().length;
+				charCount.text(userBlurb.val().length + '/' + maxChars);
+				
+				if (remaining < 0) {
+					charCount.removeClass('valid').addClass('invalid');
+					addBookStepOneBtn.prop('disabled', true);
+				} else {
+					charCount.removeClass('invalid').addClass('valid');
+					addBookStepOneBtn.prop('disabled', false);
+				}
+			}
+			
+			userBlurb.on('input', updateCharCount);
+			
+			// Initial call to set the correct state
+			updateCharCount();
+			
 			// Define genre arrays
 			const adultGenres = {!! json_encode($adult_genres_array) !!};
 			const nonAdultGenres = {!! json_encode($genres_array) !!};

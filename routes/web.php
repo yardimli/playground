@@ -75,6 +75,16 @@
 	//-------------------------------------------------------------------------
 	Route::middleware(['auth'])->group(function () {
 
+		Route::get('/prompts/{filename}.txt', function ($filename) {
+			$filePath = resource_path("prompts/{$filename}.txt");
+
+			if (File::exists($filePath)) {
+				return response()->file($filePath);
+			} else {
+				abort(404, 'File not found.');
+			}
+		});
+
 		Route::get('/start-writing', [StaticPagesController::class, 'startWriting'])->name('start-writing');
 
 		Route::get('/edit-book/{slug}', [StaticPagesController::class, 'editBook'])->name('user.edit-book');
@@ -86,7 +96,14 @@
 		Route::post('/write-book', [BookActionController::class, 'writeBook'])->name('book.write-book');
 		Route::post('/book/{bookSlug}/chapter', [BookActionController::class, 'saveChapter'])->name('book.save-chapter');
 		Route::post('/book/{bookSlug}/cover', [BookActionController::class, 'saveCover'])->name('book.save-cover');
+		Route::post('/book/{bookSlug}/details', [BookActionController::class, 'saveBookDetails'])->name('book.save-details');
+
+		Route::post('/rewrite-chapter', [BookActionController::class, 'rewriteChapter'])->name('rewrite-chapter');
+		Route::post('/accept-rewrite', [BookActionController::class, 'acceptRewrite'])->name('accept-rewrite');
+
 		Route::delete('/book/{bookSlug}', [BookActionController::class, 'deleteBook'])->name('book.delete');
+
+		Route::post('/send-llm-prompt/{bookSlug}', [BookActionController::class, 'sendLlmPrompt'])->name('book.send-llm-prompt');
 
 		Route::post('/cover-image/{bookSlug}', [BookActionController::class, 'makeCoverImage'])->name('book.make-cover-image');
 
@@ -95,6 +112,8 @@
 		Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveChapterBeats'])->name('book.save-chapter-beats');
 
 		Route::post('/book/save-single-beat/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveChapterSingleBeat'])->name('book.save-chapter-single-beats');
+
+		Route::post('/book/write-beat-description/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeatDescription'])->name('book.write-beat-description');
 
 		Route::post('/book/write-beat-text/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeChapterBeatText'])->name('book.write-beat-text');
 
