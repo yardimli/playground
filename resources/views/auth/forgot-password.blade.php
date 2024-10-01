@@ -133,7 +133,7 @@
              </div>
              <!-- Back to sign in -->
              <div class="mb-3">
-               <p>Back to <a href="sign-in.html">Sign in</a></p>
+               <p>Back to <a href="{{route('login')}}">Sign in</a></p>
              </div>
              <!-- Button -->
              <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Reset password</button></div>
