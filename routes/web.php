@@ -40,9 +40,9 @@
 	Route::get('/verify-thank-you', [VerifyThankYouController::class, 'index'])->name('verify-thank-you')->middleware('verified');
 	Route::get('/verify-thank-you-zh_TW', [VerifyThankYouController::class, 'index_zh_TW'])->name('verify-thank-you-zh_TW')->middleware('verified');
 
-	Route::get('/books-list/genre/{genre}', [StaticPagesController::class, 'booksList'])->name('user.books-list-genre');
-	Route::get('/books-list/keyword/{keyword}', [StaticPagesController::class, 'booksList'])->name('user.books-list-keyword');
-	Route::get('/books-list', [StaticPagesController::class, 'booksList'])->name('user.books-list');
+	Route::get('/showcase-library/genre/{genre}', [StaticPagesController::class, 'showcaseLibrary'])->name('user.showcase-library-genre');
+	Route::get('/showcase-library/keyword/{keyword}', [StaticPagesController::class, 'showcaseLibrary'])->name('user.showcase-library-keyword');
+	Route::get('/showcase-library', [StaticPagesController::class, 'showcaseLibrary'])->name('user.showcase-library');
 	Route::get('/book-details/{slug}', [StaticPagesController::class, 'booksDetail'])->name('user.book-details');
 
 	Route::get('/privacy', [StaticPagesController::class, 'privacy'])->name('privacy.page');

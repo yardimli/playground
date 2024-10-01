@@ -43,7 +43,7 @@
 									<div class="avatar avatar-story me-2">
 										<a href=""> <img
 												class="avatar-img rounded-circle"
-												src="/assets/images/avatar/01.jpg"
+												src="{{$book['author_avatar'] ?? ''}}"
 												alt=""> </a>
 									</div>
 									<!-- Info -->
@@ -65,7 +65,7 @@
 								<div class="mt-4">
 									
 									<a
-										href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
+										href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
 										class="badge bg-primary mb-2 me-1">{{$book['genre'] ?? ''}}</a>
 									
 									<span class="badge bg-secondary  me-1 mb-2">English</span>
@@ -74,7 +74,7 @@
 									<br>
 									@if (isset($book['keywords']))
 										@foreach ($book['keywords'] as $keyword)
-											<a href="{{route('user.books-list-keyword',[$keyword])}}"
+											<a href="{{route('user.showcase-library-keyword',[$keyword])}}"
 											   class="badge bg-info  me-1 mb-2 ">{{$keyword}}</a>
 										@endforeach
 									@endif

@@ -38,7 +38,7 @@
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
 		<div class="mb-1 mt-1 w-100" style="text-align: right;">
-			<a href="{{route('user.books-list')}}">{{__('default.Back to Books')}}</a>
+			<a href="{{route('user.showcase-library')}}">{{__('default.Back to Books')}}</a>
 		</div>
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
@@ -135,7 +135,7 @@
 							<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
 						</button>
 						
-						<a href="{{route('user.books-list')}}" class="mb-1 mt-1 btn btn-secondary w-100"><i
+						<a href="{{route('user.showcase-library')}}" class="mb-1 mt-1 btn btn-secondary w-100"><i
 								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 					
 					</div>

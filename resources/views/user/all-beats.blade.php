@@ -115,7 +115,7 @@
 						<a href="{{route('user.edit-book', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
 						   title="{{__('default.Back to Chapters')}}"><i
 								class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
-						<a href="{{route('user.books-list')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
+						<a href="{{route('user.showcase-library')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
 								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 					
 					</div>

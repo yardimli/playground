@@ -102,7 +102,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'support@writebookswithai.com'),
-        'name' => env('MAIL_FROM_NAME', 'Mindful Enlightenment Support'),
+        'name' => env('MAIL_FROM_NAME', 'Write Books With AI Support'),
     ],
 
     /*

@@ -47,11 +47,11 @@
 			$subject = '織音-電子信箱驗證信';
 			$email_view = 'emails.verify-email_zh_TW';
 			if ($locale == 'en_US') {
-				$subject = 'Please verify your Mindful Enlightenment email address.';
+				$subject = 'Please verify your Write Books With AI email address.';
 				$email_view = 'emails.verify-email';
 			}
 			if ($locale == 'tr') {
-				$subject = 'Lütfen Minik Dersler e-posta adresinizi doğrulayın.';
+				$subject = 'Lütfen Write Books With AI e-posta adresinizi doğrulayın.';
 				$email_view = 'emails.verify-email_tr';
 			}
 

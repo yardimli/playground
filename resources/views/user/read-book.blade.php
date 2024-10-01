@@ -38,7 +38,7 @@
 									<div class="avatar avatar-story me-2">
 										<a href=""> <img
 												class="avatar-img rounded-circle"
-												src="/assets/images/avatar/01.jpg"
+												src="{{$book['author_avatar'] ?? ''}}"
 												alt=""> </a>
 									</div>
 									<!-- Info -->
@@ -52,7 +52,7 @@
 											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>
 											<span class="nav-item small">{{date("Y-m-d", $book['file_time'] ?? 1923456789)}}</span>
 											<a
-												href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
+												href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
 												class="nav-item small">{{$book['genre'] ?? ''}}</a>
 										
 										</div>

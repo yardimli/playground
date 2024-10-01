@@ -160,7 +160,7 @@
 
 
 		'Unlock Your Potential - Join Our Education Site and See Your Success Unfold!' => 'Öğrenmeye Yeni Bir Boyut Ekleyin!',
-		'membership_description' => 'Merhaba! Çocuğunuzun eğitim ve başarısını izlemek ve izlemek için üye olun. Site, çocuğunuza özel olarak öğrenme gereksinimlerini karşılamak için çeşitli özelleştirilmiş öğrenme planları sunacaktır. Ayrıca, çocuğunuzun eğitim ilerleyişini ve başarısını izlemek için özel raporlar sunmaktayız. Böylece, çocuğunuzun eğitim hedeflerini en_US iyi şekilde gerçekleştirebilmesine yardımcı olabilirsiniz.', //'Welcome to our education site! We provide an easy and convenient way to track your progress, giving you access to all the tools you need to succeed. Our membership allows you to keep track of your progress as you work towards your goals. We also provide personalized suggestions for improvement, helping you maximize your potential and reach your goals faster. Join us today and get the most out of your learning experience!',
+		'membership_description' => 'Merhaba! Çocuğunuzun eğitim ve başarısını izlemek ve izlemek için üye olun. Site, çocuğunuza özel olarak öğrenme gereksinimlerini karşılamak için çeşitli özelleştirilmiş öğrenme planları sunacaktır. Ayrıca, çocuğunuzun eğitim ilerleyişini ve başarısını izlemek için özel raporlar sunmaktayız. Böylece, çocuğunuzun eğitim hedeflerini en_US iyi şekilde gerçekleştirebilmesine yardımcı olabilirsiniz.',
 
 		'Total' => 'Toplam',
 		'Results' => 'Sonuç',
@@ -234,7 +234,7 @@
 		'Name' => 'İsim',
 		'Registration successful' => 'Kayıt başarılı',
 		'Thank you for registration' => 'kayıt için teşekkürler',
-		'Welcome to Ever Perfect Assistant' => 'Ever Perfect Assistant\'ye hoş geldiniz',
+		'Welcome to Write Books With AI' => 'Write Books With AI\'ye hoş geldiniz',
 
 		'New user registration.' => 'Yeni kullanıcı kaydı.',
 		'New user in your user group.' => 'Kullanıcı grubunuzdaki yeni kullanıcı.',

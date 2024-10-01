@@ -15,7 +15,7 @@
 				<div class="row justify-content-center py-5">
 					<div class="col-md-6 text-center">
 						<!-- Title -->
-						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Welcome to <span>WBWAI</span></h1>
+						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Write Books with  <span>AI</span></h1>
 						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
 					</div>
 				</div>

@@ -179,7 +179,18 @@
 								//search $book['owner'] in users table name column
 								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
 								if ($user) {
-									$bookData['owner'] = $user->name;
+									$bookData['owner_name'] = $user->name;
+									if ($user->avatar) {
+										$bookData['author_avatar'] = Storage::url($user->avatar);
+									} else
+									{
+										$bookData['author_avatar'] = '/assets/images/avatar/03.jpg';
+									}
+								} else
+								{
+									$bookData['owner_name'] = 'admin';
+									$bookData['author_name'] = $bookData['author_name']  . '(anonymous)';
+									$bookData['author_avatar'] = '/assets/images/avatar/02.jpg';
 								}
 
 								$bookData['id'] = $subDir;
@@ -291,10 +302,21 @@
 
 			$book = json_decode(File::get($bookJsonPath), true);
 
-			//search $book['owner'] in users table name column
+//search $book['owner'] in users table name column
 			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
 			if ($user) {
-				$book['owner'] = $user->name;
+				$book['owner_name'] = $user->name;
+				if ($user->avatar) {
+					$book['author_avatar'] = Storage::url($user->avatar);
+				} else
+				{
+					$book['author_avatar'] = '/assets/images/avatar/03.jpg';
+				}
+			} else
+			{
+				$book['owner_name'] = 'admin';
+				$book['author_name'] = $book['author_name']  . '(anonymous)';
+				$book['author_avatar'] = '/assets/images/avatar/02.jpg';
 			}
 
 			$actsData = json_decode(File::get($actsFile), true);
@@ -364,8 +386,20 @@
 			//search $book['owner'] in users table name column
 			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
 			if ($user) {
-				$book['owner'] = $user->name;
+				$book['owner_name'] = $user->name;
+				if ($user->avatar) {
+					$book['author_avatar'] = Storage::url($user->avatar);
+				} else
+				{
+					$book['author_avatar'] = '/assets/images/avatar/03.jpg';
+				}
+			} else
+			{
+				$book['owner_name'] = 'admin';
+				$book['author_name'] = $book['author_name']  . '(anonymous)';
+				$book['author_avatar'] = '/assets/images/avatar/02.jpg';
 			}
+
 
 			$actsData = json_decode(File::get($actsFile), true);
 
@@ -444,7 +478,7 @@
 
 
 
-		public function booksList(Request $request)
+		public function showcaseLibrary(Request $request)
 		{
 			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
 			$json_translations = $this->write_js_translations();
@@ -471,7 +505,18 @@
 								//search $book['owner'] in users table name column
 								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
 								if ($user) {
-									$bookData['owner'] = $user->name;
+									$bookData['owner_name'] = $user->name;
+									if ($user->avatar) {
+										$bookData['author_avatar'] = Storage::url($user->avatar);
+									} else
+									{
+										$bookData['author_avatar'] = '/assets/images/avatar/03.jpg';
+									}
+								} else
+								{
+									$bookData['owner_name'] = 'admin';
+									$bookData['author_name'] = $bookData['author_name']  . '(anonymous)';
+									$bookData['author_avatar'] = '/assets/images/avatar/02.jpg';
 								}
 
 								$bookData['id'] = $subDir;
@@ -495,7 +540,6 @@
 				return ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) || (($book['public-domain'] ?? 'yes') === 'yes'));
 			});
 
-
 			$perPage = 12; // Number of items per page
 			$currentPage = $request->input('page', 1);
 			$offset = ($currentPage - 1) * $perPage;
@@ -512,7 +556,7 @@
 			$adult_genres_array = $this->adult_genres_array;
 
 
-			return view('user.books-list', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
+			return view('user.showcase-library', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksDetail(Request $request, $slug)
@@ -533,7 +577,18 @@
 			//search $book['owner'] in users table name column
 			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
 			if ($user) {
-				$book['owner'] = $user->name;
+				$book['owner_name'] = $user->name;
+				if ($user->avatar) {
+					$book['author_avatar'] = Storage::url($user->avatar);
+				} else
+				{
+					$book['author_avatar'] = '/assets/images/avatar/03.jpg';
+				}
+			} else
+			{
+				$book['owner_name'] = 'admin';
+				$book['author_name'] = $book['author_name']  . '(anonymous)';
+				$book['author_avatar'] = '/assets/images/avatar/02.jpg';
 			}
 
 			$actsData = json_decode(File::get($actsFile), true);

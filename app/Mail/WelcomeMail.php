@@ -29,7 +29,7 @@
 			$subject = '【織音】- 最懂你的心';
 			$email_view = 'emails.welcome_zh_TW';
 			if ($locale == 'en_US') {
-				$subject = 'Welcome to Mindful Enlightenment! Your exciting journey to create songs begins here.';
+				$subject = 'Welcome to WBWAI! Your exciting journey to create songs begins here.';
 				$email_view = 'emails.welcome';
 			}
 			if ($locale == 'tr') {

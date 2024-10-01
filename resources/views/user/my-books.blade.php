@@ -15,7 +15,7 @@
 				<div class="row justify-content-center py-5">
 					<div class="col-md-6 text-center">
 						<!-- Title -->
-						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Welcome to <span>WBWAI</span></h1>
+						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Write Books with  <span>AI</span></h1>
 						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 											<!-- Feed react START -->
 											<div class="d-flex justify-content-between">
 												<h6 class="mb-0"><a
-														href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
+														href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
 														class="modal-body-color">{{$book['genre'] ?? ''}}</a>
 												</h6>
 												<span class="small">{{ Illuminate\Support\Carbon::parse($book['file_time'])->diffForHumans() }}</span>
@@ -75,7 +75,7 @@
 											<div>
 												@if (isset($book['keywords']))
 													@foreach ($book['keywords'] as $keyword)
-														<a href="{{route('user.books-list-keyword',[$keyword])}}"
+														<a href="{{route('user.showcase-library-keyword',[$keyword])}}"
 														   class="badge">{{$keyword}}</a>
 													@endforeach
 												@endif

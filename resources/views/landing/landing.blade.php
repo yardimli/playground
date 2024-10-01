@@ -124,7 +124,7 @@ Header START -->
 						<a class="nav-link" href="{{route('register')}}">Register</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('user.books-list')}}">The Library</a>
+						<a class="nav-link active" href="{{route('user.showcase-library')}}">Showcase</a>
 					</li>
 				</ul>
 			</div>
@@ -148,7 +148,7 @@ Header END -->
 	<!-- **************** MAIN CONTENT START **************** -->
 	
 	<!-- Main banner START -->
-	<section class="pt-5 pb-0 position-relative">
+	<section class="pt-3 pb-0 position-relative">
 		
 		<!-- Container START -->
 		<div class="container">
@@ -156,65 +156,25 @@ Header END -->
 			<div class="row text-center position-relative z-index-1">
 				<div class="col-lg-7 mx-auto">
 					<!-- Heading -->
-					<h1 class="display-3">WRITE BOOKS WITH AI</h1>
+					<h1 class="display-4">WRITE BOOKS WITH AI</h1>
 					<p class="lead">"Your Story, Our AI - Write Books Faster, Smarter, Better with AI"</p>
 					<div class="d-sm-flex justify-content-center">
 						<!-- button -->
 						<a href="{{route('register')}}" class="btn btn-primary">Sign up</a>
-						{{--            <div class="mt-2 mt-sm-0 ms-sm-3">--}}
-						{{--              <!-- Rating START -->--}}
-						{{--              <div class="hstack justify-content-center justify-content-sm-start gap-1">--}}
-						{{--                <div><i class="fa-solid fa-star text-warning"></i></div>--}}
-						{{--                <div><i class="fa-solid fa-star text-warning"></i></div>--}}
-						{{--                <div><i class="fa-solid fa-star text-warning"></i></div>--}}
-						{{--                <div><i class="fa-solid fa-star text-warning"></i></div>--}}
-						{{--                <div><i class="fa-solid fa-star-half-stroke text-warning"></i></div>--}}
-						{{--              </div>--}}
-						{{--              <!-- Rating END -->--}}
-						{{--              <i>"I can't believe it's free!"</i>--}}
-						{{--            </div>--}}
+						            <div class="mt-2 mt-sm-0 ms-sm-3">
+						              <!-- Rating START -->
+						              <div class="hstack justify-content-center justify-content-sm-start gap-1">
+						                <div><i class="fa-solid fa-star text-warning"></i></div>
+						                <div><i class="fa-solid fa-star text-warning"></i></div>
+						                <div><i class="fa-solid fa-star text-warning"></i></div>
+						                <div><i class="fa-solid fa-star text-warning"></i></div>
+						                <div><i class="fa-solid fa-star-half-stroke text-warning"></i></div>
+						              </div>
+						              <!-- Rating END -->
+						              <i>"I can't believe it's free!"</i>
+						            </div>
 					</div>
 					<br>
-{{--					<div style="font-size: 10px;">Fine Print: You will need to purchase a plan to write stories.</div>--}}
-				</div>
-			</div>
-			<!-- Row END -->
-			
-			<!-- Row START -->
-			<div class="row g-0 align-items-center mt-2 position-relative z-index-1">
-				<div class="col-lg-4">
-					<!-- iphone-x mockup START -->
-					<div class="iphone-x iphone-x-small"
-					     style="background: url(/assets/images/mobile_ui.png); background-size: 100%;">
-						<i></i>
-						<b></b>
-					</div>
-					<!-- iphone-x mockup END -->
-				</div>
-				<div class="col-lg-8">
-					<!-- Mac desk START -->
-					<div class="mac_container ">
-						<div class="mac_scaler">
-							<div class="mac_holder">
-								<div class="mac_screen">
-									<div class="mac_camera"></div>
-									<div class="mac_screen_content"
-									     style="background:url(); background-color: black; background-size: 100%;">
-										<video width="100%" height="auto" controls>
-											<source src="{{ asset('/videos/full-demo-jun-14-2023-0914.mp4') }}" type="video/mp4">
-											Your browser does not support the video tag.
-										</video>
-									</div>
-								</div>
-								<div class="mac_bottom">
-									<div class="mac_bottom_top_half">
-										<div class="mac_thumb_space"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Mac desk START -->
 				</div>
 			</div>
 			<!-- Row END -->
@@ -242,41 +202,19 @@ Header END -->
 			<div class="row justify-content-center">
 				<!-- Title -->
 				<div class="col-lg-12 text-center mb-4">
-					<h2 class="h1">"Beyond Words: Embrace the Collaborative Adventure of Human-AI Storytelling"</h2>
-					<p>"Unlock Infinite Narratives: Experience the Ultimate Fusion of Imagination and Innovation"</p>
+					<h2 class="h1">Craft Your Novel and Short Stories</h2>
+					<p>Within a few steps create your story by choosing genre, reviewing book and character details.</p>
 				</div>
 			</div>
 			<!-- Row START -->
 			<div class="row g-4 g-lg-5">
 				<!-- Feature START -->
-				<div class="col-md-4 text-center">
+				<div class="col-lg-12 text-center">
 					<img class="h-200px mb-4" src="/assets/images/header1.jpg" alt="">
-					<h4>A Tale of Untethered Fancy: The Chronicles of WRITE BOOKS WITH AI</h4>
+					<h4>A Tale of Untethered Fancy: The Chronicles of WRITE BFOOKS WITH AI</h4>
 					<p class="mb-0">Embark on a splendid journey through the intricate domain that bridges the gaps twixt human
 						ingenuity and artificial invention. WRITE BOOKS WITH AI doth cast anew the grand tapestry of storytelling,
 						creating visionary realms heretofore unimagined, and forever altering the quill of the bard.</p>
-				</div>
-				<!-- Feature END -->
-				
-				<!-- Feature START -->
-				<div class="col-md-4 text-center">
-					<img class="h-200px mb-4" src="/assets/images/header2.jpg" alt="">
-					<h4>The Miraculous Machinations: An Ode to Boundless Narratives</h4>
-					<p class="mb-0">Venture yonder into the brave landscape of WRITE BOOKS WITH AI, where the mind's fancies are woven
-						with the wonders of mechanical creation. This union of human passion and artificial intellect doth conquer
-						the limitations of the literary world and spark the flame of inspiration within each tale as it is
-						crafted.</p>
-				</div>
-				<!-- Feature END -->
-				
-				<!-- Feature START -->
-				<div class="col-md-4 text-center">
-					<img class="h-200px mb-4" src="/assets/images/header3.jpg" alt="">
-					<h4>The Great Collaboration: A Chronicle of Heralded Imagination</h4>
-					<p class="mb-0">Traverse through the interconnected tapestry of WRITE BOOKS WITH AI, wherein human wit and the
-						prodigious capacities of artificial contraptions symbiotically arise. Witness the dawning of an innovative
-						epoch, as the age-old art of storytelling undergoes a glorious transformation, redefining what it means to
-						put pen to paper.</p>
 				</div>
 				<!-- Feature END -->
 			</div>
@@ -391,7 +329,7 @@ Header END -->
 								<div class="bg-mode border p-3 rounded-3 rounded-start-top-0 d-flex align-items-center mb-3">
 									<!-- Avatar -->
 									<div class="avatar avatar-xs me-3">
-										<a href="{{route('user.books-list')}}"> <img class="avatar-img rounded-circle"
+										<a href="{{route('user.showcase-library')}}"> <img class="avatar-img rounded-circle"
 										                                          src="/assets/images/avatar/12.jpg" alt=""> </a>
 									</div>
 									<!-- Comment box  -->

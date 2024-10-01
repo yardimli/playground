@@ -21,7 +21,7 @@
 		'Forum' => 'Forum',
 		'Teaching' => 'Teaching',
 		'How to guide' => 'How-to Guide',
-		'writebookswithai.com' => 'The Melody of Mindful Enlightenment',
+		'writebookswithai.com' => 'Write Books With AI',
 		'Terms & Conditions' => 'Terms & Conditions',
 		'I agree to the Terms and Conditions.' => '<a href=":url" target="_blank">I agree to the Terms and Conditions</a>',
 		'NAME' => 'Name',

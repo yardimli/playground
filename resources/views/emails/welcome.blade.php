@@ -4,7 +4,7 @@
 	
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Welcome to Mindful Enlightenment
+	<title>Welcome to Write Books With AI
 </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">
@@ -100,7 +100,7 @@
 
 <!-- start preheader -->
 <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-	Welcome to Mindful Enlightenment
+	Welcome to Write Books With AI
 ! We're excited to have you on board.
 </div>
 <!-- end preheader -->
@@ -145,7 +145,7 @@
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
 				<tr>
 					<td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-						<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Welcome to writebookswithai.com: Your Story, Our AI - Write Books Faster, Smarter, Better with AI</h1>
+						<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Welcome to Write Books With AI: Your Story, Our AI - Write Books Faster, Smarter, Better with AI</h1>
 					</td>
 				</tr>
 			</table>
@@ -174,7 +174,7 @@
 						<p style="margin: 0;">
 							Dear {{$name}},
 							<br><br>
-							Welcome to the vibrant world of <a href="https://writebookswithai.com">writebookswithai.com</a>, where human ingenuity and AI creativity converge to push the boundaries of imaginative storytelling! If you didn't create an account with us, please feel free to disregard this email.
+							Welcome to the vibrant world of <a href="https://writebookswithai.com">Write Books With AI</a>, where human ingenuity and AI creativity converge to push the boundaries of imaginative storytelling! If you didn't create an account with us, please feel free to disregard this email.
 							<br><br>
 							We are excited to have you as a member of our community and can't wait to see your unique stories unfold. writebookswithai.com is an online platform dedicated to empowering writers by providing ample creative space and harnessing the power of AI to refine and expand ideas. Our community is constantly growing, and we are thrilled you have joined us in this exciting literary journey!
 							<br><br>

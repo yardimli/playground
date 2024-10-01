@@ -172,7 +172,7 @@ Header START -->
 					</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" href="{{route('user.books-list')}}">The Library</a>
+							<a class="nav-link active" href="{{route('user.showcase-library')}}">Showcase</a>
 						</li>
 					
 					

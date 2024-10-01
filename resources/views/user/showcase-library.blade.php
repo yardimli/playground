@@ -15,7 +15,7 @@
 				<div class="row justify-content-center py-5">
 					<div class="col-md-6 text-center">
 						<!-- Title -->
-						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Welcome to <span>WBWAI</span></h1>
+						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Write Books with  <span>AI</span></h1>
 						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 										@endif
 										<div class="position-absolute ms-2 mt-2 top-0 start-0"
 										     style="z-index: 9"><a
-											href="{{route('user.books-list-genre',[$book['genre'] ?? ''])}}"
+											href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
 											class="badge bg-primary">{{$book['genre'] ?? ''}}</a>
 										</div>
 										
@@ -76,7 +76,7 @@
 													<div class="avatar avatar-story me-2">
 														<a href=""> <img
 																class="avatar-img rounded-circle"
-																src="/assets/images/avatar/01.jpg"
+																src="{{$book['author_avatar'] ?? ''}}"
 																alt=""> </a>
 													</div>
 													<!-- Info -->
@@ -87,8 +87,6 @@
 															</h6>
 															
 															<span class="small me-2">{{$book['publisher_name'] ?? ''}}</span>
-															<span class="small me-2"> <i class="bi bi-clock pe-1"></i>55 min read</span>
-															<span class="small">{{ Illuminate\Support\Carbon::parse($book['file_time'])->diffForHumans() }}</span>
 														</div>
 													</div>
 												</div>
