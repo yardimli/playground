@@ -154,25 +154,25 @@ Header END -->
 		<div class="container">
 			<!-- Row START -->
 			<div class="row text-center position-relative z-index-1">
-				<div class="col-lg-7 mx-auto">
+				<div class="col-lg-7 col-12 mx-auto">
 					<!-- Heading -->
 					<h1 class="display-4">WRITE BOOKS WITH AI</h1>
 					<p class="lead">"Your Story, Our AI - Write Books Faster, Smarter, Better with AI"</p>
 					<div class="d-sm-flex justify-content-center">
 						<!-- button -->
 						<a href="{{route('register')}}" class="btn btn-primary">Sign up</a>
-						            <div class="mt-2 mt-sm-0 ms-sm-3">
-						              <!-- Rating START -->
-						              <div class="hstack justify-content-center justify-content-sm-start gap-1">
-						                <div><i class="fa-solid fa-star text-warning"></i></div>
-						                <div><i class="fa-solid fa-star text-warning"></i></div>
-						                <div><i class="fa-solid fa-star text-warning"></i></div>
-						                <div><i class="fa-solid fa-star text-warning"></i></div>
-						                <div><i class="fa-solid fa-star-half-stroke text-warning"></i></div>
-						              </div>
-						              <!-- Rating END -->
-						              <i>"I can't believe it's free!"</i>
-						            </div>
+						<div class="mt-2 mt-sm-0 ms-sm-3">
+							<!-- Rating START -->
+							<div class="hstack justify-content-center justify-content-sm-start gap-1">
+								<div><i class="fa-solid fa-star text-warning"></i></div>
+								<div><i class="fa-solid fa-star text-warning"></i></div>
+								<div><i class="fa-solid fa-star text-warning"></i></div>
+								<div><i class="fa-solid fa-star text-warning"></i></div>
+								<div><i class="fa-solid fa-star-half-stroke text-warning"></i></div>
+							</div>
+							<!-- Rating END -->
+							<i>"I can't believe it's free!"</i>
+						</div>
 					</div>
 					<br>
 				</div>
@@ -197,24 +197,42 @@ Header END -->
 	<!-- Main banner END -->
 	
 	<!-- Messaging feature START -->
-	<section class="py-4 py-sm-5">
+	<section>
 		<div class="container">
 			<div class="row justify-content-center">
 				<!-- Title -->
-				<div class="col-lg-12 text-center mb-4">
+				<div class="col-lg-7 col-12 mx-auto  text-center mb-4">
 					<h2 class="h1">Craft Your Novel and Short Stories</h2>
 					<p>Within a few steps create your story by choosing genre, reviewing book and character details.</p>
 				</div>
 			</div>
 			<!-- Row START -->
-			<div class="row g-4 g-lg-5">
+			<div class="row justify-content-center">
 				<!-- Feature START -->
-				<div class="col-lg-12 text-center">
-					<img class="h-200px mb-4" src="/assets/images/header1.jpg" alt="">
-					<h4>A Tale of Untethered Fancy: The Chronicles of WRITE BFOOKS WITH AI</h4>
-					<p class="mb-0">Embark on a splendid journey through the intricate domain that bridges the gaps twixt human
-						ingenuity and artificial invention. WRITE BOOKS WITH AI doth cast anew the grand tapestry of storytelling,
-						creating visionary realms heretofore unimagined, and forever altering the quill of the bard.</p>
+				<div class="col-lg-9 col-12 mx-auto  text-center mb-4">
+					<div class="card card-body bg-mode shadow-none border-1">
+						<!-- Info -->
+						<h4 class="mt-0 mb-3">Start Your Book</h4>
+						<p class="mb-3">Write your book description and choose the structure, AI model, and language. Set up the
+							genre, writing style, and narrative. Fill in author details, then click Submit to start.</p>
+					</div>
+					<img class="mb-4 mt-4" src="/images/screenshot/add-book-dark.jpg" alt="">
+				</div>
+				<!-- Feature END -->
+			</div>
+			<!-- Row START -->
+			
+			
+			<!-- Row START -->
+			<div class="row justify-content-center">
+				<!-- Feature START -->
+				<div class="col-lg-9 col-12 mx-auto  text-center mb-4">
+					<div class="card card-body bg-mode shadow-none border-1">
+						<!-- Info -->
+						<h4 class="mt-0 mb-3">Go over the AI's suggestions to your story.</h4>
+						<p class="mb-3">After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.</p>
+					</div>
+					<img class="mb-4 mt-4" src="/images/screenshot/add-book-step-2-dark.jpg" alt="">
 				</div>
 				<!-- Feature END -->
 			</div>
@@ -222,166 +240,6 @@ Header END -->
 		</div>
 	</section>
 	<!-- Messaging feature END -->
-	
-	<!-- features START -->
-	<section class="py-4 py-sm-5">
-		<div class="container">
-			<div class="row g-4 g-lg-5 align-items-top">
-				<!-- Title -->
-				<div class="col-lg-4">
-					<h2 class="h1">The Fathomless Expanse: A Glimpse into WRITE BOOKS WITH AI's Multifarious Features</h2>
-					<p class="mb-4">Embark with us upon a journey through the myriad possibilities proffered by v's vast
-						constellation of attributes. Be beguiled by the wonders of our technological and creative assemblage, where
-						the limitless potential of human ingenuity and AI innovation coalesce to sculpt unfathomable narratives
-						amongst the celestials of storytelling. </p>
-					<a class="btn btn-dark" href="{{route('register')}}">Start now</a>
-				</div>
-				<!-- Feature item START -->
-				<div class="col-lg-8">
-					<div class="card card-body bg-mode shadow-none border-0 p-4 p-sm-5 pb-sm-0 overflow-hidden">
-						<div class="row g-4">
-							<div class="col-md-6">
-								<!-- Info -->
-								<h4 class="mt-0 mb-3">The Synaptic Waltz: A Conversational Communion of Human and AI Minds</h4>
-								<p class="mb-5">Delve into the enthralling realm where human exchange with AI transcends conventional
-									boundaries, giving birth to narratives in a melding of minds. As the dance of dialogues intertwined,
-									each interaction shapes and molds the story, creating a symbiotic tapestry of characters and plots
-									that fascinate and captivate the boundless potential within the ever-expanding, collaborative universe
-									of storytelling.</p>
-							</div>
-							<div class="col-md-6 text-end">
-								<!-- image -->
-								<!-- iphone-x mockup START -->
-								<div class="iphone-x iphone-x-small iphone-x-half mb-n5 mt-0"
-								     style="background: url(/assets/images/mobile_ui.jpg); background-size: 100%;">
-									<i></i>
-									<b></b>
-								</div>
-								<!-- iphone-x mockup END -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Feature item END -->
-				
-				<!-- Feature item START -->
-				<div class="col-md-4">
-					<div class="card card-body bg-mode shadow-none border-0 p-4 p-lg-5">
-						<!-- Image -->
-						<div>
-							<img class="w-300px" src="/assets/images/header4.jpg" alt="">
-						</div>
-						<!-- Info -->
-						<h4 class="mt-4">Cosmic Convergence: The Nexus of Human and AI Creation</h4>
-						<p class="mb-0">As we continue to explore the vast cosmic ocean of knowledge, WRITE BOOKS WITH AI stands as a
-							beacon bearing witness to the unification of human creativity and artificial intelligence. Dive into the
-							remarkable world where the next generation of storytelling emerges, intrigued by the very essence of our
-							cosmic identity.</p>
-					</div>
-				</div>
-				<!-- Feature item START -->
-				
-				<div class="col-md-4">
-					<div class="card card-body bg-mode shadow-none border-0 p-4 p-lg-5">
-						<!-- Image -->
-						<div>
-							<img class="w-300px" src="/assets/images/header5.jpg" alt="">
-						</div>
-						<!-- Info -->
-						<h4 class="mt-4">The Pale Blue Dot of Storytelling: A New Frontier in Narrative Creation</h4>
-						<p class="mb-0">As pioneers in the grand expanse of possibility, WRITE BOOKS WITH AI offers an extraordinary
-							glimpse into the evolving world of storytelling. By merging the once-separated realms of human imagination
-							and AI innovation, we embark on a new era, finding ourselves as cosmic citizens of a shared literary
-							universe.</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card card-body bg-mode shadow-none border-0 p-4 p-lg-5">
-						<!-- Image -->
-						<div>
-							<img class="w-300px" src="/assets/images/header6.jpg" alt="">
-						</div>
-						<!-- Info -->
-						<h4 class="mt-4">An AI Odyssey: Envisioning our Collective Future of Narratives</h4>
-						<p class="mb-0">WRITE BOOKS WITH AI is a testament to the boundless potential of human progress and AI
-							collaboration. As we weave our way through the vast cosmic dance of storytelling, remember that somewhere
-							out there amidst the uncharted abyss of narrative possibility, our imaginations are enabled by the very
-							technology we have fashioned, bringing forth stories that mirror the cosmos around us.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- features END -->
-	
-	<!-- Get Discovered START -->
-	<section class="py-4 py-sm-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-10 ms-auto">
-					<div class="row g-4 align-items-center">
-						<div class="col-md-5 col-lg-5 position-relative">
-							<!-- Image -->
-							<img class="rounded-circle" src="/assets/images/581177845_A Journey into the Limelight.jpg" alt="">
-							<!-- Chat START -->
-							<div class="position-absolute top-50 start-0 translate-middle d-none d-lg-block">
-								<!-- Chat item -->
-								<div class="bg-mode border p-3 rounded-3 rounded-start-top-0 d-flex align-items-center mb-3">
-									<!-- Avatar -->
-									<div class="avatar avatar-xs me-3">
-										<a href="{{route('user.showcase-library')}}"> <img class="avatar-img rounded-circle"
-										                                          src="/assets/images/avatar/12.jpg" alt=""> </a>
-									</div>
-									<!-- Comment box  -->
-									<div class="d-flex">
-										<h6 class="mb-0 ">Inventive Storytelling Awaits!</h6>
-									</div>
-								</div>
-								
-								<!-- Chat item -->
-								<div class="bg-mode border p-3 rounded-3 rounded-start-top-0 d-flex align-items-center mb-3">
-									<!-- Avatar -->
-									<div class="avatar avatar-xs me-3">
-										<a href="#!"> <img class="avatar-img rounded-circle" src="/assets/images/avatar/10.jpg" alt=""> </a>
-									</div>
-									<!-- Comment box  -->
-									<div class="d-flex">
-										<h6 class="mb-0 ">AI-Assisted Literary Magic!</h6>
-									</div>
-								</div>
-								
-								<!-- Chat item -->
-								<div class="bg-mode border p-3 rounded-3 rounded-start-top-0 d-flex align-items-center mb-3">
-									<!-- Avatar -->
-									<div class="avatar avatar-xs me-3">
-										<a href="#!"> <img class="avatar-img rounded-circle"
-										                   src="/assets/images/581177845_A Journey into the Limelight.jpg" alt=""> </a>
-									</div>
-									<!-- Comment box  -->
-									<div class="d-flex">
-										<h6 class="mb-0 ">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</h6>
-									</div>
-								</div>
-							</div>
-							<!-- Chat END -->
-						</div>
-						<div class="col-md-6">
-							<div class="ms-4">
-								<!-- Info -->
-								<h2 class="h1">A Journey into the Limelight</h2>
-								<p class="lead mb-4">Traverse through the fabled lands wherein lays the resplendent opportunity for
-									discovered fortune. As a weaver of tales in the grand tapestry of the mythic realm, thine own sagas
-									shall be revealed to many an eager eye, their imaginations set alight by the enchanting flames of your
-									prose, which finds new life within the hearts of those who seek the extraordinary.</p>
-								<a class="btn btn-primary" href="{{route('register')}}"> Let's start </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Get Discovered START -->
 	
 	
 	<!-- Main content END -->
