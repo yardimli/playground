@@ -216,7 +216,7 @@ Header END -->
 						<p class="mb-3">Write your book description and choose the structure, AI model, and language. Set up the
 							genre, writing style, and narrative. Fill in author details, then click Submit to start.</p>
 					</div>
-					<img class="mb-4 mt-4" src="/images/screenshot/add-book-dark.jpg" alt="">
+					<img class="mb-4 mt-4" src="/images/screenshot/add-book-dark.png" alt="">
 				</div>
 				<!-- Feature END -->
 			</div>
@@ -232,11 +232,55 @@ Header END -->
 						<h4 class="mt-0 mb-3">Go over the AI's suggestions to your story.</h4>
 						<p class="mb-3">After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.</p>
 					</div>
-					<img class="mb-4 mt-4" src="/images/screenshot/add-book-step-2-dark.jpg" alt="">
+					<img class="mb-4 mt-4" src="/images/screenshot/add-book-step-2-dark.png" alt="">
 				</div>
 				<!-- Feature END -->
 			</div>
+			
+			
 			<!-- Row START -->
+			<div class="row justify-content-center">
+				<!-- Feature START -->
+				<div class="col-lg-9 col-12 mx-auto  text-center mb-4">
+					<div class="card card-body bg-mode shadow-none border-1">
+						<!-- Info -->
+						<h4 class="mt-0 mb-3">Review the chapters.</h4>
+						<p class="mb-3">Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.</p>
+					</div>
+					<img class="mb-4 mt-4" src="/images/screenshot/book-chapters-dark.png" alt="">
+				</div>
+				<!-- Feature END -->
+			</div>
+			
+			
+			<!-- Row START -->
+			<div class="row justify-content-center">
+				<!-- Feature START -->
+				<div class="col-lg-9 col-12 mx-auto  text-center mb-4">
+					<div class="card card-body bg-mode shadow-none border-1">
+						<!-- Info -->
+						<h4 class="mt-0 mb-3">Time the beats.</h4>
+						<p class="mb-3">Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.</p>
+					</div>
+					<img class="mb-4 mt-4" src="/images/screenshot/chapter-beats-dark.png" alt="">
+				</div>
+				<!-- Feature END -->
+			</div>
+			
+			
+			<!-- Row START -->
+			<div class="row justify-content-center">
+				<!-- Feature START -->
+				<div class="col-lg-9 col-12 mx-auto  text-center mb-4">
+					<div class="card card-body bg-mode shadow-none border-1">
+						<!-- Info -->
+						<h4 class="mt-0 mb-3">Your book is ready to be read.</h4>
+						<p class="mb-3">Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!</p>
+					</div>
+					<img class="mb-4 mt-4" src="/images/screenshot/edit-book-dark.png" alt="">
+				</div>
+				<!-- Feature END -->
+			</div>
 		</div>
 	</section>
 	<!-- Messaging feature END -->
