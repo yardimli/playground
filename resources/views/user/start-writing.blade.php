@@ -86,6 +86,10 @@
 											
 											<select class="form-control" id="bookStructure" name="bookStructure" required>
 												<option
+													value="{{__('default.the_1_act_story.txt')}}">{{__('default.The 1 Act Story (1 Act, 3 Chapters)')}}</option>
+												<option
+													value="{{__('default.abcde_short_story.txt')}}">{{__('default.ABCDE (1 Acts, 6 Chapters)')}}</option>
+												<option
 													value="{{__('default.fichtean_curve.txt')}}">{{__('default.Fichtean Curve (3 Acts, 8 Chapters)')}}</option>
 												<option
 													value="{{__('default.freytags_pyramid.txt')}}">{{__('default.Freytag\'s Pyramid (5 Acts, 9 Chapters)')}}</option>

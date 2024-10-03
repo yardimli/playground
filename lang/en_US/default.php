@@ -384,6 +384,8 @@
 
 		//--------------------------------------------------
 
+		'abcde_short_story.txt' => 'abcde_short_story.txt',
+		'the_1_act_story.txt' => 'the_1_act_story.txt',
 		'fichtean_curve.txt' => 'fichtean_curve.txt',
 		'freytags_pyramid.txt' => 'freytags_pyramid.txt',
 		'heros_journey.txt' => 'heros_journey.txt',
@@ -394,7 +396,7 @@
 		//index.php
 		'Language' => 'Language',
 		'Default Language' => 'English',
-		'Default Structure' => 'fichtean_curve.txt',
+		'Default Structure' => 'the_1_act_story.txt',
 		'You must be logged in to create a book.' => 'You must be logged in to create a book.',
 		'Write Books With AI - Index' => 'Write Books With AI - Index',
 		'Write Books With AI' => 'Write Books With AI',
@@ -416,6 +418,8 @@
 		'English' => 'English',
 		'Norwegian' => 'Norsk',
 		'Turkish' => 'Türkçe',
+		'ABCDE Short Story (1 Act, 6 Chapters)' => 'ABCDE Short Story (1 Act, 6 Chapters)',
+		'The 1 Act Story (1 Act, 3 Chapters)' => 'The 1 Act Story (1 Act, 3 Chapters)',
 		'Fichtean Curve (3 Acts, 8 Chapters)' => 'Fichtean Curve (3 Acts, 8 Chapters)',
 		'Freytag\'s Pyramid (5 Acts, 9 Chapters)' => 'Freytag\'s Pyramid (5 Acts, 9 Chapters)',
 		'Hero\'s Journey (3 Acts, 12 Chapters)' => 'Hero\'s Journey (3 Acts, 12 Chapters)',

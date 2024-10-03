@@ -172,7 +172,7 @@
 				'##adult_content##' => $bookData['adult_content'] ?? 'non-adult',
 				'##writing_style##' => $bookData['writing_style'] ?? 'Minimalist',
 				'##narrative_style##' => $bookData['narrative_style'] ?? 'Third Person - The narrator has a godlike perspective',
-				'##book_structure##' => $bookData['book_structure'] ?? 'fichtean_curve.txt',
+				'##book_structure##' => $bookData['book_structure'] ?? 'the_1_act_story.txt',
 				'##previous_chapters##' => $chapters_string,
 				'##current_chapter##' => $current_chapter_string,
 			];

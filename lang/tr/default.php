@@ -451,6 +451,8 @@
 		//----------------------------------------------------------
 
 		//files
+		'abcde_short_story.txt' => 'abcde_short_story.txt',
+		'the_1_act_story.txt' => 'the_1_act_story.txt',
 		'fichtean_curve.txt' => 'fichtean_curve_tr.txt',
 		'freytags_pyramid.txt' => 'freytags_pyramid_tr.txt',
 		'heros_journey.txt' => 'heros_journey_tr.txt',
@@ -460,7 +462,7 @@
 
 		//index.php
 		'Default Language' => 'Türkçe',
-		'Default Structure' => 'fichtean_curve_tr.txt',
+		'Default Structure' => 'the_1_act_story.txt',
 		'You must be logged in to create a book.' => 'Kitap oluşturmak için giriş yapmalısınız.',
 		'Write Books With AI - Index' => 'Netkitap - Ana Sayfa',
 		'Write Books With AI' => 'Netkitap',

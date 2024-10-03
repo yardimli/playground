@@ -219,7 +219,7 @@ function rewriteChapter(chapterFilename) {
 			'##adult_content##': bookData.adult_content || 'non-adult',
 			'##writing_style##': bookData.writing_style || 'Minimalist',
 			'##narrative_style##': bookData.narrative_style || 'Third Person - The narrator has a godlike perspective',
-			'##book_structure##': bookData.book_structure || 'fichtean_curve.txt',
+			'##book_structure##': bookData.book_structure || 'the_1_act_story.txt',
 			'##previous_chapters##': chaptersToInclude.map(ch =>
 				`name: ${ch.name}\nshort description: ${ch.short_description}\nevents: ${ch.events}\npeople: ${ch.people}\nplaces: ${ch.places}\nfrom previous chapter: ${ch.from_previous_chapter}\nto next chapter: ${ch.to_next_chapter}\n\nbeats:\n${ch.beats ? ch.beats.map(b => b.beat_summary || b.description).join('\n') : ''}`
 			).join('\n\n'),
