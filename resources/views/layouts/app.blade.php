@@ -235,8 +235,8 @@ Header START -->
 									</div>
 									<div>
 										<a class="h6 stretched-link"
-										   href="{{route('my.books')}}">{{ Auth::user()->username }}</a>
-										<p class="small m-0">Writer</p>
+										   href="{{route('my.books')}}">{{ Auth::user()->name }}</a>
+										<p class="small m-0">{{ Auth::user()->username }}</p>
 									</div>
 								</div>
 								<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"

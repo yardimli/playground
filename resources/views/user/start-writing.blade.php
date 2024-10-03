@@ -161,7 +161,7 @@
 										<div class="mb-3 col-12 col-xl-6">
 											<label for="authorName" class="form-label">{{__('default.Author Name')}}:</label>
 											<input type="text" class="form-control" id="authorName" name="authorName" required
-											       value="{{ Auth::user()->username ?? 'Noname Penname' }}">
+											       value="{{ Auth::user()->name ?? 'Pen Name' }}">
 										</div>
 										<div class="mb-3 col-12 col-xl-6">
 											<label for="publisherName" class="form-label">{{__('default.Publisher Name')}}:</label>
