@@ -13,7 +13,7 @@ Character Profiles:
 ##character_profiles##
 Book Language: ##language##
 
-Create a story outline in the format "The 3-Act Story Structure" with the structure like
+Create a story outline in the format bellow. The story has 1 act and 3 chapters. The structure should be like:
 
 Act 1
 Chapter 1: Introduction. Here’s where you introduce your readers to your characters and establish your story setting and tone. I will dive into characters and setting more in later posts. Your protagonist is usually called to action here. Popular Fantasy writer Brandon Sanderson calls this an “inciting incident”, some sort of crisis point that makes your character get out of his or her world (or comfort zone) into a new world. Here you make some promises to your reader as to where the story leads to. (Make sure you keep them!)
