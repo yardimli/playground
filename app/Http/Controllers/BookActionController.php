@@ -468,11 +468,21 @@
 			if (!$verified['success']) {
 				return response()->json($verified);
 			}
-			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
 
-			File::deleteDirectory($bookPath);
+			$sourcePath = Storage::disk('public')->path("books/{$bookSlug}");
+			$destinationPath = Storage::disk('public')->path("deleted_books/{$bookSlug}");
 
-			return response()->json(['success' => true, 'message' => __('Book deleted successfully')]);
+			// Create the deleted_books directory if it doesn't exist
+			if (!File::isDirectory(dirname($destinationPath))) {
+				File::makeDirectory(dirname($destinationPath), 0755, true);
+			}
+
+			// Move the book folder to the deleted_books directory
+			if (File::moveDirectory($sourcePath, $destinationPath)) {
+				return response()->json(['success' => true, 'message' => __('Book deleted successfully')]);
+			} else {
+				return response()->json(['success' => false, 'message' => __('Failed to delete the book')]);
+			}
 		}
 
 		public function makeCoverImage(Request $request, $bookSlug)

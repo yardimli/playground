@@ -312,6 +312,37 @@ $(document).ready(function () {
 		location.reload();
 	});
 	
+	let bookToDelete = null;
+	
+	$('.delete-book-btn').on('click', function(e) {
+		e.preventDefault();
+		bookToDelete = $(this).data('book-id');
+		$('#deleteConfirmModal').modal('show');
+	});
+	
+	$('#confirmDeleteBtn').on('click', function() {
+		if (bookToDelete) {
+			$.ajax({
+				url: `/book/${bookToDelete}`,
+				type: 'DELETE',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				success: function(response) {
+					if (response.success) {
+						$('#deleteConfirmModal').modal('hide');
+						window.location.href = '/my-books';
+					} else {
+						alert(response.message);
+					}
+				},
+				error: function() {
+					alert('An error occurred while deleting the book.');
+				}
+			});
+		}
+	});
+	
 	$('#createCoverBtn').on('click', function (e) {
 		e.preventDefault();
 		$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');
