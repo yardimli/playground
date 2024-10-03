@@ -28,7 +28,7 @@
 //			$this->guard()->login($user);
 
 			// Redirect the user to the /my-books page with a success message.
-			return redirect('/my-books')->with('status', 'Your password has been changed.');
+			return redirect('/my.books')->with('status', 'Your password has been changed.');
 		}
 
 		public function showResetPasswordForm(Request $request, $token = null)
