@@ -403,7 +403,7 @@ $(document).ready(function () {
 	
 	if (emptyBeatDescriptions) {
 		//show the alert modal
-		$("#alertModalContent").html(__e('This chapter has no beats written yet.') + "<br>" + __e('Click "Recreate Beats" to generate beat descriptions.') + "<span style=\"font-size: 18px;\">{{__('default.Number of beats per chapter:')}}</span><br><br>\n" +
+		$("#alertModalContent").html(__e('This chapter has no beats written yet.') + "<br>" + __e('Click "Recreate Beats" to generate beat descriptions.') + "<span style=\"font-size: 18px;\">" + __e('Number of beats per chapter:') + "</span><br><br>\n" +
 			"\t\t\t\t\t\t<select id=\"beatsPerChapter_modal\" class=\"form-select mx-auto mb-1\">\n" +
 			"\t\t\t\t\t\t\t<option value=\"2\" selected>2</option>\n" +
 			"\t\t\t\t\t\t\t<option value=\"3\">3</option>\n" +
@@ -414,7 +414,7 @@ $(document).ready(function () {
 			"\t\t\t\t\t\t\t<option value=\"8\">8</option>\n" +
 			"\t\t\t\t\t\t\t<option value=\"9\">9</option>\n" +
 			"\t\t\t\t\t\t\t<option value=\"10\">10</option>\n" +
-			"\t\t\t\t\t\t</select>" + "<br><br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
+			"\t\t\t\t\t\t</select>" + "<br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
 			"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>"+__e('Recreate Beats') + "</button>");
 		$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		$("#recreateBeats_modal").off('click').on('click', function () {
