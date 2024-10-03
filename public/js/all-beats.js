@@ -403,8 +403,13 @@ $(document).ready(function () {
 	
 	if (emptyBeatDescriptions) {
 		//show the alert modal
-		$("#alertModalContent").html(__e('Click "Recreate Beats" to generate beat descriptions.'));
+		$("#alertModalContent").html(__e('This chapter has no beats written yet.') + "<br>" + __e('Click "Recreate Beats" to generate beat descriptions.') + "<br><br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
+			"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>"+__e('Recreate Beats') + "</button>");
 		$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+		$("#recreateBeats_modal").off('click').on('click', function () {
+			$("#alertModal").modal('hide');
+			recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter').val()));
+		});
 		
 	}
 	

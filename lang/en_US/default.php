@@ -611,6 +611,7 @@
 		'You will need to save the beats before proceeding to write the beat contents.' => 'You will need to save the beats before proceeding to write the beat contents.',
 		'Processing your request. This may take a few minutes...' => 'Processing your request. This may take a few minutes...',
 		'Click "Save Beats" before proceeding to write all beat contents.' => 'Click "Save Beats" before proceeding to write all beat contents.',
+		'This chapter has no beats written yet.' => 'This chapter has no beats written yet.',
 		'Click "Recreate Beats" to generate beat descriptions.' => 'Click "Recreate Beats" to generate beat descriptions.',
 		'Failed to write beat text: ' => 'Failed to write beat text: ',
 		'Writing beat summary...' => 'Writing beat summary...',
