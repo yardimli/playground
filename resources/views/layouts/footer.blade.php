@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-md-6">
 				<!-- Copyright START -->
-				<p class="text-center text-md-end mb-0">©2024 <a class="text-body" href="https://www.writebookswithai.com"> WRITE BOOKS WITH AI </a>All rights
+				<p class="text-center text-md-end mb-0">©2024 <a class="text-body" href="https://www.writebookswithai.com"> {{__('default.Write Books With AI')}} </a>All rights
 					reserved.</p>
 				<!-- Copyright END -->
 			</div>

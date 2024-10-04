@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Write Books with AI - Unleash the Stories Within: Where Human Ingenuity and AI Creativity Converge</title>
+	<title>Write Books with{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="fictionfusion.io">
-	<meta name="description" content="Write Books with AI - Unleash the Stories Within: Where Human Ingenuity and AI Creativity Converge">
+	<meta name="author" content="writebookswithai.com">
+	<meta name="description" content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
 
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+	<link rel="shortcut icon" href="/images/favicon.ico">
 
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">

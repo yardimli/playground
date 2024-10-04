@@ -54,7 +54,7 @@
 											</h6>
 											
 											<span class="nav-item small">{{$book['publisher_name'] ?? ''}}</span>
-											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>
+{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
 											<span class="nav-item small">{{date("Y-m-d", $book['file_time'] ?? 1923456789)}}</span>
 										</div>
 									</div>

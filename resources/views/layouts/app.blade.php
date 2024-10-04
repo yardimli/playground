@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>WRITE BOOKS WITH AI - @yield('title', 'Home')</title>
+	<title>{{__('default.Write Books With AI')}} - @yield('title', 'Home')</title>
 	
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="fictionfusion.io">
 	<meta name="description"
-	      content="Write Books with AI - Unleash the Stories Within: Where Human Ingenuity and AI Creativity Converge">
+	      content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<script src="/assets/js/core/jquery.min.js"></script>
 	
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+	<link rel="shortcut icon" href="/images/favicon.ico">
 	
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">

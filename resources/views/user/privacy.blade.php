@@ -1918,7 +1918,7 @@
 							<p class="c5 c8 c10"><span class="c1"></span></p>
 							<ul class="c4 lst-kix_suxqkadflmqm-0">
 								<li class="c5 c6 li-bullet-0"><span>&quot;</span><span class="c0">Company</span><span>&quot; (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to </span><span
-										class="c12">WRITE BOOKS WITH AI<br><br></span><span class="c1">For the purpose of the GDPR, the Company is the Data Controller.</span>
+										class="c12">{{__('default.Write Books With AI')}}<br><br></span><span class="c1">For the purpose of the GDPR, the Company is the Data Controller.</span>
 								</li>
 							</ul>
 							<p class="c5 c8 c10"><span class="c1"></span></p>

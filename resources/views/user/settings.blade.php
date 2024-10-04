@@ -420,9 +420,7 @@
 										sure to save
 										anything
 										you wish to keep before proceeding.</p>
-									<p class="mb-2">We're sad to see you go, but we hope that WRITE BOOKS WITH AI has been an
-										enjoyable
-										experience for you. We wish you the best in your future endeavors. Goodbye!</p>
+									<p class="mb-2">We're sad to see you go, but we hope that {{__('default.Write Books With AI')}} has been an enjoyable experience for you. We wish you the best in your future endeavors. Goodbye!</p>
 								</div>
 								<!-- Card header START -->
 								<!-- Card body START -->

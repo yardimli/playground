@@ -15,7 +15,7 @@
 				<div class="row justify-content-center py-5">
 					<div class="col-md-6 text-center">
 						<!-- Title -->
-						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Write Books with  <span>AI</span></h1>
+						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">{{__('default.Write Books With AI')}}</h1>
 						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
 					</div>
 				</div>
@@ -34,64 +34,71 @@
 						<div class="row g-4 mt-2">
 							<div class="col-12">
 								<div class="card p-1">
-									<h2 class="p-1" style="margin:0px;">Sample Books and Short Stories</h2>
+									<h2 class="p-1" style="margin:0px;">{{__('default.Your Private Library')}}</h2>
 									<div class="ps-1">
-										Read a sample of our books and short stories. Click on the book cover to read the full book or
-										story.
+										{{__('default.Here are all the books both complete and in progress.')}} {{__('default.Click on the book cover to read or edit the full book.')}}
 									</div>
 								</div>
 							</div>
 							
 							@foreach ($books as $book)
-								<div class="col-sm-6 col-lg-4">
+								<div class="col-12 col-sm-6 col-lg-3">
 									<!-- Card feed item START -->
 									<div class="card h-100">
 										<a class="text-body" href="{{route('user.book-details',$book['id'] ?? '0')}}"><img
-												class="card-img-top"
+												class="card-img-top" style="min-height: 300px"
 												src="{{$book['cover_filename'] ?? ''}}"
 												alt="Book"></a>
 										@if ($book['language'] !== 'English')
-											<div class="badge bg-info text-white mt-2 ms-2 me-2 position-absolute top-0 start-0"
+											<div class="badge bg-info text-white mt-2 ms-2 me-2 position-absolute top-0 end-0"
 											     style="z-index: 9">
 												<span class="badge text-bg-info">{{ $book['language'] }}</span>
 											</div>
 										@endif
+										<div class="position-absolute ms-2 mt-2 top-0 start-0"
+										     style="z-index: 9"><a
+												href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
+												class="badge bg-primary">{{$book['genre'] ?? ''}}</a>
+										</div>
+										
 										
 										<!-- Card body START -->
 										<div class="card-body">
 											<!-- Info -->
-											<a class="text-body"
-											   href="{{route('user.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
-											<!-- Feed react START -->
-											<div class="d-flex justify-content-between">
-												<h6 class="mb-0"><a
-														href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
-														class="modal-body-color">{{$book['genre'] ?? ''}}</a>
-												</h6>
-												<span class="small">{{ Illuminate\Support\Carbon::parse($book['file_time'])->diffForHumans() }}</span>
-											</div>
-											<p class="dz-para">{{$book['blurb'] ?? ''}}</p>
 											
-											<div>
-												@if (isset($book['keywords']))
-													@foreach ($book['keywords'] as $keyword)
-														<a href="{{route('user.showcase-library-keyword',[$keyword])}}"
-														   class="badge">{{$keyword}}</a>
-													@endforeach
-												@endif
+											<h3 class="title mb-0"><a href="{{route('user.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
+											</h3>
+											
+											<div class="d-flex align-items-center justify-content-between my-3">
+												<div class="d-flex align-items-center">
+													<!-- Avatar -->
+													<div class="avatar avatar-story me-2">
+														<a href=""> <img
+																class="avatar-img rounded-circle"
+																src="{{$book['author_avatar'] ?? ''}}"
+																alt=""> </a>
+													</div>
+													<!-- Info -->
+													<div>
+														<div class="nav nav-divider">
+															<h6 class="card-title mb-0 w-100"><a
+																	href=""> {{$book['author_name'] ?? ''}} </a>
+															</h6>
+															
+															<span class="small me-2">{{$book['publisher_name'] ?? ''}}</span>
+														</div>
+													</div>
+												</div>
 											</div>
 											
-											<ul class="book-info">
-												<li><span>Written by</span> {{$book['author_name'] ?? ''}}</li>
-												<li><span>Publisher</span> {{$book['publisher_name'] ?? ''}}</li>
-												<li><span>Year</span> {{date("Y", $book['file_time'] ?? 123456789)}}</li>
-											</ul>
+											<p>{{$book['blurb'] ?? ''}}</p>
 										</div>
 										<!-- Card body END -->
 									</div>
 								</div>
 							@endforeach
 						</div>
+						
 						
 						
 					</div>

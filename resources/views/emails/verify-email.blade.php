@@ -99,7 +99,7 @@
 
 <!-- start preheader -->
 <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-	Please verify your email address with Write Books With AI.
+	Please verify your email address with {{__('default.Write Books With AI')}}.
 </div>
 <!-- end preheader -->
 
@@ -118,8 +118,7 @@
 				<tr>
 					<td align="center" valign="top" style="padding: 12px 24px;">
 						<a href="https://writebookswithai.com" target="_blank" style="display: inline-block;">
-							<img id="site_logo" src="https://writebookswithai.com/images/logo.png" alt="Write Books With AI
- Logo" border="0" width="200" style="display: block; width: 200px; max-width: 200px; min-width: 200px;">
+							<img id="site_logo" src="https://writebookswithai.com/images/logo.png" alt="{{__('default.Write Books With AI')}}" border="0" width="200" style="display: block; width: 200px; max-width: 200px; min-width: 200px;">
 						</a>
 					</td>
 				</tr>

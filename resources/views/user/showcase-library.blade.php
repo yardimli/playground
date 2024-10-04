@@ -15,7 +15,7 @@
 				<div class="row justify-content-center py-5">
 					<div class="col-md-6 text-center">
 						<!-- Title -->
-						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Write Books with  <span>AI</span></h1>
+						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">{{__('default.Write Books With AI')}}</h1>
 						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
 					</div>
 				</div>
@@ -34,16 +34,15 @@
 						<div class="row g-4 mt-2">
 							<div class="col-12">
 								<div class="card p-1">
-									<h2 class="p-1" style="margin:0px;">Sample Books and Short Stories</h2>
+									<h2 class="p-1" style="margin:0px;">{{__('default.Sample Books and Short Stories')}}</h2>
 									<div class="ps-1">
-										Read a sample of our books and short stories. Click on the book cover to read the full book or
-										story.
+										{{__('default.Read a sample of our books and short stories.')}} {{__('default.Click on the book cover to read the full book or story.')}}
 									</div>
 								</div>
 							</div>
 							
 							@foreach ($paginatedBooks as $book)
-								<div class="col-sm-6 col-lg-4">
+								<div class="col-12 col-sm-6 col-lg-3">
 									<!-- Card feed item START -->
 									<div class="card h-100">
 										<a class="text-body" href="{{route('user.book-details',$book['id'] ?? '0')}}"><img

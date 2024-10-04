@@ -4,7 +4,7 @@
 	
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Welcome to Write Books With AI
+	<title>Welcome to {{__('default.Write Books With AI')}}
 </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">
@@ -174,7 +174,7 @@
 						<p style="margin: 0;">
 							Dear {{$name}},
 							<br><br>
-							Welcome to the vibrant world of <a href="https://writebookswithai.com">Write Books With AI</a>, where human ingenuity and AI creativity converge to push the boundaries of imaginative storytelling! If you didn't create an account with us, please feel free to disregard this email.
+							Welcome to the vibrant world of <a href="https://writebookswithai.com">Write Books With{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI! If you didn't create an account with us, please feel free to disregard this email.
 							<br><br>
 							We are excited to have you as a member of our community and can't wait to see your unique stories unfold. writebookswithai.com is an online platform dedicated to empowering writers by providing ample creative space and harnessing the power of AI to refine and expand ideas. Our community is constantly growing, and we are thrilled you have joined us in this exciting literary journey!
 							<br><br>

@@ -23,12 +23,20 @@
 							</div>
 							
 							<br>
-							Sat 09/28/2024
+							<strong>v0.1.0 - 09/28/2024</strong>
 							<br>
-							Use Write Books with AI's UI, design the rest as a private tool. There is no need for users to publish their stories on the site.
+							- Change the Write Books with AI's UI, so except the showcase all books are private. <br>There is no need for users to publish their stories on the site.
 							<br>
-							Add Blog from everperfectassistant.com
+							- Add Blog code.
+							<br><br>
+							<strong>v0.1.1 - 09/29/2024</strong>
+							<br>
+							- Allow users to insert beats in between existing beats or at the beginning or end of the chapter.
 							
+							<br><br>
+								<strong>v0.1.2 - 09/30/2024</strong>
+							<br>
+							- Improve the UI for viewing the library and reading the books.
 							
 						</div>
 					</div>

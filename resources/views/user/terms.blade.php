@@ -904,7 +904,7 @@
 								<li class="c0 li-bullet-0"><span>&ldquo;</span><span class="c6">Account</span><span class="c1">&rdquo; means a unique account created for You to access our Service or parts of our Service.</span>
 								</li>
 								<li class="c0 li-bullet-0"><span>&ldquo;</span><span class="c6">Company</span><span>&rdquo; (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to </span><span
-										class="c10">WRITE BOOKS WITH AI</span></li>
+										class="c10">{{__('default.Write Books With AI')}}</span></li>
 								<li class="c0 li-bullet-0"><span>&ldquo;</span><span
 										class="c6">Country</span><span>&rdquo; refers to </span><span
 										class="c10">Taiwan</span><span>.</span></li>

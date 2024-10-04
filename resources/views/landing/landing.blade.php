@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Webestica.com">
 	<meta name="description"
-	      content="Write Books with AI - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
+	      content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
 	
 	<!-- Dark mode -->
 	<script>
@@ -71,7 +71,7 @@
 	</script>
 	
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+	<link rel="shortcut icon" href="/images/favicon.ico">
 	
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -156,7 +156,7 @@ Header END -->
 			<div class="row text-center position-relative z-index-1">
 				<div class="col-lg-7 col-12 mx-auto">
 					<!-- Heading -->
-					<h1 class="display-4">WRITE BOOKS WITH AI</h1>
+					<h1 class="display-4">{{__('default.Write Books With AI')}}</h1>
 					<p class="lead">"Your Story, Our AI - Write Books Faster, Smarter, Better with AI"</p>
 					<div class="d-sm-flex justify-content-center">
 						<!-- button -->

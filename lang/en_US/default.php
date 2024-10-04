@@ -671,5 +671,12 @@
 		'Publisher Name' => 'Publisher Name',
 		'Author Name' => 'Author Name',
 		'Book Description' => 'Book Description',
+
+		'Sample Books and Short Stories' => 'Sample Books and Short Stories',
+		'Read a sample of our books and short stories.' => 'Read a sample of our books and short stories.',
+		'Click on the book cover to read the full book or story.' => 'Click on the book cover to read the full book or story.',
+		'Your Private Library' => 'Your Private Library',
+		'Here are all the books both complete and in progress.' => 'Here are all the books both complete and in progress.',
+		'Click on the book cover to read or edit the full book.' => 'Click on the book cover to read or edit the full book.',
 	];
 
