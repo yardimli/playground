@@ -227,7 +227,6 @@
 			}
 		}
 
-
 		public function writeBook(Request $request)
 		{
 			$verified = MyHelper::verifyBookOwnership('');
@@ -406,7 +405,6 @@
 			}
 
 		}
-
 
 		public function saveChapter(Request $request, $bookSlug)
 		{
@@ -1454,6 +1452,38 @@ Prompt:";
 				return response()->json(['success' => true, 'message' => 'Beats saved.']);
 			} else {
 				return response()->json(['success' => false, 'message' => __('Failed to save beats')]);
+			}
+		}
+
+		public function addEmptyBeat(Request $request, $bookSlug, $chapterFilename)
+		{
+			$verified = MyHelper::verifyBookOwnership($bookSlug);
+			if (!$verified['success']) {
+				return response()->json($verified);
+			}
+
+			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
+			$chapterFilePath = "{$bookPath}/{$chapterFilename}";
+
+			if (!File::exists($chapterFilePath)) {
+				return response()->json(['success' => false, 'message' => __('Chapter file not found')], 404);
+			}
+
+			$chapterData = json_decode(File::get($chapterFilePath), true);
+			$beatIndex = (int)$request->input('beatIndex');
+			$position = $request->input('position');
+			$newBeat = json_decode($request->input('newBeat'), true);
+
+			if ($position === 'before') {
+				array_splice($chapterData['beats'], $beatIndex, 0, [$newBeat]);
+			} else {
+				array_splice($chapterData['beats'], $beatIndex + 1, 0, [$newBeat]);
+			}
+
+			if (File::put($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+				return response()->json(['success' => true, 'message' => __('Empty beat added successfully.')]);
+			} else {
+				return response()->json(['success' => false, 'message' => __('Failed to add empty beat')]);
 			}
 		}
 

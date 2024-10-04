@@ -549,6 +549,11 @@
 		'Error decoding JSON:' => 'Error decoding JSON:',
 		'Chapters JSON file not found.' => 'Chapters JSON file not found.',
 
+		'Empty beat added successfully.' => 'Empty beat added successfully.',
+		'Failed to add empty beat' => 'Failed to add empty beat',
+		'Add Empty Beat Before' => 'Add Empty Beat Before',
+		'Add Empty Beat After' => 'Add Empty Beat After',
+
 
 		//action-book.php
 		'Book created successfully' => 'Book created successfully',

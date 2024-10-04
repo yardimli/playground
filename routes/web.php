@@ -91,6 +91,7 @@
 
 		Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [StaticPagesController::class, 'bookBeats'])->name('user.book-beats');
 
+		Route::post('/book/add-empty-beat/{bookSlug}/{chapterFilename}', [BookActionController::class, 'addEmptyBeat']);
 
 		Route::post('/write-book-character-profiles', [BookActionController::class, 'writeBookCharacterProfiles'])->name('book.write-book-character-profiles');
 		Route::post('/write-book', [BookActionController::class, 'writeBook'])->name('book.write-book');

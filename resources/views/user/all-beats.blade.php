@@ -237,6 +237,14 @@
 										<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
 										        data-chapter-filename="{{$chapter['chapterFilename']}}"
 										        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
+										@if($index == 0)
+											<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="before" data-chapter-index="f"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}"
+											        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
+										@endif
+										<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="after" data-chapter-index="f"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}"
+										        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
 										<div class="me-auto d-inline-block" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
 									</div>
 								</div>

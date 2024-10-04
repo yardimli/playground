@@ -28,15 +28,16 @@
 							- Change the Write Books with AI's UI, so except the showcase all books are private. <br>There is no need for users to publish their stories on the site.
 							<br>
 							- Add Blog code.
+							
 							<br><br>
 							<strong>v0.1.1 - 09/29/2024</strong>
 							<br>
-							- Allow users to insert beats in between existing beats or at the beginning or end of the chapter.
-							
-							<br><br>
-								<strong>v0.1.2 - 09/30/2024</strong>
-							<br>
 							- Improve the UI for viewing the library and reading the books.
+
+							<br><br>
+							<strong>v0.1.2 - 09/30/2024</strong>
+							<br>
+							- Allow users to insert empty beats after existing beats and at the beginning of the chapter.
 							
 						</div>
 					</div>

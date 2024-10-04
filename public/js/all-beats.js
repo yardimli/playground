@@ -63,7 +63,7 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
 					
 				});
 				
-				$("#alertModalContent").html(__e('All chapter Beat Descriptions generated successfully.')+"<br>"+__e('Please review the beats and click "Save Beats" to save the changes.')+"<br>"+__e('You will need to save the beats before proceeding to write the beat contents.'));
+				$("#alertModalContent").html(__e('All chapter Beat Descriptions generated successfully.') + "<br>" + __e('Please review the beats and click "Save Beats" to save the changes.') + "<br>" + __e('You will need to save the beats before proceeding to write the beat contents.'));
 				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				$("#saveBeatsBtn").show();
 				$('#recreateBeats').prop('disabled', false);
@@ -315,7 +315,10 @@ function writeAllBeats() {
 			let beatDescription = $(`#beatDescription_${chapterIndex}_${beatIndex}`).val();
 			let beatText = $(`#beatText_${chapterIndex}_${beatIndex}`).val();
 			if (beatText.trim() !== '') {
-				$('#writeAllBeatsLog').append('<br>' + __e('Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...', {chapterIndex : chapterIndex, beatIndex: beatIndex + 1}) + '<br>');
+				$('#writeAllBeatsLog').append('<br>' + __e('Chapter ${chapterIndex}, Beat ${beatIndex} already has text. Skipping...', {
+					chapterIndex: chapterIndex,
+					beatIndex: beatIndex + 1
+				}) + '<br>');
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				processedBeats++;
 				let progress = Math.round((processedBeats / totalBeats) * 100);
@@ -323,7 +326,10 @@ function writeAllBeats() {
 				processNextBeat();
 			} else {
 				
-				$('#writeAllBeatsLog').append('<br><br><em>' + __e('Writing chapter ${chapterIndex}, beat ${beatIndex}', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
+				$('#writeAllBeatsLog').append('<br><br><em>' + __e('Writing chapter ${chapterIndex}, beat ${beatIndex}', {
+					chapterIndex: chapterIndex,
+					beatIndex: (beatIndex + 1)
+				}) + '</em>');
 				
 				$('#writeAllBeatsLog').append('<br><em>' + __e('Beat Description:') + '</em> ' + beatDescription);
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
@@ -339,10 +345,16 @@ function writeAllBeats() {
 					})
 					.then(() => {
 						//add the newly written summary to the log
-						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
+						$('#writeAllBeatsLog').append('<br><em>' + __e('Summary for chapter ${chapterIndex}, beat ${beatIndex}:', {
+							chapterIndex: chapterIndex,
+							beatIndex: (beatIndex + 1)
+						}) + '</em>');
 						$('#writeAllBeatsLog').append('<br>' + $(`#beatSummary_${chapterIndex}_${beatIndex}`).val());
 						
-						$('#writeAllBeatsLog').append('<br><em>' + __e('Lore Book for chapter ${chapterIndex}, beat ${beatIndex}:', {chapterIndex : chapterIndex, beatIndex: (beatIndex + 1)}) + '</em>');
+						$('#writeAllBeatsLog').append('<br><em>' + __e('Lore Book for chapter ${chapterIndex}, beat ${beatIndex}:', {
+							chapterIndex: chapterIndex,
+							beatIndex: (beatIndex + 1)
+						}) + '</em>');
 						$('#writeAllBeatsLog').append('<br>' + $(`#beatLoreBook_${chapterIndex}_${beatIndex}`).val());
 						
 						processedBeats++;
@@ -380,13 +392,12 @@ function writeAllBeats() {
 
 $(document).ready(function () {
 	
-	if (selectedChapter!=='') {
+	if (selectedChapter !== '') {
 		$('#writeAllBeatsBtn').hide();
 		$("#saveBeatsBtn").hide();
 		$('#recreateBeats').show();
 		$('#beatsPerChapter').show();
-	} else
-	{
+	} else {
 		$('#writeAllBeatsBtn').show();
 		$("#saveBeatsBtn").hide();
 		$('#recreateBeats').hide();
@@ -415,7 +426,7 @@ $(document).ready(function () {
 			"\t\t\t\t\t\t\t<option value=\"9\">9</option>\n" +
 			"\t\t\t\t\t\t\t<option value=\"10\">10</option>\n" +
 			"\t\t\t\t\t\t</select>" + "<br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
-			"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>"+__e('Recreate Beats') + "</button>");
+			"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>" + __e('Recreate Beats') + "</button>");
 		$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		$("#recreateBeats_modal").off('click').on('click', function () {
 			$("#alertModal").modal('hide');
@@ -423,6 +434,44 @@ $(document).ready(function () {
 		});
 		
 	}
+	
+	
+	$('.addEmptyBeatBtn').off('click').on('click', function () {
+		let chapterIndex = $(this).data('chapter-index');
+		let chapterFilename = $(this).data('chapter-filename');
+		let beatIndex = $(this).data('beat-index');
+		let position = $(this).data('position');
+		
+		let newBeat = {
+			description: '',
+			beat_text: '',
+			beat_summary: '',
+			beat_lore_book: ''
+		};
+		
+		$.ajax({
+			url: `/book/add-empty-beat/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				beatIndex: beatIndex,
+				position: position,
+				newBeat: JSON.stringify(newBeat)
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function (response) {
+				if (response.success) {
+					location.reload(); // Refresh the page
+				} else {
+					alert('Failed to add empty beat: ' + response.message);
+				}
+			},
+			error: function () {
+				alert('An error occurred while adding the empty beat.');
+			}
+		});
+	});
 	
 	$('#writeAllBeatsBtn').on('click', function () {
 		writeAllBeats();
