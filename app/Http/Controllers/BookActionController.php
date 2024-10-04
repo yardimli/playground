@@ -513,7 +513,7 @@ The image in the background is :
  the book title is " . $title1 . "
  the author is " . $author1 . "
 Write in English even if the background is written in another language.
-With the above information, compose a book cover. Write it as a single paragraph. The instructions should focus on the text elements of the book cover. Generally the title should be on top part and the artist on the bottom of the image.
+With the above information, compose a book cover. Write it as a single paragraph. The instructions should focus on the text elements of the book cover. Generally the title should be on top part and the author on the bottom of the image. The texts should not repeat.
 
 Prompt:";
 
