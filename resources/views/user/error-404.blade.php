@@ -3,17 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
-	<meta name="robots" content="" />
-	<meta name="description" content="Playground-Computer Ecommerce Website"/>
-	<meta property="og:title" content="Playground-Computer Ecommerce Website"/>
-	<meta property="og:description" content="Playground-Computer Ecommerce Website"/>
-	<meta property="og:image" content="https://makaanlelo.com/tf_products_007/playground/xhtml/social-image.png"/>
-	<meta name="format-detection" content="telephone=no">
 	
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
 	
 	<!-- PAGE TITLE HERE -->
 	<title>Playground-Computer Ecommerce Website</title>
