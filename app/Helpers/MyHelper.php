@@ -543,10 +543,21 @@
 
 			$chat_messages = [];
 
-			if ($example_question === '') {
-				$chat_messages[] = [
-					'role' => 'system',
-					'content' => 'You are an expert writer.'];
+			$system_prompt = '';
+
+			if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
+				if ($example_question === '') {
+					$system_prompt = 'You are an expert writer.';
+				} else {
+					$system_prompt = 'You are an expert writer. As an example given the following prompt: ' . $example_question . ' you wrote: ' . $example_answer;
+				}
+			} else {
+
+
+				if ($example_question === '') {
+					$chat_messages[] = [
+						'role' => 'system',
+						'content' => 'You are an expert writer.'];
 
 //					$chat_messages[] = [
 //						'role' => 'system',
@@ -557,10 +568,10 @@
 //- Mix short, punchy sentences with long, descriptive ones. Drop fill words to add variety.
 //'];
 
-			} else {
-				$chat_messages[] = [
-					'role' => 'system',
-					'content' => 'You are an expert writer. As an example given the following prompt: ' . $example_question . ' you wrote: ' . $example_answer];
+				} else {
+					$chat_messages[] = [
+						'role' => 'system',
+						'content' => 'You are an expert writer. As an example given the following prompt: ' . $example_question . ' you wrote: ' . $example_answer];
 
 //					$chat_messages[] = [
 //						'role' => 'system',
@@ -576,7 +587,9 @@
 //- Put dialogue on its own paragraph to separate scene and action.
 //- Reduce indicators of uncertainty like "trying" or "maybe"'
 //					];
+				}
 			}
+
 
 			$chat_messages[] = [
 				'role' => 'user',
@@ -602,7 +615,8 @@
 				$data['max_tokens'] = 4096;
 				$data['temperature'] = 1;
 			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
-				$data['max_tokens'] = 4096;
+				$data['max_tokens'] = 8096;
+				$data['system'] = $system_prompt;
 			} else {
 				$data['max_tokens'] = 8096;
 				if (stripos($llm_model, 'anthropic') !== false) {
