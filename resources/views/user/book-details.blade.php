@@ -22,7 +22,7 @@
 							<br>
 							<a href="{{route('user.read-book',$book_slug)}}" class="btn btn-primary">{{__('Read Book')}}</a>
 							@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
-								<a href="{{route('user.edit-book',$book_slug)}}" class="btn btn-danger">{{__('Edit Book')}}</a>
+								<a href="{{route('edit-book',$book_slug)}}" class="btn btn-danger">{{__('Edit Book')}}</a>
 							@endif
 						</div>
 					</div>

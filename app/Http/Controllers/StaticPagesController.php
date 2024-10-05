@@ -68,50 +68,38 @@
 		private array $writingStyles = [
 			[
 				"value" => "Descriptive",
-				"label" => "Descriptive - Rich, detailed, and imaginative language",
+				"label" => "Descriptive",
 			],
 			[
-				"value" => "Expository",
-				"label" => "Expository - Informative and straightforward writing style",
-			],
-			[
-				"value" => "Narrative",
-				"label" => "Narrative - Tells a story through a series of events",
-			],
-			[
-				"value" => "Persuasive",
-				"label" => "Persuasive - Aims to convince the reader of a certain viewpoint",
-			],
-			[
-				"value" => "Argumentative",
-				"label" => "Argumentative - Presents a debatable issue with a clear position",
-			],
-			[
-				"value" => "Stream Of Consciousness",
-				"label" => "Stream Of Consciousness",
+				"value" => "Minimalist",
+				"label" => "Minimalist",
 			],
 			[
 				"value" => "Satirical",
 				"label" => "Satirical",
 			],
 			[
-				"value" => "Minimalist",
-				"label" => "Minimalist - Uses simple, concise language and avoids unnecessary detail or embellishment",
+				"value" => "Narrative",
+				"label" => "Narrative",
+			],
+			[
+				"value" => "Argumentative",
+				"label" => "Argumentative",
 			]
 		];
 
 		private array $narrativeStyles = [
 			[
 				"value" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
-				"label" => "<span style=\"font-weight: bold;\">First-person:</span><br>The story is told from the perspective of a single character using \"I\" or \"we\" pronouns, providing direct access to the character's thoughts and feelings.",
+				"label" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
 			],
 			[
 				"value" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
-				"label" => "<span style=\"font-weight: bold;\">Second-person:</span><br>The narrator addresses the reader directly using \"you\" pronouns, engaging the reader as an active participant in the story.",
+				"label" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
 			],
 			[
 				"value" => "Third Person - The narrator has a godlike perspective",
-				"label" => "<span style=\"font-weight: bold;\">Third-person Omniscient:</span><br>The narrator has a godlike perspective, knowing all characters' thoughts and feelings, as well as past, present, and future events.",
+				"label" => "Third Person - The narrator has a godlike perspective",
 			],
 		];
 
@@ -473,7 +461,10 @@
 			$genres_array = $this->genres_array;
 			$adult_genres_array = $this->adult_genres_array;
 
-			return view('user.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array'));
+			$writingStyles = $this->writingStyles;
+			$narrativeStyles = $this->narrativeStyles;
+
+			return view('user.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
 		}
 
 
@@ -757,12 +748,17 @@
 				$selectedChapter = '';
 			}
 
+			$writingStyles = $this->writingStyles;
+			$narrativeStyles = $this->narrativeStyles;
+
 			return view('user.all-beats', [
 				'book' => $bookData,
 				'book_slug' => $bookSlug,
 				'selected_chapter' => $selectedChapter ?? '',
 				'selected_chapter_index' => $selectedChapterIndex,
 				'json_translations' => $this->write_js_translations(),
+				'writingStyles' => $writingStyles,
+				'narrativeStyles' => $narrativeStyles,
 			]);
 		}
 

@@ -105,6 +105,32 @@
 							<option value="10">10</option>
 						</select>
 						
+						<div class="mb-3">
+							<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
+							<select class="form-control" id="writingStyle" name="writingStyle" required>
+								@foreach($writingStyles as $style)
+									@if ($style['value'] === $book['writing_style'])
+										<option value="{{ $style['value'] }}" selected>{{ $style['label'] }}</option>
+									@else
+										<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
+									@endif
+								@endforeach
+							</select>
+						</div>
+						
+						<div class="mb-3">
+							<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
+							<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
+								@foreach($narrativeStyles as $style)
+									@if ($style['value'] === $book['narrative_style'])
+										<option value="{{ $style['value'] }}" selected>{{ $style['value'] }}</option>
+									@else
+										<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
+									@endif
+								@endforeach
+							</select>
+						</div>
+						
 						
 						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn"
 						        title="{{__('default.Write All Beats')}}"><i
@@ -115,7 +141,7 @@
 							<i class="bi bi-chat-dots"></i> {{__('default.Send Prompt to LLM')}}
 						</button>
 						
-						<a href="{{route('user.book-beats',[$book_slug, 'all-chapters','2'])}}"
+						<a href="{{route('book-beats',[$book_slug, 'all-chapters','2'])}}"
 						   class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
 							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
 						</a>
@@ -471,7 +497,8 @@
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+     aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">

@@ -17,7 +17,7 @@ People: ##people##
 Places: ##places##
 
 Lore Book:
-##beat_lore_book##
+##lore_book##
 
 Previous Beat Summaries:
 ##previous_beat_summaries##

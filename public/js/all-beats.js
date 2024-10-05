@@ -1,4 +1,4 @@
-function recreateBeats(selectedChapter, beatsPerChapter = 3) {
+function recreateBeats(selectedChapter, beatsPerChapter = 3, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 	$('#fullScreenOverlay').removeClass('d-none');
 	$("#recreateBeats").prop('disabled', true);
 	
@@ -12,6 +12,8 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
 		data: {
 			llm: savedLlm,
 			beats_per_chapter: beatsPerChapter,
+			writing_style: writingStyle,
+			narrative_style: narrativeStyle,
 			save_results: false,
 		},
 		headers: {
@@ -50,12 +52,12 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
                           rows="3"></textarea>
 								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
             </div>
-            <div id="beatLoreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatLoreBook_${chapterIndex}_${beatIndex}"
-                       class="form-label">${__e('Beat Lore Book')}</label>
-                <textarea id="beatLoreBook_${chapterIndex}_${beatIndex}" class="form-control beat-lore-book-textarea"
+            <div id="loreBookArea_${chapterIndex}_${beatIndex}" class="mt-3">
+                <label for="loreBook_${chapterIndex}_${beatIndex}"
+                       class="form-label">${__e('Lore Book')}</label>
+                <textarea id="loreBook_${chapterIndex}_${beatIndex}" class="form-control lore-book-textarea"
                           rows="6"></textarea>
-								<div id="beatLoreResult_${chapterIndex}_${beatIndex}"></div>
+								<div id="loreResult_${chapterIndex}_${beatIndex}"></div>
             </div>
         </div>
     `;
@@ -85,7 +87,7 @@ function recreateBeats(selectedChapter, beatsPerChapter = 3) {
 }
 
 //------------------------------------------------------------
-function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
+function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 	return new Promise((resolve, reject) => {
 		if (showOverlay) {
 			$('#fullScreenOverlay').removeClass('d-none');
@@ -99,7 +101,9 @@ function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterF
 			method: 'POST',
 			data: {
 				llm: savedLlm,
-				beatIndex: beatIndex,
+				writing_style: writingStyle,
+				narrative_style: narrativeStyle,
+				beat_index: beatIndex,
 				current_beat: beatDescription,
 				save_results: save_results,
 			},
@@ -129,7 +133,7 @@ function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterF
 }
 
 //------------------------------------------------------------
-function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
+function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 	return new Promise((resolve, reject) => {
 		if (showOverlay) {
 			$('#fullScreenOverlay').removeClass('d-none');
@@ -143,7 +147,9 @@ function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename
 			method: 'POST',
 			data: {
 				llm: savedLlm,
-				beatIndex: beatIndex,
+				writing_style: writingStyle,
+				narrative_style: narrativeStyle,
+				beat_index: beatIndex,
 				current_beat: beatDescription,
 				save_results: save_results,
 			},
@@ -186,9 +192,9 @@ function writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, ch
 			method: 'POST',
 			data: {
 				llm: savedLlm,
-				beatIndex: beatIndex,
-				currentBeatDescription: beatDescription,
-				currentBeatText: beatText,
+				beat_index: beatIndex,
+				current_beat_description: beatDescription,
+				current_beat_text: beatText,
 				save_results: save_results,
 			},
 			headers: {
@@ -216,22 +222,22 @@ function writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, ch
 	});
 }
 
-function updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
+function updateLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
 	return new Promise((resolve, reject) => {
 		if (showOverlay) {
 			$('#fullScreenOverlay').removeClass('d-none');
 		}
-		$('#updateBeatLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
-		$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Updating Lore Book...'));
+		$('#updateLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
+		$('#loreResult_' + chapterIndex + '_' + beatIndex).html(__e('Updating Lore Book...'));
 		
 		$.ajax({
-			url: `/book/update-beat-lore-book/${bookSlug}/${chapterFilename}`,
+			url: `/book/update-lore-book/${bookSlug}/${chapterFilename}`,
 			method: 'POST',
 			data: {
 				llm: savedLlm,
-				beatIndex: beatIndex,
-				currentBeatDescription: beatDescription,
-				currentBeatText: beatText,
+				beat_index: beatIndex,
+				current_beat_description: beatDescription,
+				current_beat_text: beatText,
 				save_results: save_results,
 			},
 			headers: {
@@ -241,18 +247,18 @@ function updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, 
 			success: function (response) {
 				$('#fullScreenOverlay').addClass('d-none');
 				if (response.success) {
-					$('#beatLoreBook_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-					$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Beat lore book updated successfully!'));
-					$('#updateBeatLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
+					$('#loreBook_' + chapterIndex + '_' + beatIndex).val(response.prompt);
+					$('#loreResult_' + chapterIndex + '_' + beatIndex).html(__e('Lore book updated successfully!'));
+					$('#updateLoreBookBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 					resolve(response.prompt);
 				} else {
-					$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book: ') + response.message);
+					$('#loreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book: ') + response.message);
 					reject(__e('Failed to update lore book: ') + response.message);
 				}
 			},
 			error: function () {
 				$('#fullScreenOverlay').addClass('d-none');
-				$('#beatLoreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book.'));
+				$('#loreResult_' + chapterIndex + '_' + beatIndex).html(__e('Failed to update lore book.'));
 				reject(__e('Failed to update lore book.'));
 			}
 		});
@@ -260,17 +266,17 @@ function updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, 
 }
 
 //------------------------------------------------------------
-function saveBeat(beatText, beatSummary, beatLoreBook, beatDescription, beatIndex, chapterIndex, chapterFilename) {
+function saveBeat(beatText, beatSummary, loreBook, beatDescription, beatIndex, chapterIndex, chapterFilename) {
 	$.ajax({
 		url: `/book/save-single-beat/${bookSlug}/${chapterFilename}`,
 		method: 'POST',
 		data: {
 			llm: savedLlm,
-			beatIndex: beatIndex,
-			beatDescription: beatDescription,
-			beatText: beatText,
-			beatSummary: beatSummary,
-			beatLoreBook: beatLoreBook,
+			beat_index: beatIndex,
+			beat_description: beatDescription,
+			beat_text: beatText,
+			beat_summary: beatSummary,
+			lore_book: loreBook,
 		},
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -334,14 +340,14 @@ function writeAllBeats() {
 				$('#writeAllBeatsLog').append('<br><em>' + __e('Beat Description:') + '</em> ' + beatDescription);
 				$('#writeAllBeatsLog').scrollTop(log[0].scrollHeight);
 				
-				writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, false, true)
+				writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, false, true, $('#writingStyle').val(), $('#narrativeStyle').val())
 					.then(() => {
 						let beatText = $(`#beatText_${beatIndex}`).val();
 						return writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, false, true);
 					})
 					.then(() => {
 						let beatText = $(`#beatText_${chapterIndex}_${beatIndex}`).val();
-						return updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, false, true);
+						return updateLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, false, true);
 					})
 					.then(() => {
 						//add the newly written summary to the log
@@ -355,7 +361,7 @@ function writeAllBeats() {
 							chapterIndex: chapterIndex,
 							beatIndex: (beatIndex + 1)
 						}) + '</em>');
-						$('#writeAllBeatsLog').append('<br>' + $(`#beatLoreBook_${chapterIndex}_${beatIndex}`).val());
+						$('#writeAllBeatsLog').append('<br>' + $(`#loreBook_${chapterIndex}_${beatIndex}`).val());
 						
 						processedBeats++;
 						let progress = Math.round((processedBeats / totalBeats) * 100);
@@ -430,7 +436,7 @@ $(document).ready(function () {
 		$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 		$("#recreateBeats_modal").off('click').on('click', function () {
 			$("#alertModal").modal('hide');
-			recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter_modal').val()));
+			recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter_modal').val()), $('#writingStyle').val(), $('#narrativeStyle').val());
 		});
 		
 	}
@@ -446,16 +452,16 @@ $(document).ready(function () {
 			description: '',
 			beat_text: '',
 			beat_summary: '',
-			beat_lore_book: ''
+			lore_book: ''
 		};
 		
 		$.ajax({
 			url: `/book/add-empty-beat/${bookSlug}/${chapterFilename}`,
 			method: 'POST',
 			data: {
-				beatIndex: beatIndex,
+				beat_index: beatIndex,
 				position: position,
-				newBeat: JSON.stringify(newBeat)
+				new_beat: JSON.stringify(newBeat)
 			},
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -489,9 +495,9 @@ $(document).ready(function () {
 		let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 		let beatSummary = $('#beatSummary_' + chapterIndex + '_' + beatIndex).val();
-		let beatLoreBook = $('#beatLoreBook_' + chapterIndex + '_' + beatIndex).val();
+		let loreBook = $('#loreBook_' + chapterIndex + '_' + beatIndex).val();
 		
-		saveBeat(beatText, beatSummary, beatLoreBook, beatDescription, beatIndex, chapterIndex, chapterFilename);
+		saveBeat(beatText, beatSummary, loreBook, beatDescription, beatIndex, chapterIndex, chapterFilename);
 	});
 	
 	$('.writeBeatDescriptionBtn').off('click').on('click', function () {
@@ -501,7 +507,7 @@ $(document).ready(function () {
 		
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 		
-		writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
+		writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false, $('#writingStyle').val(), $('#narrativeStyle').val());
 	});
 	
 	$('.writeBeatTextBtn').off('click').on('click', function () {
@@ -511,7 +517,7 @@ $(document).ready(function () {
 		
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 		
-		writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
+		writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false, $('#writingStyle').val(), $('#narrativeStyle').val());
 	});
 	
 	$('.writeBeatSummaryBtn').off('click').on('click', function () {
@@ -524,19 +530,19 @@ $(document).ready(function () {
 		writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
 	});
 	
-	$('.updateBeatLoreBookBtn').off('click').on('click', function () {
+	$('.updateLoreBookBtn').off('click').on('click', function () {
 		let beatIndex = Number($(this).attr('data-beat-index'));
 		let chapterIndex = Number($(this).attr('data-chapter-index'));
 		let chapterFilename = $(this).attr('data-chapter-filename');
 		
 		let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 		let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
-		updateBeatLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
+		updateLoreBook(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
 	});
 	
 	$("#recreateBeats").on('click', function (e) {
 		e.preventDefault();
-		recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter').val()));
+		recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter').val()), $('#writingStyle').val(), $('#narrativeStyle').val());
 	});
 	
 	$('#saveBeatsBtn').on('click', function (e) {

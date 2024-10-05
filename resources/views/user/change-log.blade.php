@@ -39,6 +39,12 @@
 							<br>
 							- Allow users to insert empty beats after existing beats and at the beginning of the chapter.
 							
+							
+							<br><br>
+							<strong>v0.1.5 - 10/05/2024</strong>
+							<br>
+							- Add option to change writing style and narrative style later in the writing process.
+						
 						</div>
 					</div>
 					<!-- Card END -->

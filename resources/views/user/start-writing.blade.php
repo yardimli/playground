@@ -339,7 +339,7 @@
 				console.log("user_blurb value:", $('#user_blurb').val());
 				
 				$.ajax({
-					url: '{{ route("book.write-book-character-profiles") }}',
+					url: '{{ route("write-book-character-profiles") }}',
 					type: 'POST',
 					data: {
 						user_blurb: $('#user_blurb').val(),
@@ -398,7 +398,7 @@
 				$('#fullScreenOverlay').removeClass('d-none');
 				
 				$.ajax({
-					url: '{{ route("book.write-book") }}',
+					url: '{{ route("write-book") }}',
 					type: 'POST',
 					data: {
 						user_blurb: $('#user_blurb').val(),
@@ -428,7 +428,7 @@
 						if (data.success) {
 							alert('{{ __('default.Book created successfully.') }}');
 							//set url to book details
-							window.location.href = '{{ route("user.edit-book", "") }}/' + data.bookSlug;
+							window.location.href = '{{ route("edit-book", "") }}/' + data.bookSlug;
 						} else {
 							alert('Error: ' + data.message);
 						}

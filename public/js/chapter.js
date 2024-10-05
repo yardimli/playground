@@ -84,7 +84,7 @@ function saveChapter(chapterData) {
 	});
 }
 
-function generateAllBeats(beatsPerChapter = 3) {
+function generateAllBeats(beatsPerChapter = 3, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 	const modal = $('#generateAllBeatsModal');
 	const progressBar = modal.find('.progress-bar');
 	const log = $('#generateAllBeatsLog');
@@ -100,11 +100,11 @@ function generateAllBeats(beatsPerChapter = 3) {
 	chapters = bookData.acts.flatMap(act => act.chapters);
 	
 	console.log(chapters);
-	generateSingleChapterBeats(chapters, beatsPerChapter, 0);
+	generateSingleChapterBeats(chapters, beatsPerChapter, writingStyle, narrativeStyle, 0);
 	
 }
 
-function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0) {
+function generateSingleChapterBeats(chapters, beatsPerChapter, writingStyle, narrativeStyle, chapter_index = 0) {
 	const modal = $('#generateAllBeatsModal');
 	const log = $('#generateAllBeatsLog');
 	
@@ -136,6 +136,8 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0
 			data: {
 				llm: savedLlm,
 				beats_per_chapter: beatsPerChapter,
+				writing_style: writingStyle,
+				narrative_style: narrativeStyle,
 				save_results: true,
 			},
 			headers: {
@@ -185,7 +187,6 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index = 0
 
 function rewriteChapter(chapterFilename) {
 	const modal = $('#rewriteChapterModal');
-	const userPromptTextarea = $('#rewriteUserPrompt');
 	
 	let chaptersToInclude = [];
 	let foundCurrentChapter = false;
@@ -217,8 +218,8 @@ function rewriteChapter(chapterFilename) {
 			'##character_profiles##': bookData.character_profiles || '',
 			'##genre##': bookData.genre || 'fantasy',
 			'##adult_content##': bookData.adult_content || 'non-adult',
-			'##writing_style##': bookData.writing_style || 'Minimalist',
-			'##narrative_style##': bookData.narrative_style || 'Third Person - The narrator has a godlike perspective',
+			'##writing_style##': $("#writingStyle").val() || 'Minimalist',
+			'##narrative_style##': $("#narrativeStyle").val() || 'Third Person - The narrator has a godlike perspective',
 			'##book_structure##': bookData.book_structure || 'the_1_act_story.txt',
 			'##previous_chapters##': chaptersToInclude.map(ch =>
 				`name: ${ch.name}\nshort description: ${ch.short_description}\nevents: ${ch.events}\npeople: ${ch.people}\nplaces: ${ch.places}\nfrom previous chapter: ${ch.from_previous_chapter}\nto next chapter: ${ch.to_next_chapter}\n\nbeats:\n${ch.beats ? ch.beats.map(b => b.beat_summary || b.description).join('\n') : ''}`
@@ -230,7 +231,7 @@ function rewriteChapter(chapterFilename) {
 			template = template.replace(new RegExp(key, 'g'), value);
 		}
 		
-		userPromptTextarea.val(template.trim());
+		$('#rewriteUserPrompt').val(template.trim());
 		
 		// Show the modal
 		modal.modal('show');
@@ -238,7 +239,7 @@ function rewriteChapter(chapterFilename) {
 	
 	// Handle the rewrite button click
 	$('#sendRewritePromptBtn').off('click').on('click', function () {
-		const userPrompt = userPromptTextarea.val();
+		const userPrompt = $('#rewriteUserPrompt').val();
 		$('#sendRewritePromptBtn').prop('disabled', true).text(__e('Rewriting...'));
 		
 		$.ajax({
@@ -246,8 +247,6 @@ function rewriteChapter(chapterFilename) {
 			method: 'POST',
 			data: {
 				book_slug: bookSlug,
-				chapters_to_rewrite: JSON.stringify(chaptersToInclude),
-				rewrite_chapter_filename: chapterFilename,
 				llm: savedLlm,
 				user_prompt: userPrompt
 			},
@@ -357,7 +356,7 @@ $(document).ready(function () {
 		$('#generateCoverBtn').prop('disabled', true).text(__e('Generating...'));
 		
 		$.ajax({
-			url: '/cover-image/' + bookSlug,
+			url: '/make-cover-image/' + bookSlug,
 			method: 'POST',
 			data: {
 				theme: $("#coverPrompt").val(),
@@ -418,7 +417,7 @@ $(document).ready(function () {
 		var chapterCard = $(this).closest('.card');
 		
 		var chapterData = {
-			chapterFilename: chapterFilename,
+			chapter_filename: chapterFilename,
 			name: chapterCard.find('.chapterName').val(),
 			order: chapterCard.find('.chapterOrder').val(),
 			short_description: chapterCard.find('.chapterShortDescription').val(),
@@ -438,7 +437,7 @@ $(document).ready(function () {
 	
 	$('#generateAllBeatsBtn').on('click', function (e) {
 		e.preventDefault();
-		generateAllBeats(parseInt($('#beatsPerChapter').val()));
+		generateAllBeats(parseInt($('#beatsPerChapter').val()), $("#writingStyle").val(), $("#narrativeStyle").val());
 	});
 	
 	$('#rewriteChapterModal').on('shown.bs.modal', function () {
@@ -534,7 +533,7 @@ $(document).ready(function () {
 			url: '/send-llm-prompt/' + bookSlug,
 			method: 'POST',
 			data: {
-				userPrompt: userPrompt,
+				user_prompt: userPrompt,
 				llm: llm
 			},
 			headers: {
