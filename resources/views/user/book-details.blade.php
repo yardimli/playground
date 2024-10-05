@@ -70,7 +70,6 @@
 									
 									<span class="badge bg-secondary  me-1 mb-2">English</span>
 									
-									<span class="badge bg-danger me-1 mb-2">Science Fiction</span>
 									<br>
 									@if (isset($book['keywords']))
 										@foreach ($book['keywords'] as $keyword)
