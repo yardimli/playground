@@ -616,6 +616,9 @@
 				$data['temperature'] = 1;
 			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$data['max_tokens'] = 8096;
+				unset($data['frequency_penalty']);
+				unset($data['presence_penalty']);
+				unset($data['n']);
 				$data['system'] = $system_prompt;
 			} else {
 				$data['max_tokens'] = 8096;
