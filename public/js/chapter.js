@@ -126,7 +126,7 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, writingStyle, nar
 		
 		$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
 		if (chapter_index < totalChapters) {
-			generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
+			generateSingleChapterBeats(chapters, beatsPerChapter,writingStyle, narrativeStyle, chapter_index);
 		}
 	} else {
 		
@@ -164,7 +164,7 @@ function generateSingleChapterBeats(chapters, beatsPerChapter, writingStyle, nar
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 					if (chapter_index < totalChapters) {
-						generateSingleChapterBeats(chapters, beatsPerChapter, chapter_index);
+						generateSingleChapterBeats(chapters, beatsPerChapter, writingStyle, narrativeStyle, chapter_index);
 					} else {
 						$('#generateAllBeatsLog').append('<br>' + __e('All chapters processed!'));
 						$('#generateAllBeatsLog').scrollTop(log[0].scrollHeight);
