@@ -658,6 +658,9 @@
 
 			$complete_rst = json_decode($complete, true);
 
+			Log::info("GPT NO STREAM RESPONSE:");
+			Log::info($complete_rst);
+
 			if ($llm === 'open-ai-gpt-4o' || $llm === 'open-ai-gpt-4o-mini') {
 				$content = $complete_rst['choices'][0]['message']['content'];
 			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
@@ -667,9 +670,6 @@
 			}
 
 			if (!$return_json) {
-				Log::info("GPT NO STREAM RESPONSE:");
-				Log::info($complete_rst);
-
 				Log::info('Return is NOT JSON. Will return content presuming it is text.');
 				return $content;
 			}
