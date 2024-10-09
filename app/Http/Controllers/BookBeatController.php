@@ -469,7 +469,10 @@
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##previous_beat_summaries##' => $previous_beat_summaries,
 				'##last_beat_full_text##' => $last_beat_full_text,
-				'##codex##' => ($bookData['codex']['characters'] ?? 'no characters') + "\n" + ($bookData['codex']['locations'] ?? 'no locations') + "\n" + ($bookData['codex']['objects'] ?? 'no objects') + "\n" + ($bookData['codex']['lore'] ?? 'no lore'),
+				'##codex##' => ($bookData['codex']['characters'] ?? 'no characters') . "\n" .
+					($bookData['codex']['locations'] ?? 'no locations') . "\n" .
+					($bookData['codex']['objects'] ?? 'no objects') . "\n" .
+					($bookData['codex']['lore'] ?? 'no lore'),
 				'##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
 				'##genre##' => $bookData['genre'] ?? 'fantasy',
@@ -659,8 +662,10 @@
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##previous_beat_summaries##' => $previous_beat_summaries,
 				'##last_beat_full_text##' => $last_beat_full_text,
-				'##codex##' => ($bookData['codex']['characters'] ?? 'no characters') + "\n" + ($bookData['codex']['locations'] ?? 'no locations') + "\n" + ($bookData['codex']['objects'] ?? 'no objects') + "\n" + ($bookData['codex']['lore'] ?? 'no lore'),
-				'##current_beat##' => $current_beat,
+				'##codex##' => ($bookData['codex']['characters'] ?? 'no characters') . "\n" .
+					($bookData['codex']['locations'] ?? 'no locations') . "\n" .
+					($bookData['codex']['objects'] ?? 'no objects') . "\n" .
+					($bookData['codex']['lore'] ?? 'no lore'), '##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
 				'##genre##' => $bookData['genre'] ?? 'fantasy',
 				'##writing_style##' => $writingStyle,
