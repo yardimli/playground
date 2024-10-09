@@ -109,9 +109,6 @@
 
 		Route::post('/book/write-beat-summary/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeatSummary'])->name('book.write-beat-summary');
 
-		Route::post('/book/update-lore-book/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'updateLoreBook'])->name('book.update-lore-book');
-
-
 
 		Route::get('/book/{bookSlug}/codex', [BookCodexController::class, 'showCodex'])->name('book.codex');
 		Route::post('/book/{bookSlug}/codex', [BookCodexController::class, 'saveCodex'])->name('book.saveCodex');

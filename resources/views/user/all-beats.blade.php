@@ -147,6 +147,11 @@
 						        id="saveBeatsBtn"><i
 								class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
 						
+						<a href="{{route('book.codex',[$book_slug])}}" target="_blank" class="btn btn-primary mb-3 mt-1 w-100" id="openCodexBtn">
+							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
+						</a>
+						
+						
 						<a href="{{route('edit-book', $book_slug)}}" class="btn btn-primary mb-1 mt-1 w-100"
 						   title="{{__('default.Back to Chapters')}}"><i
 								class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>

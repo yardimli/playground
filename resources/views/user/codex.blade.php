@@ -33,7 +33,7 @@
 	<div class="container mt-2">
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">Codex for {{ $bookData['title'] }}</h1>
 		<div class="mb-1 mt-1 w-100" style="text-align: right;">
-			<a href="{{route('user.book-details', $bookSlug)}}" class="btn btn-primary">Back to Book</a>
+			<a href="{{route('edit-book', $bookSlug)}}" class="btn btn-primary">Back to Book</a>
 		</div>
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">

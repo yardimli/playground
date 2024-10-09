@@ -16,8 +16,8 @@ Events: ##events##
 People: ##people##
 Places: ##places##
 
-Lore Book:
-##lore_book##
+Codex:
+##codex##
 
 Previous Beat Summaries:
 ##previous_beat_summaries##

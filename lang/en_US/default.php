@@ -458,6 +458,7 @@
 		'Export as DocX' => 'Export as DocX',
 		'View Book' => 'View Book',
 		'Read Book' => 'Read Book',
+		'Open Codex' => 'Open Codex',
 
 		'Back to Books' => 'Back to Books',
 		'Log out' => 'Log out',
