@@ -597,6 +597,7 @@
 		'Beat Description' => 'Beat Description',
 		'Beat Text' => 'Beat Text',
 		'Beat Summary' => 'Beat Summary',
+		'Summary' => 'Summary',
 		'Save Beat' => 'Save Beat',
 		'Write Beat Text' => 'Write Beat Text',
 		'Write Summary' => 'Write Summary',

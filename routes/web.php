@@ -1,6 +1,8 @@
 <?php
 
 	use App\Http\Controllers\BookActionController;
+	use App\Http\Controllers\BookBeatController;
+	use App\Http\Controllers\BookCodexController;
 	use App\Http\Controllers\DreamStudioController;
 	use App\Http\Controllers\JobController;
 	use App\Http\Controllers\LoginWithGoogleController;
@@ -85,40 +87,40 @@
 			}
 		});
 
-		Route::get('/start-writing', [StaticPagesController::class, 'startWriting'])->name('start-writing');
-
-		Route::get('/edit-book/{slug}', [StaticPagesController::class, 'editBook'])->name('edit-book');
-
-		Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [StaticPagesController::class, 'bookBeats'])->name('book-beats');
+		Route::get('/start-writing', [BookActionController::class, 'startWriting'])->name('start-writing');
+		Route::get('/edit-book/{slug}', [BookActionController::class, 'editBook'])->name('edit-book');
 
 		Route::post('/write-book-character-profiles', [BookActionController::class, 'writeBookCharacterProfiles'])->name('write-book-character-profiles');
 		Route::post('/write-book', [BookActionController::class, 'writeBook'])->name('write-book');
 		Route::post('/book/{bookSlug}/chapter', [BookActionController::class, 'saveChapter'])->name('book.save-chapter');
 		Route::post('/book/{bookSlug}/cover', [BookActionController::class, 'saveCover'])->name('book.save-cover');
 		Route::post('/book/{bookSlug}/details', [BookActionController::class, 'saveBookDetails'])->name('book.save-book-details');
-		Route::post('/book/add-empty-beat/{bookSlug}/{chapterFilename}', [BookActionController::class, 'addEmptyBeat'])->name('book.add-empty-beat');
-		Route::post('/book/write-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeBeats'])->name('book.write-beats');
 
-		Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveBeats'])->name('book.save-beats');
 
-		Route::post('/book/save-single-beat/{bookSlug}/{chapterFilename}', [BookActionController::class, 'saveSingleBeat'])->name('book.save-single-beat');
 
-		Route::post('/book/write-beat-description/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeBeatDescription'])->name('book.write-beat-description');
+		Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [BookBeatController::class, 'bookBeats'])->name('book-beats');
+		Route::post('/book/add-empty-beat/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'addEmptyBeat'])->name('book.add-empty-beat');
+		Route::post('/book/write-beats/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeats'])->name('book.write-beats');
+		Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'saveBeats'])->name('book.save-beats');
+		Route::post('/book/save-single-beat/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'saveSingleBeat'])->name('book.save-single-beat');
+		Route::post('/book/write-beat-description/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeatDescription'])->name('book.write-beat-description');
 
-		Route::post('/book/write-beat-text/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeBeatText'])->name('book.write-beat-text');
+		Route::post('/book/write-beat-text/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeatText'])->name('book.write-beat-text');
 
-		Route::post('/book/write-beat-summary/{bookSlug}/{chapterFilename}', [BookActionController::class, 'writeBeatSummary'])->name('book.write-beat-summary');
+		Route::post('/book/write-beat-summary/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeatSummary'])->name('book.write-beat-summary');
 
-		Route::post('/book/update-lore-book/{bookSlug}/{chapterFilename}', [BookActionController::class, 'updateLoreBook'])->name('book.update-lore-book');
+		Route::post('/book/update-lore-book/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'updateLoreBook'])->name('book.update-lore-book');
 
+
+
+		Route::get('/book/{bookSlug}/codex', [BookCodexController::class, 'showCodex'])->name('book.codex');
+		Route::post('/book/{bookSlug}/codex', [BookCodexController::class, 'saveCodex'])->name('book.saveCodex');
+		Route::post('/book/{bookSlug}/update-codex-from-beats', [BookCodexController::class, 'updateCodexFromBeats'])->name('book.update-codex-from-beats');
 
 		Route::post('/rewrite-chapter', [BookActionController::class, 'rewriteChapter'])->name('rewrite-chapter');
 		Route::post('/accept-rewrite', [BookActionController::class, 'acceptRewrite'])->name('accept-rewrite');
-
 		Route::delete('/book/{bookSlug}', [BookActionController::class, 'deleteBook'])->name('book.delete');
-
 		Route::post('/send-llm-prompt/{bookSlug}', [BookActionController::class, 'sendLlmPrompt'])->name('send-llm-prompt');
-
 		Route::post('/make-cover-image/{bookSlug}', [BookActionController::class, 'makeCoverImage'])->name('make-cover-image');
 
 
@@ -127,10 +129,8 @@
 		Route::post('/settings', [UserSettingsController::class, 'updateSettings'])->name('settings.update');
 
 		Route::post('/settings/password', [UserSettingsController::class, 'updatePassword'])->name('settings.password.update');
-
 		Route::get('/users', [UserController::class, 'index'])->name('users.index');
 		Route::post('/login-as', [UserController::class, 'loginAs'])->name('users.login-as');
-
 		Route::get('/resendConfirmEmail/{orderID}', [OrderController::class, 'resendConfirmEmail'])->name('order.resendConfirmEmail');
 		Route::get('/resendConfirmEmail2/{newOrder}', [OrderController::class, 'resendConfirmEmail2'])->name('order.resendConfirmEmail2');
 

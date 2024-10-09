@@ -30,91 +30,17 @@
 	class StaticPagesController extends Controller
 	{
 
-		private array $genres_array = array(
-			"Action",
-			"Biography",
-			"Body, Mind & Spirit",
-			"Business & Economics",
-			"Education",
-			"Family & Relationships",
-			"Health & Fitness",
-			"Romance",
-			"Young Adult",
-			"Horror",
-			"Fantasy",
-			"Realistic",
-			"LGBTQ+",
-			"Science Fiction",
-			"Dark Humor",
-			"Mystery",
-			"Thriller",
-			"Historical",
-			"Paranormal",
-			"Adventure",
-			"Crime",
-			"Children's Literature",
-			"Steampunk",
-			"Chick Lit",
-			"Post-Apocalyptic",
-			"Humor",
-			"Drama",
-			"Western",
-			"Space Opera"
-		);
-
-		private array $adult_genres_array = array(
-			"Contemporary Erotica", "Paranormal Erotica", "BDSM Erotica", "Romance Erotica", "LGBT+ Erotica", "Erotic Thriller", "Erotic Fantasy", "Taboo/Forbidden romance", "Polyamory/Menage", "Erotic Science Fiction", "Erotic Mystery", "Erotic Horror", "Erotic Comedy", "Erotic Steampunk", "Erotic Sword and Sorcery", "Erotic Noir");
-
-		private array $writingStyles = [
-			[
-				"value" => "Descriptive",
-				"label" => "Descriptive",
-			],
-			[
-				"value" => "Minimalist",
-				"label" => "Minimalist",
-			],
-			[
-				"value" => "Satirical",
-				"label" => "Satirical",
-			],
-			[
-				"value" => "Narrative",
-				"label" => "Narrative",
-			],
-			[
-				"value" => "Argumentative",
-				"label" => "Argumentative",
-			]
-		];
-
-		private array $narrativeStyles = [
-			[
-				"value" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
-				"label" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
-			],
-			[
-				"value" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
-				"label" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
-			],
-			[
-				"value" => "Third Person - The narrator has a godlike perspective",
-				"label" => "Third Person - The narrator has a godlike perspective",
-			],
-		];
-
 		//-------------------------------------------------------------------------
 		// Index
 		public function index(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
+			$json_translations = MyHelper::writeJsTranslations();
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view("user.index", compact('posts', 'locale', 'json_translations', 'genres_array', 'adult_genres_array'));
+			return view("user.index", compact('posts',  'json_translations', 'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -133,8 +59,8 @@
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
 			return view("user.faq", compact('posts', 'genres_array', 'adult_genres_array'));
 		}
@@ -142,8 +68,7 @@
 
 		public function myBooks(Request $request)
 		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
+			$json_translations = MyHelper::writeJsTranslations();
 
 			$booksDir = Storage::disk('public')->path('books');
 
@@ -202,8 +127,8 @@
 				return ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) || (($book['public-domain'] ?? 'yes') === 'yes'));
 			});
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
 
 			return view("user.my-books", compact('books', 'genres_array', 'adult_genres_array'));
@@ -224,13 +149,14 @@
 		{
 			return view('help.help-details', ['topic' => $topic]);
 		}
+
 		public function contact_us(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
 			// Return to the existing blog list view with the posts
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
 			return view("user.contact-us", compact('posts', 'genres_array', 'adult_genres_array'));
 
@@ -254,31 +180,9 @@
 
 		//------------------------------------------------------------------------------
 
-		private function write_js_translations()
-		{
-			$locale = app()->getLocale(); // Get the current locale
-			$translations = [];
-
-			// Get all translation files for the current locale
-			$path = base_path("lang/{$locale}");
-
-			if (is_dir($path)) {
-				$files = glob("{$path}/*.php");
-				foreach ($files as $file) {
-					$filename = basename($file, '.php');
-					$translations = array_merge($translations, trans($filename));
-				}
-			}
-
-			$output = "\nconst translations = " . json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . ";\n";
-
-			return $output;
-		}
-
 		public function readBook(Request $request, $slug)
 		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
+			$json_translations = MyHelper::writeJsTranslations();
 
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
@@ -349,130 +253,15 @@
 			$book['cover_filename'] = $coverFilename;
 			$book['acts'] = $acts;
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view('user.read-book', compact('locale', 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
+			return view('user.read-book', compact( 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
-
-
-		public function editBook(Request $request, $slug)
-		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
-
-			$bookPath = Storage::disk('public')->path("books/{$slug}");
-			$bookJsonPath = "{$bookPath}/book.json";
-			$actsFile = "{$bookPath}/acts.json";
-
-			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
-			}
-
-			$book = json_decode(File::get($bookJsonPath), true);
-
-			//search $book['owner'] in users table name column
-			$user = User::where('email', ($book['owner'] ?? 'admin'))->first();
-			if ($user) {
-				$book['owner_name'] = $user->name;
-				if ($user->avatar) {
-					$book['author_avatar'] = Storage::url($user->avatar);
-				} else
-				{
-					$book['author_avatar'] = '/assets/images/avatar/03.jpg';
-				}
-			} else
-			{
-				$book['owner_name'] = 'admin';
-				$book['author_name'] = $book['author_name']  . '(anonymous)';
-				$book['author_avatar'] = '/assets/images/avatar/02.jpg';
-			}
-
-
-			$actsData = json_decode(File::get($actsFile), true);
-
-			$acts = [];
-			foreach ($actsData as $act) {
-				$actChapters = [];
-				$chapterFiles = File::glob("{$bookPath}/*.json");
-				foreach ($chapterFiles as $chapterFile) {
-					$chapterData = json_decode(File::get($chapterFile), true);
-					if (!isset($chapterData['row'])) {
-						continue;
-					}
-					$chapterData['chapterFilename'] = basename($chapterFile);
-					//if chapterData['events'] is an array, convert it to a string
-					if (isset($chapterData['events']) && is_array($chapterData['events'])) {
-						$chapterData['events'] = implode("\n", $chapterData['events']);
-					}
-					//places
-					if (isset($chapterData['places']) && is_array($chapterData['places'])) {
-						$chapterData['places'] = implode("\n", $chapterData['places']);
-					}
-					//people
-					if (isset($chapterData['people']) && is_array($chapterData['people'])) {
-						$chapterData['people'] = implode("\n", $chapterData['people']);
-					}
-
-					if ($chapterData['row'] === $act['id']) {
-						$actChapters[] = $chapterData;
-
-					}
-				}
-
-				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
-				$acts[] = [
-					'id' => $act['id'],
-					'title' => $act['title'],
-					'chapters' => $actChapters
-				];
-			}
-
-
-			$random_int = rand(1, 16);
-			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
-			$book['cover_filename'] = $book['cover_filename'] ?? '';
-
-			$book_slug = $slug;
-
-			if ($book['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $book['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/" . $book['cover_filename']);
-			}
-
-			$book['cover_filename'] = $coverFilename;
-
-			$book['acts'] = $acts;
-
-			$colorOptions = [
-				['background' => '#F28B82', 'text' => '#000000'],
-				['background' => '#FBBC04', 'text' => '#000000'],
-				['background' => '#FFF475', 'text' => '#000000'],
-				['background' => '#CCFF90', 'text' => '#000000'],
-				['background' => '#A7FFEB', 'text' => '#000000'],
-				['background' => '#CBF0F8', 'text' => '#000000'],
-				['background' => '#AECBFA', 'text' => '#000000'],
-				['background' => '#D7AEFB', 'text' => '#000000'],
-				['background' => '#FDCFE8', 'text' => '#000000'],
-				['background' => '#E6C9A8', 'text' => '#000000'],
-				['background' => '#E8EAED', 'text' => '#000000'],
-				['background' => '#FFFFFF', 'text' => '#000000']
-			];
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-
-			$writingStyles = $this->writingStyles;
-			$narrativeStyles = $this->narrativeStyles;
-
-			return view('user.edit-book', compact('locale', 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
-		}
-
-
 
 		public function showcaseLibrary(Request $request)
 		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
+			$json_translations = MyHelper::writeJsTranslations();
 
 			$booksDir = Storage::disk('public')->path('books');
 
@@ -543,17 +332,16 @@
 				['path' => $request->url(), 'query' => $request->query()]
 			);
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
 
-			return view('user.showcase-library', compact('locale', 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
+			return view('user.showcase-library', compact( 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksDetail(Request $request, $slug)
 		{
-			$locale = \App::getLocale() ?: config('app.fallback_locale', 'zh_TW');
-			$json_translations = $this->write_js_translations();
+			$json_translations = MyHelper::writeJsTranslations();
 
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
@@ -625,141 +413,10 @@
 
 			$book['acts'] = $acts;
 
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
+			$genres_array = MyHelper::$genres_array;
+			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view('user.book-details', compact('locale', 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
-		}
-
-		public function startWriting(Request $request)
-		{
-			$random_int = rand(1, 16);
-			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
-
-			$genres_array = $this->genres_array;
-			$adult_genres_array = $this->adult_genres_array;
-			$writingStyles = $this->writingStyles;
-			$narrativeStyles = $this->narrativeStyles;
-
-			$posts = MyHelper::getBlogData();
-			// Return to the existing blog list view with the posts
-			return view("user.start-writing", compact('posts', 'coverFilename', 'adult_genres_array', 'genres_array', 'writingStyles', 'narrativeStyles'));
-
-		}
-
-		public function bookBeats(Request $request, $bookSlug, $selectedChapter = 'all-chapters', $beatsPerChapter = 3)
-		{
-			$verified = MyHelper::verifyBookOwnership($bookSlug);
-			if (!$verified['success']) {
-				return redirect()->route('user.books')->with('error', $verified['message']);
-			}
-
-			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
-			$bookData = json_decode(File::get("{$bookPath}/book.json"), true);
-			$actsData = json_decode(File::get("{$bookPath}/acts.json"), true);
-
-			$beatsPerChapter = intval($beatsPerChapter);
-
-			// Load all chapters and their beats
-			$acts = [];
-			foreach ($actsData as $act) {
-				$actChapters = [];
-				$chapterFiles = File::glob("{$bookPath}/*.json");
-				foreach ($chapterFiles as $chapterFile) {
-					$chapterData = json_decode(File::get($chapterFile), true);
-					if (!isset($chapterData['row']) || $chapterData['row'] !== $act['id']) {
-						continue;
-					}
-					if (!isset($chapterData['beats'])) {
-						$chapterData['beats'] = [];
-						//create 3 empty beats
-						for ($i = 0; $i < $beatsPerChapter; $i++) {
-							$chapterData['beats'][] = [
-								'description' => '',
-								'beat_text' => '',
-								'beat_summary' => '',
-							];
-						}
-					}
-					$chapterData['chapterFilename'] = basename($chapterFile);
-					$actChapters[] = $chapterData;
-				}
-				usort($actChapters, fn($a, $b) => $a['order'] - $b['order']);
-				$acts[] = [
-					'id' => $act['id'],
-					'title' => $act['title'],
-					'chapters' => $actChapters
-				];
-			}
-
-			$bookData['acts'] = $acts;
-
-			$random_int = rand(1, 16);
-			$coverFilename = '/images/placeholder-cover-' . $random_int . '.jpg';
-			$bookData['cover_filename'] = $bookData['cover_filename'] ?? '';
-
-			if ($bookData['cover_filename'] && file_exists(Storage::disk('public')->path("ai-images/" . $bookData['cover_filename']))) {
-				$coverFilename = asset("storage/ai-images/" . $bookData['cover_filename']);
-			}
-
-			$bookData['cover_filename'] = $coverFilename;
-
-			$selectedChapterIndex = 0;
-
-			if ($selectedChapter !== 'all-chapters') {
-
-				foreach ($bookData['acts'] as $act) {
-					foreach ($act['chapters'] as $index => $chapter) {
-						$selectedChapterIndex++;
-						if ($chapter['chapterFilename'] === $selectedChapter . '.json') {
-							break 2;
-						}
-					}
-				}
-
-				// Filter to only include the specified chapter
-				foreach ($bookData['acts'] as &$act) {
-					$act['chapters'] = array_filter($act['chapters'], function ($chapter) use ($selectedChapter) {
-						return $chapter['chapterFilename'] === $selectedChapter . '.json';
-					});
-				}
-				// Remove acts with no chapters
-				$bookData['acts'] = array_filter($bookData['acts'], function ($act) {
-					return !empty($act['chapters']);
-				});
-			}
-
-			foreach ($bookData['acts'] as &$act) {
-				foreach ($act['chapters'] as &$chapter) {
-					if (array_key_exists('beats', $chapter)) {
-						foreach ($chapter['beats'] as &$beat) {
-							foreach ($beat as $key => &$content) {
-								if (is_string($content)) {
-									$content = str_replace("<BR><BR>", "\n", $content);
-									$content = str_replace("<BR>", "\n", $content);
-								}
-							}
-						}
-					}
-				}
-			}
-
-			if ($selectedChapter === 'all-chapters') {
-				$selectedChapter = '';
-			}
-
-			$writingStyles = $this->writingStyles;
-			$narrativeStyles = $this->narrativeStyles;
-
-			return view('user.all-beats', [
-				'book' => $bookData,
-				'book_slug' => $bookSlug,
-				'selected_chapter' => $selectedChapter ?? '',
-				'selected_chapter_index' => $selectedChapterIndex,
-				'json_translations' => $this->write_js_translations(),
-				'writingStyles' => $writingStyles,
-				'narrativeStyles' => $narrativeStyles,
-			]);
+			return view('user.book-details', compact( 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
 
 	}

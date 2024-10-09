@@ -147,6 +147,10 @@
 							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
 						</a>
 						
+						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-1 w-100" id="openCodexBtn">
+							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
+						</a>
+						
 						<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
 							<i class="bi bi-file-earmark-pdf"></i> {{__('default.Export as PDF')}}
 						</button>
@@ -516,10 +520,6 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	window.currentUserName = "<?php echo htmlspecialchars(Auth::user()->email ?? __('Visitor')); ?>";
-</script>
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="/js/jquery-3.7.0.min.js"></script>

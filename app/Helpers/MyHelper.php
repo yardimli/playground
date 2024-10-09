@@ -23,6 +23,79 @@
 	class MyHelper
 	{
 
+		public static $genres_array = array(
+			"Action",
+			"Biography",
+			"Body, Mind & Spirit",
+			"Business & Economics",
+			"Education",
+			"Family & Relationships",
+			"Health & Fitness",
+			"Romance",
+			"Young Adult",
+			"Horror",
+			"Fantasy",
+			"Realistic",
+			"LGBTQ+",
+			"Science Fiction",
+			"Dark Humor",
+			"Mystery",
+			"Thriller",
+			"Historical",
+			"Paranormal",
+			"Adventure",
+			"Crime",
+			"Children's Literature",
+			"Steampunk",
+			"Chick Lit",
+			"Post-Apocalyptic",
+			"Humor",
+			"Drama",
+			"Western",
+			"Space Opera"
+		);
+
+		public static $adult_genres_array = array(
+			"Contemporary Erotica", "Paranormal Erotica", "BDSM Erotica", "Romance Erotica", "LGBT+ Erotica", "Erotic Thriller", "Erotic Fantasy", "Taboo/Forbidden romance", "Polyamory/Menage", "Erotic Science Fiction", "Erotic Mystery", "Erotic Horror", "Erotic Comedy", "Erotic Steampunk", "Erotic Sword and Sorcery", "Erotic Noir");
+
+		public static $writingStyles = [
+			[
+				"value" => "Descriptive",
+				"label" => "Descriptive",
+			],
+			[
+				"value" => "Minimalist",
+				"label" => "Minimalist",
+			],
+			[
+				"value" => "Satirical",
+				"label" => "Satirical",
+			],
+			[
+				"value" => "Narrative",
+				"label" => "Narrative",
+			],
+			[
+				"value" => "Argumentative",
+				"label" => "Argumentative",
+			]
+		];
+
+		public static $narrativeStyles = [
+			[
+				"value" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
+				"label" => "First Person - The story is told from the perspective of a single character using \"I\" or \"we\" pronouns",
+			],
+			[
+				"value" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
+				"label" => "Second Person - The narrator addresses the reader directly using \"you\" pronouns",
+			],
+			[
+				"value" => "Third Person - The narrator has a godlike perspective",
+				"label" => "Third Person - The narrator has a godlike perspective",
+			],
+		];
+
 		public static function getUserOrdersAndTokens($user_id)
 		{
 			$userId = $user_id;
@@ -134,6 +207,27 @@
 			} else {
 				return ['success' => true, 'message' => __('Book not found')];
 			}
+		}
+
+		public static function writeJsTranslations()
+		{
+			$locale = app()->getLocale(); // Get the current locale
+			$translations = [];
+
+			// Get all translation files for the current locale
+			$path = base_path("lang/{$locale}");
+
+			if (is_dir($path)) {
+				$files = glob("{$path}/*.php");
+				foreach ($files as $file) {
+					$filename = basename($file, '.php');
+					$translations = array_merge($translations, trans($filename));
+				}
+			}
+
+			$output = "\nconst translations = " . json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . ";\n";
+
+			return $output;
 		}
 
 

@@ -43,19 +43,29 @@
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
 			</div>
-			<div class="card-body modal-content modal-content-color d-flex flex-row">
+			<div class="card-body modal-content modal-content-color">
 				<!-- Image Div -->
 				<div class="row">
-					<div class="col-lg-5 col-12 mb-3">
-						<img
-							src="{{$book['cover_filename']}}"
-							alt="{{__('default.Book Cover')}}"
-							style="width: 100%; object-fit: cover;"
-							id="bookCover">
-						<br>
+					<!-- Text Blocks Div -->
+					<div class="col-12 col-lg-8">
+						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
+						      id="bookBlurb">{{$book['blurb']}}</span>
+						<br><br>
 						
+						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
+					</div>
+					<div class="col-12 col-lg-4">
+						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
+								{{$book['prompt'] ?? 'no prompt'}}</span></div>
+						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
+								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
+					</div>
+					<div class="col-12 mt-3">
+					</div>
+					
+					<div class="col-12 col-lg-6">
 						<span class="form-label">{{__('default.AI Engines:')}}</span>
-						<select id="llmSelect" class="form-select mx-auto mb-1">
+						<select id="llmSelect" class="form-select">
 							<?php
 							if (Auth::user() && Auth::user()->isAdmin()) {
 								?>
@@ -88,6 +98,10 @@
 							{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
 						
 						</select>
+					</div>
+					
+					<div class="col-12 col-lg-6" id="beatsPerChapterLabel">
+						
 						<span class="form-label">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
 							<option value="2" selected>2</option>
@@ -100,31 +114,37 @@
 							<option value="9">9</option>
 							<option value="10">10</option>
 						</select>
-						<div class="mb-3">
-							<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
-							<select class="form-control" id="writingStyle" name="writingStyle" required>
-								@foreach($writingStyles as $style)
-									@if ($style['value'] === $book['writing_style'])
-										<option value="{{ $style['value'] }}" selected>{{ $style['label'] }}</option>
-									@else
-										<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
-						
-						<div class="mb-3">
-							<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
-							<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
-								@foreach($narrativeStyles as $style)
-									@if ($style['value'] === $book['narrative_style'])
-										<option value="{{ $style['value'] }}" selected>{{ $style['value'] }}</option>
-									@else
-										<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
+					</div>
+					
+					<div class="col-12 col-lg-6">
+						<span for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</span>
+						<select class="form-control" id="writingStyle" name="writingStyle" required>
+							@foreach($writingStyles as $style)
+								@if ($style['value'] === $book['writing_style'])
+									<option value="{{ $style['value'] }}" selected>{{ $style['label'] }}</option>
+								@else
+									<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
+								@endif
+							@endforeach
+						</select>
+					</div>
+					
+					<div class="col-12 col-lg-6">
+						<span for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</span>
+						<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
+							@foreach($narrativeStyles as $style)
+								@if ($style['value'] === $book['narrative_style'])
+									<option value="{{ $style['value'] }}" selected>{{ $style['value'] }}</option>
+								@else
+									<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
+								@endif
+							@endforeach
+						</select>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-12 col-lg-6">
 						<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
 								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
 						<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
@@ -142,148 +162,165 @@
 						<a href="{{route('user.showcase-library')}}" class="mb-1 mt-1 btn btn-primary w-100"><i
 								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
 					
-					</div>
-					<!-- Text Blocks Div -->
-					<div class="col-lg-7 col-12">
-						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
-						      id="bookBlurb">{{$book['blurb']}}</span>
-						<br><br>
-						
-						
-						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
-						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
-								{{$book['prompt'] ?? 'no prompt'}}</span></div>
-						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
-								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
-					
 					
 					</div>
 				</div>
-			
 			</div>
 		</div>
+	
+	@php
+		//dd($book);
+		$chapter_index = 0;
+		if ($selected_chapter_index !== 0) {
+			$chapter_index = $selected_chapter_index -1;
+		}
+	@endphp
+	
+	<div class="card-header modal-header modal-header-color mb-4">
+		<h5 class="modal-title p-2" id="beatModalLabel">{{__('default.Beats')}}</h5>
+	</div>
+	
+	@foreach($book['acts'] as $act)
 		
-		@php
-			//dd($book);
-			$chapter_index = 0;
-			if ($selected_chapter_index !== 0) {
-				$chapter_index = $selected_chapter_index -1;
-			}
-		@endphp
-		
-		<div class="card-header modal-header modal-header-color mb-4">
-			<h5 class="modal-title p-2" id="beatModalLabel">{{__('default.Beats')}}</h5>
-		</div>
-		
-		@foreach($book['acts'] as $act)
-			
-			@foreach($act['chapters'] as $chapter)
-				@php
-					$chapter_index++;
-				@endphp
-				<div class="card general-card">
-					<div class="card-body modal-content-color">
-						<h5>{{__('default.Chapter')}} #{{$chapter_index}} - {{$chapter['name'] ?? 'noname'}}</h5>
-						<em>{{__('default.Description')}}</em>: <span
-							id="chapterDescription">{{$chapter['short_description'] ?? 'no description'}}</span><br>
-						<em>{{__('default.Events')}}</em>: <span
-							id="chapterEvents">{{$chapter['events'] ?? 'no events'}}</span><br>
-						<em>{{__('default.People')}}</em>: <span
-							id="chapterPeople">{{$chapter['people'] ?? 'no people'}}</span><br>
-						<em>{{__('default.Places')}}</em>: <span
-							id="chapterPlaces">{{$chapter['places'] ?? 'no places'}}</span><br>
-						<em>{{__('default.Previous Chapter')}}</em>: <span
-							id="chapterFromPreviousChapter">{{$chapter['from_previous_chapter']}}</span><br>
-						<em>{{__('default.Next Chapter')}}</em>: <span
-							id="chapterToNextChapter">{{$chapter['to_next_chapter']}}</span><br>
-					</div>
+		@foreach($act['chapters'] as $chapter)
+			@php
+				$chapter_index++;
+			@endphp
+			<div class="card general-card">
+				<div class="card-body modal-content-color">
+					<h5>{{__('default.Chapter')}} #{{$chapter_index}} - {{$chapter['name'] ?? 'noname'}}</h5>
+					<em>{{__('default.Description')}}</em>: <span
+						id="chapterDescription">{{$chapter['short_description'] ?? 'no description'}}</span><br>
+					<em>{{__('default.Events')}}</em>: <span
+						id="chapterEvents">{{$chapter['events'] ?? 'no events'}}</span><br>
+					<em>{{__('default.People')}}</em>: <span
+						id="chapterPeople">{{$chapter['people'] ?? 'no people'}}</span><br>
+					<em>{{__('default.Places')}}</em>: <span
+						id="chapterPlaces">{{$chapter['places'] ?? 'no places'}}</span><br>
+					<em>{{__('default.Previous Chapter')}}</em>: <span
+						id="chapterFromPreviousChapter">{{$chapter['from_previous_chapter']}}</span><br>
+					<em>{{__('default.Next Chapter')}}</em>: <span
+						id="chapterToNextChapter">{{$chapter['to_next_chapter']}}</span><br>
 				</div>
-				
-				<div class="card general-card">
-					<div class="card-body modal-content-color">
-						<div id="beatsList">
+			</div>
+			
+			<div class="card general-card">
+				<div class="card-body modal-content-color">
+					<div id="beatsList">
+						@php
+							$index = -1;
+						@endphp
+						@foreach($chapter['beats'] as $beat)
 							@php
-								$index = -1;
+								$index++;
 							@endphp
-							@foreach($chapter['beats'] as $beat)
-								@php
-									$index++;
-								@endphp
-								<div class="mb-3 beat-outer-container" data-chapter-index="{{$chapter_index}}"
-								     data-chapter-filename="{{$chapter['chapterFilename']}}"
-								     data-beat-index="{{$index}}">
-									<h6>{{__('default.Beat')}} {{$index+1}}</h6>
-									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}">
-										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
-										       class="form-label">{{__('default.Beat Description')}}</label>
-										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
-										          class="form-control beat-description-textarea"
-										          rows="3">{{$beat['description'] ?? ''}}</textarea>
-										<div id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
-										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
-									</div>
-									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
-										<label for="beatText_{{$chapter_index}}_{{$index}}"
-										       class="form-label">{{__('default.Beat Text')}}</label>
-										<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
-										          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
-										<div id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
-										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}" data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-									</div>
-									<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-3">
-										<label for="beatSummary_{{$chapter_index}}_{{$index}}"
-										       class="form-label">{{__('default.Beat Summary')}}</label>
-										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}" class="form-control beat-summary-textarea"
-										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
-										<div id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
-										<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
-									</div>
-									
-									<div id="loreBookArea_{{$chapter_index}}_{{$index}}" class="mt-3">
-										<label for="loreBook_{{$chapter_index}}_{{$index}}"
-										       class="form-label">{{__('default.Lore Book')}}</label>
-										<textarea id="loreBook_{{$chapter_index}}_{{$index}}"
-										          class="form-control lore-book-textarea"
-										          rows="6">{{$beat['lore_book'] ?? ''}}</textarea>
-										<div id="loreResult_{{$chapter_index}}_{{$index}}"></div>
-										<button id="updateLoreBookBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="updateLoreBookBtn btn btn-primary mt-3 me-2">{{__('default.Update Lore Book')}}</button>
+							
+							<div class="mb-3 beat-outer-container" data-chapter-index="{{$chapter_index}}"
+							     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
+								<h6>{{__('default.Beat')}} {{$index+1}}</h6>
+								
+								<ul class="nav nav-tabs" id="beatTabs_{{$chapter_index}}_{{$index}}" role="tablist">
+									<li class="nav-item" role="presentation">
+										<button class="nav-link active" id="description-tab-{{$chapter_index}}-{{$index}}"
+										        data-bs-toggle="tab" data-bs-target="#description-{{$chapter_index}}-{{$index}}"
+										        type="button" role="tab" aria-controls="description"
+										        aria-selected="true">{{__('default.Description')}}</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="text-tab-{{$chapter_index}}-{{$index}}" data-bs-toggle="tab"
+										        data-bs-target="#text-{{$chapter_index}}-{{$index}}" type="button" role="tab"
+										        aria-controls="text" aria-selected="false">{{__('default.Text')}}</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="summary-tab-{{$chapter_index}}-{{$index}}" data-bs-toggle="tab"
+										        data-bs-target="#summary-{{$chapter_index}}-{{$index}}" type="button" role="tab"
+										        aria-controls="summary" aria-selected="false">{{__('default.Summary')}}</button>
+									</li>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="lore-tab-{{$chapter_index}}-{{$index}}" data-bs-toggle="tab"
+										        data-bs-target="#lore-{{$chapter_index}}-{{$index}}" type="button" role="tab"
+										        aria-controls="lore" aria-selected="false">{{__('default.Lore Book')}}</button>
+									</li>
+								</ul>
+								
+								<div class="tab-content" id="beatTabContent_{{$chapter_index}}_{{$index}}">
+									<div class="tab-pane fade show active" id="description-{{$chapter_index}}-{{$index}}"
+									     role="tabpanel" aria-labelledby="description-tab-{{$chapter_index}}-{{$index}}">
+										<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}">
+											<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
+											          class="form-control beat-description-textarea"
+											          rows="3">{{$beat['description'] ?? ''}}</textarea>
+											<div id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
+											<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
+										</div>
 									</div>
 									
-									<div>
-										<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}"
-										        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
-										@if($index == 0)
-											<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="before"
-											        data-chapter-index="f"
+									<div class="tab-pane fade" id="text-{{$chapter_index}}-{{$index}}" role="tabpanel"
+									     aria-labelledby="text-tab-{{$chapter_index}}-{{$index}}">
+										<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
+											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
+											          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
+											<div id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
+											<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
+											<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
 											        data-chapter-filename="{{$chapter['chapterFilename']}}"
-											        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
-										@endif
-										<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="after"
-										        data-chapter-index="f"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}"
-										        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
-										<div class="me-auto d-inline-block" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
+											        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
+											@if($index == 0)
+												<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="before"
+												        data-chapter-index="{{$chapter_index}}"
+												        data-chapter-filename="{{$chapter['chapterFilename']}}"
+												        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
+											@endif
+											<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="after"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}"
+											        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
+											<div class="me-auto d-inline-block" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
+										</div>
+									</div>
+									
+									<div class="tab-pane fade" id="summary-{{$chapter_index}}-{{$index}}" role="tabpanel"
+									     aria-labelledby="summary-tab-{{$chapter_index}}-{{$index}}">
+										<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-3">
+											<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
+											          class="form-control beat-summary-textarea"
+											          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
+											<div id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
+											<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
+										</div>
+									</div>
+									
+									<div class="tab-pane fade" id="lore-{{$chapter_index}}-{{$index}}" role="tabpanel"
+									     aria-labelledby="lore-tab-{{$chapter_index}}-{{$index}}">
+										<div id="loreBookArea_{{$chapter_index}}_{{$index}}" class="mt-3">
+											<textarea id="loreBook_{{$chapter_index}}_{{$index}}" class="form-control lore-book-textarea"
+											          rows="6">{{$beat['lore_book'] ?? ''}}</textarea>
+											<div id="loreResult_{{$chapter_index}}_{{$index}}"></div>
+											<button id="updateLoreBookBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="updateLoreBookBtn btn btn-primary mt-3 me-2">{{__('default.Update Lore Book')}}</button>
+										</div>
 									</div>
 								</div>
-							@endforeach
-						</div>
+							</div>
+						
+						@endforeach
 					</div>
 				</div>
+			</div>
 			@endforeach
-		@endforeach
-	</div>
+			@endforeach
+			</div>
 </main>
 
 <!-- Modal for Writing All Beats -->

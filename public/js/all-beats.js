@@ -403,11 +403,13 @@ $(document).ready(function () {
 		$("#saveBeatsBtn").hide();
 		$('#recreateBeats').show();
 		$('#beatsPerChapter').show();
+		$('#beatsPerChapterLabel').show();
 	} else {
 		$('#writeAllBeatsBtn').show();
 		$("#saveBeatsBtn").hide();
 		$('#recreateBeats').hide();
 		$('#beatsPerChapter').hide();
+		$('#beatsPerChapterLabel').hide();
 	}
 	
 	//check if the beat-description-textarea is empty

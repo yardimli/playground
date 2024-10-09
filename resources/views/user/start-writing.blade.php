@@ -299,7 +299,7 @@
 			updateCharCount();
 			
 			// Define genre arrays
-			const adultGenres = {!! json_encode($adult_genres_array) !!};
+			const adultGenres = {!! json_encode(MyHelper::$adult_genres_array;) !!};
 			const nonAdultGenres = {!! json_encode($genres_array) !!};
 			
 			// Initial genre dropdown population
