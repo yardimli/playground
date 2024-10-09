@@ -429,7 +429,7 @@
 					
 				} else {
 					$('#fullScreenOverlay').addClass('d-none');
-					$("#alertModalContent").html({{__('default.Failed to create beats: ')}} + response.message);
+					$("#alertModalContent").html("{{__('default.Failed to create beats: ')}}" + response.message);
 					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					
 					$("#recreateBeats").prop('disabled', false);
@@ -437,7 +437,7 @@
 			},
 			error: function () {
 				$('#fullScreenOverlay').addClass('d-none');
-				$("#alertModalContent").html({{__('default.An error occurred while creating beats.')}});
+				$("#alertModalContent").html("{{__('default.An error occurred while creating beats.')}}");
 				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 			}
 		});
@@ -451,7 +451,7 @@
 			}
 			
 			$("#writeBeatDescriptionBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$("#beatDescriptionResult_" + chapterIndex + '_' + beatIndex).html({{__('default.Writing beat description...')}});
+			$("#beatDescriptionResult_" + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat description...')}}");
 			
 			$.ajax({
 				url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
@@ -472,18 +472,18 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
 						$('#beatDescription_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html({{__('default.Beat description generated successfully!')}});
+						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat description generated successfully!')}}");
 						$('#writeBeatDescriptionBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 						resolve(response.prompt);
 					} else {
-						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write beat description:')}}' + response.message);
-						reject('{{__('default.Failed to write beat description:')}}' + response.message);
+						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat description:')}}" + response.message);
+						reject("{{__('default.Failed to write beat description:')}}" + response.message);
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write beat description:')}}');
-					reject('{{__('default.Failed to write beat description:')}}');
+					$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat description:')}}");
+					reject("{{__('default.Failed to write beat description:')}}");
 				}
 			});
 		});
@@ -497,7 +497,7 @@
 			}
 			
 			$("#writeBeatTextBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$("#beatTextResult_" + chapterIndex + '_' + beatIndex).html('{{__('default.Writing beat text...')}}');
+			$("#beatTextResult_" + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat text...')}}");
 			
 			$.ajax({
 				url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
@@ -518,18 +518,18 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
 						$('#beatText_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Beat text generated successfully!')}}');
+						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat text generated successfully!')}}");
 						$('#writeBeatTextBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 						resolve(response.prompt);
 					} else {
-						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write beat text: ')}}' + response.message);
-						reject('{{__('default.Failed to write beat text: ')}}' + response.message);
+						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat text: ')}}" + response.message);
+						reject("{{__('default.Failed to write beat text: ')}}" + response.message);
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write beat text.')}}');
-					reject('{{__('default.Failed to write beat text.')}}');
+					$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat text.')}}");
+					reject("{{__('default.Failed to write beat text.')}}");
 				}
 			});
 		});
@@ -542,7 +542,7 @@
 				$('#fullScreenOverlay').removeClass('d-none');
 			}
 			$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Writing beat summary...')}}');
+			$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat summary...')}}");
 			
 			$.ajax({
 				url: `/book/write-beat-summary/${bookSlug}/${chapterFilename}`,
@@ -562,18 +562,18 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
 						$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Beat summary generated successfully!')}}');
+						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat summary generated successfully!')}}");
 						$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
 						resolve(response.prompt);
 					} else {
-						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write summary: ')}}' + response.message);
-						reject('{{__('default.Failed to write summary: ')}}' + response.message);
+						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write summary: ')}}" + response.message);
+						reject("{{__('default.Failed to write summary: ')}}" + response.message);
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html('{{__('default.Failed to write beat summary.')}}');
-					reject('{{__('default.Failed to write beat summary.')}}');
+					$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat summary.')}}");
+					reject("{{__('default.Failed to write beat summary.')}}");
 				}
 			});
 		});
@@ -597,9 +597,9 @@
 			dataType: 'json',
 			success: function (response) {
 				if (response.success) {
-					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html('{{__('default.Beat saved successfully!')}}');
+					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html("{{__('default.Beat saved successfully!')}}");
 				} else {
-					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html('{{__('default.Failed to save beat: ')}}' + response.message);
+					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html("{{__('default.Failed to save beat: ')}}" + response.message);
 				}
 			}
 		});
@@ -642,7 +642,7 @@
 				"\t\t\t\t\t\t\t<option value=\"9\">9</option>\n" +
 				"\t\t\t\t\t\t\t<option value=\"10\">10</option>\n" +
 				"\t\t\t\t\t\t</select>" + "<br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
-				"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>" + '{{__('default.Recreate Beats')}}' + "</button>");
+				"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>{{__('default.Recreate Beats')}}</button>");
 			$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 			$("#recreateBeats_modal").off('click').on('click', function () {
 				$("#alertModal").modal('hide');
@@ -766,14 +766,14 @@
 				dataType: 'json',
 				success: function (response) {
 					if (response.success) {
-						$("#alertModalContent").html('{{__('default.Beats saved successfully!')}}');
+						$("#alertModalContent").html("{{__('default.Beats saved successfully!')}}");
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						setTimeout(function () {
 							location.reload();
 						}, 2500);
 						
 					} else {
-						$("#alertModalContent").html('{{__('default.Failed to save beats: ')}}' + response.message);
+						$("#alertModalContent").html("{{__('default.Failed to save beats: ')}}" + response.message);
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				}
