@@ -143,10 +143,6 @@
 					<div class="col-12 col-lg-6">
 						<button type="button" class="btn btn-success mt-1 mb-1 w-100" id="recreateBeats"><i
 								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
-						<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
-						        id="saveBeatsBtn"><i
-								class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
-						
 						<a href="{{route('book.codex',[$book_slug])}}" target="_blank" class="btn btn-primary mb-3 mt-1 w-100" id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
@@ -299,6 +295,11 @@
 				</div>
 			@endforeach
 		@endforeach
+		
+		<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
+		        id="saveBeatsBtn"><i
+				class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
+	
 	</div>
 </main>
 
