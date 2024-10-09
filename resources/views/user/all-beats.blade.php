@@ -51,9 +51,9 @@
 						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
 					</div>
 					<div class="col-12 col-lg-4">
-						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
+						<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
 								{{$book['prompt'] ?? 'no prompt'}}</span></div>
-						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
+						<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
 								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
 					</div>
 					<div class="col-12 mt-3">
