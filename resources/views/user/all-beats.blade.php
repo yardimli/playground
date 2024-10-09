@@ -402,20 +402,6 @@
                           class="form-control beat-description-textarea"
                           rows="3">${beat.description}</textarea>
             </div>
-            <div id="beatTextArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatText_${chapterIndex}_${beatIndex}"
-                       class="form-label">{{__('default.Beat Text')}}</label>
-                <textarea id="beatText_${chapterIndex}_${beatIndex}" class="form-control beat-text-textarea"
-                          rows="10"></textarea>
-								<div id="beatTextResult_${chapterIndex}_${beatIndex}"></div>
-            </div>
-            <div id="beatSummaryArea_${chapterIndex}_${beatIndex}" class="mt-3">
-                <label for="beatSummary_${chapterIndex}_${beatIndex}"
-                       class="form-label">{{__('default.Beat Summary')}}</label>
-                <textarea id="beatSummary_${chapterIndex}_${beatIndex}" class="form-control beat-summary-textarea"
-                          rows="3"></textarea>
-								<div id="beatSummaryResult_${chapterIndex}_${beatIndex}"></div>
-            </div>
         </div>
     `;
 						$('#beatsList').append(beatHtml);
@@ -748,8 +734,8 @@
 			
 			$('#beatsList').find('.beat-outer-container').each(function (index, element) {
 				let beatDescription = $(element).find('.beat-description-textarea').val();
-				let beatText = $(element).find('.beat-text-textarea').val();
-				let beatSummary = $(element).find('.beat-summary-textarea').val();
+				let beatText = $(element).find('.beat-text-textarea').val() || '';
+				let beatSummary = $(element).find('.beat-summary-textarea').val() || '';
 				beats.push({description: beatDescription, beat_text: beatText, beat_summary: beatSummary});
 			});
 			
