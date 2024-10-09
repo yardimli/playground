@@ -21,9 +21,7 @@
 	<link href="/css/custom.css" rel="stylesheet">
 	
 	<script>
-		{!! $json_translations !!}
-			let
-		bookData = @json($bookData);
+		let bookData = @json($bookData);
 		let bookSlug = "{{$bookSlug}}";
 	</script>
 
@@ -41,26 +39,63 @@
 			<div class="card-header modal-header modal-header-color">
 			</div>
 			<div class="card-body modal-content modal-content-color">
-					<div class="mb-3">
-						<label for="characters" class="form-label">Characters</label>
-						<textarea class="form-control" id="characters"
-						          rows="5">{{ $bookData['codex']['characters'] }}</textarea>
+				
+				<div class="mb-3">
+					<label for="characters" class="form-label">Characters</label>
+					<div class="row">
+						<div class="col-12" id="charactersCol">
+            <textarea class="form-control" id="characters"
+                      rows="5"
+                      data-original="{{ $bookData['codex']['characters'] }}">{{ $bookData['codex']['characters'] }}</textarea>
+						</div>
+						<div class="col-6" id="charactersDiffCol" style="display: none;">
+							<div class="mb-3 modal-header-color" id="charactersDiff"></div>
+						</div>
 					</div>
-					<div class="mb-3">
-						<label for="locations" class="form-label">Locations</label>
-						<textarea class="form-control" id="locations"
-						          rows="5">{{ $bookData['codex']['locations'] }}</textarea>
+				</div>
+				
+				<div class="mb-3">
+					<label for="locations" class="form-label">Locations</label>
+					<div class="row">
+						<div class="col-12" id="locationsCol">
+            <textarea class="form-control" id="locations"
+                      rows="5"
+                      data-original="{{ $bookData['codex']['locations'] }}">{{ $bookData['codex']['locations'] }}</textarea>
+						</div>
+						<div class="col-6" id="locationsDiffCol" style="display: none;">
+							<div class="mb-3 modal-header-color" id="locationsDiff"></div>
+						</div>
 					</div>
-					<div class="mb-3">
-						<label for="objects" class="form-label">Objects/Items</label>
-						<textarea class="form-control" id="objects"
-						          rows="5">{{ $bookData['codex']['objects'] }}</textarea>
+				</div>
+				
+				<div class="mb-3">
+					<label for="objects" class="form-label">Objects/Items</label>
+					<div class="row">
+						<div class="col-12" id="objectsCol">
+            <textarea class="form-control" id="objects"
+                      rows="5"
+                      data-original="{{ $bookData['codex']['objects'] }}">{{ $bookData['codex']['objects'] }}</textarea>
+						</div>
+						<div class="col-6" id="objectsDiffCol" style="display: none;">
+							<div class="mb-3 modal-header-color" id="objectsDiff"></div>
+						</div>
 					</div>
-					<div class="mb-3">
-						<label for="lore" class="form-label">Lore</label>
-						<textarea class="form-control" id="lore" rows="5">{{ $bookData['codex']['lore'] }}</textarea>
+				</div>
+				
+				<div class="mb-3">
+					<label for="lore" class="form-label">Lore</label>
+					<div class="row">
+						<div class="col-12" id="loreCol">
+            <textarea class="form-control" id="lore"
+                      rows="5"
+                      data-original="{{ $bookData['codex']['lore'] }}">{{ $bookData['codex']['lore'] }}</textarea>
+						</div>
+						<div class="col-6" id="loreDiffCol" style="display: none;">
+							<div class="mb-3 modal-header-color" id="loreDiff"></div>
+						</div>
 					</div>
-					<button id="saveCodex" class="btn btn-primary">Save Codex</button>
+				</div>
+				<button id="saveCodex" class="btn btn-primary">Save Codex</button>
 			</div>
 		
 		</div>
@@ -127,7 +162,8 @@
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox"
 									       value="{{ $chapter['chapterFilename'] }}-!-!-{{ $beatIndex }}"
-									       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}" {{$checkbox_checked}}>
+									       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
+									       name="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}" {{$checkbox_checked}}>
 									<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
 										Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
 									</label>
@@ -148,6 +184,36 @@
 	</div>
 </main>
 
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
+				<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
+				        aria-label="{{__('default.Close')}}"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div id="alertModalContent"></div>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary alert-modal-close-button"
+				        data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="fullScreenOverlay" class="d-none">
+	<div class="overlay-content">
+		<div class="spinner-border text-light" role="status">
+			<span class="visually-hidden">{{__('Loading...')}}</span>
+		</div>
+		<p class="mt-3 text-light">{{__('default.Processing your request. This may take a few minutes...')}}</p>
+	</div>
+</div>
+
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="/js/jquery-3.7.0.min.js"></script>
@@ -156,15 +222,78 @@
 
 <script src="/js/jspdf.umd.min.js"></script>
 <script src="/js/docx.js"></script>
+<script src="/js/diff.js"></script>
 
 <!-- Your custom scripts -->
 <script src="/js/custom-ui.js"></script>
 
 
 <script>
+	
+	function setTextareaHeight(field) {
+		var textarea = document.getElementById(field);
+		var diffDiv = document.getElementById(field + 'Diff');
+		textarea.style.height = diffDiv.offsetHeight + 'px';
+	}
+	
+	function showDiff(field, newText) {
+		var oldText = $('#' + field).data('original');
+		var diff = Diff.diffLines(oldText, newText);
+		var display = document.getElementById(field + 'Diff');
+		display.innerHTML = '';
+		
+		diff.forEach((part) => {
+			var color = part.added ? 'green' :
+				part.removed ? 'red' : 'grey';
+			var span = document.createElement('span');
+			span.style.color = color;
+			
+			var lines = part.value.split('\n');
+			lines.forEach((line, index) => {
+				if (index > 0) {
+					span.appendChild(document.createElement('br'));
+				}
+				span.appendChild(document.createTextNode(line));
+			});
+			
+			display.appendChild(span);
+		});
+		
+		$('#' + field).val(newText).data('original', newText);
+		
+		// Adjust layout
+		$('#' + field + 'Col').removeClass('col-12').addClass('col-6');
+		$('#' + field + 'DiffCol').show();
+		
+		setTextareaHeight(field);
+		
+	}
+	
+	function resetLayout() {
+		['characters', 'locations', 'objects', 'lore'].forEach(field => {
+			$('#' + field + 'Col').removeClass('col-6').addClass('col-12');
+			$('#' + field + 'DiffCol').hide();
+		});
+	}
+	
 	$(document).ready(function () {
+		
+		$('#alertModal').on('hidden.bs.modal', function () {
+			if ($('#alertModalContent').text().trim() === 'Codex saved successfully') {
+				location.reload();
+			}
+		});
+		
 		$('#saveCodex').on('click', function (e) {
 			e.preventDefault();
+			$('#fullScreenOverlay').removeClass('d-none');
+			
+			// Collect checked beats
+			let checkedBeats = [];
+			$('.form-check-input:checked').each(function() {
+				let [chapterFilename, beatIndex] = $(this).val().split('-!-!-');
+				checkedBeats.push({chapterFilename, beatIndex: parseInt(beatIndex)});
+			});
 			
 			$.ajax({
 				url: '/book/{{ $bookSlug }}/codex',
@@ -174,50 +303,64 @@
 					locations: $('#locations').val(),
 					objects: $('#objects').val(),
 					lore: $('#lore').val(),
+					beats: checkedBeats,
 					_token: '{{ csrf_token() }}'
 				},
 				success: function (response) {
-					alert('Codex saved successfully');
+					$('#fullScreenOverlay').addClass('d-none');
+					$("#alertModalContent").html('Codex saved successfully');
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				},
 				error: function () {
-					alert('Error saving codex');
+					$('#fullScreenOverlay').addClass('d-none');
+					$("#alertModalContent").html('Error saving codex');
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			});
 		});
 		
 		$('.updateCodexFromBeat').on('click', function () {
+			
 			let chapterFilename = $(this).data('chapterfilename');
 			let beatIndex = $(this).data('beatindex');
-			let checkboxId = $(this).data('id');
-			let checkboxChecked = $('#' + checkboxId).prop('checked');
-			checkboxChecked = checkboxChecked ? 'true' : 'false';
+			console.log(chapterFilename, beatIndex, $(this).data('id'));
+			document.getElementById($(this).data('id')).checked = true;
 			
+			$('#fullScreenOverlay').removeClass('d-none');
 			$.ajax({
-				url: '/book/{{ $bookSlug }}/update-codex-from-beats',
+				url: '/book/{{ $bookSlug }}/update-codex-from-beat',
 				method: 'POST',
 				data: {
 					llm: savedLlm,
 					chapterFilename: chapterFilename,
 					beatIndex: beatIndex,
-					checkboxChecked: checkboxChecked,
 					
 					_token: '{{ csrf_token() }}'
 				},
 				success: function (response) {
+					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
-						$("#characters").val(response.codex_character_results);
-						$("#locations").val(response.codex_location_results);
-						$("#objects").val(response.codex_object_results);
-						$("#lore").val(response.codex_lore_results);
 						
-						alert('Codex updated successfully');
+						showDiff('characters', response.codex_character_results);
+						showDiff('locations', response.codex_location_results);
+						showDiff('objects', response.codex_object_results);
+						showDiff('lore', response.codex_lore_results);
+						
+						$("#diffView").show();
+						
+						$("#alertModalContent").html('Codex updated successfully');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						// location.reload();
 					} else {
-						alert('Error updating codex');
+						$('#fullScreenOverlay').addClass('d-none');
+						$("#alertModalContent").html('Error updating codex (1)');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				},
 				error: function () {
-					alert('Error updating codex');
+					$('#fullScreenOverlay').addClass('d-none');
+					$("#alertModalContent").html('Error updating codex (2)');
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			});
 		});

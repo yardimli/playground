@@ -5,9 +5,7 @@
 @section('content')
 	
 	<script>
-		{!! $json_translations !!}
-			let
-		bookData = @json($book);
+		let bookData = @json($book);
 		let bookSlug = "{{$book_slug}}";
 	</script>
 	<main class="pt-5">
@@ -49,7 +47,7 @@
 											</h6>
 											
 											<span class="nav-item small">{{$book['publisher_name'] ?? ''}}</span>
-{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
+											{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
 											<span class="nav-item small">{{date("Y-m-d", $book['file_time'] ?? 1923456789)}}</span>
 											<a
 												href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
@@ -59,7 +57,6 @@
 									</div>
 								</div>
 							</div>
-							
 							
 							
 							@php

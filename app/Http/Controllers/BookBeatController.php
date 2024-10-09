@@ -121,7 +121,6 @@
 				'book_slug' => $bookSlug,
 				'selected_chapter' => $selectedChapter ?? '',
 				'selected_chapter_index' => $selectedChapterIndex,
-				'json_translations' => MyHelper::writeJsTranslations(),
 				'writingStyles' => MyHelper::$writingStyles,
 				'narrativeStyles' => MyHelper::$narrativeStyles,
 			]);
@@ -401,7 +400,6 @@
 
 			$previous_beat_summaries = '';
 			$last_beat_full_text = '';
-			$last_lore_book = '';
 			$next_beat = '';
 
 			// Get the current beat
@@ -416,7 +414,6 @@
 				for ($i = 0; $i < $beatIndex; $i++) {
 					if ($i === $beatIndex - 1) {
 						$last_beat_full_text = $current_chapter['beats'][$i]['beat_text'] ?? '';
-						$last_lore_book = $current_chapter['beats'][$i]['lore_book'] ?? '';
 					} else {
 						$current_beat_summary = $current_chapter['beats'][$i]['beat_summary'] ?? $current_chapter['beats'][$i]['description'] ?? '';
 						$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -431,7 +428,6 @@
 					for ($i = 0; $i < $prev_beats_count; $i++) {
 						if ($i === $prev_beats_count - 1) {
 							$last_beat_full_text = $prev_chapter_beats[$i]['beat_text'] ?? '';
-							$last_lore_book = $prev_chapter_beats[$i]['lore_book'] ?? '';
 						} else {
 							$current_beat_summary = $prev_chapter_beats[$i]['beat_summary'] ?? $prev_chapter_beats[$i]['description'] ?? '';
 							$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -473,7 +469,7 @@
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##previous_beat_summaries##' => $previous_beat_summaries,
 				'##last_beat_full_text##' => $last_beat_full_text,
-				'##lore_book##' => $last_lore_book,
+				'##lore_book##' => ($bookData['codex']['characters'] ?? 'no characters') + "\n" + ($bookData['codex']['locations'] ?? 'no locations') + "\n" + ($bookData['codex']['objects'] ?? 'no objects') + "\n" + ($bookData['codex']['lore'] ?? 'no lore'),
 				'##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
 				'##genre##' => $bookData['genre'] ?? 'fantasy',
@@ -591,7 +587,6 @@
 
 			$previous_beat_summaries = '';
 			$last_beat_full_text = '';
-			$last_lore_book = '';
 			$next_beat = '';
 
 			// Get the current beat
@@ -606,7 +601,6 @@
 				for ($i = 0; $i < $beatIndex; $i++) {
 					if ($i === $beatIndex - 1) {
 						$last_beat_full_text = $current_chapter['beats'][$i]['beat_text'] ?? '';
-						$last_lore_book = $current_chapter['beats'][$i]['lore_book'] ?? '';
 					} else {
 						$current_beat_summary = $current_chapter['beats'][$i]['beat_summary'] ?? $current_chapter['beats'][$i]['description'] ?? '';
 						$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -621,7 +615,6 @@
 					for ($i = 0; $i < $prev_beats_count; $i++) {
 						if ($i === $prev_beats_count - 1) {
 							$last_beat_full_text = $prev_chapter_beats[$i]['beat_text'] ?? '';
-							$last_lore_book = $prev_chapter_beats[$i]['lore_book'] ?? '';
 						} else {
 							$current_beat_summary = $prev_chapter_beats[$i]['beat_summary'] ?? $prev_chapter_beats[$i]['description'] ?? '';
 							$previous_beat_summaries .= $current_beat_summary . "\n";
@@ -666,7 +659,7 @@
 				'##next_chapter##' => $current_chapter['to_next_chapter'] ?? 'No more chapters',
 				'##previous_beat_summaries##' => $previous_beat_summaries,
 				'##last_beat_full_text##' => $last_beat_full_text,
-				'##lore_book##' => $last_lore_book,
+				'##lore_book##' => ($bookData['codex']['characters'] ?? 'no characters') + "\n" + ($bookData['codex']['locations'] ?? 'no locations') + "\n" + ($bookData['codex']['objects'] ?? 'no objects') + "\n" + ($bookData['codex']['lore'] ?? 'no lore'),
 				'##current_beat##' => $current_beat,
 				'##next_beat##' => $next_beat,
 				'##genre##' => $bookData['genre'] ?? 'fantasy',
@@ -862,12 +855,10 @@
 			$beatDescription = $request->input('beat_description', '');
 			$beatText = $request->input('beat_text', '');
 			$beatSummary = $request->input('beat_summary', '');
-			$loreBook = $request->input('lore_book', '');
 
 			$chapterData['beats'][$beatIndex]['description'] = $beatDescription;
 			$chapterData['beats'][$beatIndex]['beat_text'] = $beatText;
 			$chapterData['beats'][$beatIndex]['beat_summary'] = $beatSummary;
-			$chapterData['beats'][$beatIndex]['lore_book'] = $loreBook;
 
 			if (File::put($chapterFilePath, json_encode($chapterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
 				return response()->json(['success' => true, 'message' => 'Beats saved.']);

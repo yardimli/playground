@@ -123,7 +123,7 @@
 			$bookJsonPath = "{$bookPath}/book.json";
 			$bookData = json_decode(File::get($bookJsonPath), true);
 
-			$codex_beats = $bookData['codex']['beats'] ?? [];
+			$codex_beats = $request->input('beats', []) ?? [];
 
 			$codexData = [
 				'characters' => $request->input('characters', []),
@@ -145,8 +145,6 @@
 			if (!$verified['success']) {
 				return redirect()->route('user.showcase-library')->with('error', $verified['message']);
 			}
-
-			$json_translations = MyHelper::writeJsTranslations();
 
 			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
 			$bookJsonPath = "{$bookPath}/book.json";
@@ -209,10 +207,10 @@
 				$bookData['codex'] = $codexData;
 			}
 
-			return view('user.codex', compact('bookSlug', 'bookData', 'json_translations'));
+			return view('user.codex', compact('bookSlug', 'bookData'));
 		}
 
-		public function updateCodexFromBeats(Request $request, $bookSlug)
+		public function updateCodexFromBeat(Request $request, $bookSlug)
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
@@ -227,27 +225,11 @@
 			$beatIndex = $request->input('beatIndex');
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
 
-			$codex_beat_ids = $bookData['codex']['beats'] ?? [];
-
-			$codex_character_results = '';
-			$codex_location_results = '';
-			$codex_object_results = '';
-			$codex_lore_results = '';
-
-
 			$chapterPath = "{$bookPath}/{$chapterFilename}";
 			$chapterData = json_decode(File::get($chapterPath), true);
 
 			$beatDescription = $chapterData['beats'][$beatIndex]['description'] ?? '';
 			$beatText = $chapterData['beats'][$beatIndex]['beat_text'] ?? '';
-			//check if the beat is already in the codex
-			$beatExists = false;
-			foreach ($codex_beat_ids as $codex_beat_id) {
-				if ($codex_beat_id['chapterFilename'] === $chapterFilename && $codex_beat_id['beatIndex'] === $beatIndex) {
-					$beatExists = true;
-					break;
-				}
-			}
 
 			$codex_lore_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'lore', $bookData['codex']['lore'], $beatDescription, $beatText);
 
@@ -256,13 +238,6 @@
 			$codex_location_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'locations', $bookData['codex']['locations'], $beatDescription, $beatText);
 
 			$codex_object_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'objects', $bookData['codex']['objects'], $beatDescription, $beatText);
-
-			if (!$beatExists) {
-				$codex_beat_ids[] = ['chapterFilename' => $chapterFilename, 'beatIndex' => $beatIndex];
-				$bookData['codex']['beats'] = $codex_beat_ids;
-				File::put($bookJsonPath, json_encode($bookData, JSON_PRETTY_PRINT));
-			}
-
 
 			return response()->json(['success' => true,
 				'chapterFilename' => $chapterFilename,

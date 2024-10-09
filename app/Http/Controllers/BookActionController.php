@@ -39,8 +39,6 @@
 				return response()->json($verified);
 			}
 
-			$json_translations = MyHelper::writeJsTranslations();
-
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
 			$actsFile = "{$bookPath}/acts.json";
@@ -144,7 +142,7 @@
 			$writingStyles = MyHelper::$writingStyles;
 			$narrativeStyles = MyHelper::$narrativeStyles;
 
-			return view('user.edit-book', compact( 'book', 'json_translations', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
+			return view('user.edit-book', compact( 'book', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
 		}
 
 		public function writeBookCharacterProfiles(Request $request)

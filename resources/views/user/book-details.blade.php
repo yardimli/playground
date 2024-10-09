@@ -5,9 +5,7 @@
 @section('content')
 	
 	<script>
-		{!! $json_translations !!}
-			let
-		bookData = @json($book);
+		let bookData = @json($book);
 		let bookSlug = "{{$book_slug}}";
 	</script>
 	<main class="pt-5">

@@ -115,7 +115,7 @@
 
 		Route::get('/book/{bookSlug}/codex', [BookCodexController::class, 'showCodex'])->name('book.codex');
 		Route::post('/book/{bookSlug}/codex', [BookCodexController::class, 'saveCodex'])->name('book.saveCodex');
-		Route::post('/book/{bookSlug}/update-codex-from-beats', [BookCodexController::class, 'updateCodexFromBeats'])->name('book.update-codex-from-beats');
+		Route::post('/book/{bookSlug}/update-codex-from-beat', [BookCodexController::class, 'updateCodexFromBeat'])->name('book.update-codex-from-beat');
 
 		Route::post('/rewrite-chapter', [BookActionController::class, 'rewriteChapter'])->name('rewrite-chapter');
 		Route::post('/accept-rewrite', [BookActionController::class, 'acceptRewrite'])->name('accept-rewrite');

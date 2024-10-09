@@ -35,12 +35,11 @@
 		public function index(Request $request)
 		{
 			$posts = MyHelper::getBlogData();
-			$json_translations = MyHelper::writeJsTranslations();
 
 			$genres_array = MyHelper::$genres_array;
 			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view("user.index", compact('posts',  'json_translations', 'genres_array', 'adult_genres_array'));
+			return view("user.index", compact('posts',  'genres_array', 'adult_genres_array'));
 
 		}
 
@@ -68,8 +67,6 @@
 
 		public function myBooks(Request $request)
 		{
-			$json_translations = MyHelper::writeJsTranslations();
-
 			$booksDir = Storage::disk('public')->path('books');
 
 			$books = [];
@@ -182,8 +179,6 @@
 
 		public function readBook(Request $request, $slug)
 		{
-			$json_translations = MyHelper::writeJsTranslations();
-
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
 			$actsFile = "{$bookPath}/acts.json";
@@ -256,13 +251,11 @@
 			$genres_array = MyHelper::$genres_array;
 			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view('user.read-book', compact( 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
+			return view('user.read-book', compact( 'book', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function showcaseLibrary(Request $request)
 		{
-			$json_translations = MyHelper::writeJsTranslations();
-
 			$booksDir = Storage::disk('public')->path('books');
 
 			$books = [];
@@ -336,13 +329,11 @@
 			$adult_genres_array = MyHelper::$adult_genres_array;
 
 
-			return view('user.showcase-library', compact( 'json_translations', 'paginatedBooks', 'genres_array', 'adult_genres_array'));
+			return view('user.showcase-library', compact( 'paginatedBooks', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function booksDetail(Request $request, $slug)
 		{
-			$json_translations = MyHelper::writeJsTranslations();
-
 			$bookPath = Storage::disk('public')->path("books/{$slug}");
 			$bookJsonPath = "{$bookPath}/book.json";
 			$actsFile = "{$bookPath}/acts.json";
@@ -416,7 +407,7 @@
 			$genres_array = MyHelper::$genres_array;
 			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view('user.book-details', compact( 'book', 'json_translations', 'book_slug', 'genres_array', 'adult_genres_array'));
+			return view('user.book-details', compact( 'book', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
 
 	}

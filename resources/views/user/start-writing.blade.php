@@ -251,13 +251,35 @@
 			<p class="mt-3 text-light">{{__('default.Processing your request. This may take a few minutes...')}}</p>
 		</div>
 	</div>
+	
+	
+	
+	<!-- Alert Modal -->
+	<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
+	     aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
+					<h5 class="modal-title" id="alertModalLabel">Alert</h5>
+					<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
+					        aria-label="{{__('default.Close')}}"></button>
+				</div>
+				<div class="modal-body modal-body-color">
+					<div id="alertModalContent"></div>
+				</div>
+				<div class="modal-footer modal-footer-color">
+					<button type="button" class="btn btn-secondary alert-modal-close-button"
+					        data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 @endsection
 
 @push('scripts')
 	<!-- Inline JavaScript code -->
 	<script>
-		let savedTheme = localStorage.getItem('theme') || 'light';
 		let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
 		
 		let exampleQuestion = '';
@@ -362,7 +384,6 @@
 						console.log(data);
 						$('#fullScreenOverlay').addClass('d-none');
 						if (data.success) {
-							//alert('{{ __('default.Book created successfully. Please check the new fields before continuing.') }}');
 							$('#addBookStepOneBtn').addClass('d-none');
 							$('#hint_1').addClass('d-none');
 							$('#hint_2').removeClass('d-none');
@@ -384,12 +405,15 @@
 							
 							$('#character_profiles').val(characterProfiles);
 						} else {
-							alert('Error: ' + data.message);
+							$("#alertModalContent").html("Error: " + data.message);
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						}
 					},
 					error: function (xhr, status, error) {
 						$('#fullScreenOverlay').addClass('d-none');
-						alert('Error: ' + error);
+						
+						$("#alertModalContent").html("Error: " + error);
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				});
 			});
@@ -427,16 +451,19 @@
 					success: function (data) {
 						$('#fullScreenOverlay').addClass('d-none');
 						if (data.success) {
-							alert('{{ __('default.Book created successfully.') }}');
-							//set url to book details
-							window.location.href = '{{ route("edit-book", "") }}/' + data.bookSlug;
+							
+							$("#alertModalContent").html("{{ __('default.Book created successfully.') }} <a href='{{ route("edit-book", "") }}/" + data.bookSlug + "'>{{ __('default.Click here to edit the book.') }}</a>");
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						} else {
-							alert('Error: ' + data.message);
+							$("#alertModalContent").html("Error: " + data.message);
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						}
 					},
 					error: function (xhr, status, error) {
 						$('#fullScreenOverlay').addClass('d-none');
-						alert('Error: ' + error);
+						
+						$("#alertModalContent").html("Error: " + error);
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				});
 			});
