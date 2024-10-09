@@ -285,6 +285,7 @@
 		let exampleQuestion = '';
 		let exampleAnswer = '';
 		let bookKeywords = '';
+		let bookEditUrl = '';
 		
 		// Function to update genre dropdown
 		function updateGenreDropdown(genres) {
@@ -296,6 +297,12 @@
 		}
 		
 		$(document).ready(function () {
+			
+			$('#alertModal').on('hidden.bs.modal', function (e) {
+				if (bookEditUrl) {
+					window.location.href = bookEditUrl;
+				}
+			});
 			
 			const maxChars = 2000;
 			const userBlurb = $('#user_blurb');
@@ -451,8 +458,8 @@
 					success: function (data) {
 						$('#fullScreenOverlay').addClass('d-none');
 						if (data.success) {
-							
-							$("#alertModalContent").html("{{ __('default.Book created successfully.') }} <a href='{{ route("edit-book", "") }}/" + data.bookSlug + "'>{{ __('default.Click here to edit the book.') }}</a>");
+							bookEditUrl = '{{ route("edit-book", "") }}/' + data.bookSlug;
+							$("#alertModalContent").html("{{ __('default.Book created successfully.') }} <a href='" + bookEditUrl + "'>{{ __('default.Click here to edit the book.') }}</a>");
 							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						} else {
 							$("#alertModalContent").html("Error: " + data.message);
