@@ -232,13 +232,13 @@
 			$beatDescription = $chapterData['beats'][$beatIndex]['description'] ?? '';
 			$beatText = $chapterData['beats'][$beatIndex]['beat_text'] ?? '';
 
-			$codex_lore_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'lore', $bookData['codex']['lore'], $beatDescription, $beatText);
+			$codex_lore_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'lore', $bookData['codex']['lore'] ?? '', $beatDescription, $beatText);
 
-			$codex_character_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'characters', $bookData['codex']['characters'], $beatDescription, $beatText);
+			$codex_character_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'characters', $bookData['codex']['characters'] ?? '', $beatDescription, $beatText);
 
-			$codex_location_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'locations', $bookData['codex']['locations'], $beatDescription, $beatText);
+			$codex_location_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'locations', $bookData['codex']['locations'] ?? '', $beatDescription, $beatText);
 
-			$codex_object_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'objects', $bookData['codex']['objects'], $beatDescription, $beatText);
+			$codex_object_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'objects', $bookData['codex']['objects'] ?? '', $beatDescription, $beatText);
 
 			return response()->json(['success' => true,
 				'chapterFilename' => $chapterFilename,
