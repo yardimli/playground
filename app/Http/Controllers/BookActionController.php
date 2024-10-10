@@ -439,6 +439,17 @@
 					foreach ($act['chapters'] as $chapterIndex => $chapter) {
 						$chapterFilename = Str::slug($chapter['name']) . '_' . time() . '.json';
 						$chapter_name = $chapter['name'] ?? 'chapter ' . ($chapter_index + 1);
+
+						if (isset($chapter['events']) && is_array($chapter['events'])) {
+							$chapter['events'] = implode("\n", $chapter['events']);
+						}
+						if (isset($chapter['places']) && is_array($chapter['places'])) {
+							$chapter['places'] = implode("\n", $chapter['places']);
+						}
+						if (isset($chapter['people']) && is_array($chapter['people'])) {
+							$chapter['people'] = implode("\n", $chapter['people']);
+						}
+
 						$chapterData = [
 							'row' => $actIndex + 1,
 							'order' => $chapterIndex + 1,

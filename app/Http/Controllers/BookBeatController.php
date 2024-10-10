@@ -225,6 +225,16 @@
 			$writing_style = $request->input('writing_style', 'Minimalist');
 			$narrative_style = $request->input('narrative_style', 'Third Person - The narrator has a godlike perspective');
 
+			if (isset($current_chapter['events']) && is_array($current_chapter['events'])) {
+				$current_chapter['events'] = implode("\n", $current_chapter['events']);
+			}
+			if (isset($current_chapter['places']) && is_array($current_chapter['places'])) {
+				$current_chapter['places'] = implode("\n", $current_chapter['places']);
+			}
+			if (isset($current_chapter['people']) && is_array($current_chapter['people'])) {
+				$current_chapter['people'] = implode("\n", $current_chapter['people']);
+			}
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
@@ -246,7 +256,7 @@
 				'##narrative_style##' => $narrative_style,
 			];
 
-			Log::info('Prompt replacements: ' . json_encode($replacements));
+//			Log::info('Prompt replacements: ' . json_encode($replacements));
 
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
@@ -459,6 +469,16 @@
 			// Load the beat prompt template
 			$beatPromptTemplate = File::get(resource_path('prompts/beat_description_prompt.txt'));
 
+			if (isset($current_chapter['events']) && is_array($current_chapter['events'])) {
+				$current_chapter['events'] = implode("\n", $current_chapter['events']);
+			}
+			if (isset($current_chapter['places']) && is_array($current_chapter['places'])) {
+				$current_chapter['places'] = implode("\n", $current_chapter['places']);
+			}
+			if (isset($current_chapter['people']) && is_array($current_chapter['people'])) {
+				$current_chapter['people'] = implode("\n", $current_chapter['people']);
+			}
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
@@ -657,6 +677,16 @@
 			$writingStyle = $request->input('writing_style', 'Minimalist');
 			$narrativeStyle = $request->input('narrative_style', 'Third Person - The narrator has a godlike perspective');
 
+			if (isset($current_chapter['events']) && is_array($current_chapter['events'])) {
+				$current_chapter['events'] = implode("\n", $current_chapter['events']);
+			}
+			if (isset($current_chapter['places']) && is_array($current_chapter['places'])) {
+				$current_chapter['places'] = implode("\n", $current_chapter['places']);
+			}
+			if (isset($current_chapter['people']) && is_array($current_chapter['people'])) {
+				$current_chapter['people'] = implode("\n", $current_chapter['people']);
+			}
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
@@ -772,6 +802,16 @@
 
 			// Load the beat prompt template
 			$beatPromptTemplate = File::get(resource_path('prompts/beat_summary.txt'));
+
+			if (isset($current_chapter['events']) && is_array($current_chapter['events'])) {
+				$current_chapter['events'] = implode("\n", $current_chapter['events']);
+			}
+			if (isset($current_chapter['places']) && is_array($current_chapter['places'])) {
+				$current_chapter['places'] = implode("\n", $current_chapter['places']);
+			}
+			if (isset($current_chapter['people']) && is_array($current_chapter['people'])) {
+				$current_chapter['people'] = implode("\n", $current_chapter['people']);
+			}
 
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',

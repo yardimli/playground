@@ -88,6 +88,17 @@
 			} elseif ($codexPart === 'lore') {
 				$beatPromptTemplate = File::get(resource_path('prompts/codex_lore.txt'));
 			}
+
+			if (isset($current_chapter['events']) && is_array($current_chapter['events'])) {
+				$current_chapter['events'] = implode("\n", $current_chapter['events']);
+			}
+			if (isset($current_chapter['places']) && is_array($current_chapter['places'])) {
+				$current_chapter['places'] = implode("\n", $current_chapter['places']);
+			}
+			if (isset($current_chapter['people']) && is_array($current_chapter['people'])) {
+				$current_chapter['people'] = implode("\n", $current_chapter['people']);
+			}
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
