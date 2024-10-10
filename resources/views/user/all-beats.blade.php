@@ -214,11 +214,14 @@
 											<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
 											          class="form-control beat-description-textarea"
 											          rows="3">{{$beat['description'] ?? ''}}</textarea>
-												<div id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
 												<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
 												        data-chapter-index="{{$chapter_index}}"
 												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
 												        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
+												<div class="me-auto d-inline-block">
+												<div class="small text-info" id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
+												</div>
+											
 											</div>
 										</div>
 										
@@ -227,7 +230,6 @@
 											<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
 											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 											          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
-												<div id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
 												<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
 												        data-chapter-index="{{$chapter_index}}"
 												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
@@ -245,8 +247,10 @@
 												        data-chapter-index="{{$chapter_index}}"
 												        data-chapter-filename="{{$chapter['chapterFilename']}}"
 												        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
-												<div class="me-auto d-inline-block"
-												     id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
+												<div class="me-auto d-inline-block">
+													<div class="small text-info" id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
+													<div class="small text-info" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
+												</div>
 											</div>
 										</div>
 										
@@ -256,11 +260,13 @@
 											<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
 											          class="form-control beat-summary-textarea"
 											          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
-												<div id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
 												<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
 												        data-chapter-index="{{$chapter_index}}"
 												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
 												        class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
+												<div class="me-auto d-inline-block">
+													<div class="small text-info" id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -590,7 +596,6 @@
 			return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
 		});
 	}
-	
 	
 	//------------------------------------------------------------
 	$(document).ready(function () {
