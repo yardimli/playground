@@ -40,12 +40,12 @@
 			</div>
 			<div class="card-body modal-content modal-content-color">
 				
-				<div class="mb-3">
-					<label for="characters" class="form-label">Characters</label>
+				<div class="mb-5">
+					<label for="characters" class="form-label h4">Characters</label>
 					<div class="row">
 						<div class="col-12" id="charactersCol">
             <textarea class="form-control" id="characters"
-                      rows="5"
+                      rows="10"
                       data-original="{{ $bookData['codex']['characters'] }}">{{ $bookData['codex']['characters'] }}</textarea>
 						</div>
 						<div class="col-6" id="charactersDiffCol" style="display: none;">
@@ -54,12 +54,12 @@
 					</div>
 				</div>
 				
-				<div class="mb-3">
-					<label for="locations" class="form-label">Locations</label>
+				<div class="mb-5">
+					<label for="locations" class="form-label h4">Locations</label>
 					<div class="row">
 						<div class="col-12" id="locationsCol">
             <textarea class="form-control" id="locations"
-                      rows="5"
+                      rows="10"
                       data-original="{{ $bookData['codex']['locations'] }}">{{ $bookData['codex']['locations'] }}</textarea>
 						</div>
 						<div class="col-6" id="locationsDiffCol" style="display: none;">
@@ -68,12 +68,12 @@
 					</div>
 				</div>
 				
-				<div class="mb-3">
-					<label for="objects" class="form-label">Objects/Items</label>
+				<div class="mb-5">
+					<label for="objects" class="form-label h4">Objects/Items</label>
 					<div class="row">
 						<div class="col-12" id="objectsCol">
             <textarea class="form-control" id="objects"
-                      rows="5"
+                      rows="10"
                       data-original="{{ $bookData['codex']['objects'] }}">{{ $bookData['codex']['objects'] }}</textarea>
 						</div>
 						<div class="col-6" id="objectsDiffCol" style="display: none;">
@@ -83,11 +83,11 @@
 				</div>
 				
 				<div class="mb-3">
-					<label for="lore" class="form-label">Lore</label>
+					<label for="lore" class="form-label h4">Lore</label>
 					<div class="row">
 						<div class="col-12" id="loreCol">
             <textarea class="form-control" id="lore"
-                      rows="5"
+                      rows="10"
                       data-original="{{ $bookData['codex']['lore'] }}">{{ $bookData['codex']['lore'] }}</textarea>
 						</div>
 						<div class="col-6" id="loreDiffCol" style="display: none;">
@@ -156,9 +156,10 @@
 									<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
 										Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
 									</label>
+									<br>
 									<button data-id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
 									        data-chapterfilename="{{ $chapter['chapterFilename'] }}" data-beatindex="{{ $beatIndex }}"
-									        class="btn updateCodexFromBeat btn-secondary mt-1 mb-3">Update Codex from Beat
+									        class="btn btn-sm updateCodexFromBeat btn-secondary mt-1 mb-3">Update Codex from Beat
 									</button>
 								</div>
 							@endif
