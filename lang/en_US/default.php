@@ -465,6 +465,7 @@
 		'Edit' => 'Edit',
 
 		'Back to Books' => 'Back to Books',
+		'Back to Book Page' => 'Back to Book Page',
 		'Log out' => 'Log out',
 		'Login/Sign up' => 'Login/Sign up',
 		'Write Books With AI Book' => 'Write Books With AI Book',
