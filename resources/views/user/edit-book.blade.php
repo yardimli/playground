@@ -840,11 +840,6 @@
 	$(document).ready(function () {
 		getLLMsData().then(function (llmsData) {
 			const llmSelect = $('#llmSelect');
-			// llmSelect.empty();
-			// llmSelect.append($('<option>', {
-			// 	value: '',
-			{{--	text: '{{__('default.Select an AI Engine')}}'--}}
-			// }));
 			
 			llmsData.forEach(function (model) {
 				
