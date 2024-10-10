@@ -35,7 +35,7 @@
 		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
 		<div class="mb-1 mt-1 w-100" style="text-align: right;">
 			<a href="{{route('user.showcase-library')}}">{{__('default.Back to Books')}}</a> |
-			<a href="{{route('user.book-details',$book['id'] ?? '0')}}">{{__('default.Back to Book Page')}}</a>
+			<a href="{{route('user.book-details',$book_slug)}}">{{__('default.Back to Book Page')}}</a>
 		</div>
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
