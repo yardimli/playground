@@ -99,6 +99,17 @@
 
 			foreach ($bookData['acts'] as &$act) {
 				foreach ($act['chapters'] as &$chapter) {
+
+					if (isset($chapter['events']) && is_array($chapter['events'])) {
+						$chapter['events'] = implode("\n", $chapter['events']);
+					}
+					if (isset($chapter['places']) && is_array($chapter['places'])) {
+						$chapter['places'] = implode("\n", $chapter['places']);
+					}
+					if (isset($chapter['people']) && is_array($chapter['people'])) {
+						$chapter['people'] = implode("\n", $chapter['people']);
+					}
+
 					if (array_key_exists('beats', $chapter)) {
 						foreach ($chapter['beats'] as &$beat) {
 							foreach ($beat as $key => &$content) {

@@ -219,6 +219,16 @@
 					}
 					$chapterData['chapterFilename'] = basename($chapterFile);
 
+					if (isset($chapterData['events']) && is_array($chapterData['events'])) {
+						$chapterData['events'] = implode("\n", $chapterData['events']);
+					}
+					if (isset($chapterData['places']) && is_array($chapterData['places'])) {
+						$chapterData['places'] = implode("\n", $chapterData['places']);
+					}
+					if (isset($chapterData['people']) && is_array($chapterData['people'])) {
+						$chapterData['people'] = implode("\n", $chapterData['people']);
+					}
+
 					if ($chapterData['row'] === $act['id']) {
 						$actChapters[] = $chapterData;
 
