@@ -4,6 +4,7 @@
 
 	use App\Models\SentencesTable;
 	use App\Models\User;
+	use Carbon\Carbon;
 	use GuzzleHttp\Client;
 	use GuzzleHttp\Exception\ClientException;
 	use Illuminate\Http\Request;
@@ -222,7 +223,10 @@
 
 				return response()->json(['success' => true, 'message' => __('Book created successfully'), 'data' => $results]);
 			} else {
-				return response()->json(['success' => false, 'message' => __('Failed to generate book')]);
+				if (isset($results->error)) {
+					return response()->json(['success' => false, 'message' => $resultData->error]);
+				}
+//				return response()->json(['success' => false, 'message' => __('Failed to generate book')]);
 			}
 		}
 
@@ -363,6 +367,10 @@
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$results = MyHelper::llm_no_tool_call($llm, $exampleQuestion, $exampleAnswer, $prompt, true, $language);
+
+			if (isset($results->error)) {
+				return response()->json(['success' => false, 'message' => $resultData->error]);
+			}
 
 
 			//loop all data fields and replace <BR> with \n
@@ -703,10 +711,73 @@ Prompt:";
 
 			try {
 				$resultData = MyHelper::llm_no_tool_call($llm, '', '', $userPrompt, false);
+
+				if (isset($resultData->error)) {
+					return response()->json(['success' => false, 'message' => $resultData->error]);
+				}
+
 				return response()->json(['success' => true, 'result' => $resultData]);
 			} catch (\Exception $e) {
 				return response()->json(['success' => false, 'message' => $e->getMessage()]);
 			}
+		}
+
+		public function checkLLMsJson()
+		{
+			$llmsJsonPath = Storage::disk('public')->path('llms.json');
+
+			if (!File::exists($llmsJsonPath) || Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($llmsJsonPath))) > 1) {
+				$client = new Client();
+				$response = $client->get('https://openrouter.ai/api/v1/models');
+				$data = json_decode($response->getBody(), true);
+
+				if (isset($data['data'])) {
+					File::put($llmsJsonPath, json_encode($data['data']));
+				} else {
+					return response()->json([]);
+				}
+			}
+
+			if (Auth::user() && Auth::user()->isAdmin()) {
+//				return response()->json(json_decode(File::get($llmsJsonPath), true));
+
+				$llms = json_decode(File::get($llmsJsonPath), true);
+
+				$filtered_llms = array_filter($llms, function($llm) {
+					if (isset($llm['id']) && (stripos($llm['id'], 'openrouter/auto') !== false)) {
+						return false;
+					}
+
+					if (isset($llm['pricing']['prompt'])) {
+						$price_per_million = floatval($llm['pricing']['prompt']) * 1000000;
+						return $price_per_million <= 5;
+					}
+					return true;
+				});
+
+				return response()->json(array_values($filtered_llms));
+
+
+			} else
+			{
+				$llms = json_decode(File::get($llmsJsonPath), true);
+
+				$filtered_llms = array_filter($llms, function($llm) {
+					if (isset($llm['id']) && (stripos($llm['id'], 'openrouter/auto') !== false)) {
+						return false;
+					}
+
+					if (isset($llm['pricing']['prompt'])) {
+						$price_per_million = floatval($llm['pricing']['prompt']) * 1000000;
+						return $price_per_million <= 0.5;
+					}
+					return true;
+				});
+
+				return response()->json(array_values($filtered_llms));
+
+			}
+
 		}
 
 	}

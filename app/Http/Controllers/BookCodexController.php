@@ -108,6 +108,7 @@
 
 			$resultData = MyHelper::llm_no_tool_call($llm, '', '', $beatPrompt, false);
 
+
 			return $resultData;
 		}
 

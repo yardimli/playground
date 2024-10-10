@@ -46,50 +46,12 @@
 						<img
 							src="{{$book['cover_filename']}}"
 							alt="{{__('default.Book Cover')}}"
-							style="width: 100%; object-fit: cover;"
+							style="width: 100%; object-fit: cover; min-height: 400px;"
 							id="bookCover">
 						<br>
 						<button class="btn btn-primary mb-3 mt-1 w-100" title="{{__('default.Cover Image')}}" id="createCoverBtn">
 							<i class="bi bi-image"></i> {{__('default.Cover Image')}}
 						</button>
-						
-						
-						<br>
-						
-						<span style="font-size: 18px;">{{__('default.AI Engines:')}}</span>
-						<select id="llmSelect" class="form-select mx-auto mb-1">
-							<?php
-							if (Auth::user() && Auth::user()->isAdmin()) {
-								?>
-							<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-							<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-							<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
-							<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
-								<?php
-							} else {
-								?>
-							<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-								<?php
-							}
-							?>
-							{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
-							{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
-							{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
-							{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
-							<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-							<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-							<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-							<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-							{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
-							{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
-							{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
-							{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
-							<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-							{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
-							{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
-							{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
-						
-						</select>
 						
 						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
@@ -130,14 +92,32 @@
 							</select>
 						</div>
 						
+						<div class="mb-3">
+							<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
+								@if (Auth::user() && Auth::user()->isAdmin())
+									<label class="badge bg-danger">Admin</label>
+								@endif
+							
+							</label>
+							<select id="llmSelect" class="form-select mx-auto">
+								<option value="">{{__('default.Select an AI Engine')}}</option>
+								@if (Auth::user() && Auth::user()->isAdmin())
+									<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+									<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+									<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+									<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+								@endif
+							</select>
+						</div>
+						<div class="mt-1 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
+							<div id="modelDescription"></div>
+							<div id="modelPricing"></div>
+						</div>
+						
 						
 						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn"
 						        title="{{__('default.Write All Beats')}}"><i
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
-						</button>
-						
-						<button class="btn btn-primary mb-3 mt-1 w-100" id="openLlmPromptModalBtn">
-							<i class="bi bi-chat-dots"></i> {{__('default.Send Prompt to LLM')}}
 						</button>
 						
 						<a href="{{route('book-beats',[$book_slug, 'all-chapters','2'])}}"
@@ -148,22 +128,7 @@
 						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-1 w-100" id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
-						
-						<button class="btn btn-success mb-1 mt-1 w-100" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
-							<i class="bi bi-file-earmark-pdf"></i> {{__('default.Export as PDF')}}
-						</button>
-						
-						<button class="btn btn-success mb-1 mt-1 w-100" id="exportTxtBtn" title="{{__('default.Export as DocX')}}">
-							<i class="bi bi-file-earmark-word"></i> {{__('default.Export as DocX')}}
-						</button>
-						
-						<button class="btn btn-primary mb-3 mt-1 w-100" id="showBookStructureBtn"
-						        title="{{__('default.Read Book')}}">
-							<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
-						</button>
-						
-						<a href="{{route('user.showcase-library')}}" class="mb-1 mt-1 btn btn-secondary w-100"><i
-								class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
+					
 					
 					</div>
 					<!-- Text Blocks Div -->
@@ -182,6 +147,16 @@
 								<button class="btn btn-primary mt-3" id="editBookDetailsBtn">
 									<i class="bi bi-pencil-square"></i> {{__('default.Edit Book Details')}}
 								</button>
+								
+								<button class="btn btn-primary mt-3" id="openLlmPromptModalBtn">
+									<i class="bi bi-chat-dots"></i> {{__('default.Send Prompt to LLM')}}
+								</button>
+								
+								<button class="btn btn-primary mt-3" id="showBookStructureBtn"
+								        title="{{__('default.Read Book')}}">
+									<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
+								</button>
+								
 								
 								<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
 								        data-book-id="<?php echo urlencode($book_slug); ?>"><i
@@ -524,10 +499,6 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/moment.min.js"></script>
 
-<script src="/js/jspdf.umd.min.js"></script>
-<script src="/js/docx.js"></script>
-
-
 <!-- Your custom scripts -->
 <script src="/js/custom-ui.js"></script>
 <script>
@@ -712,7 +683,7 @@
 				},
 				
 				error: function () {
-					$('#generateAllBeatsLog').append('<p>Error generating beats for chapter: '+chapter.name + '</p>');
+					$('#generateAllBeatsLog').append('<p>Error generating beats for chapter: ' + chapter.name + '</p>');
 					$('#generateAllBeats').scrollTop(log[0].scrollHeight);
 					//break loop
 				}
@@ -840,263 +811,85 @@
 		
 	}
 	
-	function exportAsPdf(bookStructure) {
-		console.log(bookStructure);
-		const {jsPDF} = window.jspdf;
-		const doc = new jsPDF({
-			unit: 'in',
-			format: [6, 9]
-		});
-		
-		// Load a Unicode font
-		doc.addFont('/assets/fonts/NotoSans-Regular.ttf', 'NotoSans', 'normal');
-		doc.addFont('/assets/fonts/NotoSans-Bold.ttf', 'NotoSans', 'bold');
-		doc.addFont('/assets/fonts/NotoSans-Italic.ttf', 'NotoSans', 'italic');
-		
-		// Set default font to Roboto
-		doc.setFont('NotoSans', 'normal');
-		
-		// Set font to a serif font
-		// doc.setFont('times', 'normal');
-		
-		const lineHeight = 0.25; // Increased line height
-		let yPosition = 0.75; // Increased top margin
-		const pageHeight = 8.5;
-		const pageWidth = 6;
-		const margin = 0.75; // Increased side margins
-		let pageNumber = 1;
-		let currentFontSize = 12;
-		let currentFontStyle = 'normal';
-		
-		function setFont(fontSize = 12, isBold = false) {
-			currentFontSize = fontSize;
-			currentFontStyle = isBold ? 'bold' : 'normal';
-			doc.setFontSize(fontSize);
-			// doc.setFont('times', currentFontStyle);
-			doc.setFont('NotoSans', currentFontStyle);
-		}
-		
-		function addText(text, fontSize = 12, isBold = false, align = 'left') {
-			setFont(fontSize, isBold);
-			const splitText = doc.splitTextToSize(text, pageWidth - 2 * margin);
-			splitText.forEach(line => {
-				if (yPosition > pageHeight - margin) {
-					addPageNumber();
-					doc.addPage();
-					yPosition = margin;
-					pageNumber++;
-					setFont(currentFontSize, currentFontStyle === 'bold');
-				}
-				
-				doc.text(line, align === 'center' ? pageWidth / 2 : margin, yPosition, {align: align});
-				
-				yPosition += lineHeight;
-			});
-			yPosition += 0.2; // Add a small gap after each text block
-		}
-		
-		function addPageBreak() {
-			addPageNumber();
-			doc.addPage();
-			yPosition = margin;
-			pageNumber++;
-			setFont(currentFontSize, currentFontStyle === 'bold');
-		}
-		
-		function addPageNumber() {
-			const currentFont = doc.getFont();
-			const currentFontSize = doc.getFontSize();
-			doc.setFontSize(10);
-			doc.setFont('NotoSans', 'normal');
-			doc.text(String(pageNumber), pageWidth - margin + 0.2, pageHeight - margin + 0.4, {align: 'right'});
-			doc.setFontSize(currentFontSize);
-			doc.setFont(currentFont.fontName, currentFont.fontStyle);
-		}
-		
-		
-		function addCenteredPage(text, fontSize = 18, isBold = true) {
-			addPageBreak();
-			setFont(fontSize, isBold);
-			const textLines = doc.splitTextToSize(text, pageWidth - 2 * margin);
-			const textHeight = textLines.length * lineHeight;
-			const startY = (pageHeight - textHeight) / 2;
-			doc.text(textLines, pageWidth / 2, startY, {align: 'center'});
-		}
-		
-		// Title
-		addCenteredPage(bookStructure.title, 18, true);
-		
-		// Blurb
-		addCenteredPage(bookStructure.blurb, 14, true);
-		addPageBreak();
-		
-		// Back Cover Text
-		addText(bookStructure.back_cover_text, 14, false);
-		addPageBreak();
-		
-		bookStructure.acts.forEach((act, actIndex) => {
-			if (bookStructure.language === 'Turkish') {
-				act.title = act.title.replace('Act', 'Perde');
-			}
-			
-			addCenteredPage(`${act.title}`); //Act ${actIndex + 1}:
-			act.chapters.forEach((chapter, chapterIndex) => {
-				addPageBreak();
-				
-				if (bookStructure.language === 'Turkish') {
-					chapter.name = chapter.name.replace('Chapter', 'Bölüm');
-				}
-				
-				// Chapter title
-				addText(chapter.name, 14, true);
-				
-				// Beats
-				if (chapter.beats && chapter.beats.length > 0) {
-					
-					chapter.beats.forEach((beat, beatIndex) => {
-						if (beat.beat_text) {
-							addText(beat.beat_text);
-							// addText('____________________');
-							addText('');
-						}
-					});
+	
+	function getLLMsData() {
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				url: '/check-llms-json',
+				type: 'GET',
+				success: function (data) {
+					resolve(data);
+				},
+				error: function (xhr, status, error) {
+					reject(error);
 				}
 			});
 		});
-		
-		addPageNumber(); // Add page number to the last page
-		let simpleFilename = bookStructure.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-		doc.save(simpleFilename + '.pdf');
 	}
 	
-	async function exportAsDocx(bookStructure) {
-		console.log(bookStructure);
-		
-		const {Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak} = docx;
-		
-		let doc_children = [];
-		
-		function addText(text, size = 24, bold = false, alignment = AlignmentType.LEFT) {
-			doc_children.push(new Paragraph({
-				alignment: alignment,
-				spacing: {
-					line: 1.5 * 240
-				},
-				children: [
-					new TextRun({
-						text: text,
-						bold: bold,
-						size: size
-					})
-				]
-			}));
-		}
-		
-		function addPageBreak() {
-			doc_children.push(new Paragraph({
-				children: [new PageBreak()]
-			}));
-		}
-		
-		function addCenteredPage(text, size = 36, bold = true) {
-			addText('');
-			addText('');
-			addText('');
-			addText('');
-			addText('');
-			addText('');
-			addText('');
-			addText('');
-			addText(text, size, bold, AlignmentType.CENTER);
-		}
-		
-		// Title
-		addCenteredPage(bookStructure.title);
-		addPageBreak();
-		
-		// Blurb
-		addText('');
-		addText('');
-		addText('');
-		addText('');
-		addText(bookStructure.blurb, 28, false, AlignmentType.JUSTIFIED);
-		addPageBreak();
-		
-		// Back Cover Text
-		addText(bookStructure.back_cover_text, 28, false, AlignmentType.JUSTIFIED);
-		addPageBreak();
-		
-		bookStructure.acts.forEach((act, actIndex) => {
-			if (bookStructure.language === 'Turkish') {
-				act.title = act.title.replace('Act', 'Perde');
-			}
-			
-			addCenteredPage(`${act.title}`);
-			addPageBreak();
-			
-			act.chapters.forEach((chapter, chapterIndex) => {
-				if (bookStructure.language === 'Turkish') {
-					chapter.name = chapter.name.replace('Chapter', 'Bölüm');
-				}
-				
-				// Chapter title
-				addText('');
-				addText(chapter.name, 32, true, AlignmentType.CENTER);
-				addText('');
-				addText('');
-				
-				// Beats
-				if (chapter.beats && chapter.beats.length > 0) {
-					chapter.beats.forEach((beat, beatIndex) => {
-						if (beat.beat_text) {
-							let beat_texts = beat.beat_text.split('\n');
-							beat_texts.forEach((beat_text) => {
-								addText(beat_text, 24, false, AlignmentType.JUSTIFIED);
-								// addText('');
-							});
-						}
-					});
-				}
-				
-				addPageBreak();
-				
-				
-			});
+	function linkify(text) {
+		const urlRegex = /(https?:\/\/[^\s]+)/g;
+		return text.replace(urlRegex, function (url) {
+			return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
 		});
-		
-		// Generate and save the document
-		
-		const doc = new Document({
-			sections: [{
-				properties: {
-					page: {
-						size: {
-							width: 6 * 1440, // 6 inches in twips (1 inch = 1440 twips)
-							height: 9 * 1440, // 9 inches in twips
-						},
-					},
-				},
-				children: doc_children
-			}]
-		});
-		
-		const blob = await Packer.toBlob(doc);
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		let simpleFilename = bookStructure.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-		link.download = simpleFilename + '.docx';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
 	}
-	
 	
 	let createCoverFileName = '';
 	let bookToDelete = null;
 	
 	$(document).ready(function () {
+		getLLMsData().then(function (llmsData) {
+			const llmSelect = $('#llmSelect');
+			// llmSelect.empty();
+			// llmSelect.append($('<option>', {
+			// 	value: '',
+			{{--	text: '{{__('default.Select an AI Engine')}}'--}}
+			// }));
+			
+			llmsData.forEach(function (model) {
+				
+				// Calculate and display pricing per million tokens
+				let promptPricePerMillion = ((model.pricing.prompt || 0) * 1000000).toFixed(2);
+				let completionPricePerMillion = ((model.pricing.completion || 0) * 1000000).toFixed(2);
+				
+				llmSelect.append($('<option>', {
+					value: model.id,
+					text: model.name + ' - $' + promptPricePerMillion + ' / $' + completionPricePerMillion,
+					'data-description': model.description,
+					'data-prompt-price': model.pricing.prompt || 0,
+					'data-completion-price': model.pricing.completion || 0,
+				}));
+			});
+			
+			// Set the saved LLM if it exists
+			if (savedLlm) {
+				llmSelect.val(savedLlm);
+			}
+			
+			// Show description on change
+			llmSelect.change(function () {
+				const selectedOption = $(this).find('option:selected');
+				const description = selectedOption.data('description');
+				const promptPrice = selectedOption.data('prompt-price');
+				const completionPrice = selectedOption.data('completion-price');
+				$('#modelDescription').html(linkify(description || ''));
+				
+				// Calculate and display pricing per million tokens
+				const promptPricePerMillion = (promptPrice * 1000000).toFixed(2);
+				const completionPricePerMillion = (completionPrice * 1000000).toFixed(2);
+				
+				$('#modelPricing').html(`
+                <strong>Pricing (per million tokens):</strong> Prompt: $${promptPricePerMillion} - Completion: $${completionPricePerMillion}
+            `);
+			});
+			
+			// Trigger change to show initial description
+			llmSelect.trigger('change');
+		}).catch(function (error) {
+			console.error('Error loading LLMs data:', error);
+		});
+		
+		
 		$('.closeAndRefreshButton').on('click', function () {
 			location.reload();
 		});
@@ -1249,16 +1042,6 @@
 			$('#editAuthorName').val(bookData.author_name);
 			$('#editPublisherName').val(bookData.publisher_name);
 			$('#editBookDetailsModal').modal('show');
-		});
-		
-		$('#exportPdfBtn').on('click', function (e) {
-			e.preventDefault();
-			exportAsPdf(bookData);
-		});
-		
-		$('#exportTxtBtn').on('click', function (e) {
-			e.preventDefault();
-			exportAsDocx(bookData);
 		});
 		
 		

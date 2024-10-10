@@ -25,11 +25,22 @@
       #charCount {
           font-size: 0.9em;
       }
+
       #charCount.valid {
           color: green;
       }
+
       #charCount.invalid {
           color: red;
+      }
+
+      #modelDescription a {
+          color: #007bff;
+          text-decoration: none;
+      }
+
+      #modelDescription a:hover {
+          text-decoration: underline;
       }
 	
 	</style>
@@ -81,7 +92,7 @@
 									</div>
 									
 									<div class="row">
-										<div class="mb-3 col-12 col-xl-6">
+										<div class="mb-1 col-12 col-xl-6">
 											<label for="language" class="form-label">{{__('default.Book Structure')}}:</label>
 											
 											<select class="form-control" id="bookStructure" name="bookStructure" required>
@@ -104,42 +115,27 @@
 											</select>
 										</div>
 										
-										<div class="mb-3 col-12 col-xl-6">
-											<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}</label>
-											<select id="llmSelect" class="form-select mx-auto mb-3">
-												<?php
-												if (Auth::user() && Auth::user()->isAdmin()) {
-													?>
-												<option value="anthropic/claude-3.5-sonnet:beta">{{__('default.Select an AI Engine')}}</option>
-												<option value="anthropic/claude-3.5-sonnet:beta">anthropic :: claude-3.5-sonnet</option>
-												<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
-												<option value="openai/gpt-4o-2024-08-06">openai :: gpt-4o</option>
-													<?php
-												} else {
-													?>
-												<option value="anthropic/claude-3-haiku:beta">{{__('default.Select an AI Engine')}}</option>
-													<?php
-												}
-												?>
-												{{--					<option value="open-ai-gpt-4o">open-ai-gpt-4o</option>--}}
-												{{--					<option value="open-ai-gpt-4o-mini">open-ai-gpt-4o-mini</option>--}}
-												{{--					<option value="anthropic-haiku">anthropic-haiku</option>--}}
-												{{--					<option value="anthropic-sonet">anthropic-sonet</option>--}}
-												<option value="anthropic/claude-3-haiku:beta">anthropic :: claude-3-haiku</option>
-												<option value="openai/gpt-4o-mini">openai :: gpt-4o-mini</option>
-												<option value="google/gemini-flash-1.5">google :: gemini-flash-1.5</option>
-												<option value="mistralai/mistral-nemo">mistralai :: mistral-nemo</option>
-												{{--					<option value="mistralai/mixtral-8x22b-instruct">mistralai :: mixtral-8x22b</option>--}}
-												{{--					<option value="meta-llama/llama-3.1-70b-instruct">meta-llama :: llama-3.1</option>--}}
-												{{--					<option value="meta-llama/llama-3.1-8b-instruct">meta-llama :: llama-3.1-8b</option>--}}
-												{{--					<option value="microsoft/wizardlm-2-8x22b">microsoft :: wizardlm-2-8x22b</option>--}}
-												<option value="nousresearch/hermes-3-llama-3.1-405b">nousresearch :: hermes-3</option>
-												{{--					<option value="perplexity/llama-3.1-sonar-large-128k-chat">perplexity :: llama-3.1-sonar-large</option>--}}
-												{{--					<option value="perplexity/llama-3.1-sonar-small-128k-chat">perplexity :: llama-3.1-sonar-small</option>--}}
-												{{--					<option value="cohere/command-r">cohere :: command-r</option>--}}
+										<div class="mb-1 col-12 col-xl-6">
+											<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
+												@if (Auth::user() && Auth::user()->isAdmin())
+													<label class="badge bg-danger">Admin</label>
+												@endif
 											
+											</label>
+											<select id="llmSelect" class="form-select mx-auto">
+												<option value="">{{__('default.Select an AI Engine')}}</option>
+												@if (Auth::user() && Auth::user()->isAdmin())
+													<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+													<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+													<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+													<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+												@endif
 											</select>
 										</div>
+									</div>
+									<div class="mt-1 small col-12 alert alert-primary">
+										<div id="modelDescription"></div>
+										<div id="modelPricing"></div>
 									</div>
 									
 									<div class="row">
@@ -199,6 +195,10 @@
 										{{__('default.After clicking the submit button, The AI will start creating all the chapters for the book. This process may take a few minutes.')}}
 									</div>
 									
+									<button id="tryAgainBtn" class="btn btn-secondary btnhover d-none"
+									        style="min-width: 180px;">{{__('default.Try Again')}}</button>
+									
+									
 									<div id="book_details" class="d-none">
 										<div class="mb-3">
 											<label for="book_title" class="form-label">{{__('default.Book Title')}}:</label>
@@ -228,7 +228,6 @@
 									        style="min-width: 180px;">{{__('default.Submit')}}</button>
 									<button id="addBookStepTwoBtn" class="btn btn-primary btnhover d-none"
 									        style="min-width: 180px;">{{__('default.Submit')}}</button>
-								
 								
 								</div>
 							</div>
@@ -296,7 +295,80 @@
 			});
 		}
 		
+		function getLLMsData() {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					url: '/check-llms-json',
+					type: 'GET',
+					success: function (data) {
+						resolve(data);
+					},
+					error: function (xhr, status, error) {
+						reject(error);
+					}
+				});
+			});
+		}
+		
+		function linkify(text) {
+			const urlRegex = /(https?:\/\/[^\s]+)/g;
+			return text.replace(urlRegex, function (url) {
+				return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+			});
+		}
+		
 		$(document).ready(function () {
+			
+			getLLMsData().then(function (llmsData) {
+				const llmSelect = $('#llmSelect');
+				// llmSelect.empty();
+				// llmSelect.append($('<option>', {
+				// 	value: '',
+				{{--	text: '{{__('default.Select an AI Engine')}}'--}}
+				// }));
+				
+				llmsData.forEach(function (model) {
+					// Calculate and display pricing per million tokens
+					let promptPricePerMillion = ((model.pricing.prompt || 0) * 1000000).toFixed(2);
+					let completionPricePerMillion = ((model.pricing.completion || 0) * 1000000).toFixed(2);
+					
+					llmSelect.append($('<option>', {
+						value: model.id,
+						text: model.name + ' - $' + promptPricePerMillion + ' / $' + completionPricePerMillion,
+						'data-description': model.description,
+						'data-prompt-price': model.pricing.prompt || 0,
+						'data-completion-price': model.pricing.completion || 0,
+					}));
+				});
+				
+				// Set the saved LLM if it exists
+				if (savedLlm) {
+					llmSelect.val(savedLlm);
+				}
+				
+				// Show description on change
+				llmSelect.change(function () {
+					const selectedOption = $(this).find('option:selected');
+					const description = selectedOption.data('description');
+					const promptPrice = selectedOption.data('prompt-price');
+					const completionPrice = selectedOption.data('completion-price');
+					$('#modelDescription').html(linkify(description || ''));
+					
+					// Calculate and display pricing per million tokens
+					const promptPricePerMillion = (promptPrice * 1000000).toFixed(2);
+					const completionPricePerMillion = (completionPrice * 1000000).toFixed(2);
+					
+					$('#modelPricing').html(`
+                <strong>Pricing (per million tokens):</strong> Prompt: $${promptPricePerMillion} - Completion: $${completionPricePerMillion}
+            `);
+				});
+				
+				// Trigger change to show initial description
+				llmSelect.trigger('change');
+			}).catch(function (error) {
+				console.error('Error loading LLMs data:', error);
+			});
+			
 			
 			$('#alertModal').on('hidden.bs.modal', function (e) {
 				if (bookEditUrl) {
@@ -362,6 +434,17 @@
 				}
 			}
 			
+			$("#tryAgainBtn").on('click', function (event) {
+				event.preventDefault();
+				$('#addBookStepOneBtn').removeClass('d-none');
+				$('#hint_1').removeClass('d-none');
+				$('#hint_2').addClass('d-none');
+				$('#book_details').addClass('d-none');
+				$('#addBookStepTwoBtn').addClass('d-none');
+				$(this).addClass('d-none');
+			});
+			
+			
 			$("#addBookStepOneBtn").on('click', function (event) {
 				event.preventDefault();
 				$('#fullScreenOverlay').removeClass('d-none');
@@ -394,6 +477,7 @@
 							$('#addBookStepOneBtn').addClass('d-none');
 							$('#hint_1').addClass('d-none');
 							$('#hint_2').removeClass('d-none');
+							$('#tryAgainBtn').removeClass('d-none');
 							
 							$('#book_details').removeClass('d-none');
 							$('#addBookStepTwoBtn').removeClass('d-none');

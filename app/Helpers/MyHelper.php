@@ -777,7 +777,17 @@
 			} else if ($llm === 'anthropic-haiku' || $llm === 'anthropic-sonet') {
 				$content = $complete_rst['content'][0]['text'];
 			} else {
-				$content = $complete_rst['choices'][0]['message']['content'];
+				if (isset($complete_rst['error'])) {
+					Log::info('================== ERROR =====================');
+					Log::info($complete_rst);
+					Log::info($complete_rst['error']['message']);
+					return json_decode( $complete_rst['error']['message'] ?? '{}');
+				}
+				if (isset($complete_rst['choices'][0]['message']['content'])) {
+					$content = $complete_rst['choices'][0]['message']['content'];
+				} else {
+					$content = '';
+				}
 			}
 
 			if (!$return_json) {

@@ -87,6 +87,8 @@
 			}
 		});
 
+		Route::get('/check-llms-json', [BookActionController::class, 'checkLLMsJson']);
+
 		Route::get('/start-writing', [BookActionController::class, 'startWriting'])->name('start-writing');
 		Route::get('/edit-book/{slug}', [BookActionController::class, 'editBook'])->name('edit-book');
 

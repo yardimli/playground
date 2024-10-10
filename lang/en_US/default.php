@@ -456,9 +456,13 @@
 		'Cover Image' => 'Cover Image',
 		'Export as PDF' => 'Export as PDF',
 		'Export as DocX' => 'Export as DocX',
+		'PDF' => 'PDF',
+		'DocX' => 'DocX',
 		'View Book' => 'View Book',
 		'Read Book' => 'Read Book',
 		'Open Codex' => 'Open Codex',
+		'Read' => 'Read',
+		'Edit' => 'Edit',
 
 		'Back to Books' => 'Back to Books',
 		'Log out' => 'Log out',

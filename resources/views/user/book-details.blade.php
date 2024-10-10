@@ -16,9 +16,10 @@
 				<div class="col-xl-4 col-lg-4 col-12 vstack gap-4">
 					<div class="card">
 						<div class="card-body py-3">
-							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4">
+							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4" style="min-height: 400px;">
 							<br>
 							<a href="{{route('user.read-book',$book_slug)}}" class="btn btn-primary">{{__('Read Book')}}</a>
+							
 							@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
 								<a href="{{route('edit-book',$book_slug)}}" class="btn btn-danger">{{__('Edit Book')}}</a>
 							@endif

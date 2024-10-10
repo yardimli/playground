@@ -275,6 +275,10 @@
 
 			$resultData = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $prompt, true);
 
+			if (isset($resultData->error)) {
+				return response()->json(['success' => false, 'message' => $resultData->error]);
+			}
+
 			//loop all data fields and replace <BR> with \n
 			foreach ($resultData as $key => $value) {
 				if (gettype($value) === 'string') {
@@ -492,6 +496,11 @@
 
 			$resultData = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $beatPrompt, false);
 
+			if (isset($resultData->error)) {
+				return response()->json(['success' => false, 'message' => $resultData->error]);
+			}
+
+
 			$resultData = str_replace('<BR>', "\n", $resultData);
 
 			if ($save_results) {
@@ -708,6 +717,11 @@
 
 			$resultData = MyHelper::llm_no_tool_call($llm, $example_question, $example_answer, $beatPrompt, false);
 
+			if (isset($resultData->error)) {
+				return response()->json(['success' => false, 'message' => $resultData->error]);
+			}
+
+
 			$resultData = str_replace('<BR>', "\n", $resultData);
 
 			if ($save_results) {
@@ -775,6 +789,10 @@
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
 			$resultData = MyHelper::llm_no_tool_call($llm, '', '', $beatPrompt, false);
+
+			if (isset($resultData->error)) {
+				return response()->json(['success' => false, 'message' => $resultData->error]);
+			}
 
 			if ($save_results) {
 				$chapterFilePath = "{$bookPath}/{$chapterFilename}";
