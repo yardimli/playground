@@ -246,6 +246,8 @@
 				'##narrative_style##' => $narrative_style,
 			];
 
+			Log::info('Prompt replacements: ' . json_encode($replacements));
+
 			$prompt = str_replace(array_keys($replacements), array_values($replacements), $prompt);
 
 			$example_question = '';
