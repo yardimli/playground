@@ -530,13 +530,20 @@
 		'Save Beats' => 'Save Beats',
 		'Description' => 'Description',
 		'Beats' => 'Beats',
+		'Write Beat' => 'Write Beat',
 		'Writing All Beats' => 'Writing All Beats',
 		'Read Chapter Beats' => 'Read Chapter Beats',
 		'Edit All Beats' => 'Edit All Beats',
 		'Write Beat Description' => 'Write Beat Description',
+		'Rewrite Beat Description' => 'Rewrite Beat Description',
 		'Writing beat description...' => 'Writing beat description...',
 		'Beat description generated successfully!' => 'Beat description generated successfully!',
 		'Failed to write beat description:' => 'Failed to write beat description:',
+		'Accept Output' => 'Accept Output',
+		'Edit Beat Summary' => 'Edit Beat Summary',
+		'Alert' => 'Alert',
+		'Save Summary' => 'Save Summary',
+		'Beat and summary saved successfully!' => 'Beat and summary saved successfully!',
 
 
 		//action-beats.php

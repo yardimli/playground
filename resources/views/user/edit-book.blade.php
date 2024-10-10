@@ -377,7 +377,6 @@
 	</div>
 </div>
 
-
 <!-- Modal for Editing Book Details -->
 <div class="modal fade" id="editBookDetailsModal" tabindex="-1" aria-labelledby="editBookDetailsModalLabel"
      aria-hidden="true">

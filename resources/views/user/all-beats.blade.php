@@ -133,7 +133,8 @@
 					<div class="col-12 col-lg-6">
 						<button type="button" class="btn btn-success mt-2 mb-3" id="recreateBeats"><i
 								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
-						<a href="{{route('book.codex',[$book_slug])}}" target="_blank" class="btn btn-primary mb-3 mt-2" id="openCodexBtn">
+						<a href="{{route('book.codex',[$book_slug])}}" target="_blank" class="btn btn-primary mb-3 mt-2"
+						   id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
 					</div>
@@ -188,90 +189,83 @@
 								     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
 									<h6>{{__('default.Beat')}} {{$index+1}}</h6>
 									
-									<ul class="nav nav-tabs" id="beatTabs_{{$chapter_index}}_{{$index}}" role="tablist">
-										<li class="nav-item" role="presentation">
-											<button class="nav-link active" id="description-tab-{{$chapter_index}}-{{$index}}"
-											        data-bs-toggle="tab" data-bs-target="#description-{{$chapter_index}}-{{$index}}"
-											        type="button" role="tab" aria-controls="description"
-											        aria-selected="true">{{__('default.Description')}}</button>
-										</li>
-										<li class="nav-item" role="presentation">
-											<button class="nav-link" id="text-tab-{{$chapter_index}}-{{$index}}" data-bs-toggle="tab"
-											        data-bs-target="#text-{{$chapter_index}}-{{$index}}" type="button" role="tab"
-											        aria-controls="text" aria-selected="false">{{__('default.Text')}}</button>
-										</li>
-										<li class="nav-item" role="presentation">
-											<button class="nav-link" id="summary-tab-{{$chapter_index}}-{{$index}}" data-bs-toggle="tab"
-											        data-bs-target="#summary-{{$chapter_index}}-{{$index}}" type="button" role="tab"
-											        aria-controls="summary" aria-selected="false">{{__('default.Summary')}}</button>
-										</li>
-									</ul>
+									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
+									@if ( ($beat['description'] ?? '') === '')
+										@php $hideDescription = ''; $showTextFlag = true; @endphp
+									@endif
 									
-									<div class="tab-content" id="beatTabContent_{{$chapter_index}}_{{$index}}">
-										<div class="tab-pane fade show active" id="description-{{$chapter_index}}-{{$index}}"
-										     role="tabpanel" aria-labelledby="description-tab-{{$chapter_index}}-{{$index}}">
-											<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}">
-											<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
-											          class="form-control beat-description-textarea"
-											          rows="3">{{$beat['description'] ?? ''}}</textarea>
-												<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
-												        data-chapter-index="{{$chapter_index}}"
-												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-												        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
-												<div class="me-auto d-inline-block">
-												<div class="small text-info" id="beatDescriptionResult_{{$chapter_index}}_{{$index}}"></div>
-												</div>
-											
-											</div>
-										</div>
-										
-										<div class="tab-pane fade" id="text-{{$chapter_index}}-{{$index}}" role="tabpanel"
-										     aria-labelledby="text-tab-{{$chapter_index}}-{{$index}}">
-											<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3">
+									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}}">
+										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
+										       class="form-label">{{__('default.Beat Description')}}</label>
+										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
+										          class="form-control beat-description-textarea"
+										          rows="3">{{$beat['description'] ?? ''}}</textarea>
+									</div>
+									
+									@php $hideText = 'd-none'; @endphp
+									@if ( ($beat['description'] ?? '') !== '' || ($beat['beat_text'] ?? '') !== '')
+										@php $hideText = ''; @endphp
+									@endif
+									
+									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3 {{$hideText}}">
+										<label for="beatText_{{$chapter_index}}_{{$index}}"
+										       class="form-label">{{__('default.Beat Text')}}</label>
+										@if ( ($beat['beat_text'] ?? '') !== '')
+											<div class="small text-info">{{__('default.Beat Description')}}:
+												{{$beat['description'] ?? ''}}</div>
 											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 											          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
-												<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
-												        data-chapter-index="{{$chapter_index}}"
-												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-												        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-												<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
-												        data-chapter-filename="{{$chapter['chapterFilename']}}"
-												        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
-												@if($index == 0)
-													<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="before"
-													        data-chapter-index="{{$chapter_index}}"
-													        data-chapter-filename="{{$chapter['chapterFilename']}}"
-													        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
-												@endif
-												<button class="addEmptyBeatBtn btn btn-primary mt-3 me-2" data-position="after"
-												        data-chapter-index="{{$chapter_index}}"
-												        data-chapter-filename="{{$chapter['chapterFilename']}}"
-												        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
-												<div class="me-auto d-inline-block">
-													<div class="small text-info" id="beatTextResult_{{$chapter_index}}_{{$index}}"></div>
-													<div class="small text-info" id="beatDetailModalResult_{{$chapter_index}}_{{$index}}"></div>
-												</div>
-											</div>
-										</div>
+										@else
+											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
+											          rows="10">{{$beat['description'] ?? ''}}</textarea>
+										@endif
 										
-										<div class="tab-pane fade" id="summary-{{$chapter_index}}-{{$index}}" role="tabpanel"
-										     aria-labelledby="summary-tab-{{$chapter_index}}-{{$index}}">
-											<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-3">
-											<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
-											          class="form-control beat-summary-textarea"
-											          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
-												<button id="writeBeatSummaryBtn_{{$chapter_index}}_{{$index}}"
-												        data-chapter-index="{{$chapter_index}}"
-												        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-												        class="writeBeatSummaryBtn btn btn-primary mt-3 me-2">{{__('default.Write Summary')}}</button>
-												<div class="me-auto d-inline-block">
-													<div class="small text-info" id="beatSummaryResult_{{$chapter_index}}_{{$index}}"></div>
-												</div>
-											</div>
-										</div>
+										<label for="beatSummary_{{$chapter_index}}_{{$index}}"
+										       class="form-label d-none">{{__('default.Beat Summary')}}</label>
+										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
+										          class="form-control beat-summary-textarea d-none"
+										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
 									</div>
+									
+									
+									@if ( ($beat['description'] ?? '') !== '')
+										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
+										
+										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Rewrite Beat Description')}}</button>
+									
+									@else
+										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
+									@endif
+									
+									
+									<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
+									        data-chapter-filename="{{$chapter['chapterFilename']}}"
+									        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
+									
+									@if ( ($beat['description'] ?? '') !== '')
+										@if($index == 0)
+											<button class="addEmptyBeatBtn btn btn-info mt-3 me-2" data-position="before"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}"
+											        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
+										@endif
+										<button class="addEmptyBeatBtn btn btn-info mt-3 me-2" data-position="after"
+										        data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}"
+										        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
+									@endif
+									<div class="me-auto small text-info" style="max-height: 80px; overflow: auto;"
+									     id="beatBlockResults_{{$chapter_index}}_{{$index}}"></div>
 								</div>
-							
 							@endforeach
 						</div>
 					</div>
@@ -286,32 +280,13 @@
 	</div>
 </main>
 
-<!-- Modal for Viewing Chapter Beats -->
-<div class="modal fade" id="chapterBeatsModal" tabindex="-1" aria-labelledby="chapterBeatsModalLabel"
-     aria-hidden="true">
-	<div class="modal-dialog modal-xl modal-dialog-scrollable">
-		<div class="modal-content modal-content-color">
-			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="chapterBeatsModalLabel">{{__('default.Read Chapter Beats')}}</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
-			</div>
-			<div class="modal-body modal-body-color">
-				<div id="chapterBeatsContent"></div>
-			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <!-- Alert Modal -->
 <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
      aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="alertModalLabel">Alert</h5>
+				<h5 class="modal-title" id="alertModalLabel">{{__('default.Alert')}}</h5>
 				<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
 				        aria-label="{{__('default.Close')}}"></button>
 			</div>
@@ -326,6 +301,55 @@
 	</div>
 </div>
 
+<!-- Write/Rewrite Beat Description/Text Modal -->
+<div class="modal fade" id="writeBeatModal" tabindex="-1" aria-labelledby="writeBeatModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="writeBeatModalLabel">{{__('default.Write Beat')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<div class="mb-3">
+					<label for="writeUserPrompt" class="form-label">{{__('default.User Prompt')}}</label>
+					<textarea class="form-control" id="writeUserPrompt" rows="10"></textarea>
+				</div>
+				<div class="mb-3">
+					<h6>{{__('default.Write Beat')}}:</h6>
+					<textarea class="form-control" id="writeResult" rows="10"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer modal-footer-color justify-content-start">
+				<button type="button" class="btn btn-primary"
+				        id="sendWritePromptBtn">{{__('default.Write Beat')}}</button>
+				<button type="button" class="btn btn-success" id="acceptWriteBtn"
+				        style="display: none;">{{__('default.Accept Output')}}</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Beat Summary Edit Modal -->
+<div class="modal fade" id="beatSummaryEditModal" tabindex="-1" aria-labelledby="beatSummaryEditModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="beatSummaryEditModalLabel">{{__('default.Edit Beat Summary')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<textarea id="editableBeatSummary" class="form-control" rows="5"></textarea>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Cancel')}}</button>
+				<button type="button" class="btn btn-primary" id="saveBeatSummaryBtn">{{__('default.Save Summary')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div id="fullScreenOverlay" class="d-none">
 	<div class="overlay-content">
@@ -399,7 +423,7 @@
 					
 				} else {
 					$('#fullScreenOverlay').addClass('d-none');
-					$("#alertModalContent").html("{{__('default.Failed to create beats: ')}}" + JSON.stringify( response.message ));
+					$("#alertModalContent").html("{{__('default.Failed to create beats: ')}}" + JSON.stringify(response.message));
 					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					
 					$("#recreateBeats").prop('disabled', false);
@@ -414,105 +438,12 @@
 	}
 	
 	//------------------------------------------------------------
-	function writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
-		return new Promise((resolve, reject) => {
-			if (showOverlay) {
-				$('#fullScreenOverlay').removeClass('d-none');
-			}
-			
-			$("#writeBeatDescriptionBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$("#beatDescriptionResult_" + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat description...')}}");
-			
-			$.ajax({
-				url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
-				method: 'POST',
-				data: {
-					llm: savedLlm,
-					writing_style: writingStyle,
-					narrative_style: narrativeStyle,
-					beat_index: beatIndex,
-					current_beat: beatDescription,
-					save_results: save_results,
-				},
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				dataType: 'json',
-				success: function (response) {
-					$('#fullScreenOverlay').addClass('d-none');
-					if (response.success) {
-						$('#beatDescription_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat description generated successfully!')}}");
-						$('#writeBeatDescriptionBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
-						resolve(response.prompt);
-					} else {
-						$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat description:')}}" + response.message);
-						reject("{{__('default.Failed to write beat description:')}}" + response.message);
-					}
-				},
-				error: function () {
-					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatDescriptionResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat description:')}}");
-					reject("{{__('default.Failed to write beat description:')}}");
-				}
-			});
-		});
-	}
-	
-	//------------------------------------------------------------
-	function writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
-		return new Promise((resolve, reject) => {
-			if (showOverlay) {
-				$('#fullScreenOverlay').removeClass('d-none');
-			}
-			
-			$("#writeBeatTextBtn_" + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$("#beatTextResult_" + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat text...')}}");
-			
-			$.ajax({
-				url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
-				method: 'POST',
-				data: {
-					llm: savedLlm,
-					writing_style: writingStyle,
-					narrative_style: narrativeStyle,
-					beat_index: beatIndex,
-					current_beat: beatDescription,
-					save_results: save_results,
-				},
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				dataType: 'json',
-				success: function (response) {
-					$('#fullScreenOverlay').addClass('d-none');
-					if (response.success) {
-						$('#beatText_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat text generated successfully!')}}");
-						$('#writeBeatTextBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
-						resolve(response.prompt);
-					} else {
-						$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat text: ')}}" + response.message);
-						reject("{{__('default.Failed to write beat text: ')}}" + response.message);
-					}
-				},
-				error: function () {
-					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatTextResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat text.')}}");
-					reject("{{__('default.Failed to write beat text.')}}");
-				}
-			});
-		});
-	}
-	
-	//------------------------------------------------------------
 	function writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, showOverlay = true, save_results = false) {
 		return new Promise((resolve, reject) => {
 			if (showOverlay) {
 				$('#fullScreenOverlay').removeClass('d-none');
 			}
-			$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', true);
-			$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Writing beat summary...')}}");
+			$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Writing beat summary...')}}<br>");
 			
 			$.ajax({
 				url: `/book/write-beat-summary/${bookSlug}/${chapterFilename}`,
@@ -532,18 +463,17 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
 						$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Beat summary generated successfully!')}}");
-						$('#writeBeatSummaryBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
+						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Beat summary generated successfully!')}}<br>");
 						resolve(response.prompt);
 					} else {
-						$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write summary: ')}}" + response.message);
+						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Failed to write summary: ')}}" + response.message + "<br>");
 						reject("{{__('default.Failed to write summary: ')}}" + response.message);
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatSummaryResult_' + chapterIndex + '_' + beatIndex).html("{{__('default.Failed to write beat summary.')}}");
-					reject("{{__('default.Failed to write beat summary.')}}");
+					$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Failed to write beat summary.')}}");
+					reject("{{__('default.Failed to write beat summary.')}}<br>");
 				}
 			});
 		});
@@ -567,9 +497,57 @@
 			dataType: 'json',
 			success: function (response) {
 				if (response.success) {
-					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html("{{__('default.Beat saved successfully!')}}");
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Beat saved successfully!')}}<br>");
+					if (beatText !== '') {
+						writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false)
+							.then(summary => {
+								// Show the summary edit modal
+								$('#editableBeatSummary').val(summary);
+								$('#beatSummaryEditModal').modal('show');
+								
+								// Handle saving the edited summary
+								$('#saveBeatSummaryBtn').off('click').on('click', function () {
+									let editedSummary = $('#editableBeatSummary').val();
+									saveBeatWithSummary(beatText, editedSummary, beatDescription, beatIndex, chapterIndex, chapterFilename);
+									$('#beatSummaryEditModal').modal('hide');
+								});
+							});
+					} else {
+						//reload the page
+						location.reload();
+					}
 				} else {
-					$("#beatDetailModalResult_" + chapterIndex + "_" + beatIndex).html("{{__('default.Failed to save beat: ')}}" + response.message);
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Failed to save beat: ')}}" + response.message + "<br>");
+				}
+			}
+		});
+	}
+	
+	function saveBeatWithSummary(beatText, beatSummary, beatDescription, beatIndex, chapterIndex, chapterFilename) {
+		$.ajax({
+			url: `/book/save-single-beat/${bookSlug}/${chapterFilename}`,
+			method: 'POST',
+			data: {
+				llm: savedLlm,
+				beat_index: beatIndex,
+				beat_description: beatDescription,
+				beat_text: beatText,
+				beat_summary: beatSummary,
+			},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			dataType: 'json',
+			success: function (response) {
+				if (response.success) {
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Beat and summary saved successfully!')}}<br>");
+					$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(beatSummary);
+					
+					//reload the page
+					location.reload();
+					
+				} else {
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Failed to save beat with summary: ')}}" + response.message + "<br>");
 				}
 			}
 		});
@@ -595,6 +573,177 @@
 		return text.replace(urlRegex, function (url) {
 			return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
 		});
+	}
+	
+	function writeBeat(chapterFilename, writeMode, beatIndex, chapterIndex, textInput) {
+		const modal = $('#writeBeatModal');
+		$('#writeResult').val('');
+		
+		if (writeMode === 'write_beat_description') {
+			$('#fullScreenOverlay').removeClass('d-none');
+			$.ajax({
+				url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
+				method: 'POST',
+				data: {
+					llm: savedLlm,
+					create_prompt: true,
+					writing_style: $('#writingStyle').val(),
+					narrative_style: $('#narrativeStyle').val(),
+					beat_index: beatIndex,
+					current_beat: textInput,
+					save_results: false,
+				},
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				dataType: 'json',
+				success: function (response) {
+					$('#fullScreenOverlay').addClass('d-none');
+					$('#writeUserPrompt').val(response.prompt);
+					// Show the modal
+					modal.modal('show');
+				},
+				error: function () {
+					$('#fullScreenOverlay').addClass('d-none');
+				}
+			});
+		}
+		
+		if (writeMode === 'write_beat_text') {
+			$('#fullScreenOverlay').removeClass('d-none');
+			$.ajax({
+				url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
+				method: 'POST',
+				data: {
+					llm: savedLlm,
+					create_prompt: true,
+					writing_style: $('#writingStyle').val(),
+					narrative_style: $('#narrativeStyle').val(),
+					beat_index: beatIndex,
+					current_beat: textInput,
+					save_results: false,
+				},
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				dataType: 'json',
+				success: function (response) {
+					$('#fullScreenOverlay').addClass('d-none');
+					$('#writeUserPrompt').val(response.prompt);
+					// Show the modal
+					modal.modal('show');
+				},
+				error: function () {
+					$('#fullScreenOverlay').addClass('d-none');
+				}
+			});
+		}
+		
+		// Handle the rewrite button click
+		$('#sendWritePromptBtn').off('click').on('click', function () {
+			const userPrompt = $('#writeUserPrompt').val();
+			$('#sendWritePromptBtn').prop('disabled', true).text('{{__('default.Rewriting...')}}');
+			
+			if (writeMode === 'write_beat_description') {
+				$('#fullScreenOverlay').removeClass('d-none');
+				$.ajax({
+					url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
+					method: 'POST',
+					data: {
+						llm: savedLlm,
+						create_prompt: false,
+						beat_prompt: userPrompt,
+						writing_style: $('#writingStyle').val(),
+						narrative_style: $('#narrativeStyle').val(),
+						beat_index: beatIndex,
+						current_beat: textInput,
+						save_results: false,
+					},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					dataType: 'json',
+					success: function (response) {
+						$('#fullScreenOverlay').addClass('d-none');
+						
+						if (response.success) {
+							// Display the rewritten chapter in the modal
+							$('#writeResult').val(response.prompt);
+							$('#acceptWriteBtn').show();
+						} else {
+							$("#alertModalContent").html('{{__('default.Failed to write beat:')}}' + response.message);
+							$("#alertModal").modal('show');
+						}
+						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
+					},
+					error: function () {
+						$("#alertModalContent").html('{{__('default.Error write beat')}}');
+						$("#alertModal").modal('show');
+						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
+						
+						$('#fullScreenOverlay').addClass('d-none');
+					}
+				});
+			}
+			
+			if (writeMode === 'write_beat_text') {
+				$('#fullScreenOverlay').removeClass('d-none');
+				$.ajax({
+					url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
+					method: 'POST',
+					data: {
+						llm: savedLlm,
+						create_prompt: false,
+						beat_prompt: userPrompt,
+						writing_style: $('#writingStyle').val(),
+						narrative_style: $('#narrativeStyle').val(),
+						beat_index: beatIndex,
+						current_beat: textInput,
+						save_results: false,
+					},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					dataType: 'json',
+					success: function (response) {
+						$('#fullScreenOverlay').addClass('d-none');
+						
+						if (response.success) {
+							// Display the rewritten chapter in the modal
+							$('#writeResult').val(response.prompt);
+							$('#acceptWriteBtn').show();
+						} else {
+							$("#alertModalContent").html('{{__('default.Failed to write beat:')}}' + response.message);
+							$("#alertModal").modal('show');
+						}
+						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
+					},
+					error: function () {
+						$("#alertModalContent").html('{{__('default.Error write beat')}}');
+						$("#alertModal").modal('show');
+						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
+						
+						$('#fullScreenOverlay').addClass('d-none');
+					}
+				});
+			}
+			
+		});
+		
+		$('#acceptWriteBtn').off('click').on('click', function () {
+			if (writeMode === 'write_beat_description') {
+				$('#beatDescription_' + chapterIndex + '_' + beatIndex).val($('#writeResult').val());
+				$('#writeBeatDescriptionBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
+			}
+			
+			if (writeMode === 'write_beat_text') {
+				$('#beatText_' + chapterIndex + '_' + beatIndex).val($('#writeResult').val());
+				$('#writeBeatTextBtn_' + chapterIndex + '_' + beatIndex).prop('disabled', false);
+			}
+			
+			$('#writeBeatModal').modal('hide');
+		});
+		
 	}
 	
 	//------------------------------------------------------------
@@ -750,13 +899,12 @@
 		});
 		
 		$('.writeBeatDescriptionBtn').off('click').on('click', function () {
+			let chapterFilename = $(this).attr('data-chapter-filename');
 			let beatIndex = Number($(this).attr('data-beat-index'));
 			let chapterIndex = Number($(this).attr('data-chapter-index'));
-			let chapterFilename = $(this).attr('data-chapter-filename');
-			
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 			
-			writeBeatDescription(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false, $('#writingStyle').val(), $('#narrativeStyle').val());
+			writeBeat(chapterFilename, 'write_beat_description', beatIndex, chapterIndex, beatDescription);
 		});
 		
 		$('.writeBeatTextBtn').off('click').on('click', function () {
@@ -764,19 +912,10 @@
 			let chapterIndex = Number($(this).attr('data-chapter-index'));
 			let chapterFilename = $(this).attr('data-chapter-filename');
 			
-			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
-			
-			writeBeatText(beatDescription, beatIndex, chapterIndex, chapterFilename, true, false, $('#writingStyle').val(), $('#narrativeStyle').val());
-		});
-		
-		$('.writeBeatSummaryBtn').off('click').on('click', function () {
-			let beatIndex = Number($(this).attr('data-beat-index'));
-			let chapterIndex = Number($(this).attr('data-chapter-index'));
-			let chapterFilename = $(this).attr('data-chapter-filename');
-			
 			let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
-			writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false);
+			
+			writeBeat(chapterFilename, 'write_beat_text', beatIndex, chapterIndex, beatText);
 		});
 		
 		$("#recreateBeats").on('click', function (e) {
@@ -809,6 +948,7 @@
 				dataType: 'json',
 				success: function (response) {
 					if (response.success) {
+						
 						$("#alertModalContent").html("{{__('default.Beats saved successfully!')}}");
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						setTimeout(function () {
