@@ -216,6 +216,19 @@
 										</ul>
 									</div>
 									
+									<button class="btn btn-sm btn-outline-primary toggle-beat-description"
+									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+										{{__('default.Description')}}
+									</button>
+									<button class="btn btn-sm btn-outline-primary toggle-beat-text"
+									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+										{{__('default.Text')}}
+									</button>
+									<button class="btn btn-sm btn-outline-primary toggle-beat-summary"
+									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+										{{__('default.Summary')}}
+									</button>
+									
 									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
 									@if ( ($beat['description'] ?? '') === '')
 										@php $hideDescription = ''; $showTextFlag = true; @endphp
@@ -236,23 +249,21 @@
 									
 									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3 {{$hideText}}">
 										@if ( ($beat['beat_text'] ?? '') !== '')
-											<div class="small text-info mb-2">{{__('default.Beat Description')}}:
+											<div class="small text-info mb-2"
+											     id="beatDescriptionLabel_{{$chapter_index}}_{{$index}}">{{__('default.Beat Description')}}:
 												{{$beat['description'] ?? ''}}</div>
-											<label for="beatText_{{$chapter_index}}_{{$index}}"
-											       class="form-label">{{__('default.Beat Text')}}</label>
-											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
-											          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
-										@else
-											<label for="beatText_{{$chapter_index}}_{{$index}}"
-											       class="form-label">{{__('default.Beat Text')}}</label>
-											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
-											          rows="10">{{$beat['description'] ?? ''}}</textarea>
 										@endif
-										
+										<label for="beatText_{{$chapter_index}}_{{$index}}"
+										       class="form-label">{{__('default.Beat Text')}}</label>
+										<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
+										          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
+									</div>
+									
+									<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-2  d-none">
 										<label for="beatSummary_{{$chapter_index}}_{{$index}}"
-										       class="form-label d-none">{{__('default.Beat Summary')}}</label>
+										       class="form-label mt-2">{{__('default.Beat Summary')}}</label>
 										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
-										          class="form-control beat-summary-textarea d-none"
+										          class="form-control beat-summary-textarea"
 										          rows="3">{{$beat['beat_summary'] ?? ''}}</textarea>
 									</div>
 									
@@ -851,6 +862,53 @@
 			
 		}
 		
+		$('.toggle-beat-description').on('click', function () {
+			
+			
+			let chapterIndex = $(this).data('chapter-index');
+			let beatIndex = $(this).data('beat-index');
+			
+			if (!$("#beatDescriptionContainer_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatTextArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatSummaryArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none')) {
+				return;
+			}
+			
+			$('#beatDescriptionContainer_' + chapterIndex + '_' + beatIndex).toggleClass('d-none');
+			if ($('#beatDescriptionContainer_' + chapterIndex + '_' + beatIndex).hasClass('d-none')) {
+				$("#beatDescriptionLabel_" + chapterIndex + "_" + beatIndex).removeClass('d-none');
+			} else {
+				$("#beatDescriptionLabel_" + chapterIndex + "_" + beatIndex).addClass('d-none');
+			}
+		});
+		
+		// Toggle beat text visibility
+		$('.toggle-beat-text').on('click', function () {
+			let chapterIndex = $(this).data('chapter-index');
+			let beatIndex = $(this).data('beat-index');
+			
+			if (!$("#beatTextArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatDescriptionContainer_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatSummaryArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none')) {
+				return;
+			}
+			
+			$('#beatTextArea_' + chapterIndex + '_' + beatIndex).toggleClass('d-none');
+		});
+		
+		// Toggle beat summary visibility
+		$('.toggle-beat-summary').on('click', function () {
+			let chapterIndex = $(this).data('chapter-index');
+			let beatIndex = $(this).data('beat-index');
+			
+			if (!$("#beatSummaryArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatDescriptionContainer_" + chapterIndex + "_" + beatIndex).hasClass('d-none') &&
+				$("#beatTextArea_" + chapterIndex + "_" + beatIndex).hasClass('d-none')) {
+				return;
+			}
+			
+			$('#beatSummaryArea_' + chapterIndex + '_' + beatIndex).toggleClass('d-none');
+		});
 		
 		$('.addEmptyBeatBtn').off('click').on('click', function () {
 			let chapterIndex = $(this).data('chapter-index');
@@ -913,11 +971,12 @@
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 			let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 			
-			if (beatText !== '' || !$('#beatTextArea_' + chapterIndex + '_' + beatIndex).hasClass('d-none')) {
+			if (beatText !== '') {
 				$('#beatTextArea_' + chapterIndex + '_' + beatIndex).addClass('d-none');
+				$('#beatText_' + chapterIndex + '_' + beatIndex).val('');
+				
 				$('#beatDescriptionContainer_' + chapterIndex + '_' + beatIndex).removeClass('d-none');
 				$("#writeBeatTextBtn_" + chapterIndex + "_" + beatIndex).addClass('d-none');
-				$('#beatText_' + chapterIndex + '_' + beatIndex).val('');
 			}
 			
 			writeBeat(chapterFilename, 'write_beat_description', beatIndex, chapterIndex, beatDescription);
