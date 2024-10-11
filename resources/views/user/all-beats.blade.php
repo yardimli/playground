@@ -19,13 +19,6 @@
 	<link href="/css/bootstrap-icons.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="/css/custom.css" rel="stylesheet"> <!-- If you have custom CSS -->
-	
-	<script>
-		let bookData = @json($book);
-		let bookSlug = "{{$book_slug}}";
-		let selectedChapter = "{{$selected_chapter}}";
-		let selectedChapterIndex = "{{$selected_chapter_index}}";
-	</script>
 
 </head>
 <body>
@@ -185,16 +178,38 @@
 									$index++;
 								@endphp
 								
-								<div class="mb-3 beat-outer-container" data-chapter-index="{{$chapter_index}}"
+								<div class="mb-4 beat-outer-container" data-chapter-index="{{$chapter_index}}"
 								     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
-									<h6>{{__('default.Beat')}} {{$index+1}}</h6>
+									
+									<div class="dropdown d-inline-block" style="vertical-align: top;">
+										<button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown"
+										        aria-expanded="false">
+											{{__('default.Beat')}} {{$index+1}}
+										</button>
+										<ul class="dropdown-menu">
+											@if($index == 0)
+												<li>
+													<button class="addEmptyBeatBtn dropdown-item" data-position="before"
+													        data-chapter-index="{{$chapter_index}}"
+													        data-chapter-filename="{{$chapter['chapterFilename']}}"
+													        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
+												</li>
+											@endif
+											<li>
+												<button class="addEmptyBeatBtn dropdown-item" data-position="after"
+												        data-chapter-index="{{$chapter_index}}"
+												        data-chapter-filename="{{$chapter['chapterFilename']}}"
+												        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
+											</li>
+										</ul>
+									</div>
 									
 									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
 									@if ( ($beat['description'] ?? '') === '')
 										@php $hideDescription = ''; $showTextFlag = true; @endphp
 									@endif
 									
-									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}}">
+									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}} mt-3">
 										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Description')}}</label>
 										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
@@ -208,14 +223,16 @@
 									@endif
 									
 									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3 {{$hideText}}">
-										<label for="beatText_{{$chapter_index}}_{{$index}}"
-										       class="form-label">{{__('default.Beat Text')}}</label>
 										@if ( ($beat['beat_text'] ?? '') !== '')
-											<div class="small text-info">{{__('default.Beat Description')}}:
+											<div class="small text-info mb-2">{{__('default.Beat Description')}}:
 												{{$beat['description'] ?? ''}}</div>
+											<label for="beatText_{{$chapter_index}}_{{$index}}"
+											       class="form-label">{{__('default.Beat Text')}}</label>
 											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 											          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
 										@else
+											<label for="beatText_{{$chapter_index}}_{{$index}}"
+											       class="form-label">{{__('default.Beat Text')}}</label>
 											<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
 											          rows="10">{{$beat['description'] ?? ''}}</textarea>
 										@endif
@@ -249,20 +266,8 @@
 									
 									<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
 									        data-chapter-filename="{{$chapter['chapterFilename']}}"
-									        data-beat-index="{{$index}}">{{__('default.Save Beat')}}</button>
+									        data-beat-index="{{$index}}">{{__('default.Save')}}</button>
 									
-									@if ( ($beat['description'] ?? '') !== '')
-										@if($index == 0)
-											<button class="addEmptyBeatBtn btn btn-info mt-3 me-2" data-position="before"
-											        data-chapter-index="{{$chapter_index}}"
-											        data-chapter-filename="{{$chapter['chapterFilename']}}"
-											        data-beat-index="{{$index}}">{{__('default.Add Empty Beat Before')}}</button>
-										@endif
-										<button class="addEmptyBeatBtn btn btn-info mt-3 me-2" data-position="after"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}"
-										        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
-									@endif
 									<div class="me-auto small text-info" style="max-height: 80px; overflow: auto;"
 									     id="beatBlockResults_{{$chapter_index}}_{{$index}}"></div>
 								</div>
@@ -273,7 +278,7 @@
 			@endforeach
 		@endforeach
 		
-		<button type="button" class="btn btn-primary mt-2 mb-1 w-100"
+		<button type="button" class="btn btn-primary mt-2 mb-5 w-100"
 		        id="saveBeatsBtn"><i
 				class="bi bi-file-earmark-text-fill"></i> {{__('default.Save Beats')}}</button>
 	
@@ -363,12 +368,14 @@
 
 <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="/js/jquery-3.7.0.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
 <script src="/js/moment.min.js"></script>
 
 <!-- Your custom scripts -->
 <script src="/js/custom-ui.js"></script>
 <script>
+	let selectedChapter = "{{$selected_chapter}}";
+	let selectedChapterIndex = "{{$selected_chapter_index}}";
 	
 	function recreateBeats(selectedChapter, beatsPerChapter = 3, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 		$('#fullScreenOverlay').removeClass('d-none');
@@ -379,7 +386,7 @@
 		
 		// Now proceed with creating beats
 		$.ajax({
-			url: `/book/write-beats/${bookSlug}/${selectedChapter}`,
+			url: `/book/write-beats/{{$book_slug}}/${selectedChapter}`,
 			method: 'POST',
 			data: {
 				llm: savedLlm,
@@ -446,7 +453,7 @@
 			$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Writing beat summary...')}}<br>");
 			
 			$.ajax({
-				url: `/book/write-beat-summary/${bookSlug}/${chapterFilename}`,
+				url: `/book/write-beat-summary/{{$book_slug}}/${chapterFilename}`,
 				method: 'POST',
 				data: {
 					llm: savedLlm,
@@ -482,7 +489,7 @@
 	//------------------------------------------------------------
 	function saveBeat(beatText, beatSummary, beatDescription, beatIndex, chapterIndex, chapterFilename) {
 		$.ajax({
-			url: `/book/save-single-beat/${bookSlug}/${chapterFilename}`,
+			url: `/book/save-single-beat/{{$book_slug}}/${chapterFilename}`,
 			method: 'POST',
 			data: {
 				llm: savedLlm,
@@ -525,7 +532,7 @@
 	
 	function saveBeatWithSummary(beatText, beatSummary, beatDescription, beatIndex, chapterIndex, chapterFilename) {
 		$.ajax({
-			url: `/book/save-single-beat/${bookSlug}/${chapterFilename}`,
+			url: `/book/save-single-beat/{{$book_slug}}/${chapterFilename}`,
 			method: 'POST',
 			data: {
 				llm: savedLlm,
@@ -582,7 +589,7 @@
 		if (writeMode === 'write_beat_description') {
 			$('#fullScreenOverlay').removeClass('d-none');
 			$.ajax({
-				url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
+				url: `/book/write-beat-description/{{$book_slug}}/${chapterFilename}`,
 				method: 'POST',
 				data: {
 					llm: savedLlm,
@@ -612,7 +619,7 @@
 		if (writeMode === 'write_beat_text') {
 			$('#fullScreenOverlay').removeClass('d-none');
 			$.ajax({
-				url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
+				url: `/book/write-beat-text/{{$book_slug}}/${chapterFilename}`,
 				method: 'POST',
 				data: {
 					llm: savedLlm,
@@ -647,7 +654,7 @@
 			if (writeMode === 'write_beat_description') {
 				$('#fullScreenOverlay').removeClass('d-none');
 				$.ajax({
-					url: `/book/write-beat-description/${bookSlug}/${chapterFilename}`,
+					url: `/book/write-beat-description/{{$book_slug}}/${chapterFilename}`,
 					method: 'POST',
 					data: {
 						llm: savedLlm,
@@ -689,7 +696,7 @@
 			if (writeMode === 'write_beat_text') {
 				$('#fullScreenOverlay').removeClass('d-none');
 				$.ajax({
-					url: `/book/write-beat-text/${bookSlug}/${chapterFilename}`,
+					url: `/book/write-beat-text/{{$book_slug}}/${chapterFilename}`,
 					method: 'POST',
 					data: {
 						llm: savedLlm,
@@ -751,11 +758,6 @@
 		
 		getLLMsData().then(function (llmsData) {
 			const llmSelect = $('#llmSelect');
-			// llmSelect.empty();
-			// llmSelect.append($('<option>', {
-			// 	value: '',
-			{{--	text: '{{__('default.Select an AI Engine')}}'--}}
-			// }));
 			
 			llmsData.forEach(function (model) {
 				// Calculate and display pricing per million tokens
@@ -857,7 +859,7 @@
 			};
 			
 			$.ajax({
-				url: `/book/add-empty-beat/${bookSlug}/${chapterFilename}`,
+				url: `/book/add-empty-beat/{{$book_slug}}/${chapterFilename}`,
 				method: 'POST',
 				data: {
 					beat_index: beatIndex,
@@ -903,6 +905,14 @@
 			let beatIndex = Number($(this).attr('data-beat-index'));
 			let chapterIndex = Number($(this).attr('data-chapter-index'));
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
+			let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
+			
+			if (beatText !== '' || !$('#beatTextArea_' + chapterIndex + '_' + beatIndex).hasClass('d-none')) {
+				$('#beatTextArea_' + chapterIndex + '_' + beatIndex).addClass('d-none');
+				$('#beatDescriptionContainer_' + chapterIndex + '_' + beatIndex).removeClass('d-none');
+				$("#writeBeatTextBtn_" + chapterIndex + "_" + beatIndex).addClass('d-none');
+				$('#beatText_' + chapterIndex + '_' + beatIndex).val('');
+			}
 			
 			writeBeat(chapterFilename, 'write_beat_description', beatIndex, chapterIndex, beatDescription);
 		});
@@ -930,13 +940,13 @@
 			
 			$('#beatsList').find('.beat-outer-container').each(function (index, element) {
 				let beatDescription = $(element).find('.beat-description-textarea').val();
-				let beatText = $(element).find('.beat-text-textarea').val() || '';
-				let beatSummary = $(element).find('.beat-summary-textarea').val() || '';
+				let beatText = '';
+				let beatSummary = '';
 				beats.push({description: beatDescription, beat_text: beatText, beat_summary: beatSummary});
 			});
 			
 			$.ajax({
-				url: `/book/save-beats/${bookSlug}/${selectedChapter}.json`,
+				url: `/book/save-beats/{{$book_slug}}/${selectedChapter}.json`,
 				method: 'POST',
 				data: {
 					llm: savedLlm,
