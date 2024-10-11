@@ -127,7 +127,10 @@ Header START -->
 						<a class="nav-link" href="{{route('register')}}">Register</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('user.showcase-library')}}">Showcase</a>
+						<a class="nav-link active" href="{{route('binshopsblog.index',['en_US'])}}">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="{{route('user.showcase-library')}}">Showcase Library</a>
 					</li>
 				</ul>
 			</div>

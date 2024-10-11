@@ -41,14 +41,17 @@
 				<!-- Image Div -->
 				<div class="row">
 					<!-- Text Blocks Div -->
-					<div class="col-12 col-lg-8">
-						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
-						      id="bookBlurb">{{$book['blurb']}}</span>
+					<div class="col-12 col-lg-6  bg-dark p-3">
+						<span><em>{{__('default.Blurb')}}</em>
+							<br>
+						<span id="bookBlurb">{{$book['blurb']}}</span>
 						<br><br>
 						
+						<span><em>{{__('default.Back Cover Text')}}</em>
+							<br>
 						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
 					</div>
-					<div class="col-12 col-lg-4">
+					<div class="col-12 col-lg-6 p-3  bg-dark">
 						<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
 								{{$book['prompt'] ?? 'no prompt'}}</span></div>
 						<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
@@ -201,6 +204,15 @@
 												        data-chapter-filename="{{$chapter['chapterFilename']}}"
 												        data-beat-index="{{$index}}">{{__('default.Add Empty Beat After')}}</button>
 											</li>
+											@if ( ($beat['description'] ?? '') !== '')
+												<li>
+													<button class="writeBeatDescriptionBtn dropdown-item"
+													        id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
+													        data-chapter-index="{{$chapter_index}}"
+													        data-chapter-filename="{{$chapter['chapterFilename']}}"
+													        data-beat-index="{{$index}}">{{__('default.Rewrite Beat Description')}}</button>
+												</li>
+											@endif
 										</ul>
 									</div>
 									
@@ -250,12 +262,6 @@
 										        data-chapter-index="{{$chapter_index}}"
 										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
 										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-										
-										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Rewrite Beat Description')}}</button>
-									
 									@else
 										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
 										        data-chapter-index="{{$chapter_index}}"
@@ -450,7 +456,7 @@
 			if (showOverlay) {
 				$('#fullScreenOverlay').removeClass('d-none');
 			}
-			$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Writing beat summary...')}}<br>");
+			$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).prepend("{{__('default.Writing beat summary...')}}<br>");
 			
 			$.ajax({
 				url: `/book/write-beat-summary/{{$book_slug}}/${chapterFilename}`,
@@ -470,16 +476,16 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
 						$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(response.prompt);
-						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Beat summary generated successfully!')}}<br>");
+						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).prepend("{{__('default.Beat summary generated successfully!')}}<br>");
 						resolve(response.prompt);
 					} else {
-						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Failed to write summary: ')}}" + response.message + "<br>");
+						$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).prepend("{{__('default.Failed to write summary: ')}}" + response.message + "<br>");
 						reject("{{__('default.Failed to write summary: ')}}" + response.message);
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).append("{{__('default.Failed to write beat summary.')}}");
+					$('#beatBlockResults_' + chapterIndex + '_' + beatIndex).prepend("{{__('default.Failed to write beat summary.')}}");
 					reject("{{__('default.Failed to write beat summary.')}}<br>");
 				}
 			});
@@ -504,7 +510,7 @@
 			dataType: 'json',
 			success: function (response) {
 				if (response.success) {
-					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Beat saved successfully!')}}<br>");
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).prepend("{{__('default.Beat saved successfully!')}}<br>");
 					if (beatText !== '') {
 						writeBeatSummary(beatText, beatDescription, beatIndex, chapterIndex, chapterFilename, true, false)
 							.then(summary => {
@@ -524,7 +530,7 @@
 						location.reload();
 					}
 				} else {
-					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Failed to save beat: ')}}" + response.message + "<br>");
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).prepend("{{__('default.Failed to save beat: ')}}" + response.message + "<br>");
 				}
 			}
 		});
@@ -547,14 +553,14 @@
 			dataType: 'json',
 			success: function (response) {
 				if (response.success) {
-					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Beat and summary saved successfully!')}}<br>");
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).prepend("{{__('default.Beat and summary saved successfully!')}}<br>");
 					$('#beatSummary_' + chapterIndex + '_' + beatIndex).val(beatSummary);
 					
 					//reload the page
 					location.reload();
 					
 				} else {
-					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).append("{{__('default.Failed to save beat with summary: ')}}" + response.message + "<br>");
+					$("#beatBlockResults_" + chapterIndex + "_" + beatIndex).prepend("{{__('default.Failed to save beat with summary: ')}}" + response.message + "<br>");
 				}
 			}
 		});
@@ -791,7 +797,7 @@
 				const completionPricePerMillion = (completionPrice * 1000000).toFixed(2);
 				
 				$('#modelPricing').html(`
-                <strong>Pricing (per million tokens):</strong> Prompt: $${promptPricePerMillion} - Completion: $${completionPricePerMillion}
+                <strong>Pricing (million tokens):</strong> Prompt: $${promptPricePerMillion} - Completion: $${completionPricePerMillion}
             `);
 			});
 			

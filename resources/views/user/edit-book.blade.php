@@ -144,7 +144,7 @@
 								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
 						
 						@if (Auth::user())
-							@if (Auth::user()->email === $book['owner'] || Auth::user()->name === $book['owner'])
+							@if (Auth::user()->email === $book['owner'] || Auth::user()->name === $book['owner'] || Auth::user()->isAdmin())
 								<button class="btn btn-primary mt-3" id="editBookDetailsBtn">
 									<i class="bi bi-pencil-square"></i> {{__('default.Edit Book Details')}}
 								</button>
