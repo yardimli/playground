@@ -102,75 +102,75 @@
 		
 		<hr>
 		
-		<div class="mb-3">
-			<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
-				@if (Auth::user() && Auth::user()->isAdmin())
-					<label class="badge bg-danger">Admin</label>
-				@endif
+		<div class="card general-card">
+			<div class="card-header modal-header modal-header-color" style="display: block;">
+				<div class="mb-3">
+					<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
+						@if (Auth::user() && Auth::user()->isAdmin())
+							<label class="badge bg-danger">Admin</label>
+						@endif
+					
+					</label>
+					<select id="llmSelect" class="form-select mx-auto">
+						<option value="">{{__('default.Select an AI Engine')}}</option>
+						@if (Auth::user() && Auth::user()->isAdmin())
+							<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+							<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+							<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+							<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+						@endif
+					</select>
+				</div>
+				<div class="mt-1 mb-1 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
+					<div id="modelDescription"></div>
+					<div id="modelPricing"></div>
+				</div>
 			
-			</label>
-			<select id="llmSelect" class="form-select mx-auto">
-				<option value="">{{__('default.Select an AI Engine')}}</option>
-				@if (Auth::user() && Auth::user()->isAdmin())
-					<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
-					<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
-					<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
-					<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
-				@endif
-			</select>
-		</div>
-		<div class="mt-1 mb-5 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
-			<div id="modelDescription"></div>
-			<div id="modelPricing"></div>
-		</div>
-		
-		
-		<h3>Chapters and Beats</h3>
-		<div id="chaptersAndBeats">
-			<?php
-//				dd($bookData);
-			?>
-			@foreach($bookData['acts'] as $act)
-				@foreach($act['chapters'] as $chapter)
-					<h4>{{ $chapter['name'] }}</h4>
-					@if(isset($chapter['beats']))
-						@foreach($chapter['beats'] as $beatIndex => $beat)
-							@if(!empty($beat['beat_text']))
-								@php
-									$checkbox_checked = '';
-									if (!empty($bookData['codex']['beats'])) {
-										for ($i = 0; $i < count($bookData['codex']['beats']); $i++) {
-											if ($bookData['codex']['beats'][$i]['chapterFilename'] === $chapter['chapterFilename'] && $bookData['codex']['beats'][$i]['beatIndex'] == $beatIndex) {
-												$checkbox_checked = 'checked';
-												break;
-											}
-										}
-									}
-								@endphp
-								
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox"
-									       value="{{ $chapter['chapterFilename'] }}-!-!-{{ $beatIndex }}"
-									       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
-									       name="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}" {{$checkbox_checked}}>
-									<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
-										Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
-									</label>
-									<br>
-									<button data-id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
-									        data-chapterfilename="{{ $chapter['chapterFilename'] }}" data-beatindex="{{ $beatIndex }}"
-									        class="btn btn-sm updateCodexFromBeat btn-secondary mt-1 mb-3">Update Codex from Beat
-									</button>
-								</div>
-							@endif
+			</div>
+			<div class="card-body modal-content modal-content-color">
+				
+				
+				<h5>Chapters and Beats</h5>
+				<div id="chaptersAndBeats">
+					@foreach($bookData['acts'] as $act)
+						@foreach($act['chapters'] as $chapter)
+							<div class="border p-3 mb-3">
+								<h5>{{ $chapter['name'] }}</h5>
+								@if(isset($chapter['beats']))
+									@foreach($chapter['beats'] as $beatIndex => $beat)
+										@if(!empty($beat['beat_text']))
+											@php
+												$beat_added_before = '';
+												if (!empty($bookData['codex']['beats'])) {
+													for ($i = 0; $i < count($bookData['codex']['beats']); $i++) {
+														if ($bookData['codex']['beats'][$i]['chapterFilename'] === $chapter['chapterFilename'] && $bookData['codex']['beats'][$i]['beatIndex'] == $beatIndex) {
+															$beat_added_before = '<label class="badge bg-success">' . __('default.Already Added') . '</label>';
+															break;
+														}
+													}
+												}
+											@endphp
+											<div class="form-check mb-3">
+												<input class="form-check-input beat-checkbox" type="checkbox"
+												       value="{{ $chapter['chapterFilename'] }}-!-!-{{ $beatIndex }}"
+												       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
+												       name="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
+												<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
+													{!! $beat_added_before !!} Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
+												</label>
+											</div>
+										@endif
+									@endforeach
+								@else
+									<p>No beats found</p>
+								@endif
+							</div>
 						@endforeach
-					@else
-						<p>No beats found</p>
-					@endif
-				@endforeach
-			@endforeach
+					@endforeach
+				</div>
+				<button id="updateCodexFromBeats" class="btn btn-primary mt-3">Update Codex from Selected Beats</button>
+			</div>
 		</div>
-	
 	</div>
 </main>
 
@@ -180,7 +180,7 @@
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
+				<h5 class="modal-title" id="alertModalLabel">Alert</h5>
 				<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
 				        aria-label="{{__('default.Close')}}"></button>
 			</div>
@@ -349,7 +349,7 @@
 			
 			// Collect checked beats
 			let checkedBeats = [];
-			$('.form-check-input:checked').each(function() {
+			$('.beat-checkbox:checked').each(function () {
 				let [chapterFilename, beatIndex] = $(this).val().split('-!-!-');
 				checkedBeats.push({chapterFilename, beatIndex: parseInt(beatIndex)});
 			});
@@ -378,49 +378,48 @@
 			});
 		});
 		
-		$('.updateCodexFromBeat').on('click', function () {
+		$('#updateCodexFromBeats').on('click', function () {
+			let selectedBeats = [];
+			$('.beat-checkbox:checked').each(function () {
+				let [chapterFilename, beatIndex] = $(this).val().split('-!-!-');
+				selectedBeats.push({chapterFilename, beatIndex: parseInt(beatIndex)});
+			});
 			
-			let chapterFilename = $(this).data('chapterfilename');
-			let beatIndex = $(this).data('beatindex');
-			console.log(chapterFilename, beatIndex, $(this).data('id'));
-			document.getElementById($(this).data('id')).checked = true;
+			if (selectedBeats.length === 0) {
+				$("#alertModalContent").html('{{__('default.Please select at least one beat to update the codex.')}}');
+				$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+				return;
+			}
 			
 			$('#fullScreenOverlay').removeClass('d-none');
 			$.ajax({
-				url: '/book/{{ $bookSlug }}/update-codex-from-beat',
+				url: '/book/{{ $bookSlug }}/update-codex-from-beats',
 				method: 'POST',
 				data: {
-					llm: savedLlm,
-					chapterFilename: chapterFilename,
-					beatIndex: beatIndex,
-					
+					llm: $('#llmSelect').val(),
+					selectedBeats: selectedBeats,
 					_token: '{{ csrf_token() }}'
 				},
 				success: function (response) {
 					$('#fullScreenOverlay').addClass('d-none');
 					if (response.success) {
-						
-						$('.updateCodexFromBeat').prop('disabled', true);
-						
-						showDiff('characters', response.codex_character_results);
-						showDiff('locations', response.codex_location_results);
-						showDiff('objects', response.codex_object_results);
-						showDiff('lore', response.codex_lore_results);
+						showDiff('characters', response.codex.characters);
+						showDiff('locations', response.codex.locations);
+						showDiff('objects', response.codex.objects);
+						showDiff('lore', response.codex.lore);
 						
 						$("#diffView").show();
 						
-						$("#alertModalContent").html('Codex updated successfully');
+						$("#alertModalContent").html('{{__('default.Codex Data Update, please verify then save')}}');
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-						// location.reload();
 					} else {
-						$('#fullScreenOverlay').addClass('d-none');
-						$("#alertModalContent").html('Error updating codex (1)');
+						$("#alertModalContent").html('{{__('default.Error updating codex')}}: ' + response.message);
 						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
-					$("#alertModalContent").html('Error updating codex (2)');
+					$("#alertModalContent").html('{{__('default.Error updating codex')}}');
 					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 				}
 			});

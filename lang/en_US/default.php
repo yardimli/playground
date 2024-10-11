@@ -544,6 +544,10 @@
 		'Alert' => 'Alert',
 		'Save Summary' => 'Save Summary',
 		'Beat and summary saved successfully!' => 'Beat and summary saved successfully!',
+		'Already Added' => 'Already Added',
+		'Codex Data Update, please verify then save' => 'Codex Data Update, please verify then save',
+		'Error updating codex' => 'Error updating codex',
+		'Please select at least one beat to update the codex.' => 'Please select at least one beat to update the codex.',
 
 
 		//action-beats.php

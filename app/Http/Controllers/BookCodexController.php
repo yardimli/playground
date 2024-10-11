@@ -15,7 +15,7 @@
 
 	class BookCodexController extends Controller
 	{
-		public function updateCodex($llm, $chapterFilename, $bookSlug, $codexPart, $existingCodexPart, $currentBeatDescription, $currentBeatText)
+		public function updateCodex($llm, $chapterFilename, $bookSlug, $codexPart, $existingCodexPart, $beats)
 		{
 			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");
 			$bookJsonPath = "{$bookPath}/book.json";
@@ -99,6 +99,15 @@
 				$current_chapter['people'] = implode("\n", $current_chapter['people']);
 			}
 
+			$beatSummaries = [];
+			$beatTexts = [];
+			foreach ($beats as $beat) {
+				$chapterData = json_decode(File::get("{$bookPath}/{$beat['chapterFilename']}"), true);
+				$beatSummaries[] = $chapterData['beats'][$beat['beatIndex']]['description'] ?? '';
+				$beatTexts[] = $chapterData['beats'][$beat['beatIndex']]['beat_text'] ?? '';
+			}
+
+
 			$replacements = [
 				'##book_title##' => $bookData['title'] ?? 'no title',
 				'##back_cover_text##' => $bookData['back_cover_text'] ?? 'no back cover text',
@@ -110,15 +119,15 @@
 				'##events##' => $current_chapter['events'] ?? 'no events',
 				'##people##' => $current_chapter['people'] ?? 'no people',
 				'##places##' => $current_chapter['places'] ?? 'no places',
-				'##beat_summary##' => $currentBeatDescription ?? '',
-				'##beat_text##' => $currentBeatText ?? '',
+				'##beat_summary##' => implode("\n\n", $beatSummaries) ?? '',
+				'##beat_text##' => implode("\n\n", $beatTexts) ?? '',
 				'##previous_codex_part##' => $existingCodexPart,
 			];
+
 
 			$beatPrompt = str_replace(array_keys($replacements), array_values($replacements), $beatPromptTemplate);
 
 			$resultData = MyHelper::llm_no_tool_call($llm, '', '', $beatPrompt, false);
-
 
 			return $resultData;
 		}
@@ -137,12 +146,28 @@
 
 			$codex_beats = $request->input('beats', []) ?? [];
 
+			// Add new beats that aren't already in the codex
+			$existingBeats = $bookData['codex']['beats'] ?? [];
+			foreach ($codex_beats as $newBeat) {
+				$beatExists = false;
+				foreach ($existingBeats as $existingBeat) {
+					if ($existingBeat['chapterFilename'] === $newBeat['chapterFilename'] &&
+						$existingBeat['beatIndex'] === $newBeat['beatIndex']) {
+						$beatExists = true;
+						break;
+					}
+				}
+				if (!$beatExists) {
+					$existingBeats[] = $newBeat;
+				}
+			}
+
 			$codexData = [
-				'characters' => $request->input('characters', []),
-				'locations' => $request->input('locations', []),
-				'objects' => $request->input('objects', []),
-				'lore' => $request->input('lore', []),
-				'beats' => $codex_beats
+				'characters' => $request->input('characters', ''),
+				'locations' => $request->input('locations', ''),
+				'objects' => $request->input('objects', ''),
+				'lore' => $request->input('lore', ''),
+				'beats' => $existingBeats
 			];
 
 			$bookData['codex'] = $codexData;
@@ -194,7 +219,6 @@
 
 					if ($chapterData['row'] === $act['id']) {
 						$actChapters[] = $chapterData;
-
 					}
 				}
 
@@ -207,7 +231,6 @@
 			}
 
 			$bookData['acts'] = $acts;
-
 
 			if (!isset($bookData['codex']) || !$bookData['codex']) {
 				$codexData = [
@@ -222,7 +245,7 @@
 			return view('user.codex', compact('bookSlug', 'bookData'));
 		}
 
-		public function updateCodexFromBeat(Request $request, $bookSlug)
+		public function updateCodexFromBeats(Request $request, $bookSlug)
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
@@ -233,32 +256,25 @@
 			$bookJsonPath = "{$bookPath}/book.json";
 			$bookData = json_decode(File::get($bookJsonPath), true);
 
-			$chapterFilename = $request->input('chapterFilename');
-			$beatIndex = $request->input('beatIndex');
+			$selectedBeats = $request->input('selectedBeats');
 			$llm = $request->input('llm', 'anthropic/claude-3-haiku:beta');
 
-			$chapterPath = "{$bookPath}/{$chapterFilename}";
-			$chapterData = json_decode(File::get($chapterPath), true);
+			$codex_lore_results = $this->updateCodex($llm, '', $bookSlug, 'lore', $bookData['codex']['lore'] ?? '', $selectedBeats);
+			$codex_character_results = $this->updateCodex($llm, '', $bookSlug, 'characters', $bookData['codex']['characters'] ?? '', $selectedBeats);
+			$codex_location_results = $this->updateCodex($llm, '', $bookSlug, 'locations', $bookData['codex']['locations'] ?? '', $selectedBeats);
+			$codex_object_results = $this->updateCodex($llm, '', $bookSlug, 'objects', $bookData['codex']['objects'] ?? '', $selectedBeats);
 
-			$beatDescription = $chapterData['beats'][$beatIndex]['description'] ?? '';
-			$beatText = $chapterData['beats'][$beatIndex]['beat_text'] ?? '';
+			$updatedCodex = [
+				'characters' => $codex_character_results,
+				'locations' => $codex_location_results,
+				'objects' => $codex_object_results,
+				'lore' => $codex_lore_results,
+			];
 
-			$codex_lore_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'lore', $bookData['codex']['lore'] ?? '', $beatDescription, $beatText);
-
-			$codex_character_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'characters', $bookData['codex']['characters'] ?? '', $beatDescription, $beatText);
-
-			$codex_location_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'locations', $bookData['codex']['locations'] ?? '', $beatDescription, $beatText);
-
-			$codex_object_results = $this->updateCodex($llm, $chapterFilename, $bookSlug, 'objects', $bookData['codex']['objects'] ?? '', $beatDescription, $beatText);
-
-			return response()->json(['success' => true,
-				'chapterFilename' => $chapterFilename,
-				'beatIndex' => $beatIndex,
-				'codex_character_results' => $codex_character_results,
-				'codex_location_results' => $codex_location_results,
-				'codex_object_results' => $codex_object_results,
-				'codex_lore_results' => $codex_lore_results,
-				'message' => __('Codex updated successfully')]);
+			return response()->json([
+				'success' => true,
+				'codex' => $updatedCodex,
+				'message' => __('Codex updated successfully')
+			]);
 		}
-
 	}
