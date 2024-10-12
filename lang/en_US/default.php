@@ -579,6 +579,7 @@
 		'Edited chapter' => 'Edited chapter',
 		'Cover saved successfully' => 'Cover saved successfully',
 		'Restart Tour' => 'Restart Tour',
+		'Try Again' => 'Try Again',
 
 		//action-make-cover.php
 		'Image generated successfully' => 'Image generated successfully',

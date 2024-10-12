@@ -229,12 +229,7 @@
 										{{__('default.Summary')}}
 									</button>
 									
-									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
-									@if ( ($beat['description'] ?? '') === '')
-										@php $hideDescription = ''; $showTextFlag = true; @endphp
-									@endif
-									
-									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}} mt-3">
+									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="mt-3">
 										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Description')}}</label>
 										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
