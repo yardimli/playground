@@ -229,7 +229,12 @@
 										{{__('default.Summary')}}
 									</button>
 									
-									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="mt-3">
+									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
+									@if ( ($beat['description'] ?? '') === '')
+										@php $hideDescription = ''; $showTextFlag = true; @endphp
+									@endif
+									
+									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}} mt-3">
 										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Description')}}</label>
 										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
@@ -243,11 +248,9 @@
 									@endif
 									
 									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3 {{$hideText}}">
-										@if ( ($beat['beat_text'] ?? '') !== '')
-											<div class="small text-info mb-2"
-											     id="beatDescriptionLabel_{{$chapter_index}}_{{$index}}">{{__('default.Beat Description')}}:
-												{{$beat['description'] ?? ''}}</div>
-										@endif
+										<div class="small text-info mb-2"
+										     id="beatDescriptionLabel_{{$chapter_index}}_{{$index}}">{{__('default.Beat Description')}}:
+											{{$beat['description'] ?? ''}}</div>
 										<label for="beatText_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Text')}}</label>
 										<textarea id="beatText_{{$chapter_index}}_{{$index}}" class="form-control beat-text-textarea"
