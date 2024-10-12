@@ -1005,7 +1005,7 @@
 			let beatText = $('#beatText_' + chapterIndex + '_' + beatIndex).val();
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 			
-			writeBeat(chapterFilename, 'write_beat_text', beatIndex, chapterIndex, beatText);
+			writeBeat(chapterFilename, 'write_beat_text', beatIndex, chapterIndex, beatDescription + "\n" + beatText);
 		});
 		
 		$("#recreateBeats").on('click', function (e) {
