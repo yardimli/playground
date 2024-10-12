@@ -690,6 +690,8 @@
 					if ($next_beat === '') {
 						$next_beat = ($next_chapter['name'] ?? 'Next Chapter') . "\nNext Chapter Description:" . ($next_chapter['short_description'] ?? '');
 					}
+				} else if ($next_chapter !== null) {
+					$next_beat = ($next_chapter['name'] ?? 'Next Chapter') . "\nNext Chapter Description:" . ($next_chapter['short_description'] ?? '');
 				}
 			}
 
