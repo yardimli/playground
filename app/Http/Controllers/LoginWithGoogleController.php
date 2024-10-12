@@ -64,7 +64,7 @@
 
 					Auth::login($finduser);
 
-					return redirect()->intended('/settings');
+					return redirect()->intended('/write-book');
 
 				} else {
 					$username = $user->getNickname() ?? Str::slug($user->name);
@@ -103,12 +103,12 @@
 						'avatar' => $avatarPath
 					]);
 
-					MyHelper::addStarterPackage($new_user->id);
+					//MyHelper::addStarterPackage($new_user->id);
 					///-------------- ADD NEW USER TOKENS
 
 					Auth::login($new_user);
 
-					return redirect()->intended('/settings');
+					return redirect()->intended('/write-book');
 				}
 
 			} catch
