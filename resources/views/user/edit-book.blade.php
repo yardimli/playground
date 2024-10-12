@@ -504,6 +504,7 @@
 <script>
 	
 	let reload_window = false;
+	let savedLlm = localStorage.getItem('edit-book-llm') || 'anthropic/claude-3-haiku:beta';
 	
 	function showBookStructureModal() {
 		
@@ -811,7 +812,6 @@
 		
 	}
 	
-	
 	function getLLMsData() {
 		return new Promise((resolve, reject) => {
 			$.ajax({
@@ -884,6 +884,21 @@
 			console.error('Error loading LLMs data:', error);
 		});
 		
+		$("#llmSelect").on('change', function () {
+			localStorage.setItem('edit-book-llm', $(this).val());
+			savedLlm = $(this).val();
+		});
+		
+		// change $llmSelect to savedLlm
+		console.log('set llmSelect to ' + savedLlm);
+		var dropdown = document.getElementById('llmSelect');
+		var options = dropdown.getElementsByTagName('option');
+		
+		for (var i = 0; i < options.length; i++) {
+			if (options[i].value === savedLlm) {
+				dropdown.selectedIndex = i;
+			}
+		}
 		
 		$('.closeAndRefreshButton').on('click', function () {
 			location.reload();

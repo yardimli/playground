@@ -759,8 +759,12 @@ Prompt:";
 						return false;
 					}
 
-					if (isset($llm['pricing']['prompt'])) {
-						$price_per_million = floatval($llm['pricing']['prompt']) * 1000000;
+					if (isset($llm['id']) && (stripos($llm['id'], 'vision') !== false)) {
+						return false;
+					}
+
+					if (isset($llm['pricing']['completion'])) {
+						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
 						return $price_per_million <= 5;
 					}
 					return true;
@@ -778,11 +782,20 @@ Prompt:";
 						return false;
 					}
 
-					if (isset($llm['pricing']['prompt'])) {
-						$price_per_million = floatval($llm['pricing']['prompt']) * 1000000;
-						return $price_per_million <= 0.5;
+					if (isset($llm['id']) && (stripos($llm['id'], 'vision') !== false)) {
+						return false;
 					}
-					return true;
+
+					if (isset($llm['pricing']['completion'])) {
+						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
+						return $price_per_million <= 1.5;
+					}
+
+					if (!isset($llm['pricing']['completion'])) {
+						return false;
+					}
+
+						return true;
 				});
 
 				return response()->json(array_values($filtered_llms));

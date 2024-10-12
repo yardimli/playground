@@ -1,6 +1,4 @@
 let savedTheme = localStorage.getItem('theme') || 'light';
-let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
-
 
 function applyTheme(theme) {
 	if (theme === 'dark') {
@@ -18,22 +16,13 @@ $(document).ready(function () {
 	
 	applyTheme(savedTheme);
 	
-	$("#llmSelect").on('change', function () {
-		localStorage.setItem('llm', $(this).val());
-		savedLlm = $(this).val();
+	$('#modeToggleBtn').on('click', function () {
+		const currentTheme = $('body').hasClass('dark-mode') ? 'dark' : 'light';
+		const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+		localStorage.setItem('theme', newTheme);
+		applyTheme(newTheme);
 	});
 	
-	// change $llmSelect to savedLlm
-	console.log('set llmSelect to ' + savedLlm);
-	var dropdown = document.getElementById('llmSelect');
-	var options = dropdown.getElementsByTagName('option');
-
-	
-	for (var i = 0; i < options.length; i++) {
-		if (options[i].value === savedLlm) {
-				dropdown.selectedIndex = i;
-		}
-	}
 	
 	// Manage z-index for multiple modals
 	$('.modal').on('show.bs.modal', function () {

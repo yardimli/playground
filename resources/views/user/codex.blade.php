@@ -20,6 +20,9 @@
 	<!-- Custom styles for this template -->
 	<link href="/css/custom.css" rel="stylesheet">
 	
+	<link rel="stylesheet" href="/css/introjs.css">
+	<link rel="stylesheet" href="/css/introjs-dark.css" disabled>
+	
 	<script>
 		let bookData = @json($bookData);
 		let bookSlug = "{{$bookSlug}}";
@@ -216,9 +219,11 @@
 
 <!-- Your custom scripts -->
 <script src="/js/custom-ui.js"></script>
+<script src="/js/intro.min.js"></script>
 
 
 <script>
+	let savedLlm = localStorage.getItem('codex-llm') || 'anthropic/claude-3-haiku:beta';
 	
 	function setTextareaHeight(field) {
 		var textarea = document.getElementById(field);
@@ -288,8 +293,26 @@
 		});
 	}
 	
+	function isDarkMode() {
+		return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+	}
+	
+	// Function to toggle Intro.js stylesheets based on theme
+	function toggleIntroJsStylesheet() {
+		const lightStylesheet = document.querySelector('link[href="/css/introjs.css"]');
+		const darkStylesheet = document.querySelector('link[href="/css/introjs-dark.css"]');
+		
+		if (isDarkMode()) {
+			lightStylesheet.disabled = true;
+			darkStylesheet.disabled = false;
+		} else {
+			lightStylesheet.disabled = false;
+			darkStylesheet.disabled = true;
+		}
+	}
 	
 	$(document).ready(function () {
+		toggleIntroJsStylesheet();
 		
 		$('#alertModal').on('hidden.bs.modal', function () {
 			if ($('#alertModalContent').text().trim() === 'Codex saved successfully') {
@@ -320,6 +343,7 @@
 				llmSelect.val(savedLlm);
 			}
 			
+			
 			// Show description on change
 			llmSelect.change(function () {
 				const selectedOption = $(this).find('option:selected');
@@ -342,6 +366,23 @@
 		}).catch(function (error) {
 			console.error('Error loading LLMs data:', error);
 		});
+		
+		$("#llmSelect").on('change', function () {
+			localStorage.setItem('codex-llm', $(this).val());
+			savedLlm = $(this).val();
+		});
+		
+		// change $llmSelect to savedLlm
+		console.log('set llmSelect to ' + savedLlm);
+		var dropdown = document.getElementById('llmSelect');
+		var options = dropdown.getElementsByTagName('option');
+		
+		for (var i = 0; i < options.length; i++) {
+			if (options[i].value === savedLlm) {
+				dropdown.selectedIndex = i;
+			}
+		}
+		
 		
 		$('#saveCodex').on('click', function (e) {
 			e.preventDefault();

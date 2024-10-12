@@ -393,6 +393,7 @@
 <script>
 	let selectedChapter = "{{$selected_chapter}}";
 	let selectedChapterIndex = "{{$selected_chapter_index}}";
+	let savedLlm = localStorage.getItem('beats-llm') || 'anthropic/claude-3-haiku:beta';
 	
 	function recreateBeats(selectedChapter, beatsPerChapter = 3, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 		$('#fullScreenOverlay').removeClass('d-none');
@@ -817,6 +818,22 @@
 		}).catch(function (error) {
 			console.error('Error loading LLMs data:', error);
 		});
+		
+		$("#llmSelect").on('change', function () {
+			localStorage.setItem('beats-llm', $(this).val());
+			savedLlm = $(this).val();
+		});
+		
+		// change $llmSelect to savedLlm
+		console.log('set llmSelect to ' + savedLlm);
+		var dropdown = document.getElementById('llmSelect');
+		var options = dropdown.getElementsByTagName('option');
+		
+		for (var i = 0; i < options.length; i++) {
+			if (options[i].value === savedLlm) {
+				dropdown.selectedIndex = i;
+			}
+		}
 		
 		
 		if (selectedChapter !== '') {

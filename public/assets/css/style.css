@@ -125,6 +125,12 @@
   --bs-breakpoint-xxl: 1400px;
   --bs-scroll-thumb: #e1e4e6;
 
+
+  --scrollbar-width: 10px;
+  --scrollbar-track-color: #f4f4f4;
+  --scrollbar-thumb-color: #ced4da;
+  --scrollbar-thumb-hover-color: #a1a1a1;
+
 }
 
 [data-bs-theme=dark] {
@@ -176,6 +182,31 @@
   --bs-border-color: #29292e;
   --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
   --bs-scroll-thumb: #676a79;
+
+  --scrollbar-width: 10px;
+  --scrollbar-track-color: #333;
+  --scrollbar-thumb-color: #555;
+  --scrollbar-thumb-hover-color: #777;
+
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 10px;
+  border: 2px solid var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-color);
 }
 
 *,

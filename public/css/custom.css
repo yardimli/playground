@@ -19,10 +19,6 @@
     --alert-success-background: #d4edda;
     --alert-success-text: #155724;
 
-    --hamburger-menu-color: #fff;
-    --hamburger-menu-background-color: #444;
-    --hamburger-menu-line-color: #fff;
-
     --scrollbar-width: 8px;
     --scrollbar-track-color: #f4f4f4;
     --scrollbar-thumb-color: #ced4da;
@@ -51,10 +47,6 @@ body.dark-mode {
     --input-border-color: #444;
     --alert-success-background: #155724;
     --alert-success-text: #d4edda;
-
-    --hamburger-menu-color: #000;
-    --hamburger-menu-background-color: #555;
-    --hamburger-menu-line-color: #000;
 
     --scrollbar-track-color: #333;
     --scrollbar-thumb-color: #555;

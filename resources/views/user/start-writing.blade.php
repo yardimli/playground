@@ -3,6 +3,9 @@
 @section('title', 'Start Writing')
 
 @section('content')
+	<link rel="stylesheet" href="/css/introjs.css">
+	<link rel="stylesheet" href="/css/introjs-dark.css" disabled>
+	
 	<style>
       #fullScreenOverlay {
           position: fixed;
@@ -57,6 +60,9 @@
 						<div class="row">
 							<div class="col-xl-3 col-lg-4 mb-5">
 								<img alt="" src="{{$coverFilename}}">
+								<div class="mb-3 mt-3">
+									<a href="#" id="restartTour">{{ __('default.Restart Tour') }}</a>
+								</div>
 							</div>
 							<div class="col-xl-9 col-lg-8 mb-5">
 								<div class="shop-bx shop-profile">
@@ -93,7 +99,11 @@
 									
 									<div class="row">
 										<div class="mb-1 col-12 col-xl-6">
-											<label for="language" class="form-label">{{__('default.Book Structure')}}:</label>
+											<label for="language" class="form-label">
+												{{__('default.Book Structure')}}:
+												<i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#bookStructureModal"
+												   style="cursor: pointer;"></i>
+											</label>
 											
 											<select class="form-control" id="bookStructure" name="bookStructure" required>
 												<option
@@ -273,13 +283,136 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Book Structure Info Modal -->
+	<div class="modal fade" id="bookStructureModal" tabindex="-1" aria-labelledby="bookStructureModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-lg">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
+					<h5 class="modal-title" id="bookStructureModalLabel">Book Structure Types</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body modal-body-color">
+					<div class="accordion" id="bookStructureAccordion">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading1">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+									The 1 Act Story (1 Act, 3 Chapters)
+								</button>
+							</h2>
+							<div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									A simple structure for short stories or novellas. It consists of a single act divided into three chapters: setup, confrontation, and resolution. This structure is straightforward and focuses on a single main conflict or plot point.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading2">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+									ABCDE (1 Act, 6 Chapters)
+								</button>
+							</h2>
+							<div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									The ABCDE structure stands for Action, Background, Conflict, Development, and Ending. It's a concise structure that works well for short stories or novellas, guiding the narrative through these five key elements across six chapters.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading3">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+									Fichtean Curve (3 Acts, 8 Chapters)
+								</button>
+							</h2>
+							<div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									The Fichtean Curve is a three-act structure that focuses on rising action through a series of crises. It starts with immediate conflict and continues to build tension through multiple crises before reaching the climax and resolution. This structure is good for action-packed or suspenseful stories.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading4">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+									Freytag's Pyramid (5 Acts, 9 Chapters)
+								</button>
+							</h2>
+							<div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									Freytag's Pyramid is a five-act structure: exposition, rising action, climax, falling action, and denouement. It provides a balanced approach to storytelling, with equal emphasis on the build-up and the aftermath of the climax. This structure works well for complex plots with significant character development.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading5">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+									Hero's Journey (3 Acts, 12 Chapters)
+								</button>
+							</h2>
+							<div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									Based on Joseph Campbell's monomyth, the Hero's Journey is a three-act structure that follows a protagonist's adventure through 12 stages. It includes the departure, initiation, and return of the hero. This structure is ideal for epic tales, fantasy, and coming-of-age stories.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading6">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+									Story Clock (4 Acts, 12 Chapters)
+								</button>
+							</h2>
+							<div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									The Story Clock is a four-act structure that visualizes the story as a clock face, with 12 chapters corresponding to the hours. It provides a clear framework for pacing and plot development, ensuring key events occur at regular intervals throughout the narrative.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading7">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+									Save The Cat (4 Acts, 15 Chapters)
+								</button>
+							</h2>
+							<div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									Save The Cat is a four-act structure popularized by screenwriter Blake Snyder. It breaks down the narrative into 15 specific beats or plot points. This structure is highly detailed and works well for both novels and screenplays, providing a clear roadmap for the story's progression.
+								</div>
+							</div>
+						</div>
+						
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="heading8">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+									Dan Harmon's Story Circle (8 Acts, 15 Chapters)
+								</button>
+							</h2>
+							<div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#bookStructureAccordion">
+								<div class="accordion-body">
+									Dan Harmon's Story Circle is an eight-act structure based on the Hero's Journey but simplified for modern storytelling. It follows a character who goes on a journey, adapts to a new situation, and undergoes a change. This structure is versatile and can be applied to various genres and story lengths.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer modal-footer-color">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 @endsection
 
 @push('scripts')
 	<!-- Inline JavaScript code -->
+	<script src="/js/intro.min.js"></script>
 	<script>
-		let savedLlm = localStorage.getItem('llm') || 'anthropic/claude-3-haiku:beta';
+		let savedLlm = localStorage.getItem('book-llm') || 'anthropic/claude-3-haiku:beta';
 		
 		let exampleQuestion = '';
 		let exampleAnswer = '';
@@ -317,7 +450,169 @@
 			});
 		}
 		
+		function startIntro() {
+			let intro = introJs().setOptions({
+				steps: [
+					{
+						element: '#user_blurb',
+						intro: "Describe your book's story, characters, and events here. The more detailed your description, the more creative and unique the writing will be."
+					},
+					{
+						element: '#language',
+						intro: "Select the language for your book."
+					},
+					{
+						element: '#bookStructure',
+						intro: "Choose the structure for your book. This determines the number of acts and chapters."
+					},
+					{
+						element: '#llmSelect',
+						intro: "Select the AI engine to use for generating your book."
+					},
+					{
+						element: '#adultContent',
+						intro: "Specify whether your book contains adult content or not."
+					},
+					{
+						element: '#genre',
+						intro: "Choose the genre for your book."
+					},
+					{
+						element: '#authorName',
+						intro: "Enter the author's name for the book."
+					},
+					{
+						element: '#publisherName',
+						intro: "Enter the publisher's name for the book."
+					},
+					{
+						element: '#writingStyle',
+						intro: "Select the writing style for your book."
+					},
+					{
+						element: '#narrativeStyle',
+						intro: "Choose the narrative style for your book."
+					},
+					{
+						element: '#addBookStepOneBtn',
+						intro: "Click this button to generate the book's title, blurb, and characters.",
+						position: 'top'
+					}
+				],
+				exitOnOverlayClick: false,
+				showStepNumbers: true,
+				disableInteraction: false,
+				showBullets: false,
+				showProgress: true
+			});
+			
+			
+			intro.onafterchange(function (targetElement) {
+				if (targetElement.tagName.toLowerCase() === 'textarea') {
+					var nextButton = document.querySelector('.introjs-nextbutton');
+					nextButton.classList.add('introjs-disabled');
+					nextButton.classList.add('custom-disabled'); // Add this line
+					
+					$(targetElement).on('input', function () {
+						if ($(this).val().trim() !== '') {
+							nextButton.classList.remove('introjs-disabled');
+							nextButton.classList.remove('custom-disabled'); // Add this line
+						} else {
+							nextButton.classList.add('introjs-disabled');
+							nextButton.classList.add('custom-disabled'); // Add this line
+						}
+					});
+				}
+			});
+			
+			intro.oncomplete(function () {
+				localStorage.setItem('introCompleted', 'true');
+			});
+			
+			intro.start();
+		}
+		
+		// Function to continue the tour for the second part
+		function continueTour() {
+			let intro = introJs().setOptions({
+				steps: [
+					{
+						element: '#book_title',
+						intro: "This is the generated title for your book. You can edit it if needed."
+					},
+					{
+						element: '#book_blurb',
+						intro: "This is the generated blurb for your book. Feel free to make adjustments."
+					},
+					{
+						element: '#back_cover_text',
+						intro: "This text will appear on the back cover of your book. You can modify it as needed."
+					},
+					{
+						element: '#character_profiles',
+						intro: "These are the generated character profiles for your book. Review and edit if necessary."
+					},
+					{
+						element: '#addBookStepTwoBtn',
+						intro: "Click this button to start generating the full content of your book.",
+						position: 'top'
+					}
+				],
+				exitOnOverlayClick: false,
+				showStepNumbers: true,
+				showBullets: false,
+				showProgress: true
+			});
+			
+			intro.oncomplete(function () {
+				localStorage.setItem('introCompleted', 'true');
+			});
+			
+			intro.start();
+		}
+		
+		function isDarkMode() {
+			return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+		}
+		
+		// Function to toggle Intro.js stylesheets based on theme
+		function toggleIntroJsStylesheet() {
+			const lightStylesheet = document.querySelector('link[href="/css/introjs.css"]');
+			const darkStylesheet = document.querySelector('link[href="/css/introjs-dark.css"]');
+			
+			if (isDarkMode()) {
+				lightStylesheet.disabled = true;
+				darkStylesheet.disabled = false;
+			} else {
+				lightStylesheet.disabled = false;
+				darkStylesheet.disabled = true;
+			}
+		}
+		
+		
 		$(document).ready(function () {
+			toggleIntroJsStylesheet();
+			
+			// Start the tour if it's the user's first time
+			if (!localStorage.getItem('introCompleted')) {
+				startIntro();
+			}
+			
+			
+			document.addEventListener('click', function (event) {
+				if (event.target.classList.contains('introjs-nextbutton') &&
+					event.target.classList.contains('custom-disabled')) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+			}, true);
+			
+			
+			// Restart tour button
+			$('#restartTour').on('click', function (e) {
+				e.preventDefault();
+				startIntro();
+			});
 			
 			getLLMsData().then(function (llmsData) {
 				const llmSelect = $('#llmSelect');
@@ -369,6 +664,23 @@
 				console.error('Error loading LLMs data:', error);
 			});
 			
+			$("#llmSelect").on('change', function () {
+				localStorage.setItem('book-llm', $(this).val());
+				savedLlm = $(this).val();
+			});
+			
+			// change $llmSelect to savedLlm
+			console.log('set llmSelect to ' + savedLlm);
+			var dropdown = document.getElementById('llmSelect');
+			var options = dropdown.getElementsByTagName('option');
+			
+			for (var i = 0; i < options.length; i++) {
+				if (options[i].value === savedLlm) {
+					dropdown.selectedIndex = i;
+				}
+			}
+			
+			
 			
 			$('#alertModal').on('hidden.bs.modal', function (e) {
 				if (bookEditUrl) {
@@ -416,23 +728,6 @@
 				}
 			});
 			
-			
-			$("#llmSelect").on('change', function () {
-				localStorage.setItem('llm', $(this).val());
-				savedLlm = $(this).val();
-			});
-			
-			// change $llmSelect to savedLlm
-			console.log('set llmSelect to ' + savedLlm);
-			var dropdown = document.getElementById('llmSelect');
-			var options = dropdown.getElementsByTagName('option');
-			
-			
-			for (var i = 0; i < options.length; i++) {
-				if (options[i].value === savedLlm) {
-					dropdown.selectedIndex = i;
-				}
-			}
 			
 			$("#tryAgainBtn").on('click', function (event) {
 				event.preventDefault();
@@ -495,6 +790,13 @@
 							});
 							
 							$('#character_profiles').val(characterProfiles);
+							
+							setTimeout(function () {
+								if ($('#book_details').is(':visible')) {
+									continueTour();
+								}
+							}, 500); // Adjust this delay if needed
+							
 						} else {
 							$("#alertModalContent").html("Error: " + data.message);
 							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
