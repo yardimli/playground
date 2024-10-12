@@ -774,6 +774,10 @@ Prompt:";
 					if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
 						return false;
 					}
+					
+					if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
+						return false;
+					}
 
 					if (isset($llm['pricing']['completion'])) {
 						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
@@ -809,7 +813,11 @@ Prompt:";
 					if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
 						return false;
 					}
-					
+
+					if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
+						return false;
+					}
+
 					if (isset($llm['pricing']['completion'])) {
 						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
 						return $price_per_million <= 1.5;
