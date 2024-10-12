@@ -140,6 +140,15 @@
 													<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
 													<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
 												@endif
+												@if (Auth::user() && !empty(Auth::user()->anthropic_key))
+													<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+													<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+												@endif
+												@if (Auth::user() && !empty(Auth::user()->openai_api_key))
+													<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+													<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+												@endif
+											
 											</select>
 										</div>
 									</div>
@@ -205,10 +214,6 @@
 										{{__('default.After clicking the submit button, The AI will start creating all the chapters for the book. This process may take a few minutes.')}}
 									</div>
 									
-									<button id="tryAgainBtn" class="btn btn-secondary btnhover d-none"
-									        style="min-width: 180px;">{{__('default.Try Again')}}</button>
-									
-									
 									<div id="book_details" class="d-none">
 										<div class="mb-3">
 											<label for="book_title" class="form-label">{{__('default.Book Title')}}:</label>
@@ -238,6 +243,8 @@
 									        style="min-width: 180px;">{{__('default.Submit')}}</button>
 									<button id="addBookStepTwoBtn" class="btn btn-primary btnhover d-none"
 									        style="min-width: 180px;">{{__('default.Submit')}}</button>
+									<button id="tryAgainBtn" class="btn btn-danger btnhover d-none"
+									        style="min-width: 180px;">{{__('default.Try Again')}}</button>
 								
 								</div>
 							</div>

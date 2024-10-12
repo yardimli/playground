@@ -17,8 +17,6 @@
 	use App\Notifications\CustomVerifyEmail;
 
 
-
-
 	class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 	{
 		use HasApiTokens;
@@ -41,8 +39,8 @@
 			'email',
 			'password',
 			'google_id',
-            'line_id',
-            'facebook_id',
+			'line_id',
+			'facebook_id',
 			'avatar',
 			'picture',
 			'username',
@@ -53,7 +51,10 @@
 			'last_login',
 			'last_ip',
 			'background_image',
-			'email_verified_at'
+			'email_verified_at',
+			'openai_api_key',
+			'anthropic_key',
+			'openrouter_key',
 
 
 		];
@@ -95,7 +96,7 @@
 			// Maybe you can just hardcode in a user id that you
 			//   know is always an admin ID?
 
-			if ($this->member_type === 1){
+			if ($this->member_type === 1) {
 
 				// return true so this user CAN edit/post/delete
 				// blog posts (and post any HTML/JS)

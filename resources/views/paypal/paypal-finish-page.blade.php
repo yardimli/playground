@@ -15,7 +15,7 @@
 					<div class="col-md-6 text-center">
 						<!-- Title -->
 						<h1 class="text-white" style="background-color: rgba(0,0,0,0.5)">Purchase Results</h1>
-						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">Your Story, Our AI - Write Books Faster, Smarter, Better with AI</span>
+						<span class="mb-4 text-white" style="background-color: rgba(0,0,0,0.5)">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}</span>
 					</div>
 				</div>
 			</div>

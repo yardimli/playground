@@ -71,14 +71,14 @@
 		public function buyPackages(Request $request)
 		{
 			if (Auth::check()) {
-			$checkout_starter = 'starter';
-			$checkout_novella = 'novella';
-			$checkout_novel = 'novel';
-		} else {
-			$checkout_starter = null;
-			$checkout_novella = null;
-			$checkout_novel = null;
-		}
+				$checkout_starter = 'starter';
+				$checkout_novella = 'novella';
+				$checkout_novel = 'novel';
+			} else {
+				$checkout_starter = null;
+				$checkout_novella = null;
+				$checkout_novel = null;
+			}
 
 			return view('user.buy-packages', compact('checkout_starter', 'checkout_novella', 'checkout_novel'));
 		}
@@ -115,9 +115,7 @@
 					'required', 'string', 'email', 'max:255',
 					Rule::unique('users')->ignore($user->id),
 				],
-				'about_me_input' => ['nullable', 'string', 'max:500'],
 				'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
-				'background_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
 			]);
 
 			if ($validator->fails()) {
@@ -133,26 +131,38 @@
 				$user->avatar = $avatarPath;
 			}
 
-// Handle background upload
-			if ($request->hasFile('background_image')) {
-				$background = $request->file('background_image');
-				$backgroundContents = file_get_contents($background->getRealPath());
-				$backgroundName = $user->id . '_bg.jpg';
-				$backgroundPath = 'public/user_avatars/' . $backgroundName;
-				Storage::put($backgroundPath, $backgroundContents);
-				$user->background_image = $backgroundPath;
-			}
-
-
 			// Update user
 			$user->name = $request->input('name');
 			$user->username = $request->input('username');
 			$user->email = $request->input('email');
-			$user->about_me = $request->input('about_me_input');
 			$user->save();
 
 			// Redirect back with success message
 			Session::flash('success', 'Your settings have been updated successfully.');
+			return redirect()->back();
+		}
+
+		public function updateApiKeys(Request $request)
+		{
+			$user = Auth::user();
+
+			$validator = Validator::make($request->all(), [
+				'openai_api_key' => 'nullable|string',
+				'anthropic_key' => 'nullable|string',
+				'openrouter_key' => 'nullable|string',
+			]);
+
+			if ($validator->fails()) {
+				return redirect()->back()->withErrors($validator)->withInput();
+			}
+
+			$user->update([
+				'openai_api_key' => $request->input('openai_api_key'),
+				'anthropic_key' => $request->input('anthropic_key'),
+				'openrouter_key' => $request->input('openrouter_key'),
+			]);
+
+			Session::flash('success', 'Your API keys have been updated successfully.');
 			return redirect()->back();
 		}
 

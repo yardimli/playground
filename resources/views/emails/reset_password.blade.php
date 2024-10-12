@@ -4,7 +4,7 @@
 	
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Write Books With AI Reset Email</title>
+	<title>{{__('default.Write Books With AI')}} Reset Email</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">
       /**

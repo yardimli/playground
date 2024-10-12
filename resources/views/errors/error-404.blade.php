@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Write Books with{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI</title>
+	<title>{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="writebookswithai.com">
-	<meta name="description" content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
+	<meta name="description" content="{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}">
 
 	<!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

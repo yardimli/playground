@@ -20,7 +20,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!-- SITE TITLE -->
-	<title>Discover a new beginning.</title>
+	<title>{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}</title>
 	
 	<!-- FAVICON AND TOUCH ICONS -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -205,7 +205,7 @@
 									<h2 class="s-30 w-700">Open an account</h2>
 									
 									<!-- Text -->
-									<p class="p-md mt-25">Your Story, Our AI - Write Books Faster, Smarter, Better with AI
+									<p class="p-md mt-25">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}
 									</p>
 									
 									<!-- Copyright -->

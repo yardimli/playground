@@ -749,7 +749,8 @@ Prompt:";
 				}
 			}
 
-			if (Auth::user() && Auth::user()->isAdmin()) {
+			if ( (Auth::user() && Auth::user()->isAdmin()) ||
+				   (Auth::user() && !empty(Auth::user()->openrouter_key)) ) {
 //				return response()->json(json_decode(File::get($llmsJsonPath), true));
 
 				$llms = json_decode(File::get($llmsJsonPath), true);

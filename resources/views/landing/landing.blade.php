@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Write Books with AI - Your Story, Our AI - Write Books Faster, Smarter, Better with AI</title>
+	<title>{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}</title>
 	
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Webestica.com">
 	<meta name="description"
-	      content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
+	      content="{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}">
 	
 	<!-- Dark mode -->
 	<script>
@@ -163,7 +163,7 @@ Header END -->
 				<div class="col-lg-7 col-12 mx-auto">
 					<!-- Heading -->
 					<h1 class="display-4">{{__('default.Write Books With AI')}}</h1>
-					<p class="lead">"Your Story, Our AI - Write Books Faster, Smarter, Better with AI"</p>
+					<p class="lead">"{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}"</p>
 					<div class="d-sm-flex justify-content-center">
 						<!-- button -->
 						<a href="{{route('register')}}" class="btn btn-primary">Sign up</a>

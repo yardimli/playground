@@ -262,7 +262,7 @@
 				'dimensions' => 256
 			);
 
-			$openai_api_key = env('OPEN_AI_API_KEY');
+			$openai_api_key = self::getOpenAIKey();
 			$response = Http::withHeaders([
 				'Content-Type' => 'application/json',
 				'Authorization' => 'Bearer ' . $openai_api_key,
@@ -278,7 +278,7 @@
 				return mb_check_encoding($string, 'UTF-8');
 			}
 
-			$openai_api_key = env('OPEN_AI_API_KEY');
+			$openai_api_key = self::getOpenAIKey();
 			//make sure $message can be json encoded
 			if (!isValidUtf8($message)) {
 				$message = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $message);
@@ -456,6 +456,24 @@
 			return $string1 . $string2;
 		}
 
+		public static function getAnthropicKey()
+		{
+			$user = Auth::user();
+			return !empty($user->anthropic_key) ? $user->anthropic_key : $_ENV['ANTHROPIC_KEY'];
+		}
+
+		public static function getOpenAIKey()
+		{
+			$user = Auth::user();
+			return !empty($user->openai_api_key) ? $user->openai_api_key : $_ENV['OPEN_AI_API_KEY'];
+		}
+
+		public static function getOpenRouterKey()
+		{
+			$user = Auth::user();
+			return !empty($user->openrouter_key) ? $user->openrouter_key : $_ENV['OPEN_ROUTER_KEY'];
+		}
+
 		//------------------------------------------------------------
 		public static function function_call($llm, $example_question, $example_answer, $prompt, $schema, $language = 'english')
 		{
@@ -464,26 +482,26 @@
 
 			if ($llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
-				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
+				$llm_api_key = getAnthropicKey();
 				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
 
 			} else if ($llm === 'anthropic-sonet') {
 				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
-				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
+				$llm_api_key = getAnthropicKey();
 				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
 
 			} else if ($llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
-				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
+				$llm_api_key = self::getOpenAIKey();
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
 			} else if ($llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
-				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
+				$llm_api_key = self::getOpenAIKey();
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
 			} else {
 				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
-				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_api_key = self::getOpenRouterKey();
 				$llm_model = $llm;
 			}
 
@@ -612,26 +630,26 @@
 
 			if ($llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
-				$llm_api_key = $_ENV['ANTHROPIC_HAIKU_KEY'];
+				$llm_api_key = elf::getOpenAIKey();;
 				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
 
 			} else if ($llm === 'anthropic-sonet') {
 				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
-				$llm_api_key = $_ENV['ANTHROPIC_SONET_KEY'];
+				$llm_api_key = elf::getOpenAIKey();;
 				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
 
 			} else if ($llm === 'open-ai-gpt-4o') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_BASE'];
-				$llm_api_key = $_ENV['OPEN_AI_GPT4_KEY'];
+				$llm_api_key = self::getOpenAIKey();
 				$llm_model = $_ENV['OPEN_AI_GPT4_MODEL'];
 
 			} else if ($llm === 'open-ai-gpt-4o-mini') {
 				$llm_base_url = $_ENV['OPEN_AI_GPT4_MINI_BASE'];
-				$llm_api_key = $_ENV['OPEN_AI_GPT4_MINI_KEY'];
+				$llm_api_key = self::getOpenAIKey();
 				$llm_model = $_ENV['OPEN_AI_GPT4_MINI_MODEL'];
 			} else {
 				$llm_base_url = $_ENV['OPEN_ROUTER_BASE'];
-				$llm_api_key = $_ENV['OPEN_ROUTER_KEY'];
+				$llm_api_key = self::getOpenRouterKey();
 				$llm_model = $llm;
 			}
 
@@ -989,7 +1007,7 @@
 			Log::info($data);
 
 			$llm_base_url = env('OPEN_AI_GPT4_BASE');
-			$llm_api_key = env('OPEN_AI_API_KEY');
+			$llm_api_key = self::getOpenAIKey();
 
 			$post_json = json_encode($data);
 			$ch = curl_init();

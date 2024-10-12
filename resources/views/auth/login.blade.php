@@ -97,7 +97,7 @@
 											<h2 class="s-42 w-700">Back</h2>
 
 											<!-- Text -->
-											<p class="p-md mt-25">Your Story, Our AI - Write Books Faster, Smarter, Better with AI
+											<p class="p-md mt-25">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}
 											</p>
 
 											<!-- Copyright -->

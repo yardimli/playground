@@ -19,7 +19,7 @@
 						<button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
 						        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 							<span class="btn btn-primary"><i class="fa-solid fa-sliders-h"></i></span>
-							<span class="h6 mb-0 fw-bold d-lg-none ms-2">Settings</span>
+							<span class="h6 mb-0 fw-bold d-lg-none ms-2">{{__('default.Settings')}}</span>
 						</button>
 					</div>
 					<!-- Advanced filter responsive toggler END -->
@@ -29,7 +29,7 @@
 							<!-- Offcanvas header -->
 							<div class="offcanvas-header">
 								<button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas"
-								        aria-label="Close"></button>
+								        aria-label="{{__('default.Close')}}"></button>
 							</div>
 							
 							<!-- Offcanvas body -->
@@ -46,7 +46,7 @@
 												   data-bs-toggle="tab"> <img
 														class="me-2 h-20px fa-fw"
 														src="/assets/images/icon/person-outline-filled.svg"
-														alt=""><span>Account </span></a>
+														alt=""><span>{{__('default.Account')}}</span></a>
 											</li>
 {{--											<li class="nav-item" data-bs-dismiss="offcanvas">--}}
 {{--												<a class="nav-link d-flex mb-0" href="#nav-setting-tab-2"--}}
@@ -67,7 +67,7 @@
 												   data-bs-toggle="tab"> <img
 														class="me-2 h-20px fa-fw"
 														src="/assets/images/icon/trash-var-outline-filled.svg"
-														alt=""><span>Close account </span></a>
+														alt=""><span>{{__('default.Close Account')}}</span></a>
 											</li>
 										</ul>
 										<!-- Side Nav END -->
@@ -76,7 +76,7 @@
 									<!-- Card body END -->
 									<!-- Card footer -->
 									<div class="card-footer text-center py-2 pb-3">
-										<a class="btn btn-secondary-soft btn-sm w-100 mb-2" href="{{route('my.books')}}">View Profile </a>
+										<a class="btn btn-secondary-soft btn-sm w-100 mb-2" href="{{route('my.books')}}">{{__('default.My Books')}} </a>
 {{--										<a class="btn btn-info-soft btn-sm w-100" href="{{route('buy.packages')}}">Purchase Tokens</a>--}}
 									</div>
 								
@@ -107,8 +107,7 @@
 								
 								<!-- Title START -->
 								<div class="card-header border-0 pb-0">
-									<h1 class="h5 card-title">Account Settings</h1>
-									<p class="mb-0">"Your Story, Our AI - Write Books Faster, Smarter, Better with AI"</p>
+									<h1 class="h5 card-title">{{__('default.Account Settings')}}</h1>
 								</div>
 								<!-- Card header START -->
 								<!-- Card body START -->
@@ -127,63 +126,33 @@
 										@csrf
 										<!-- First name -->
 										<div class="col-sm-6 col-lg-6">
-											<label class="form-label">Name</label>
+											<label class="form-label">{{__('default.Name')}}</label>
 											<input type="text" name="name" class="form-control" placeholder=""
 											       value="{{ old('name', $user->name) }}">
 										</div>
 										<!-- User name -->
 										<div class="col-sm-6">
-											<label class="form-label">User name</label>
+											<label class="form-label">{{__('default.User name')}}</label>
 											<input type="text" name="username" class="form-control" placeholder=""
 											       value="{{ old('username', $user->username) }}">
 										</div>
 										
 										<!-- Email address -->
 										<div class="col-sm-6">
-											<label class="form-label">Email</label>
+											<label class="form-label">{{__('default.Email')}}</label>
 											<input type="email" name="email" class="form-control" placeholder=""
 											       value="{{ old('email', $user->email) }}">
-										</div>
-										<!-- Page information -->
-										<div class="col-12">
-											<label class="form-label">About Me</label>
-											<textarea name="about_me_input" id="about_me_input"
-											          class="form-control input-for-generate"
-											          rows="4"
-											          placeholder="Description (Required)">{{ old('about_me', $user->about_me) }}</textarea>
-											<div style="min-height: 50px;">
-												<small id="about_me_char_count">Character limit: 0/512</small>
-												
-												
-												<button type="button" id="generate_about_me_button"
-												        class="btn btn-sm btn-secondary-soft mt-2 float-end"
-												        onclick="generateContent('about_me')">Continue writing about me
-													<div id="about_me_spinner" class="typing align-items-center ms-2"
-													     style="min-height: 20px; display: none;">
-														<div class="dot"></div>
-														<div class="dot"></div>
-														<div class="dot"></div>
-													</div>
-												</button>
-											</div>
 										</div>
 										
 										<!-- Avatar upload -->
 										<div class="col-sm-6">
-											<label class="form-label">Avatar</label>
+											<label class="form-label">{{__('default.Avatar')}}</label>
 											<input type="file" name="avatar" class="form-control" accept="image/*">
-										</div>
-										
-										<!-- Background upload -->
-										<div class="col-sm-6">
-											<label class="form-label">Background</label>
-											<input type="file" name="background_image" class="form-control"
-											       accept="image/*">
 										</div>
 										
 										<!-- Button -->
 										<div class="col-12 text-start">
-											<button type="submit" class="btn btn-sm btn-primary mb-0">Save changes
+											<button type="submit" class="btn btn-sm btn-primary mb-0">{{__('default.Save changes')}}
 											</button>
 										</div>
 										
@@ -208,6 +177,35 @@
 								</div>
 								<!-- Card body END -->
 								
+								<!-- API Keys START -->
+								<div class="card mb-4">
+									<div class="card-header border-0 pb-0">
+										<h1 class="h5 card-title">{{__('default.API Keys')}}</h1>
+										<p class="mb-0">{{__('default.Set your personal API keys for unmetered usage.')}}</p>
+									</div>
+									<div class="card-body">
+										<form action="{{ route('settings.update-api-keys') }}" method="post" class="row g-3">
+											@csrf
+											<div class="col-12">
+												<label class="form-label">{{__('default.OpenAI API Key')}}</label>
+												<input type="text" name="openai_api_key" class="form-control" value="{{ old('openai_api_key', $user->openai_api_key) }}">
+											</div>
+											<div class="col-12">
+												<label class="form-label">{{__('default.Anthropic API Key')}}</label>
+												<input type="text" name="anthropic_key" class="form-control" value="{{ old('anthropic_key', $user->anthropic_key) }}">
+											</div>
+											<div class="col-12">
+												<label class="form-label">{{__('default.OpenRouter API Key')}}</label>
+												<input type="text" name="openrouter_key" class="form-control" value="{{ old('openrouter_key', $user->openrouter_key) }}">
+											</div>
+											<div class="col-12 text-end">
+												<button type="submit" class="btn btn-primary mb-0">{{__('default.Update API Keys')}}</button>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- API Keys END -->
+								
 								<!-- Account settings END -->
 								
 								<!-- Change your password START -->
@@ -215,10 +213,8 @@
 								<div class="card">
 									<!-- Title START -->
 									<div class="card-header border-0 pb-0">
-										<h5 class="card-title">Change your password</h5>
-										<p class="mb-0">If you signed up with Google, leave the current password blank
-											the first time you
-											update your password.</p>
+										<h5 class="card-title">{{__('default.Change your password')}}</h5>
+										<p class="mb-0">{{__('default.If you signed up with Google, leave the current password blank the first time you update your password.')}}</p>
 									</div>
 									<!-- Title START -->
 									<div class="card-body">
@@ -228,13 +224,13 @@
 											@csrf
 											<!-- Current password -->
 											<div class="col-12">
-												<label class="form-label">Current password</label>
+												<label class="form-label">{{__('default.Current password')}}</label>
 												<input type="password" name="current_password" class="form-control"
 												       placeholder="">
 											</div>
 											<!-- New password -->
 											<div class="col-12">
-												<label class="form-label">New password</label>
+												<label class="form-label">{{__('default.New password')}}</label>
 												<!-- Input group -->
 												<div class="input-group">
 													<input class="form-control fakepassword psw-input" type="password"
@@ -251,13 +247,13 @@
 											
 											<!-- Confirm new password -->
 											<div class="col-12">
-												<label class="form-label">Confirm password</label>
+												<label class="form-label">{{__('default.Confirm password')}}</label>
 												<input type="password" name="new_password_confirmation"
 												       class="form-control" placeholder="">
 											</div>
 											<!-- Button -->
 											<div class="col-12 text-end">
-												<button type="submit" class="btn btn-primary mb-0">Update password
+												<button type="submit" class="btn btn-primary mb-0">{{__('default.Update password')}}
 												</button>
 											</div>
 											
@@ -412,32 +408,26 @@
 							<div class="card">
 								<!-- Card header START -->
 								<div class="card-header border-0 pb-0">
-									<h5 class="card-title">Delete account</h5>
-									<p class="mb-2">We are sorry to hear that you wish to delete your account.</p>
-									<p class="mb-2">Please note that deleting your account may result in the permanent
-										loss of your data,
-										including any stories, comments, or interactions you've had on the platform. Be
-										sure to save
-										anything
-										you wish to keep before proceeding.</p>
-									<p class="mb-2">We're sad to see you go, but we hope that {{__('default.Write Books With AI')}} has been an enjoyable experience for you. We wish you the best in your future endeavors. Goodbye!</p>
+									<h5 class="card-title">{{__('default.Delete account')}}</h5>
+									<p class="mb-2">{{__('default.We are sorry to hear that you wish to delete your account.')}}</p>
+									<p class="mb-2">{{__('default.Please note that deleting your account may result in the permanent loss of your data.')}}</p>
+									<p class="mb-2">{{__('default.We are sad to see you go, but we hope that Write Books With AI has been an enjoyable experience for you. We wish you the best in your future endeavors. Goodbye!')}}</p>
 								</div>
 								<!-- Card header START -->
 								<!-- Card body START -->
 								<div class="card-body">
 									<!-- Delete START -->
-									<h6>Before you go...</h6>
+									<h6>{{__('default.Before you go...')}}</h6>
 									<ul>
-										<li>If you delete your account, you will lose your all data.</li>
+										<li>{{__('default.If you delete your account, you will lose your all data.')}}</li>
 									</ul>
 									<div class="form-check form-check-md my-4">
 										<input class="form-check-input" type="checkbox" value=""
 										       id="deleteaccountCheck">
-										<label class="form-check-label" for="deleteaccountCheck">Yes, I'd like to delete
-											my account</label>
+										<label class="form-check-label" for="deleteaccountCheck">{{__('default.Yes, I\'d like to delete my account')}}</label>
 									</div>
-									<a href="#" class="btn btn-success-soft btn-sm mb-2 mb-sm-0">Keep my account</a>
-									<a href="#" class="btn btn-danger btn-sm mb-0">Delete my account</a>
+									<a href="#" class="btn btn-success-soft btn-sm mb-2 mb-sm-0">{{__('default.Keep my account')}}</a>
+									<a href="#" class="btn btn-danger btn-sm mb-0">{{__('default.Delete my account')}}</a>
 									<!-- Delete END -->
 								</div>
 								<!-- Card body END -->

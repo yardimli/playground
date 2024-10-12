@@ -59,8 +59,6 @@
 
 	Route::get('/help', [StaticPagesController::class, 'help'])->name('help.page');
 
-	Route::post('/send-contact-us-email', [OrderController::class, 'sendContactUsEmail'])->name('contact.sendEmail');
-
 	//-------------------------------------------------------------------------
 
 	Route::get('/buy-packages', [UserSettingsController::class, 'buyPackages'])->name('buy.packages');
@@ -128,10 +126,10 @@
 		Route::post('/settings', [UserSettingsController::class, 'updateSettings'])->name('settings.update');
 
 		Route::post('/settings/password', [UserSettingsController::class, 'updatePassword'])->name('settings.password.update');
+		Route::post('/settings/api-keys', [UserSettingsController::class, 'updateApiKeys'])->name('settings.update-api-keys');
+
 		Route::get('/users', [UserController::class, 'index'])->name('users.index');
 		Route::post('/login-as', [UserController::class, 'loginAs'])->name('users.login-as');
-		Route::get('/resendConfirmEmail/{orderID}', [OrderController::class, 'resendConfirmEmail'])->name('order.resendConfirmEmail');
-		Route::get('/resendConfirmEmail2/{newOrder}', [OrderController::class, 'resendConfirmEmail2'])->name('order.resendConfirmEmail2');
 
 		Route::post('/settings/password', [UserSettingsController::class, 'updatePassword'])->name('settings.password.update');
 

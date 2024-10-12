@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Write Books with AI - Your Story, Our AI - Write Books Faster, Smarter, Better with AI</title>
+	<title>{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="writebookswithai.com">
-	<meta name="description" content="Write Books with AI - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
+	<meta name="description" content="{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}">
 
 	<!-- Dark mode -->
 	<script>
@@ -141,7 +141,7 @@
              <!-- Button -->
              <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Reset password</button></div>
              <!-- Copyright -->
-             <p class="mb-0 mt-3">©2024 <a target="_blank" href="https://www.writebookswithai.com/">WRITE BOOKS WITH AI.</a> All rights reserved</p>
+             <p class="mb-0 mt-3">©2024 <a target="_blank" href="https://www.writebookswithai.com/">{{__('default.Write Books With AI')}}.</a> All rights reserved</p>
            </form>
           <!-- Form END -->
         </div>

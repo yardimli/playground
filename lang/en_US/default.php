@@ -1,6 +1,7 @@
 <?php
 
 	return [
+		'Your Story, Our AI - Write Books Faster, Smarter, Better with AI' => 'Your Story, Our AI - Write Books Faster, Smarter, Better with AI',
 		'home' => 'home',
 		'WBWAI Blog' => 'WBWAI Blog',
 		'make my song' => 'make my song',
@@ -12,7 +13,10 @@
 		'Q&A' => 'FAQ',
 		'Home' => 'Home',
 		'about us' => 'About',
-		'Blog' => 'Latest Articles',
+		'Blog' => 'Blog',
+		'Showcase' => 'Showcase',
+		'Write a Book' => 'Write a Book',
+		'My Books' => 'My Books',
 		'Pricing' => 'Pricing',
 		'Help' => 'Help',
 		'Contact' => 'Contact',
@@ -35,10 +39,26 @@
 		'Purchase History' => 'Purchase History',
 		'Account' => 'Account',
 		'Close Account' => 'Close Account',
-		'Compose your lyrics' => 'Compose Your Lyrics',
 		'Character Limit' => 'Character Limit',
-		'Lyrics Help' => 'Or 2) Write your lyrics here. You can edit the AI-generated lyrics before clicking next.',
-		'Lyrics' => 'Lyrics',
+		'If you signed up with Google, leave the current password blank the first time you update your password.' => 'If you signed up with Google, leave the current password blank the first time you update your password.',
+
+		'Delete account' => 'Delete account',
+		'We are sorry to hear that you wish to delete your account.' => 'We are sorry to hear that you wish to delete your account.',
+		'Please note that deleting your account may result in the permanent loss of your data.' => 'Please note that deleting your account may result in the permanent loss of your data.',
+		'We are sad to see you go, but we hope that Write Books With AI has been an enjoyable experience for you. We wish you the best in your future endeavors. Goodbye!' => 'We are sad to see you go, but we hope that Write Books With AI has been an enjoyable experience for you. We wish you the best in your future endeavors. Goodbye!',
+		'Before you go...' => 'Before you go...',
+		'If you delete your account, you will lose your all data.' => 'If you delete your account, you will lose your all data.',
+		'Yes, I\'d like to delete my account' => 'Yes, I\'d like to delete my account',
+		'Keep my account' => 'Keep my account',
+		'Delete my account' => 'Delete my account',
+
+		'API Keys' => 'API Keys',
+		'Set your personal API keys for unmetered usage.' => 'Set your personal API keys for unmetered usage.',
+		'OpenAI API Key' => 'OpenAI API Key',
+		'Anthropic API Key' => 'Anthropic API Key',
+		'OpenRouter API Key' => 'OpenRouter API Key',
+		'Update API Keys' => 'Update API Keys',
+
 
 
 		'Contact Information' => 'Contact Information',

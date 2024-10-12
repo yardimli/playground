@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="fictionfusion.io">
 	<meta name="description"
-	      content="{{__('default.Write Books With AI')}} - Your Story, Our AI - Write Books Faster, Smarter, Better with AI">
+	      content="{{__('default.Write Books With AI')}} - {{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<script src="/assets/js/core/jquery.min.js"></script>
@@ -40,78 +40,78 @@
 @endphp
 
 <script>
-
-// <!-- Dark mode -->
-const storedTheme = localStorage.getItem('theme')
-
-const getPreferredTheme = () => {
-if (storedTheme) {
-return storedTheme
-}
-return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
-const setTheme = function (theme) {
-if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-document.documentElement.setAttribute('data-bs-theme', 'dark')
-} else {
-document.documentElement.setAttribute('data-bs-theme', theme)
-}
-}
-
-setTheme(getPreferredTheme())
-
-window.addEventListener('DOMContentLoaded', () => {
-var el = document.querySelector('.theme-icon-active');
-if (el != 'undefined' && el != null) {
-const showActiveTheme = theme => {
-const activeThemeIcon = document.querySelector('.theme-icon-active use')
-const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
-
-document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-	element.classList.remove('active')
-})
-
-btnToActive.classList.add('active')
-activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-}
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-if (storedTheme !== 'light' || storedTheme !== 'dark') {
+	
+	// <!-- Dark mode -->
+	const storedTheme = localStorage.getItem('theme')
+	
+	const getPreferredTheme = () => {
+		if (storedTheme) {
+			return storedTheme
+		}
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+	}
+	
+	const setTheme = function (theme) {
+		if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			document.documentElement.setAttribute('data-bs-theme', 'dark')
+		} else {
+			document.documentElement.setAttribute('data-bs-theme', theme)
+		}
+	}
+	
 	setTheme(getPreferredTheme())
-}
-})
-
-showActiveTheme(getPreferredTheme())
-
-document.querySelectorAll('[data-bs-theme-value]')
-.forEach(toggle => {
-	toggle.addEventListener('click', () => {
-		const theme = toggle.getAttribute('data-bs-theme-value')
-		localStorage.setItem('theme', theme)
-		setTheme(theme)
-		showActiveTheme(theme)
-	})
-})
-
-}
-});
+	
+	window.addEventListener('DOMContentLoaded', () => {
+		var el = document.querySelector('.theme-icon-active');
+		if (el != 'undefined' && el != null) {
+			const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+				
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+				
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+			
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+			
+			showActiveTheme(getPreferredTheme())
+			
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+			
+		}
+	});
 </script>
 
 @if (Auth::check())
-@php
-//check if user has purchased WRITE BOOKS WITH AI Novella or Novel Package package
-$found_package = false;
-$user_order_and_tokens = App\Helpers\MyHelper::getUserOrdersAndTokens(Auth::user()->id);
-foreach ($user_order_and_tokens['orders'] as $order) {
-foreach ($order['items'] as $orderItem) {
-if ($orderItem['product_name'] === 'Short Story Package' || $orderItem['product_name'] === 'Novella Package' || $orderItem['product_name'] === 'Novel Package') {
-	$found_package = true;
-	break;
-}
-}
-}
+	@php
+		//check if user has purchased {{__('default.Write Books With AI')}} Novella or Novel Package package
+		$found_package = false;
+		$user_order_and_tokens = App\Helpers\MyHelper::getUserOrdersAndTokens(Auth::user()->id);
+		foreach ($user_order_and_tokens['orders'] as $order) {
+		foreach ($order['items'] as $orderItem) {
+		if ($orderItem['product_name'] === 'Short Story Package' || $orderItem['product_name'] === 'Novella Package' || $orderItem['product_name'] === 'Novel Package') {
+			$found_package = true;
+			break;
+		}
+		}
+		}
 	@endphp
 @endif
 
@@ -149,7 +149,7 @@ Header START -->
 				<div class="nav mt-3 mt-lg-0 flex-nowrap align-items-center px-4 px-lg-0">
 					<div class="nav-item w-100">
 						<form class="rounded position-relative">
-							<input class="form-control ps-5 bg-light" type="search" placeholder="Search..."
+							<input class="form-control ps-5 bg-light" type="search" placeholder="{{__('default.Search...')}}"
 							       aria-label="Search">
 							<button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
 							        type="submit"><i class="bi bi-search fs-5"> </i></button>
@@ -159,35 +159,21 @@ Header START -->
 				<!-- Nav Search END -->
 				
 				<ul class="navbar-nav navbar-nav-scroll ms-auto">
-					<!-- Nav item 3 Post -->
-					{{--					<li class="nav-item dropdown">--}}
-					{{--						<a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account </a>--}}
-					{{--						<ul class="dropdown-menu" aria-labelledby="postMenu">--}}
-					{{--							<li> <a class="dropdown-item" href="help.blade.php">Help center</a> </li>--}}
-					{{--							<li> <a class="dropdown-item" href="privacy_and_terms.blade.php">Privacy & terms</a> </li>--}}
-					{{--						</ul>--}}
-					{{--					</li>--}}
-					
-					<!-- Nav item 4 Mega menu -->
-					
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('binshopsblog.index',['en_US'])}}">Blog</a>
+						<a class="nav-link active" href="{{route('binshopsblog.index',['en_US'])}}">{{__('default.Blog')}}</a>
 					</li>
-
-						<li class="nav-item">
-							<a class="nav-link active" href="{{route('user.showcase-library')}}">Showcase</a>
-						</li>
 					
-					
-						<li class="nav-item">
-							<a class="nav-link active" href="{{route('start-writing')}}">Write a Book</a>
-						</li>
-					
-					{{--					<li class="nav-item">--}}
-					{{--						<a class="nav-link" href="{{route('start-writing')}}">Fusion2</a>--}}
-					{{--					</li>--}}
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('my.books')}}">My Books</a>
+						<a class="nav-link active" href="{{route('user.showcase-library')}}">{{__('default.Showcase')}}</a>
+					</li>
+					
+					
+					<li class="nav-item">
+						<a class="nav-link active" href="{{route('start-writing')}}">{{__('default.Write a Book')}}</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" href="{{route('my.books')}}">{{__('default.My Books')}}</a>
 					</li>
 				</ul>
 			</div>
@@ -195,23 +181,11 @@ Header START -->
 			
 			<!-- Nav right START -->
 			<ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
-				{{--				<li class="nav-item ms-2">--}}
-				{{--					<a class="nav-link icon-md btn btn-light p-0" href="{{route('create.story.header')}}">--}}
-				{{--						<i class="bi bi-chat-left-text-fill fs-6"> </i>--}}
-				{{--					</a>--}}
-				{{--				</li>--}}
-				
 				<li class="nav-item ms-2">
-					<a class="nav-link icon-md btn btn-light p-0" href="{{route('help.page')}}" title="Help">
+					<a class="nav-link icon-md btn btn-light p-0" href="{{route('help.page')}}" title="{{__('default.Help')}}">
 						<i class="bi bi-life-preserver fs-6"> </i>
 					</a>
 				</li>
-{{--				<li class="nav-item ms-2">--}}
-{{--					<a class="nav-link icon-md btn btn-light p-0" href="{{route('buy.packages')}}" title="Buy Tokens">--}}
-{{--						<i class="bi bi-shop fs-6"> </i>--}}
-{{--					</a>--}}
-{{--				</li>--}}
-				
 				<li class="nav-item ms-2 dropdown">
 					<a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button"
 					   data-bs-auto-close="outside"
@@ -243,10 +217,10 @@ Header START -->
 									</div>
 								</div>
 								<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-								   href="{{route('my.books')}}">View profile</a>
+								   href="{{route('my.books')}}">{{__('My Books')}}</a>
 							</li>
 							<a class="dropdown-item" href="{{route('my.settings')}}"><i
-									class="bi bi-person fa-fw me-2"></i>Edit Profile</a>
+									class="bi bi-person fa-fw me-2"></i>{{__('default.Settings')}}</a>
 						@endif
 						<!-- Links -->
 						{{--						<li class="dropdown-divider"></li>--}}
@@ -262,9 +236,6 @@ Header START -->
 										class="bi bi-unlock fa-fw me-2"></i>Sign In</a></li>
 							<li><a class="dropdown-item bg-primary-soft-hover" href="{{ route('register') }}"><i
 										class="bi bi-person-circle fa-fw me-2"></i>Sign Up</a></li>
-{{--							<li><a class="dropdown-item" href="{{route('buy.packages')}}"><i--}}
-{{--										class="bi bi-shop fa-fw me-2"></i>Buy Tokens</a></li>--}}
-						
 						@endif
 						<!-- Dark mode options START -->
 						<hr class="dropdown-divider">
@@ -335,10 +306,7 @@ JS libraries, plugins and custom scripts -->
 <!-- Theme Functions -->
 <script src="/assets/js/functions.js"></script>
 
-{{--<script type="text/javascript">window.$sleek=[];window.SLEEK_PRODUCT_ID=532629982;(function(){d=document;s=d.createElement("script");s.src="https://client.sleekplan.com/sdk/e.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>--}}
-
 @php($title = View::getSection('title', 'Home'))
-{{--<script src="https://everperfectassistant.com/chat/chat.js?id=Gy4nA4OB5o"></script>--}}
 
 @stack('scripts')
 

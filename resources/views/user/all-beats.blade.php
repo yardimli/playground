@@ -74,6 +74,14 @@
 								<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
 								<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
 							@endif
+							@if (Auth::user() && !empty(Auth::user()->anthropic_key))
+								<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+								<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+							@endif
+							@if (Auth::user() && !empty(Auth::user()->openai_api_key))
+								<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+								<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+							@endif
 						</select>
 					</div>
 					
