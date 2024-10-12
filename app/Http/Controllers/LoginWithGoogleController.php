@@ -64,7 +64,7 @@
 
 					Auth::login($finduser);
 
-					return redirect()->intended('/write-book');
+					return redirect()->intended('/start-writing');
 
 				} else {
 					$username = $user->getNickname() ?? Str::slug($user->name);
@@ -108,7 +108,7 @@
 
 					Auth::login($new_user);
 
-					return redirect()->intended('/write-book');
+					return redirect()->intended('/start-writing');
 				}
 
 			} catch
