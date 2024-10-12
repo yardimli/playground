@@ -774,7 +774,7 @@ Prompt:";
 					if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
 						return false;
 					}
-					
+
 					if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
 						return false;
 					}

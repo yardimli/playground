@@ -87,27 +87,22 @@
 								}
 
 								//search $book['owner'] in users table name column
-								$user = User::where('email', ($bookData['owner'] ?? 'admin'))->first();
-								if ($user) {
+								$user = User::where('email', ($bookData['owner'] ?? 'deleted_user'))->first();
+								if ($user && $user->email === Auth::user()->email) {
 									$bookData['owner_name'] = $user->name;
 									if ($user->avatar) {
 										$bookData['author_avatar'] = Storage::url($user->avatar);
-									} else
-									{
+									} else {
 										$bookData['author_avatar'] = '/assets/images/avatar/03.jpg';
 									}
-								} else
-								{
-									$bookData['owner_name'] = 'admin';
-									$bookData['author_name'] = $bookData['author_name']  . '(anonymous)';
-									$bookData['author_avatar'] = '/assets/images/avatar/02.jpg';
-								}
 
-								$bookData['id'] = $subDir;
-								$bookData['cover_filename'] = $coverFilename;
-								$bookData['file_time'] = filemtime($bookJsonPath);
-								$bookData['owner'] = $bookData['owner'] ?? 'admin';
-								$books[] = $bookData;
+
+									$bookData['id'] = $subDir;
+									$bookData['cover_filename'] = $coverFilename;
+									$bookData['file_time'] = filemtime($bookJsonPath);
+									$bookData['owner'] = $bookData['owner'] ?? 'deleted_user';
+									$books[] = $bookData;
+								}
 							}
 						}
 					}
@@ -302,11 +297,13 @@
 									$bookData['author_avatar'] = '/assets/images/avatar/02.jpg';
 								}
 
-								$bookData['id'] = $subDir;
-								$bookData['cover_filename'] = $coverFilename;
-								$bookData['file_time'] = filemtime($bookJsonPath);
-								$bookData['owner'] = $bookData['owner'] ?? 'admin';
-								$books[] = $bookData;
+								if ($user->isAdmin()) {
+									$bookData['id'] = $subDir;
+									$bookData['cover_filename'] = $coverFilename;
+									$bookData['file_time'] = filemtime($bookJsonPath);
+									$bookData['owner'] = $bookData['owner'] ?? 'admin';
+									$books[] = $bookData;
+								}
 							}
 						}
 					}
