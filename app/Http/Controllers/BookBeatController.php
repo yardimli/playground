@@ -685,6 +685,11 @@
 				// If it's the last beat of the chapter, look at the next chapter
 				if ($next_chapter !== null && isset($next_chapter['beats'][0])) {
 					$next_beat = $next_chapter['beats'][0]['description'] ?? '';
+
+					//if next chapter has no beats, use the chapter description
+					if ($next_beat === '') {
+						$next_beat = ($next_chapter['name'] ?? 'Next Chapter') . "\nNext Chapter Description:" . ($next_chapter['short_description'] ?? '');
+					}
 				}
 			}
 
