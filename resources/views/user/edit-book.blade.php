@@ -68,12 +68,12 @@
 					
 					<div class="col-12 col-xl-6">
 						
-						<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
+						<span for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
 							@if (Auth::user() && Auth::user()->isAdmin())
 								<label class="badge bg-danger">Admin</label>
 							@endif
 						
-						</label>
+						</span>
 						<select id="llmSelect" class="form-select mx-auto">
 							<option value="">{{__('default.Select an AI Engine')}}</option>
 							@if (Auth::user() && Auth::user()->isAdmin())
@@ -110,7 +110,7 @@
 					</div>
 					
 					<div class="col-12 col-lg-6">
-						<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
+						<span for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</span>
 						<select class="form-control" id="writingStyle" name="writingStyle" required>
 							@foreach($writingStyles as $style)
 								@if ($style['value'] === $book['writing_style'])
@@ -123,7 +123,7 @@
 					</div>
 					
 					<div class="col-12 col-lg-6">
-						<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
+						<span for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</span>
 						<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
 							@foreach($narrativeStyles as $style)
 								@if ($style['value'] === $book['narrative_style'])
