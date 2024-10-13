@@ -283,7 +283,7 @@
 				<div class="modal-body modal-body-color">
 					<div id="alertModalContent"></div>
 				</div>
-				<div class="modal-footer modal-footer-color">
+				<div class="modal-footer modal-footer-color justify-content-start">
 					<button type="button" class="btn btn-secondary alert-modal-close-button"
 					        data-bs-dismiss="modal">{{__('default.Close')}}</button>
 				</div>
@@ -406,7 +406,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer modal-footer-color">
+				<div class="modal-footer modal-footer-color justify-content-start">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>

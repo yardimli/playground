@@ -13,22 +13,27 @@
 		<!-- Container START -->
 		<div class="container pt-4">
 			<div class="row g-4">
-				<div class="col-xl-4 col-lg-4 col-12 vstack gap-4">
+				<div class="col-xl-5 col-lg-5 col-12 vstack gap-4">
 					<div class="card">
 						<div class="card-body py-3">
-							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4" style="min-height: 400px;">
+							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4" style="min-height: 400px;" id="bookCover">
 							<br>
-							<a href="{{route('user.read-book',$book_slug)}}" class="btn btn-primary">{{__('Read Book')}}</a>
+							<a href="{{route('user.read-book',$book_slug)}}" class="btn btn-primary-soft">{{__('Read Book')}}</a>
 							
 							@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
-								<a href="{{route('edit-book',$book_slug)}}" class="btn btn-danger">{{__('Edit Book')}}</a>
+								<a href="{{route('edit-book',$book_slug)}}" class="btn btn-danger-soft">{{__('Edit Book')}}</a>
+								
+								<button class="btn btn-primary-soft" title="{{__('default.Cover Image')}}" id="createCoverBtn">
+									<i class="bi bi-image"></i> {{__('default.Cover Image')}}
+								</button>
+							
 							@endif
 						</div>
 					</div>
 				</div>
 				
 				<!-- Main content START -->
-				<div class="col-xl-8 col-lg-8 col-12 vstack gap-4">
+				<div class="col-xl-7 col-lg-7 col-12 vstack gap-4">
 					<!-- My profile START -->
 					<div class="card">
 						<div class="card-body py-0">
@@ -100,6 +105,69 @@
 		</div>
 	</main>
 	
+	<!-- Modal for Creating Book Cover -->
+	<div class="modal fade" id="createCoverModal" tabindex="-1" aria-labelledby="createCoverModalLabel"
+	     aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
+					<h5 class="modal-title" id="createCoverModalLabel">{{__('default.Create Cover')}}</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
+				</div>
+				<div class="modal-body modal-body-color">
+					<div class="row">
+						<div class="col-md-8">
+						<textarea class="form-control" id="coverPrompt" rows="5"
+						          placeholder="{{__('default.Enter cover description')}}"></textarea>
+							<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="{{__('default.Book Title')}}">
+							<input type="text" id="coverBookAuthor" class="form-control mt-2"
+							       placeholder="{{__('default.Book Author')}}">
+							<div class="mb-1 form-check mt-2">
+								<input type="checkbox" class="form-check-input" id="enhancePrompt" checked>
+								<label class="form-check-label" for="enhancePrompt">
+									{{__('default.Enhance Prompt')}}
+								</label>
+							</div>
+							<span
+								style="font-size: 14px; margin-left:24px;">{{__('default.AI will optimize for creative visuals')}}</span>
+						</div>
+						<div class="col-md-4">
+							<img src="/images/placeholder-cover.jpg" alt="{{__('default.Generated Cover')}}"
+							     style="width: 100%; height: auto;"
+							     id="generatedCover">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer modal-footer-color justify-content-start">
+					<button type="button" class="btn btn-primary-soft" id="generateCoverBtn"> {{__('default.Generate')}}</button>
+					<button type="button" class="btn btn-success-soft" id="saveCoverBtn" disabled>{{__('default.Save')}}</button>
+					<button type="button" class="btn btn-secondary-soft" data-bs-dismiss="modal"> {{__('default.Close')}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Alert Modal -->
+	<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel"
+	     aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content modal-content-color">
+				<div class="modal-header modal-header-color">
+					<h5 class="modal-title" id="alertModalLabel">Alsert</h5>
+					<button type="button" class="btn-close alert-modal-close-button" data-bs-dismiss="modal"
+					        aria-label="{{__('default.Close')}}"></button>
+				</div>
+				<div class="modal-body modal-body-color">
+					<div id="alertModalContent"></div>
+				</div>
+				<div class="modal-footer modal-footer-color justify-content-start">
+					<button type="button" class="btn btn-secondary alert-modal-close-button"
+					        data-bs-dismiss="modal">{{__('default.Close')}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	
 	@include('layouts.footer')
 
@@ -109,7 +177,75 @@
 	<!-- Inline JavaScript code -->
 	<script>
 		var current_page = 'book_details';
+		
 		$(document).ready(function () {
+			$('#createCoverBtn').on('click', function (e) {
+				e.preventDefault();
+				$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');
+				$("#coverBookTitle").val(bookData.title);
+				$("#coverBookAuthor").val(bookData.author_name);
+				$("#coverPrompt").val('{{__('default.An image describing: ')}}' + bookData.blurb);
+			});
+			
+			$('#generateCoverBtn').on('click', function () {
+				$('#generateCoverBtn').prop('disabled', true).text('{{__('default.Generating...')}}');
+				
+				$.ajax({
+					url: '/make-cover-image/' + bookSlug,
+					method: 'POST',
+					data: {
+						theme: $("#coverPrompt").val(),
+						title_1: $("#coverBookTitle").val(),
+						author_1: $("#coverBookAuthor").val(),
+						creative: $("#enhancePrompt").is(':checked') ? 'more' : 'no',
+					},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					dataType: 'json',
+					success: function (data) {
+						if (data.success) {
+							$('#generatedCover').attr('src', "/storage/ai-images/" + data.output_filename);
+							createCoverFileName = data.output_filename;
+							$('#saveCoverBtn').prop('disabled', false);
+						} else {
+							$("#alertModalContent").html('{{__('default.Failed to generate cover: ')}}' + data.message);
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+						}
+						$('#generateCoverBtn').prop('disabled', false).text('{{__('default.Generate')}}');
+					}
+				});
+			});
+			
+			$('#saveCoverBtn').on('click', function () {
+				$.ajax({
+					url: '/book/' + bookSlug + '/cover',
+					method: 'POST',
+					data: {
+						cover_filename: createCoverFileName
+					},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					dataType: 'json',
+					success: function (data) {
+						if (data.success) {
+							$("#alertModalContent").html('{{__('default.Cover saved successfully!')}}');
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+							
+							$('#bookCover').attr('src', '/storage/ai-images/' + createCoverFileName);
+						} else {
+							$("#alertModalContent").html('{{__('default.Failed to save cover: ')}}' + data.message);
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+						}
+					},
+					error: function (xhr, status, error) {
+						$("#alertModalContent").html('{{__('default.An error occurred while saving the cover.')}}');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
+					}
+				});
+			});
+			
 		});
 	</script>
 

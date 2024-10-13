@@ -26,16 +26,15 @@
 <main class="py-1">
 	
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
-		
+		<div class="mb-1 mt-1 w-100" style="text-align: right;">
+			<a href="{{route('edit-book', $book_slug)}}" class="btn btn-sm btn-primary mb-1 mt-1"
+			   title="{{__('default.Back to Chapters')}}"><i
+					class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
+		</div>
 		
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
-				<a href="{{route('edit-book', $book_slug)}}" class="btn btn-primary mb-1 mt-1"
-				   title="{{__('default.Back to Chapters')}}"><i
-						class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
-				<a href="{{route('user.showcase-library')}}" class="mb-1 mt-1 btn btn-primary"><i
-						class="bi bi-bookshelf"></i> {{__('default.Back to Books')}}</a>
+				<h3 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h3>
 			</div>
 			<div class="card-body modal-content modal-content-color">
 				<!-- Image Div -->
@@ -137,7 +136,7 @@
 					<div class="col-12 col-lg-6">
 						<button type="button" class="btn btn-success mt-2 mb-3" id="recreateBeats"><i
 								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
-						<a href="{{route('book.codex',[$book_slug])}}" target="_blank" class="btn btn-primary mb-3 mt-2"
+						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-2"
 						   id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
@@ -221,21 +220,30 @@
 													        data-beat-index="{{$index}}">{{__('default.Rewrite Beat Description')}}</button>
 												</li>
 											@endif
+											
+											<li>
+												<button class="toggle-beat-description dropdown-item"
+												        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+													{{__('default.Description')}}
+												</button>
+											</li>
+											
+											<li>
+												<button class="toggle-beat-text dropdown-item"
+												        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+													{{__('default.Text')}}
+												</button>
+											</li>
+											
+											<li>
+												<button class="toggle-beat-summary dropdown-item"
+												        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
+													{{__('default.Summary')}}
+												</button>
+											</li>
 										</ul>
 									</div>
 									
-									<button class="btn btn-sm btn-outline-primary toggle-beat-description"
-									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
-										{{__('default.Description')}}
-									</button>
-									<button class="btn btn-sm btn-outline-primary toggle-beat-text"
-									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
-										{{__('default.Text')}}
-									</button>
-									<button class="btn btn-sm btn-outline-primary toggle-beat-summary"
-									        data-chapter-index="{{$chapter_index}}" data-beat-index="{{$index}}">
-										{{__('default.Summary')}}
-									</button>
 									
 									@php $hideDescription = 'd-none'; $showTextFlag = false; @endphp
 									@if ( ($beat['description'] ?? '') === '')
@@ -321,7 +329,7 @@
 			<div class="modal-body modal-body-color">
 				<div id="alertModalContent"></div>
 			</div>
-			<div class="modal-footer modal-footer-color">
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-secondary alert-modal-close-button"
 				        data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
@@ -371,9 +379,9 @@
 			<div class="modal-body modal-body-color">
 				<textarea id="editableBeatSummary" class="form-control" rows="5"></textarea>
 			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Cancel')}}</button>
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-primary" id="saveBeatSummaryBtn">{{__('default.Save Summary')}}</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Cancel')}}</button>
 			</div>
 		</div>
 	</div>

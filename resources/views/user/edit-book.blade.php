@@ -32,27 +32,68 @@
 <main class="py-1">
 	
 	<div class="container mt-2">
-		<h1 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h1>
 		<div class="mb-1 mt-1 w-100" style="text-align: right;">
-			<a href="{{route('user.showcase-library')}}">{{__('default.Back to Books')}}</a> |
-			<a href="{{route('user.book-details',$book_slug)}}">{{__('default.Back to Book Page')}}</a>
+			<a class="btn btn-sm btn-primary mb-1 mt-1" href="{{route('my.books')}}"><i
+					class="bi bi-bookshelf"></i> {{__('default.Back to My Books')}}</a>
+			<a class="btn btn-sm btn-primary" href="{{route('user.book-details',$book_slug)}}"><i
+					class="bi bi-book"></i> {{__('default.Back to Book Page')}}</a>
 		</div>
 		<div class="card general-card">
 			<div class="card-header modal-header modal-header-color">
+				<h3 style="margin:10px;" class="text-center" id="bookTitle">{{$book['title']}}</h3>
 			</div>
 			<div class="card-body modal-content modal-content-color d-flex flex-row">
 				<!-- Image Div -->
 				<div class="row">
-					<div class="col-lg-5 col-12 mb-3">
-						<img
-							src="{{$book['cover_filename']}}"
-							alt="{{__('default.Book Cover')}}"
-							style="width: 100%; object-fit: cover; min-height: 400px;"
-							id="bookCover">
-						<br>
-						<button class="btn btn-primary mb-3 mt-1 w-100" title="{{__('default.Cover Image')}}" id="createCoverBtn">
-							<i class="bi bi-image"></i> {{__('default.Cover Image')}}
-						</button>
+					
+					<div class="col-12 col-lg-6  bg-dark p-3">
+						<span><em>{{__('default.Blurb')}}</em>
+							<br>
+						<span id="bookBlurb">{{$book['blurb']}}</span>
+						<br><br>
+						
+						<span><em>{{__('default.Back Cover Text')}}</em>
+							<br>
+						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
+					</div>
+					<div class="col-12 col-lg-6 p-3  bg-dark">
+						<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
+								{{$book['prompt'] ?? 'no prompt'}}</span></div>
+						<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
+								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
+					</div>
+					<div class="col-12 mt-3">
+					</div>
+					
+					
+					<div class="col-12 col-xl-6">
+						
+						<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
+							@if (Auth::user() && Auth::user()->isAdmin())
+								<label class="badge bg-danger">Admin</label>
+							@endif
+						
+						</label>
+						<select id="llmSelect" class="form-select mx-auto">
+							<option value="">{{__('default.Select an AI Engine')}}</option>
+							@if (Auth::user() && Auth::user()->isAdmin())
+								<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+								<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+								<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+								<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+							@endif
+							@if (Auth::user() && !empty(Auth::user()->anthropic_key))
+								<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
+								<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
+							@endif
+							@if (Auth::user() && !empty(Auth::user()->openai_api_key))
+								<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
+								<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+							@endif
+						</select>
+					</div>
+					
+					<div class="col-12 col-lg-6" id="beatsPerChapterLabel">
 						
 						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
@@ -66,108 +107,68 @@
 							<option value="9">9</option>
 							<option value="10">10</option>
 						</select>
-						
-						<div class="mb-3">
-							<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
-							<select class="form-control" id="writingStyle" name="writingStyle" required>
-								@foreach($writingStyles as $style)
-									@if ($style['value'] === $book['writing_style'])
-										<option value="{{ $style['value'] }}" selected>{{ $style['label'] }}</option>
-									@else
-										<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
-						
-						<div class="mb-3">
-							<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
-							<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
-								@foreach($narrativeStyles as $style)
-									@if ($style['value'] === $book['narrative_style'])
-										<option value="{{ $style['value'] }}" selected>{{ $style['value'] }}</option>
-									@else
-										<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
-						
-						<div class="mb-3">
-							<label for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
-								@if (Auth::user() && Auth::user()->isAdmin())
-									<label class="badge bg-danger">Admin</label>
+					</div>
+					
+					<div class="col-12 col-lg-6">
+						<label for="writingStyle" class="form-label">{{__('default.Writing Style')}}:</label>
+						<select class="form-control" id="writingStyle" name="writingStyle" required>
+							@foreach($writingStyles as $style)
+								@if ($style['value'] === $book['writing_style'])
+									<option value="{{ $style['value'] }}" selected>{{ $style['label'] }}</option>
+								@else
+									<option value="{{ $style['value'] }}">{{ $style['label'] }}</option>
 								@endif
-							
-							</label>
-							<select id="llmSelect" class="form-select mx-auto">
-								<option value="">{{__('default.Select an AI Engine')}}</option>
-								@if (Auth::user() && Auth::user()->isAdmin())
-									<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
-									<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
-									<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
-									<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
+							@endforeach
+						</select>
+					</div>
+					
+					<div class="col-12 col-lg-6">
+						<label for="narrativeStyle" class="form-label">{{__('default.Narrative Style')}}:</label>
+						<select class="form-control" id="narrativeStyle" name="narrativeStyle" required>
+							@foreach($narrativeStyles as $style)
+								@if ($style['value'] === $book['narrative_style'])
+									<option value="{{ $style['value'] }}" selected>{{ $style['value'] }}</option>
+								@else
+									<option value="{{ $style['value'] }}">{{ $style['value'] }}</option>
 								@endif
-								@if (Auth::user() && !empty(Auth::user()->anthropic_key))
-									<option value="anthropic-sonet">anthropic :: claude-3.5-sonnet (direct)</option>
-									<option value="anthropic-haiku">anthropic :: haiku (direct)</option>
-								@endif
-								@if (Auth::user() && !empty(Auth::user()->openai_api_key))
-									<option value="open-ai-gpt-4o">openai :: gpt-4o (direct)</option>
-									<option value="open-ai-gpt-4o-mini">openai :: gpt-4o-mini (direct)</option>
-								@endif
-							</select>
-						</div>
+							@endforeach
+						</select>
+					</div>
+					
+					<div class="col-12">
 						<div class="mt-1 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
 							<div id="modelDescription"></div>
 							<div id="modelPricing"></div>
 						</div>
-						
-						
-						<button class="btn btn-primary mb-1 mt-2 w-100" id="generateAllBeatsBtn"
+					</div>
+					
+					
+					<div class="col-12">
+						<button class="btn btn-danger mb-1 mt-2" id="generateAllBeatsBtn"
 						        title="{{__('default.Write All Beats')}}"><i
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
 						</button>
 						
 						<a href="{{route('book-beats',[$book_slug, 'all-chapters','2'])}}"
-						   class="btn btn-primary mb-1 mt-1 w-100" title="{{__('default.Edit All Beats')}}">
+						   class="btn btn-primary mb-1 mt-2" title="{{__('default.Edit All Beats')}}">
 							<i class="bi bi-pencil-square"></i> {{__('default.Edit All Beats')}}
 						</a>
 						
-						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-1 w-100" id="openCodexBtn">
+						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-secondary mb-1 mt-2" id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
-					
-					
-					</div>
-					<!-- Text Blocks Div -->
-					<div class="col-lg-7 col-12">
-						<span style="font-size: 16px; font-weight: normal; font-style: italic;"
-						      id="bookBlurb">{{$book['blurb']}}</span>
-						<br><br>
-						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
-						<div class="mt-3 mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
-								{{$book['prompt'] ?? 'no prompt'}}</span></div>
-						<div class="mt-3 mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
-								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
 						
 						@if (Auth::user())
 							@if (Auth::user()->email === $book['owner'] || Auth::user()->name === $book['owner'] || Auth::user()->isAdmin())
-								<button class="btn btn-primary mt-3" id="editBookDetailsBtn">
+								<button class="btn btn-primary mb-1 mt-2" id="editBookDetailsBtn">
 									<i class="bi bi-pencil-square"></i> {{__('default.Edit Book Details')}}
 								</button>
 								
-								<button class="btn btn-primary mt-3" id="openLlmPromptModalBtn">
-									<i class="bi bi-chat-dots"></i> {{__('default.Send Prompt to LLM')}}
+								<button class="btn btn-primary mb-1 mt-2" id="openLlmPromptModalBtn">
+									<i class="bi bi-chat-dots"></i> {{__('default.Chat with AI')}}
 								</button>
 								
-								<button class="btn btn-primary mt-3" id="showBookStructureBtn"
-								        title="{{__('default.Read Book')}}">
-									<i class="bi bi-book-half"></i> {{__('default.Read Book')}}
-								</button>
-								
-								
-								<button class="btn btn-danger delete-book-btn mt-3 d-inline-block"
+								<button class="btn btn-danger delete-book-btn mb-1 mt-2"
 								        data-book-id="<?php echo urlencode($book_slug); ?>"><i
 										class="bi bi-trash-fill"></i> {{__('default.Delete Book')}}
 								</button>
@@ -182,162 +183,98 @@
 		
 		<div class="book-chapter-board" id="bookBoard">
 			@foreach ($book['acts'] as $act)
-				<div class="card general-card">
+				<div class="card general-card mb-1">
 					<div class="card-header modal-header modal-header-color">
-						<h5 class="card-title">{{__('default.Act with Number', ['id' => $act['id']])}} — {{$act['title']}}</h5>
-					</div>
-					<div class="card-body modal-content modal-content-color">
-						@foreach ($act['chapters'] as $chapter)
-							<div class="card general-card">
-								<div class="card-header modal-header modal-header-color">
-									<h5 class="card-title">{{__('default.Chapter with Number', ['order' => $chapter['order']])}}
-										— {{$chapter['name']}}</h5>
-								</div>
-								<div class="card-body modal-content modal-content-color">
-									<div class="row">
-										<div class="col-9">
-											<div class="mb-3">
-												<label for="chapterName" class="form-label">{{__('default.Name')}}</label>
-												<input type="text" class="form-control chapterName" value="{{$chapter['name']}}">
-											</div>
-										</div>
-										<div class="col-3">
-											<div class="mb-3">
-												<label for="chapterOrder" class="form-label">{{__('default.Order')}}</label>
-												<input type="text" class="form-control chapterOrder" value="{{$chapter['order']}}">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterShortDescription"
-												       class="form-label">{{__('default.Short Description')}}</label>
-												<textarea class="form-control chapterShortDescription"
-												          rows="3">{{$chapter['short_description']}}</textarea>
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterEvents" class="form-label"> {{__('default.Events')}}</label>
-												<input type="text" class="form-control chapterEvents" value="{{$chapter['events']}}">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterPeople" class="form-label">{{__('default.People')}}</label>
-												<input type="text" class="form-control chapterPeople" value="{{$chapter['people']}}">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterPlaces" class="form-label"> {{__('default.Places')}}</label>
-												<input type="text" class="form-control chapterPlaces" value="{{$chapter['places']}}">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterFromPreviousChapter"
-												       class="form-label">{{__('default.Previous Chapter')}}</label>
-												<input type="text" class="form-control chapterFromPreviousChapter"
-												       value="{{$chapter['from_previous_chapter']}}">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												<label for="chapterToNextChapter" class="form-label"> {{__('default.Next Chapter')}}</label>
-												<input type="text" class="form-control chapterToNextChapter"
-												       value="{{$chapter['to_next_chapter']}}">
-											</div>
-										</div>
-									</div>
-									<div class="row" style="margin-left: -15px; margin-right: -15px;">
-										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
-											<button class="btn bt-lg btn-secondary w-100 update-chapter-btn"
-											        data-chapter-filename="{{$chapter['chapterFilename']}}">
-												{{__('default.Update Chapter')}}
-											</button>
-										</div>
-										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
-											<a class="btn bt-lg btn-primary w-100 editBeatsLink"
-											   href="/book-beats/{{$book_slug}}/{{str_replace('.json','', $chapter['chapterFilename'])}}/2">{{__('default.Open Beats')}}</a>
-										</div>
-										<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
-											<div class="btn bt-lg btn-warning w-100"
-											     onclick="rewriteChapter('{{$chapter['chapterFilename']}}')">{{__('default.Rewrite Chapter')}}</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-						@endforeach
+						<div class="card-title">{{__('default.Act with Number', ['id' => $act['id']])}} — {{$act['title']}}</div>
 					</div>
 				</div>
+				
+				@foreach ($act['chapters'] as $chapter)
+					<div class="card general-card">
+						<div class="card-header modal-header modal-header-color">
+							<div class="card-title">{{__('default.Chapter with Number', ['order' => $chapter['order']])}}
+								— {{$chapter['name']}}</div>
+						</div>
+						<div class="card-body modal-content modal-content-color">
+							<div class="row">
+								<div class="col-9">
+									<div class="mb-3">
+										<label for="chapterName" class="form-label">{{__('default.Name')}}</label>
+										<input type="text" class="form-control chapterName" value="{{$chapter['name']}}">
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="mb-3">
+										<label for="chapterOrder" class="form-label">{{__('default.Order')}}</label>
+										<input type="text" class="form-control chapterOrder" value="{{$chapter['order']}}">
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="mb-3">
+										<label for="chapterShortDescription" class="form-label">{{__('default.Short Description')}}</label>
+										<textarea class="form-control chapterShortDescription"
+										          rows="3">{{$chapter['short_description']}}</textarea>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="mb-3">
+										<label for="chapterEvents" class="form-label"> {{__('default.Events')}}</label>
+										<textarea class="form-control chapterEvents" rows="2">{{$chapter['events']}}</textarea>
+									</div>
+								</div>
+								<div class=" col-12">
+									<div class="mb-3">
+										<label for="chapterPeople" class="form-label">{{__('default.People')}}</label>
+										<textarea class="form-control chapterPeople" rows="2">{{$chapter['people']}}</textarea>
+									</div>
+								</div>
+								<div class=" col-12">
+									<div class="mb-3">
+										<label for="chapterPlaces" class="form-label"> {{__('default.Places')}}</label>
+										<textarea class="form-control chapterPlaces" rows="2">{{$chapter['places']}}</textarea>
+									</div>
+								</div>
+								<div class=" col-12">
+									<div class="mb-3">
+										<label for="chapterFromPreviousChapter"
+										       class="form-label">{{__('default.Previous Chapter')}}</label>
+										<textarea class="form-control chapterFromPreviousChapter"
+										          rows="2">{{$chapter['from_previous_chapter']}}</textarea>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="mb-3">
+										<label for="chapterToNextChapter" class="form-label"> {{__('default.Next Chapter')}}</label>
+										<textarea class="form-control chapterToNextChapter"
+										          rows="2">{{$chapter['to_next_chapter']}}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row" style="margin-left: -15px; margin-right: -15px;">
+								<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+									<button class="btn bt-lg btn-secondary w-100 update-chapter-btn"
+									        data-chapter-filename="{{$chapter['chapterFilename']}}">
+										{{__('default.Update Chapter')}}
+									</button>
+								</div>
+								<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+									<a class="btn bt-lg btn-primary w-100 editBeatsLink"
+									   href="/book-beats/{{$book_slug}}/{{str_replace('.json','', $chapter['chapterFilename'])}}/2">{{__('default.Open Beats')}}</a>
+								</div>
+								<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
+									<div class="btn bt-lg btn-warning w-100"
+									     onclick="rewriteChapter('{{$chapter['chapterFilename']}}')">{{__('default.Rewrite Chapter')}}</div>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				@endforeach
 			@endforeach
 		
 		</div>
-	
 	</div>
 </main>
-
-<!-- Modal for Creating Book Cover -->
-<div class="modal fade" id="createCoverModal" tabindex="-1" aria-labelledby="createCoverModalLabel"
-     aria-hidden="true">
-	<div class="modal-dialog ">
-		<div class="modal-content modal-content-color">
-			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="createCoverModalLabel">{{__('default.Create Cover')}}</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
-			</div>
-			<div class="modal-body modal-body-color">
-				<div class="row">
-					<div class="col-md-8">
-						<textarea class="form-control" id="coverPrompt" rows="5"
-						          placeholder="{{__('default.Enter cover description')}}"></textarea>
-						<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="{{__('default.Book Title')}}">
-						<input type="text" id="coverBookAuthor" class="form-control mt-2"
-						       placeholder="{{__('default.Book Author')}}">
-						<div class="mb-1 form-check mt-2">
-							<input type="checkbox" class="form-check-input" id="enhancePrompt" checked>
-							<label class="form-check-label" for="enhancePrompt">
-								{{__('default.Enhance Prompt')}}
-							</label>
-						</div>
-						<span
-							style="font-size: 14px; margin-left:24px;">{{__('default.AI will optimize for creative visuals')}}</span>
-					</div>
-					<div class="col-md-4">
-						<img src="/images/placeholder-cover.jpg" alt="{{__('default.Generated Cover')}}"
-						     style="width: 100%; height: auto;"
-						     id="generatedCover">
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-primary" id="generateCoverBtn"> {{__('default.Generate')}}</button>
-				<button type="button" class="btn btn-success" id="saveCoverBtn" disabled>{{__('default.Save')}}</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> {{__('default.Close')}}</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Modal for Viewing Book Structure -->
-<div class="modal fade" id="bookStructureModal" tabindex="-1" aria-labelledby="bookStructureModalLabel"
-     aria-hidden="true">
-	<div class="modal-dialog modal-xl modal-dialog-scrollable">
-		<div class="modal-content modal-content-color">
-			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="bookStructureModalLabel">{{__('default.Book Structure')}}</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{__('default.Close')}}"></button>
-			</div>
-			<div class="modal-body modal-body-color">
-				<div id="bookStructureContent"></div>
-			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> {{__('default.Close')}}</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <!-- Modal for Generating All Beats -->
 <div class="modal fade" id="generateAllBeatsModal" tabindex="-1" aria-labelledby="generateAllBeatsModalLabel"
@@ -357,7 +294,7 @@
 				<div id="generateAllBeatsLog"
 				     style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
 			</div>
-			<div class="modal-footer modal-footer-color">
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-secondary closeAndRefreshButton"> {{__('default.Close')}}</button>
 			</div>
 		</div>
@@ -377,7 +314,7 @@
 			<div class="modal-body modal-body-color">
 				<div id="alertModalContent"></div>
 			</div>
-			<div class="modal-footer modal-footer-color">
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-secondary alert-modal-close-button"
 				        data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
@@ -418,9 +355,9 @@
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-primary" id="saveBookDetailsBtn">{{__('default.Save Changes')}}</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>
@@ -431,7 +368,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content modal-content-color">
 			<div class="modal-header modal-header-color">
-				<h5 class="modal-title" id="llmPromptModalLabel">{{__('default.Send Prompt to LLM')}}</h5>
+				<h5 class="modal-title" id="llmPromptModalLabel">{{__('default.Chat with AI')}}</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body modal-body-color">
@@ -444,9 +381,9 @@
 					<textarea class="form-control" id="llmResponse" rows="10" readonly></textarea>
 				</div>
 			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-primary" id="sendPromptBtn">{{__('default.Send Prompt')}}</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>
@@ -471,12 +408,12 @@
 					<textarea class="form-control" id="rewriteResult" rows="10"></textarea>
 				</div>
 			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-primary"
 				        id="sendRewritePromptBtn">{{__('default.Rewrite Chapter')}}</button>
 				<button type="button" class="btn btn-success" id="acceptRewriteBtn"
 				        style="display: none;">{{__('default.Accept Rewrite')}}</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>
@@ -494,9 +431,9 @@
 			<div class="modal-body modal-body-color">
 				Are you sure you want to delete this book?
 			</div>
-			<div class="modal-footer modal-footer-color">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 	</div>
@@ -513,61 +450,6 @@
 	
 	let reload_window = false;
 	let savedLlm = localStorage.getItem('edit-book-llm') || 'anthropic/claude-3-haiku:beta';
-	
-	function showBookStructureModal() {
-		
-		
-		let structureHtml = '<h2>' + bookData.title + '</h2>';
-		structureHtml += '<p><i>' + '{{__('default.Blurb')}}' + ':</i> ' + bookData.blurb + '</p>';
-		structureHtml += '<p><i>' + '{{__('default.Back Cover Text')}}' + ':</i> ' + bookData.back_cover_text + '</p>';
-		
-		bookData.acts.forEach(function (act, actIndex) {
-			structureHtml += '<h3>';
-			structureHtml += "{{__('default.Act')}} " + (actIndex + 1) + ':' + act.title + ' </h3>';
-			act.chapters.forEach(function (chapter) {
-				
-				var chapter_events = chapter.events;
-				if (Array.isArray(chapter.events)) {
-					chapter_events = chapter.events.join(', ');
-				}
-				var chapter_people = chapter.people;
-				if (Array.isArray(chapter.people)) {
-					chapter_people = chapter.people.join(', ');
-				}
-				var chapter_places = chapter.places;
-				if (Array.isArray(chapter.places)) {
-					chapter_places = chapter.places.join(', ');
-				}
-				
-				structureHtml += '<h4>' + chapter.name + '</h4>';
-				structureHtml += '<p>' + chapter.short_description + '</p>';
-				structureHtml += '<ul>';
-				structureHtml += '<li><i>' + '{{__('default.Events')}}' + '</i>: ' + chapter_events + '</li>';
-				structureHtml += '<li><i>' + '{{__('default.People')}}' + '</i>: ' + chapter_people + '</li>';
-				structureHtml += '<li><i>' + '{{__('default.Places')}}' + '</i>: ' + chapter_places + '</li>';
-				structureHtml += '<li><i>' + '{{__('default.From Previous Chapter')}}' + '</i>: ' + chapter.from_previous_chapter + '</li>';
-				structureHtml += '<li><i>' + '{{__('default.To Next Chapter')}}' + '</i>: ' + chapter.to_next_chapter + '</li>';
-				structureHtml += '</ul>';
-				if (chapter.beats && chapter.beats.length > 0) {
-					structureHtml += '<h5>' + '{{__('default.Beats')}}' + ':</h5>';
-					// structureHtml += '<ul>';
-					chapter.beats.forEach(function (beat) {
-						if (beat.beat_text) {
-							let beatText = beat.beat_text;
-							beatText = beatText.replace(/\n/g, '<br>');
-							structureHtml += '<br>' + beatText + '<hr>';
-						} else {
-							structureHtml += '<br>-' + beat.description + '<hr>';
-						}
-					});
-					// structureHtml += '</ul>';
-				}
-			});
-		});
-		
-		$('#bookStructureContent').html(structureHtml);
-		$('#bookStructureModal').modal({backdrop: 'static', keyboard: true}).modal('show');
-	}
 	
 	function saveChapter(chapterData) {
 		$.ajax({
@@ -943,73 +825,6 @@
 			}
 		});
 		
-		$('#createCoverBtn').on('click', function (e) {
-			e.preventDefault();
-			$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');
-			$("#coverBookTitle").val(bookData.title);
-			$("#coverBookAuthor").val(bookData.author_name);
-			$("#coverPrompt").val('{{__('default.An image describing: ')}}' + bookData.blurb);
-		});
-		
-		$('#generateCoverBtn').on('click', function () {
-			$('#generateCoverBtn').prop('disabled', true).text('{{__('default.Generating...')}}');
-			
-			$.ajax({
-				url: '/make-cover-image/' + bookSlug,
-				method: 'POST',
-				data: {
-					theme: $("#coverPrompt").val(),
-					title_1: $("#coverBookTitle").val(),
-					author_1: $("#coverBookAuthor").val(),
-					creative: $("#enhancePrompt").is(':checked') ? 'more' : 'no',
-				},
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				dataType: 'json',
-				success: function (data) {
-					if (data.success) {
-						$('#generatedCover').attr('src', "/storage/ai-images/" + data.output_filename);
-						createCoverFileName = data.output_filename;
-						$('#saveCoverBtn').prop('disabled', false);
-					} else {
-						$("#alertModalContent").html('{{__('default.Failed to generate cover: ')}}' + data.message);
-						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-					}
-					$('#generateCoverBtn').prop('disabled', false).text('{{__('default.Generate')}}');
-				}
-			});
-		});
-		
-		$('#saveCoverBtn').on('click', function () {
-			$.ajax({
-				url: '/book/' + bookSlug + '/cover',
-				method: 'POST',
-				data: {
-					cover_filename: createCoverFileName
-				},
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				dataType: 'json',
-				success: function (data) {
-					if (data.success) {
-						$("#alertModalContent").html('{{__('default.Cover saved successfully!')}}');
-						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-						
-						$('#bookCover').attr('src', '/storage/ai-images/' + createCoverFileName);
-					} else {
-						$("#alertModalContent").html('{{__('default.Failed to save cover: ')}}' + data.message);
-						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-					}
-				},
-				error: function (xhr, status, error) {
-					$("#alertModalContent").html('{{__('default.An error occurred while saving the cover.')}}');
-					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-				}
-			});
-		});
-		
 		$('.update-chapter-btn').on('click', function () {
 			var chapterFilename = $(this).data('chapter-filename');
 			var chapterCard = $(this).closest('.card');
@@ -1026,11 +841,6 @@
 				to_next_chapter: chapterCard.find('.chapterToNextChapter').val()
 			};
 			saveChapter(chapterData);
-		});
-		
-		$('#showBookStructureBtn').on('click', function (e) {
-			e.preventDefault();
-			showBookStructureModal();
 		});
 		
 		$('#generateAllBeatsBtn').on('click', function (e) {
@@ -1118,7 +928,7 @@
 			$('#llmPromptModal').modal('show');
 		});
 		
-		// Send Prompt to LLM
+		// Chat with AI
 		$('#sendPromptBtn').on('click', function () {
 			const userPrompt = $('#userPrompt').val();
 			const llm = savedLlm; // Assuming you have a savedLlm variable

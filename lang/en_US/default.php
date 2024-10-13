@@ -484,7 +484,7 @@
 		'Read' => 'Read',
 		'Edit' => 'Edit',
 
-		'Back to Books' => 'Back to Books',
+		'Back to My Books' => 'Back to My Books',
 		'Back to Book Page' => 'Back to Book Page',
 		'Log out' => 'Log out',
 		'Login/Sign up' => 'Login/Sign up',
@@ -533,7 +533,7 @@
 		'Failed to save rewritten chapter:' => 'Failed to save rewritten chapter:',
 		'Error saving rewritten chapter' => 'Error saving rewritten chapter',
 		'User Prompt' => 'User Prompt',
-		'Send Prompt to LLM' => 'Send Prompt to LLM',
+		'Chat with AI' => 'Chat with AI',
 		'LLM Response' => 'LLM Response',
 		'Send Prompt' => 'Send Prompt',
 		'Accept Rewrite' => 'Accept Rewrite',

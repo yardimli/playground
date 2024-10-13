@@ -521,7 +521,7 @@
 		'View Book' => 'Kitabı Görüntüle',
 		'Read Book' => 'Kitabı Oku',
 
-		'Back to Books' => 'Kitaplara Geri Dön',
+		'Back to My Books' => 'Kitaplara Geri Dön',
 		'Log out' => 'Çıkış Yap',
 		'Login/Sign up' => 'Giriş Yap/Kaydol',
 		'Write Books With AI Book' => 'Netkitap',

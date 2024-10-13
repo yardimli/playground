@@ -18,11 +18,11 @@
 						<div class="card-body py-3">
 							<img src="{{$book['cover_filename']}}" alt="book" class="pb-1" style="min-height: 400px;">
 							
-							<button class="btn btn-success mb-1 mt-1" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
+							<button class="btn btn-success-soft mb-1 mt-1" id="exportPdfBtn" title="{{__('default.Export as PDF')}}">
 								<i class="bi bi-file-earmark-pdf"></i> {{__('default.PDF')}}
 							</button>
 							
-							<button class="btn btn-success mb-1 mt-1" id="exportTxtBtn" title="{{__('default.Export as DocX')}}">
+							<button class="btn btn-success-soft mb-1 mt-1" id="exportTxtBtn" title="{{__('default.Export as DocX')}}">
 								<i class="bi bi-file-earmark-word"></i> {{__('default.DocX')}}
 							</button>
 						</div>
@@ -77,12 +77,14 @@
 								<h3>{{$act['title'] ?? 'Act'}}</h3>
 								@foreach ($act['chapters'] as $chapter)
 									<h4>{{$chapter['name'] ?? 'Chapter '.$chapter_counter}}</h4>
-									<p>{{$chapter['short_description'] ?? ''}}</p>
-									<ul>
-										<li><i>{{__('Events')}}</i>: {{$chapter['events'] ?? ''}}</li>
-										<li><i>{{__('People')}}</i>: {{$chapter['people'] ?? ''}}</li>
-										<li><i>{{__('Places')}}</i>: {{$chapter['places'] ?? ''}}</li>
-									</ul>
+									@if (1===2)
+										<p>{{$chapter['short_description'] ?? ''}}</p>
+										<ul>
+											<li><i>{{__('Events')}}</i>: {{$chapter['events'] ?? ''}}</li>
+											<li><i>{{__('People')}}</i>: {{$chapter['people'] ?? ''}}</li>
+											<li><i>{{__('Places')}}</i>: {{$chapter['places'] ?? ''}}</li>
+										</ul>
+									@endif
 									@if (isset($chapter['beats']))
 										@foreach ($chapter['beats'] as $beat)
 											<p>{!! str_replace("\n","<br>",$beat['beat_text'] ?? '') !!}</p>
@@ -101,6 +103,12 @@
 							<span class="strong">Blurb:</span><br>
 							{{$book['blurb'] ?? ''}}
 						</blockquote>
+						
+						<blockquote class="blockquote-footer text-dark-emphasis" style="font-size: 14px;">
+							<span class="strong">Back Cover Text:</span><br>
+							{{$book['back_cover_text'] ?? ''}}
+						</blockquote>
+						
 						<figcaption class="blockquote-footer mb-0">
 							<span class="strong">Character Profiles:</span><br>
 							{!! str_replace("\n","<br>", $book['character_profiles'] ?? ''  ) !!}
@@ -373,7 +381,7 @@
 			document.body.removeChild(link);
 			URL.revokeObjectURL(url);
 		}
-
+		
 		var current_page = 'read_book';
 		$(document).ready(function () {
 			
