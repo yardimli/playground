@@ -782,7 +782,7 @@ Prompt:";
 
 					if (isset($llm['pricing']['completion'])) {
 						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
-						return $price_per_million <= 5;
+						return $price_per_million <= 20;
 					}
 					return true;
 				});

@@ -630,12 +630,12 @@
 
 			if ($llm === 'anthropic-haiku') {
 				$llm_base_url = $_ENV['ANTHROPIC_HAIKU_BASE'];
-				$llm_api_key = elf::getOpenAIKey();;
+				$llm_api_key = elf::getAnthropicKey();;
 				$llm_model = $_ENV['ANTHROPIC_HAIKU_MODEL'];
 
 			} else if ($llm === 'anthropic-sonet') {
 				$llm_base_url = $_ENV['ANTHROPIC_SONET_BASE'];
-				$llm_api_key = elf::getOpenAIKey();;
+				$llm_api_key = elf::getAnthropicKey();;
 				$llm_model = $_ENV['ANTHROPIC_SONET_MODEL'];
 
 			} else if ($llm === 'open-ai-gpt-4o') {
