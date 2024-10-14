@@ -87,10 +87,10 @@
 								}
 
 								//search $book['owner'] in users table name column
-								$user = User::where('email', ($bookData['owner'] ?? 'deleted_user'))->first();
-								if ($user && $user->email === Auth::user()->email || (Auth::user() && Auth::user()->isAdmin())) {
+								$user = User::where('email', ($bookData['owner']))->first();
+								if ( ($user && $user->email === Auth::user()->email) || (Auth::user() && Auth::user()->isAdmin())) {
 									$bookData['owner_name'] = $user->name ?? 'deleted_user';
-									if (!$bookData['owner_name'] === 'deleted_user') {
+									if (!($bookData['owner_name'] == 'deleted_user')) {
 										if ($user->avatar) {
 											$bookData['author_avatar'] = Storage::url($user->avatar);
 										} else {
