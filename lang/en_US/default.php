@@ -473,6 +473,7 @@
 		'name' => 'name',
 		'Error:' => 'Error:',
 		'Book created successfully.' => 'Book created successfully.',
+		'Search...' => 'Search...',
 
 		//login.php
 		'Write Books With AI - Login' => 'Write Books With AI - Login',

@@ -71,8 +71,7 @@
 					</div>
 					<div class="col-12 mt-3">
 					</div>
-					
-					
+
 					<div class="col-12 col-xl-6">
 						
 						<span for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
