@@ -256,7 +256,7 @@
 			$genres_array = MyHelper::$genres_array;
 			$adult_genres_array = MyHelper::$adult_genres_array;
 
-			return view('read-book', compact( 'book', 'book_slug', 'genres_array', 'adult_genres_array'));
+			return view('user.read-book', compact( 'book', 'book_slug', 'genres_array', 'adult_genres_array'));
 		}
 
 		public function showcaseLibrary(Request $request)

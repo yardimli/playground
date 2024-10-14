@@ -69,6 +69,8 @@
 
 		'Don\'t show this again' => 'Don\'t show this again',
 
+		'Click here to edit the book.' => 'Click here to edit the book.',
+
 
 
 
