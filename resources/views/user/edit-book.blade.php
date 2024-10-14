@@ -48,7 +48,9 @@
 				<!-- Image Div -->
 				<div class="row">
 					
-					<div class="col-12 col-lg-6  bg-dark p-3">
+					<!-- Text Blocks Div -->
+					<div class="col-12 col-lg-6">
+						<div class=" darker-bg p-3 ">
 						<span><em>{{__('default.Blurb')}}</em>
 							<br>
 						<span id="bookBlurb">{{$book['blurb']}}</span>
@@ -57,12 +59,15 @@
 						<span><em>{{__('default.Back Cover Text')}}</em>
 							<br>
 						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
+						</div>
 					</div>
-					<div class="col-12 col-lg-6 p-3  bg-dark">
-						<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
+					<div class="col-12 col-lg-6">
+						<div class=" darker-bg  p-3">
+							<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
 								{{$book['prompt'] ?? 'no prompt'}}</span></div>
-						<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
+							<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
 								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
+						</div>
 					</div>
 					<div class="col-12 mt-3">
 					</div>
