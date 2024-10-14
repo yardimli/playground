@@ -3,6 +3,8 @@
 @section('title', 'All Books')
 
 @section('content')
+	<link rel="stylesheet" href="/css/introjs.css">
+	<link rel="stylesheet" href="/css/introjs-dark.css" disabled>
 	
 	<script>
 		let bookData = @json($book);
@@ -18,14 +20,21 @@
 						<div class="card-body py-3">
 							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4" style="min-height: 400px;" id="bookCover">
 							<br>
-							<a href="{{route('user.read-book',$book_slug)}}" class="btn btn-primary-soft">{{__('Read Book')}}</a>
+							<a href="{{route('read-book',$book_slug)}}" id="readBookBtn"
+							   class="btn btn-primary-soft">{{__('Read Book')}}</a>
 							
 							@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
-								<a href="{{route('edit-book',$book_slug)}}" class="btn btn-danger-soft">{{__('Edit Book')}}</a>
+								<a href="{{route('edit-book',$book_slug)}}" id="editBookBtn"
+								   class="btn btn-danger-soft">{{__('Edit Book')}}</a>
 								
 								<button class="btn btn-primary-soft" title="{{__('default.Cover Image')}}" id="createCoverBtn">
 									<i class="bi bi-image"></i> {{__('default.Cover Image')}}
 								</button>
+								
+								<div class="mb-3 mt-3 small">
+									<a href="#" id="restartTour">{{ __('default.Restart Tour') }}</a>
+								</div>
+							
 							
 							@endif
 						</div>
@@ -38,7 +47,7 @@
 					<div class="card">
 						<div class="card-body py-0">
 							
-							<h1 class="title mb-0"><a href="{{route('user.read-book',$book_slug)}}">{{$book['title'] ?? ''}}</a>
+							<h1 class="title mb-0"><a href="{{route('read-book',$book_slug)}}">{{$book['title'] ?? ''}}</a>
 							</h1>
 							
 							<div class="d-flex align-items-center justify-content-between my-3">
@@ -58,7 +67,7 @@
 											</h6>
 											
 											<span class="nav-item small">{{$book['publisher_name'] ?? ''}}</span>
-{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
+											{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
 											<span class="nav-item small">{{date("Y-m-d", $book['file_time'] ?? 1923456789)}}</span>
 										</div>
 									</div>
@@ -69,7 +78,7 @@
 								<div class="mt-4">
 									
 									<a
-										href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
+										href="{{route('showcase-library-genre',[$book['genre'] ?? ''])}}"
 										class="badge bg-primary mb-2 me-1">{{$book['genre'] ?? ''}}</a>
 									
 									<span class="badge bg-secondary  me-1 mb-2">English</span>
@@ -77,7 +86,7 @@
 									<br>
 									@if (isset($book['keywords']))
 										@foreach ($book['keywords'] as $keyword)
-											<a href="{{route('user.showcase-library-keyword',[$keyword])}}"
+											<a href="{{route('showcase-library-keyword',[$keyword])}}"
 											   class="badge bg-info  me-1 mb-2 ">{{$keyword}}</a>
 										@endforeach
 									@endif
@@ -87,7 +96,7 @@
 							
 							<p class="mt-4">{!! str_replace("\n","<br>", $book['back_cover_text'] ?? '')!!}</p>
 						</div>
-						
+					
 					</div>
 					
 					<figure class="bg-light rounded p-3 p-sm-4 my-4">
@@ -119,7 +128,8 @@
 						<div class="col-md-8">
 						<textarea class="form-control" id="coverPrompt" rows="5"
 						          placeholder="{{__('default.Enter cover description')}}"></textarea>
-							<input type="text" id="coverBookTitle" class="form-control mt-2" placeholder="{{__('default.Book Title')}}">
+							<input type="text" id="coverBookTitle" class="form-control mt-2"
+							       placeholder="{{__('default.Book Title')}}">
 							<input type="text" id="coverBookAuthor" class="form-control mt-2"
 							       placeholder="{{__('default.Book Author')}}">
 							<div class="mb-1 form-check mt-2">
@@ -174,11 +184,108 @@
 @endsection
 
 @push('scripts')
+	<script src="/js/intro.min.js"></script>
+	
 	<!-- Inline JavaScript code -->
 	<script>
 		var current_page = 'book_details';
 		
+		function startIntro() {
+			let intro = introJs().setOptions({
+				steps: [
+					{
+						element: '#readBookBtn',
+						intro: "As the button suggests, you can read the book by clicking this button. You'll also be able to export the book to PDF or DOCX formats here.",
+					},
+					{
+						element: '#editBookBtn',
+						intro: "If you're the owner of this book, you can edit the book chapters and beats by clicking this button.",
+					},
+					{
+						element: '#createCoverBtn',
+						intro: "This button will open the cover image creation modal. You can create a cover image for your book here. You'll be able to describe the image and the AI will generate a cover image for you. Including your pen name and book title will make the cover more personalized.",
+					}
+					
+				],
+				exitOnOverlayClick: false,
+				showStepNumbers: true,
+				disableInteraction: false,
+				showBullets: false,
+				showProgress: true
+			});
+			
+			
+			// intro.onafterchange(function (targetElement) {
+			// 	if (targetElement.tagName.toLowerCase() === 'textarea') {
+			// 		var nextButton = document.querySelector('.introjs-nextbutton');
+			// 		nextButton.classList.add('introjs-disabled');
+			// 		nextButton.classList.add('custom-disabled'); // Add this line
+			//
+			// 		$(targetElement).on('input', function () {
+			// 			if ($(this).val().trim() !== '') {
+			// 				nextButton.classList.remove('introjs-disabled');
+			// 				nextButton.classList.remove('custom-disabled'); // Add this line
+			// 			} else {
+			// 				nextButton.classList.add('introjs-disabled');
+			// 				nextButton.classList.add('custom-disabled'); // Add this line
+			// 			}
+			// 		});
+			// 	}
+			// });
+			
+			intro.oncomplete(function () {
+				localStorage.setItem('bookDetailsCompleted', 'true');
+			});
+			
+			intro.start();
+		}
+		
+		function isDarkMode() {
+			return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+		}
+		
+		function toggleIntroJsStylesheet() {
+			const lightStylesheet = document.querySelector('link[href="/css/introjs.css"]');
+			const darkStylesheet = document.querySelector('link[href="/css/introjs-dark.css"]');
+			
+			if (isDarkMode()) {
+				lightStylesheet.disabled = true;
+				darkStylesheet.disabled = false;
+			} else {
+				lightStylesheet.disabled = false;
+				darkStylesheet.disabled = true;
+			}
+		}
+		
 		$(document).ready(function () {
+			toggleIntroJsStylesheet();
+			
+			// Start the tour if it's the user's first time
+			@if (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email))
+			if (!localStorage.getItem('bookDetailsCompleted')) {
+				setTimeout(function () {
+					startIntro();
+				}, 500);
+			}
+			@endif
+			
+			
+			document.addEventListener('click', function (event) {
+				if (event.target.classList.contains('introjs-nextbutton') &&
+					event.target.classList.contains('custom-disabled')) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+			}, true);
+			
+			
+			// Restart tour button
+			$('#restartTour').on('click', function (e) {
+				e.preventDefault();
+				localStorage.removeItem('bookDetailsCompleted');
+				startIntro();
+			});
+			
 			$('#createCoverBtn').on('click', function (e) {
 				e.preventDefault();
 				$('#createCoverModal').modal({backdrop: 'static', keyboard: true}).modal('show');

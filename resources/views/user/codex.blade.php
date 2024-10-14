@@ -136,6 +136,9 @@
 					<div id="modelDescription"></div>
 					<div id="modelPricing"></div>
 				</div>
+				<br>
+				<a href="#" id="restartTour">{{ __('default.Restart Tour') }}</a>
+			
 			
 			</div>
 			<div class="card-body modal-content modal-content-color">
@@ -143,43 +146,81 @@
 				
 				<h5>Chapters and Beats</h5>
 				<div id="chaptersAndBeats">
+					@php $foundBeats = false; @endphp
 					@foreach($bookData['acts'] as $act)
 						@foreach($act['chapters'] as $chapter)
-							<div class="border p-3 mb-3">
-								<h5>{{ $chapter['name'] }}</h5>
-								@if(isset($chapter['beats']))
-									@foreach($chapter['beats'] as $beatIndex => $beat)
-										@if(!empty($beat['beat_text']))
-											@php
-												$beat_added_before = '';
-												if (!empty($bookData['codex']['beats'])) {
-													for ($i = 0; $i < count($bookData['codex']['beats']); $i++) {
-														if ($bookData['codex']['beats'][$i]['chapterFilename'] === $chapter['chapterFilename'] && $bookData['codex']['beats'][$i]['beatIndex'] == $beatIndex) {
-															$beat_added_before = '<label class="badge bg-success">' . __('default.Already Added') . '</label>';
-															break;
-														}
+							@php $showChapter = false; @endphp
+							@if(isset($chapter['beats']))
+								@foreach($chapter['beats'] as $beatIndex => $beat)
+									@if(!empty($beat['beat_text']))
+										@php
+											$beat_added_before = '';
+											if (!empty($bookData['codex']['beats'])) {
+												for ($i = 0; $i < count($bookData['codex']['beats']); $i++) {
+													if ($bookData['codex']['beats'][$i]['chapterFilename'] === $chapter['chapterFilename'] && $bookData['codex']['beats'][$i]['beatIndex'] == $beatIndex) {
+														$beat_added_before = '<label class="badge bg-success">' . __('default.Already Added') . '</label>';
+														break;
 													}
 												}
-											@endphp
-											<div class="form-check mb-3">
-												<input class="form-check-input beat-checkbox" type="checkbox"
-												       value="{{ $chapter['chapterFilename'] }}-!-!-{{ $beatIndex }}"
-												       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
-												       name="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
-												<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
-													{!! $beat_added_before !!} Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
-												</label>
-											</div>
-										@endif
-									@endforeach
-								@else
-									<p>No beats found</p>
-								@endif
-							</div>
+											}
+											$foundBeats = true;
+
+											if (!$showChapter) {
+												$showChapter = true;
+											echo '<div class="border p-3 mb-3"><h5>'.$chapter['name'].'</h5>';
+											}
+										@endphp
+										<div class="form-check mb-3">
+											<input class="form-check-input beat-checkbox" type="checkbox"
+											       value="{{ $chapter['chapterFilename'] }}-!-!-{{ $beatIndex }}"
+											       id="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}"
+											       name="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
+											<label class="form-check-label" for="beat-{{ $chapter['chapterFilename'] }}-{{ $beatIndex }}">
+												{!! $beat_added_before !!} Beat {{ $beatIndex + 1 }} - {{ $beat['description'] ?? '' }}
+											</label>
+										</div>
+									@endif
+								@endforeach
+							@endif
+							@php
+								if ($showChapter) { echo  '</div>'; }
+							@endphp
 						@endforeach
 					@endforeach
+					@if (!$foundBeats)
+						<div class="border p-3 mb-3">
+							<h5>Sample Chapter 1</h5>
+							<div class="form-check mb-3">
+								<input class="form-check-input beat-checkbox" type="checkbox"
+								       value="sample-chapter-1-0"
+								       id="beat-sample-chapter-1-0"
+								       name="beat-sample-chapter-1-0">
+								<label class="badge bg-success">{{__('default.Already Added')}}</label> <label
+									class="form-check-label" for="beat-sample-chapter-1-0">
+									Beat 1 - Sample Beat
+								</label>
+							</div>
+							<div class="form-check mb-3">
+								<input class="form-check-input beat-checkbox" type="checkbox"
+								       value="sample-chapter-1-0"
+								       id="beat-sample-chapter-1-0"
+								       name="beat-sample-chapter-1-0">
+								<label
+									class="form-check-label" for="beat-sample-chapter-1-0">
+									Beat 2 - Sample Beat
+								</label>
+							</div>
+						</div>
+					@endif
 				</div>
-				<button id="updateCodexFromBeats" class="btn btn-primary mt-3">Update Codex from Selected Beats</button>
+				@if (!$foundBeats)
+					<div class="alert alert-warning" role="alert">
+						{{__('default.Showing sample beats. Please add beats to your chapters to generate codex data.')}}
+					</div>
+					<button class="btn btn-primary updateCodexFromBeatsBtn" id="dummyUpdateCodexFromBeats">Update Codex from Selected Beats</button>
+				@else
+					<button id="updateCodexFromBeats" class="btn btn-primary mt-3 updateCodexFromBeatsBtn">Update Codex from Selected Beats</button>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -221,8 +262,6 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/moment.min.js"></script>
 
-<script src="/js/jspdf.umd.min.js"></script>
-<script src="/js/docx.js"></script>
 <script src="/js/diff.js"></script>
 
 <!-- Your custom scripts -->
@@ -302,7 +341,10 @@
 	}
 	
 	function isDarkMode() {
-		return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+		let savedTheme = localStorage.getItem('theme') || 'light';
+		if (savedTheme === 'dark') {
+			return true;
+		}
 	}
 	
 	// Function to toggle Intro.js stylesheets based on theme
@@ -319,8 +361,82 @@
 		}
 	}
 	
+	function startIntro() {
+		let intro = introJs().setOptions({
+			steps: [
+				{
+					element: '#characters',
+					intro: 'Enter characters data here. Keep in mind that this data will be used to generate content. So keep it concise and relevant.'
+				},
+				{
+					element: '#locations',
+					intro: 'Enter locations data here. When using the AI engine to update the codex, you will see a diff view of the changes to each codex section.'
+				},
+				{
+					element: '#objects',
+					intro: 'Enter objects/items data here. Like with the other fields you can enter manual data or use the AI engine to generate content from the beats.'
+				},
+				{
+					element: '#lore',
+					intro: 'Enter lore data here. You know the drill by now. Keep it relevant and concise.'
+				},
+				{
+					element: '#llmSelect',
+					intro: 'Select an AI engine to use for when you want to update the codex from the beats automatically.'
+				},
+				{
+					element: '#chaptersAndBeats',
+					intro: 'Select the beats you want to use to update the codex. You can select multiple beats. Beats that have already been added to the codex are marked with a green badge.'
+				},
+				{
+					element: '.updateCodexFromBeatsBtn',
+					intro: 'Click this button to have the AI update the codex with the selected beats. You will see a diff view of the changes before saving.'
+				},
+				{
+					element: '#saveCodex',
+					intro: 'Click this button to save the codex data. Don\'t forget to save after updating the codex from the beats.'
+				}
+			],
+			exitOnOverlayClick: false,
+			showStepNumbers: true,
+			disableInteraction: false,
+			showBullets: false,
+			showProgress: true
+		});
+		
+		intro.oncomplete(function () {
+			localStorage.setItem('codexIntroCompleted', 'true');
+		});
+		
+		intro.start();
+		
+	}
+	
 	$(document).ready(function () {
 		toggleIntroJsStylesheet();
+		
+		if (!localStorage.getItem('codexIntroCompleted')) {
+			setTimeout(function () {
+				startIntro();
+			}, 500);
+		}
+		
+		document.addEventListener('click', function (event) {
+			if (event.target.classList.contains('introjs-nextbutton') &&
+				event.target.classList.contains('custom-disabled')) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		}, true);
+		
+		
+		// Restart tour button
+		$('#restartTour').on('click', function (e) {
+			e.preventDefault();
+			localStorage.removeItem('codexIntroCompleted');
+			startIntro();
+		});
+		
 		
 		$('#alertModal').on('hidden.bs.modal', function () {
 			if ($('#alertModalContent').text().trim() === 'Codex saved successfully') {

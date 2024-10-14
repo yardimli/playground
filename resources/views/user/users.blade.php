@@ -37,7 +37,7 @@
 						<td>{{ $user->email }}</td>
 						<td>{{ $user->created_at }}</td>
 						<td>
-							<form action="{{ route('users.login-as') }}" method="POST">
+							<form action="{{ route('users-login-as') }}" method="POST">
 								@csrf
 								<input type="hidden" name="user_id" value="{{ $user->id }}"/>
 								<button type="submit" class="btn btn-primary btn-sm">Login As</button>

@@ -22,7 +22,7 @@
 		'Welcome to Ever Perfect Assistant!' => 'Minik Dersler\'e Hoşgeldiniz!',
 		'Let\'s learn something new today!' => 'Bugün yeni bir şeyler öğrenelim!',
 		'Its your turn to join.' => 'Yüzlerce öğrenci bize katıldı, şimdi sıra sizde.', //Hundreds of Bots have already joined us, now it\'s your turn.
-		'signup_terms' => 'Kaydolmak, <a href=":url" target="_blank">şartlar ve koşullar</a>ı kabul ettiğiniz anlamına gelir.', //By signing up, you agree to the <a href="{{route('terms.page')}}" target="_blank" class="">Terms and Conditions</a>
+		'signup_terms' => 'Kaydolmak, <a href=":url" target="_blank">şartlar ve koşullar</a>ı kabul ettiğiniz anlamına gelir.', //By signing up, you agree to the <a href="{{route('terms-page')}}" target="_blank" class="">Terms and Conditions</a>
 		'Or' => '或',
 		'Already Have Account Sign In' => 'Hesabınız var mı? <a href=":url">Buradan giriş yapın</a>', //'Already Have an Account? Sign in here'
 		'Or Continue With' => 'Ya da Google İle Devam Et',

@@ -166,8 +166,8 @@
 												       style="float: left; margin-right: 5px;"
 												       value="1" {{ old('policy', 0) ? 'checked' : '' }}>
 												<span>I Agree with the
-															<a href="{{route('terms.page')}}">Terms</a> and
-															<a href="{{route('privacy.page')}}"> Privacy</a>
+															<a href="{{route('terms-page')}}">Terms</a> and
+															<a href="{{route('privacy-page')}}"> Privacy</a>
 														</span>
 											</div>
 										</div>

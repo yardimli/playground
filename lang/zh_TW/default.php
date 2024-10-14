@@ -105,7 +105,7 @@
 		'Welcome to writebookswithai.com!' => '歡迎來到 writebookswithai.com！',
 		'Let\'s learn something new today!' => '讓我們今天學點新東西吧!',
 		'Its your turn to join.' => '已經有數百名學生加入我們，現在輪到你了。', //Hundreds of Bots have already joined us, now it\'s your turn.
-		'signup_terms' => '註冊即表示您同意 <a href=":url" target="_blank">條款和條件</a>', //By signing up, you agree to the <a href="{{route('terms.page')}}" target="_blank" class="">Terms and Conditions</a>
+		'signup_terms' => '註冊即表示您同意 <a href=":url" target="_blank">條款和條件</a>', //By signing up, you agree to the <a href="{{route('terms-page')}}" target="_blank" class="">Terms and Conditions</a>
 		'Or' => '或',
 		'Already Have Account Sign In' => '已經有帳號了嗎？ <a href=":url" class="color--theme">由此登入</a>', //'Already Have an Account? Sign in here'
 		'Or Continue With' => '或繼續使用',

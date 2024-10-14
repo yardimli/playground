@@ -35,7 +35,7 @@
 					<div class="card">
 						<div class="card-body py-0">
 							
-							<h1 class="title mb-0"><a href="{{route('user.read-book',$book_slug)}}">{{$book['title'] ?? ''}}</a>
+							<h1 class="title mb-0"><a href="{{route('read-book',$book_slug)}}">{{$book['title'] ?? ''}}</a>
 							</h1>
 							
 							<div class="d-flex align-items-center justify-content-between my-3">
@@ -58,7 +58,7 @@
 											{{--											<span class="nav-item small"> <i class="bi bi-clock pe-1"></i>55 min read</span>--}}
 											<span class="nav-item small">{{date("Y-m-d", $book['file_time'] ?? 1923456789)}}</span>
 											<a
-												href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
+												href="{{route('showcase-library-genre',[$book['genre'] ?? ''])}}"
 												class="nav-item small">{{$book['genre'] ?? ''}}</a>
 										
 										</div>

@@ -6,22 +6,22 @@
 				<!-- Footer nav START -->
 				<ul class="nav justify-content-center justify-content-md-start lh-1">
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('about.page')}}">About</a>
+						<a class="nav-link" href="{{route('about-page')}}">About</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('onboarding.page')}}">Onboarding</a>
+						<a class="nav-link" href="{{route('onboarding-page')}}">Onboarding</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('help.page')}}">Help </a>
+						<a class="nav-link" href="{{route('help-page')}}">Help </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('terms.page')}}">Terms</a>
+						<a class="nav-link" href="{{route('terms-page')}}">Terms</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('privacy.page')}}">Privacy</a>
+						<a class="nav-link" href="{{route('privacy-page')}}">Privacy</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('change-log.page')}}">Change Log</a>
+						<a class="nav-link" href="{{route('change-log-page')}}">Change Log</a>
 					</li>
 				</ul>
 				<!-- Footer nav START -->

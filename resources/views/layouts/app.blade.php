@@ -125,7 +125,7 @@ Header START -->
 	<nav class="navbar navbar-expand-lg">
 		<div class="container">
 			<!-- Logo START -->
-			<a class="navbar-brand" href="{{route('landing.page')}}">
+			<a class="navbar-brand" href="{{route('landing-page')}}">
 				<img class="light-mode-item navbar-brand-item" src="/images/logo.png" alt="logo">
 				<img class="dark-mode-item navbar-brand-item" src="/images/logo.png" alt="logo">
 			</a>
@@ -164,7 +164,7 @@ Header START -->
 					</li>
 					
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('user.showcase-library')}}">{{__('default.Showcase')}}</a>
+						<a class="nav-link active" href="{{route('showcase-library')}}">{{__('default.Showcase')}}</a>
 					</li>
 					
 					
@@ -173,7 +173,7 @@ Header START -->
 					</li>
 					
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('my.books')}}">{{__('default.My Books')}}</a>
+						<a class="nav-link" href="{{route('my-books')}}">{{__('default.My Books')}}</a>
 					</li>
 				</ul>
 			</div>
@@ -182,7 +182,7 @@ Header START -->
 			<!-- Nav right START -->
 			<ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
 				<li class="nav-item ms-2">
-					<a class="nav-link icon-md btn btn-light p-0" href="{{route('help.page')}}" title="{{__('default.Help')}}">
+					<a class="nav-link icon-md btn btn-light p-0" href="{{route('help-page')}}" title="{{__('default.Help')}}">
 						<i class="bi bi-life-preserver fs-6"> </i>
 					</a>
 				</li>
@@ -212,14 +212,14 @@ Header START -->
 									</div>
 									<div>
 										<a class="h6 stretched-link"
-										   href="{{route('my.books')}}">{{ Auth::user()->name }}</a>
+										   href="{{route('my-books')}}">{{ Auth::user()->name }}</a>
 										<p class="small m-0">{{ Auth::user()->username }}</p>
 									</div>
 								</div>
 								<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-								   href="{{route('my.books')}}">{{__('My Books')}}</a>
+								   href="{{route('my-books')}}">{{__('My Books')}}</a>
 							</li>
-							<a class="dropdown-item" href="{{route('my.settings')}}"><i
+							<a class="dropdown-item" href="{{route('my-settings')}}"><i
 									class="bi bi-person fa-fw me-2"></i>{{__('default.Settings')}}</a>
 						@endif
 						<!-- Links -->

@@ -180,7 +180,7 @@
 		{
 			$verified = MyHelper::verifyBookOwnership($bookSlug);
 			if (!$verified['success']) {
-				return redirect()->route('user.showcase-library')->with('error', $verified['message']);
+				return redirect()->route('showcase-library')->with('error', $verified['message']);
 			}
 
 			$bookPath = Storage::disk('public')->path("books/{$bookSlug}");

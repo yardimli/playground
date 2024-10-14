@@ -45,7 +45,7 @@
 								<div class="col-12 col-sm-6 col-lg-3">
 									<!-- Card feed item START -->
 									<div class="card h-100">
-										<a class="text-body" href="{{route('user.book-details',$book['id'] ?? '0')}}"><img
+										<a class="text-body" href="{{route('book-details',$book['id'] ?? '0')}}"><img
 												class="card-img-top" style="min-height: 300px"
 												src="{{$book['cover_filename'] ?? ''}}"
 												alt="Book"></a>
@@ -57,7 +57,7 @@
 										@endif
 										<div class="position-absolute ms-2 mt-2 top-0 start-0"
 										     style="z-index: 9"><a
-												href="{{route('user.showcase-library-genre',[$book['genre'] ?? ''])}}"
+												href="{{route('showcase-library-genre',[$book['genre'] ?? ''])}}"
 												class="badge bg-primary">{{$book['genre'] ?? ''}}</a>
 										</div>
 										
@@ -66,7 +66,7 @@
 										<div class="card-body">
 											<!-- Info -->
 											
-											<h3 class="title mb-0"><a href="{{route('user.book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
+											<h3 class="title mb-0"><a href="{{route('book-details',$book['id'] ?? '0')}}">{{$book['title'] ?? ''}}</a>
 											</h3>
 											
 											<div class="d-flex align-items-center justify-content-between my-3">

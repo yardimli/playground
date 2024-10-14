@@ -59,6 +59,17 @@
 		'OpenRouter API Key' => 'OpenRouter API Key',
 		'Update API Keys' => 'Update API Keys',
 
+		'No beats have been generated for this chapter. Please click the "Recreate Beats" button to generate beats. You will need to save the beats before proceeding to write the beat contents.' => 'No beats have been generated for this chapter. Please click the "Recreate Beats" button to generate beats. You will need to save the beats before proceeding to write the beat contents.',
+
+		'The User Prompt you see here has been generated from the book details as well as current chapter and previous beats or chapters if they exist.' => 'The User Prompt you see here has been generated from the book details as well as current chapter and previous beats or chapters if they exist.',
+
+		'It also contains the beat description that the AI will write out.' => 'It also contains the beat description that the AI will write out.',
+
+		'You can modify the prompt to add specific details, change the tone, or provide additional context for the AI to consider when writing the beat.' => 'You can modify the prompt to add specific details, change the tone, or provide additional context for the AI to consider when writing the beat.',
+
+		'Don\'t show this again' => 'Don\'t show this again',
+
+
 
 
 		'Contact Information' => 'Contact Information',

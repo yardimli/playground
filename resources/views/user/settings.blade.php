@@ -76,8 +76,8 @@
 									<!-- Card body END -->
 									<!-- Card footer -->
 									<div class="card-footer text-center py-2 pb-3">
-										<a class="btn btn-secondary-soft btn-sm w-100 mb-2" href="{{route('my.books')}}">{{__('default.My Books')}} </a>
-{{--										<a class="btn btn-info-soft btn-sm w-100" href="{{route('buy.packages')}}">Purchase Tokens</a>--}}
+										<a class="btn btn-secondary-soft btn-sm w-100 mb-2" href="{{route('my-books')}}">{{__('default.My Books')}} </a>
+{{--										<a class="btn btn-info-soft btn-sm w-100" href="{{route('buy-packages')}}">Purchase Tokens</a>--}}
 									</div>
 								
 								</div>
@@ -121,7 +121,7 @@
 										</div>
 									@endif
 									
-									<form action="{{ route('settings.update') }}" method="post" class="row g-3"
+									<form action="{{ route('settings-update') }}" method="post" class="row g-3"
 									      enctype="multipart/form-data">
 										@csrf
 										<!-- First name -->
@@ -184,7 +184,7 @@
 										<p class="mb-0">{{__('default.Set your personal API keys for unmetered usage.')}}</p>
 									</div>
 									<div class="card-body">
-										<form action="{{ route('settings.update-api-keys') }}" method="post" class="row g-3">
+										<form action="{{ route('settings-update-api-keys') }}" method="post" class="row g-3">
 											@csrf
 											<div class="col-12">
 												<label class="form-label">{{__('default.OpenAI API Key')}}</label>
@@ -219,7 +219,7 @@
 									<!-- Title START -->
 									<div class="card-body">
 										
-										<form action="{{ route('settings.password.update') }}" method="post"
+										<form action="{{ route('settings-password-update') }}" method="post"
 										      class="row g-3">
 											@csrf
 											<!-- Current password -->

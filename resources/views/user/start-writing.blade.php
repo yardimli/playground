@@ -531,9 +531,9 @@
 					});
 				}
 			});
-			
+
 			intro.oncomplete(function () {
-				localStorage.setItem('introCompleted', 'true');
+				localStorage.setItem('startWritePart1IntroCompleted', 'true');
 			});
 			
 			intro.start();
@@ -572,7 +572,7 @@
 			});
 			
 			intro.oncomplete(function () {
-				localStorage.setItem('introCompleted', 'true');
+				localStorage.setItem('startWritePart2IntroCompleted', 'true');
 			});
 			
 			intro.start();
@@ -582,7 +582,6 @@
 			return document.documentElement.getAttribute('data-bs-theme') === 'dark';
 		}
 		
-		// Function to toggle Intro.js stylesheets based on theme
 		function toggleIntroJsStylesheet() {
 			const lightStylesheet = document.querySelector('link[href="/css/introjs.css"]');
 			const darkStylesheet = document.querySelector('link[href="/css/introjs-dark.css"]');
@@ -601,8 +600,10 @@
 			toggleIntroJsStylesheet();
 			
 			// Start the tour if it's the user's first time
-			if (!localStorage.getItem('introCompleted')) {
-				startIntro();
+			if (!localStorage.getItem('startWritePart1IntroCompleted')) {
+				setTimeout(function () {
+					startIntro();
+				}, 500);
 			}
 			
 			
@@ -618,16 +619,13 @@
 			// Restart tour button
 			$('#restartTour').on('click', function (e) {
 				e.preventDefault();
+				localStorage.removeItem('startWritePart1IntroCompleted');
+				localStorage.removeItem('startWritePart2IntroCompleted');
 				startIntro();
 			});
 			
 			getLLMsData().then(function (llmsData) {
 				const llmSelect = $('#llmSelect');
-				// llmSelect.empty();
-				// llmSelect.append($('<option>', {
-				// 	value: '',
-				{{--	text: '{{__('default.Select an AI Engine')}}'--}}
-				// }));
 				
 				llmsData.forEach(function (model) {
 					// Calculate and display pricing per million tokens
@@ -798,11 +796,13 @@
 							
 							$('#character_profiles').val(characterProfiles);
 							
-							setTimeout(function () {
-								if ($('#book_details').is(':visible')) {
-									continueTour();
-								}
-							}, 500); // Adjust this delay if needed
+							if (!localStorage.getItem('startWritePart2IntroCompleted')) {
+								setTimeout(function () {
+									if ($('#book_details').is(':visible')) {
+										continueTour();
+									}
+								}, 500); // Adjust this delay if needed
+							}
 							
 						} else {
 							$("#alertModalContent").html("Error: " + data.message);
@@ -851,7 +851,7 @@
 					success: function (data) {
 						$('#fullScreenOverlay').addClass('d-none');
 						if (data.success) {
-							bookEditUrl = '{{ route("edit-book", "") }}/' + data.bookSlug;
+							bookEditUrl = '{{ route("book-details", "") }}/' + data.bookSlug;
 							$("#alertModalContent").html("{{ __('default.Book created successfully.') }} <a href='" + bookEditUrl + "'>{{ __('default.Click here to edit the book.') }}</a>");
 							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						} else {

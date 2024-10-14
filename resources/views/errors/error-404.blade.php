@@ -195,7 +195,7 @@
         <h2 class="mb-2 h1">Page Not Found!</h2>
         <p>Either something went wrong or this page doesn't exist anymore.</p>
         <!-- Button -->
-        <a class="btn btn-primary-soft btn-sm" href="{{route('landing.page')}}">Got to home page</a>
+        <a class="btn btn-primary-soft btn-sm" href="{{route('landing-page')}}">Got to home page</a>
       </div>
       <!-- Error 404 START -->
     </div>

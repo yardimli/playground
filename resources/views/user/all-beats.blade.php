@@ -19,6 +19,9 @@
 	<link href="/css/bootstrap-icons.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="/css/custom.css" rel="stylesheet"> <!-- If you have custom CSS -->
+	
+	<link rel="stylesheet" href="/css/introjs.css">
+	<link rel="stylesheet" href="/css/introjs-dark.css" disabled>
 
 </head>
 <body>
@@ -136,11 +139,20 @@
 					<div class="col-12 col-lg-6">
 						<button type="button" class="btn btn-success mt-2 mb-3" id="recreateBeats"><i
 								class="bi bi-pencil"></i> {{__('default.Recreate Beats')}}</button>
-						<a href="{{route('book.codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-2"
+						<a href="{{route('book-codex',[$book_slug])}}" class="btn btn-primary mb-3 mt-2"
 						   id="openCodexBtn">
 							<i class="bi bi-book"></i> {{__('default.Open Codex')}}
 						</a>
 					</div>
+					
+					<div class="col-12">
+						<div class="mt-2 alert alert-info d-none" id="noBeatsInfo" role="alert">
+							{{__('default.No beats have been generated for this chapter. Please click the "Recreate Beats" button to generate beats. You will need to save the beats before proceeding to write the beat contents.')}}
+						</div>
+						<a href="#" id="restartTour">{{ __('default.Restart Tour') }}</a>
+					
+					</div>
+				
 				</div>
 			</div>
 		</div>
@@ -192,7 +204,8 @@
 								     data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}">
 									
 									<div class="dropdown d-inline-block" style="vertical-align: top;">
-										<button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown"
+										<button class="btn btn-info dropdown-toggle beat-dropdown-button" type="button"
+										        data-bs-toggle="dropdown"
 										        aria-expanded="false">
 											{{__('default.Beat')}} {{$index+1}}
 										</button>
@@ -250,7 +263,8 @@
 										@php $hideDescription = ''; $showTextFlag = true; @endphp
 									@endif
 									
-									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}" class="{{$hideDescription}} mt-3">
+									<div id="beatDescriptionContainer_{{$chapter_index}}_{{$index}}"
+									     class="{{$hideDescription}} mt-3 beat-description-container">
 										<label for="beatDescription_{{$chapter_index}}_{{$index}}"
 										       class="form-label">{{__('default.Beat Description')}}</label>
 										<textarea id="beatDescription_{{$chapter_index}}_{{$index}}"
@@ -263,7 +277,8 @@
 										@php $hideText = ''; @endphp
 									@endif
 									
-									<div id="beatTextArea_{{$chapter_index}}_{{$index}}" class="mt-3 {{$hideText}}">
+									<div id="beatTextArea_{{$chapter_index}}_{{$index}}"
+									     class="mt-3 {{$hideText}} beat-text-area-container">
 										<div class="small text-info mb-2"
 										     id="beatDescriptionLabel_{{$chapter_index}}_{{$index}}">{{__('default.Beat Description')}}:
 											{{$beat['description'] ?? ''}}</div>
@@ -273,7 +288,8 @@
 										          rows="10">{{$beat['beat_text'] ?? ''}}</textarea>
 									</div>
 									
-									<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}" class="mt-2  d-none">
+									<div id="beatSummaryArea_{{$chapter_index}}_{{$index}}"
+									     class="mt-2  d-none beat-summary-area-container">
 										<label for="beatSummary_{{$chapter_index}}_{{$index}}"
 										       class="form-label mt-2">{{__('default.Beat Summary')}}</label>
 										<textarea id="beatSummary_{{$chapter_index}}_{{$index}}"
@@ -282,25 +298,27 @@
 									</div>
 									
 									
-									@if ( ($beat['description'] ?? '') !== '')
-										<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
-									@else
-										<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
-										        data-chapter-index="{{$chapter_index}}"
-										        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
-										        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
-									@endif
-									
-									
-									<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
-									        data-chapter-filename="{{$chapter['chapterFilename']}}"
-									        data-beat-index="{{$index}}">{{__('default.Save')}}</button>
-									
-									<div class="me-auto small text-info" style="max-height: 80px; overflow: auto;"
-									     id="beatBlockResults_{{$chapter_index}}_{{$index}}"></div>
+									<div class="beat-write-buttons">
+										@if ( ($beat['description'] ?? '') !== '')
+											<button id="writeBeatTextBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="writeBeatTextBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Text')}}</button>
+										@else
+											<button id="writeBeatDescriptionBtn_{{$chapter_index}}_{{$index}}"
+											        data-chapter-index="{{$chapter_index}}"
+											        data-chapter-filename="{{$chapter['chapterFilename']}}" data-beat-index="{{$index}}"
+											        class="writeBeatDescriptionBtn btn btn-primary mt-3 me-2">{{__('default.Write Beat Description')}}</button>
+										@endif
+										
+										
+										<button class="saveBeatBtn btn btn-success mt-3 me-2" data-chapter-index="{{$chapter_index}}"
+										        data-chapter-filename="{{$chapter['chapterFilename']}}"
+										        data-beat-index="{{$index}}">{{__('default.Save')}}</button>
+										
+										<div class="me-auto small text-info" style="max-height: 80px; overflow: auto;"
+										     id="beatBlockResults_{{$chapter_index}}_{{$index}}"></div>
+									</div>
 								</div>
 							@endforeach
 						</div>
@@ -347,6 +365,12 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body modal-body-color">
+				<div id="writeBeatHelp" class="alert alert-info mb-3">
+					<p>{{__('default.The User Prompt you see here has been generated from the book details as well as current chapter and previous beats or chapters if they exist.')}}</p>
+					<p>{{__('default.It also contains the beat description that the AI will write out.')}}</p>
+					<p>{{__('You can modify the prompt to add specific details, change the tone, or provide additional context for the AI to consider when writing the beat.')}}</p>
+					<p><a href="#" id="hideWriteBeatHelp">{{__('default.Don\'t show this again')}}</a></p>
+				</div>
 				<div class="mb-3">
 					<label for="writeUserPrompt" class="form-label">{{__('default.User Prompt')}}</label>
 					<textarea class="form-control" id="writeUserPrompt" rows="10"></textarea>
@@ -404,6 +428,8 @@
 
 <!-- Your custom scripts -->
 <script src="/js/custom-ui.js"></script>
+<script src="/js/intro.min.js"></script>
+
 <script>
 	let selectedChapter = "{{$selected_chapter}}";
 	let selectedChapterIndex = "{{$selected_chapter_index}}";
@@ -442,7 +468,7 @@
              data-chapter-filename="${selectedChapter}"
              data-beat-index="${beatIndex}">
             <h6>Beat ${beatIndex + 1}</h6>
-            <div id="beatDescriptionContainer_${chapterIndex}_${beatIndex}">
+            <div id="beatDescriptionContainer_${chapterIndex}_${beatIndex}" class="mt-3 beat-description-container">
                 <label for="beatDescription_${chapterIndex}_${beatIndex}"
                        class="form-label">{{__('default.Beat Description')}}</label>
                 <textarea id="beatDescription_${chapterIndex}_${beatIndex}"
@@ -785,8 +811,146 @@
 		
 	}
 	
+	function isDarkMode() {
+		let savedTheme = localStorage.getItem('theme') || 'light';
+		if (savedTheme === 'dark') {
+			return true;
+		}
+	}
+	
+	// Function to toggle Intro.js stylesheets based on theme
+	function toggleIntroJsStylesheet() {
+		const lightStylesheet = document.querySelector('link[href="/css/introjs.css"]');
+		const darkStylesheet = document.querySelector('link[href="/css/introjs-dark.css"]');
+		
+		if (isDarkMode()) {
+			lightStylesheet.disabled = true;
+			darkStylesheet.disabled = false;
+		} else {
+			lightStylesheet.disabled = false;
+			darkStylesheet.disabled = true;
+		}
+	}
+	
+	function startIntro() {
+		//make the first beat text and summary and the save beats button visible
+		$('.beat-description-container').first().removeClass('d-none');
+		$('.beat-text-area-container').first().removeClass('d-none');
+		$('.beat-summary-area-container').first().removeClass('d-none');
+		$('#saveBeatsBtn').show();
+		let intro = introJs().setOptions({
+			steps: [
+				{
+					element: '#llmSelect',
+					intro: 'Select an AI engine to use for writing both beat descriptions and the beat text itself.'
+				},
+				{
+					element: '#beatsPerChapter',
+					intro: 'Choose how many beats should be generated for each chapter.'
+				},
+				{
+					element: '#writingStyle',
+					intro: 'Select the writing style for your book. You can change this later.'
+				},
+				{
+					element: '#narrativeStyle',
+					intro: 'Choose the narrative style for your book. Again this can be changed later for individual beats.'
+				},
+				{
+					element: '#recreateBeats',
+					intro: 'Click this button to generate all the beat descriptions for this chapter.'
+				},
+				{
+					element: '#openCodexBtn',
+					intro: 'Click here to open the Codex, you will be able to auto update the codex from the beats already written.'
+				},
+				
+				{
+					element: '.beat-dropdown-button',
+					intro: 'From this dropdown you can "Add Empty Beat Before/After", "Rewrite Beat Description", "Edit Beat Text" and "Edit Beat Summary".'
+				},
+				{
+					element: '.beat-description-textarea',
+					intro: 'This is where you can write or rewrite the beat description. The AI engine will both write the description and also later use the description to write the Beat Text itself.'
+				},
+				{
+					element: '.beat-text-textarea',
+					intro: 'This is where the full text of the beat is written. You can edit this text as needed.'
+				},
+				{
+					element: '.beat-summary-textarea',
+					intro: 'This is where the summary of the beat is written. The beat summary is used to help the AI writing the next beat.'
+				},
+				{
+					element: '.beat-write-buttons',
+					intro: 'Click this button to initiate for the AI to write the beat description or beat text.'
+				},
+				{
+					element: '.saveBeatBtn',
+					intro: 'Click this button to save the beat description and text. When saving beat text the AI will also write the beat summary.'
+				},
+				{
+					element: '#saveBeatsBtn',
+					intro: 'Click this button to save all the beats you have written. You will need to save the beat descriptions before proceeding to write the beat contents.'
+				}
+			],
+			exitOnOverlayClick: false,
+			showStepNumbers: true,
+			disableInteraction: false,
+			showBullets: false,
+			showProgress: true
+		});
+		
+		intro.oncomplete(function () {
+			localStorage.setItem('beatsIntroCompleted', 'true');
+		});
+		
+		intro.start();
+		
+	}
+	
+	
 	//------------------------------------------------------------
 	$(document).ready(function () {
+		toggleIntroJsStylesheet();
+		
+		if (!localStorage.getItem('beatsIntroCompleted')) {
+			setTimeout(function () {
+				startIntro();
+			}, 500);
+		}
+		
+		document.addEventListener('click', function (event) {
+			if (event.target.classList.contains('introjs-nextbutton') &&
+				event.target.classList.contains('custom-disabled')) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		}, true);
+		
+		
+		// Restart tour button
+		$('#restartTour').on('click', function (e) {
+			e.preventDefault();
+			localStorage.removeItem('beatsIntroCompleted');
+			startIntro();
+		});
+		
+		if (localStorage.getItem('hideWriteBeatHelp') === 'true') {
+			$('#writeBeatHelp').hide();
+		}
+
+		$('#hideWriteBeatHelp').on('click', function(e) {
+			e.preventDefault();
+			localStorage.setItem('hideWriteBeatHelp', 'true');
+			$('#writeBeatHelp').hide();
+		});
+
+		$('#writeBeatModal').on('show.bs.modal', function () {
+			if (localStorage.getItem('hideWriteBeatHelp') !== 'true') {
+				$('#writeBeatHelp').show();
+			}
+		});
 		
 		getLLMsData().then(function (llmsData) {
 			const llmSelect = $('#llmSelect');
@@ -871,26 +1035,7 @@
 		});
 		
 		if (emptyBeatDescriptions) {
-			//show the alert modal
-			$("#alertModalContent").html("{{__('default.This chapter has no beats written yet.')}}<br>{{__('default.Click "Recreate Beats" to generate beat descriptions.')}}<span style=\"font-size: 18px;\">{{__('default.Number of beats per chapter:')}}</span><br><br>\n" +
-				"\t\t\t\t\t\t<select id=\"beatsPerChapter_modal\" class=\"form-select mx-auto mb-1\">\n" +
-				"\t\t\t\t\t\t\t<option value=\"2\" selected>2</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"3\">3</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"4\">4</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"5\">5</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"6\">6</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"7\">7</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"8\">8</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"9\">9</option>\n" +
-				"\t\t\t\t\t\t\t<option value=\"10\">10</option>\n" +
-				"\t\t\t\t\t\t</select>" + "<br><button type=\"button\" class=\"btn btn-success mt-1 mb-1 w-100\" id=\"recreateBeats_modal\"><i\n" +
-				"\t\t\t\t\t\t\t\tclass=\"bi bi-pencil\"></i>{{__('default.Recreate Beats')}}</button>");
-			$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
-			$("#recreateBeats_modal").off('click').on('click', function () {
-				$("#alertModal").modal('hide');
-				recreateBeats(selectedChapter + '.json', parseInt($('#beatsPerChapter_modal').val()), $('#writingStyle').val(), $('#narrativeStyle').val());
-			});
-			
+			$('#noBeatsInfo').removeClass('d-none');
 		}
 		
 		$('.toggle-beat-description').on('click', function () {

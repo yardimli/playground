@@ -34,7 +34,7 @@
 										<a href="{{$post->url($locale, $routeWithoutLocale)}}"
 										   class="badge text-bg-danger">{{$post->category_name}}</a>
 										
-										{{--                <h6 class="mb-0"><a href="{{ route('landing.page', 'blog-detail') }}">Frances Guerrero</a></h6>--}}
+										{{--                <h6 class="mb-0"><a href="{{ route('landing-page', 'blog-detail') }}">Frances Guerrero</a></h6>--}}
 										<span class="small">{{date('d M Y ', strtotime($post->post->posted_at))}}</span>
 									</div>
 								</div>
