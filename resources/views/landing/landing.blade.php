@@ -121,16 +121,16 @@ Header START -->
 				<ul class="navbar-nav navbar-nav-scroll me-auto">
 					<!-- Nav item -->
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('login')}}">Log In</a>
+						<a class="nav-link" href="{{route('login')}}">{{__('default.Login')}}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{route('register')}}">Register</a>
+						<a class="nav-link" href="{{route('register')}}">{{__('default.Register')}}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('binshopsblog.index',['en_US'])}}">Blog</a>
+						<a class="nav-link active" href="{{route('binshopsblog.index',['en_US'])}}">{{__('default.Blog')}}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="{{route('showcase-library')}}">Showcase Library</a>
+						<a class="nav-link active" href="{{route('showcase-library')}}">{{__('default.Showcase Library')}}</a>
 					</li>
 				</ul>
 			</div>
@@ -166,7 +166,7 @@ Header END -->
 					<p class="lead">"{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}"</p>
 					<div class="d-sm-flex justify-content-center">
 						<!-- button -->
-						<a href="{{route('register')}}" class="btn btn-primary">Sign up</a>
+						<a href="{{route('register')}}" class="btn btn-primary">{{__('default.Sign up')}}</a>
 						<div class="mt-2 mt-sm-0 ms-sm-3">
 							<!-- Rating START -->
 							<div class="hstack justify-content-center justify-content-sm-start gap-1">
@@ -288,8 +288,13 @@ Header END -->
 				<!-- Feature END -->
 			</div>
 		</div>
+		
+		<div style="text-align: center;">
+		<a href="https://www.producthunt.com/posts/write-books-with-ai?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-write&#0045;books&#0045;with&#0045;ai" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=493674&theme=neutral" alt="Write&#0032;Books&#0032;with&#0032;AI - Your&#0032;Story&#0032;Our&#0032;AI&#0044;&#0032;Write&#0032;Books&#0032;Faster&#0032;Smarter&#0032;Better&#0032;with&#0032;AI | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+		</div>
 	</section>
 	<!-- Messaging feature END -->
+	
 	
 	
 	<!-- Main content END -->

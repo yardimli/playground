@@ -321,5 +321,8 @@
 		'Or' => 'Or',
 		'at least 8 characters' => 'at least 8 characters',
 
+		'Register' => 'Register',
+		'Showcase Library' => 'Showcase Library',
+
 
 	];

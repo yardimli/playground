@@ -320,4 +320,8 @@
 		'Or' => 'Veya',
 		'at least 8 characters' => 'en az 8 karakter',
 
+		'Register' => 'Kaydol',
+		'Showcase Library' => 'Vitrin Kütüphanesi',
+
+
 	];
