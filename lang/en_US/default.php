@@ -282,7 +282,7 @@
 		'Book Description' => 'Book Description',
 		'Language' => 'Language',
 		'English' => 'English',
-		'Default Language' => 'Default Language',
+		'Default Language' => 'English',
 		'Norwegian' => 'Norwegian',
 		'Turkish' => 'Turkish',
 		'Book Structure' => 'Book Structure',
@@ -293,17 +293,21 @@
 		'fichtean_curve.txt' => 'fichtean_curve.txt',
 		'Fichtean Curve (3 Acts, 8 Chapters)' => 'Fichtean Curve (3 Acts, 8 Chapters)',
 		'freytags_pyramid.txt' => 'freytags_pyramid.txt',
+		'Freytag\'s Pyramid (5 Acts, 9 Chapters)' => 'Freytag\'s Pyramid (5 Acts, 9 Chapters)',
 		'heros_journey.txt' => 'heros_journey.txt',
+		'Hero\'s Journey (3 Acts, 12 Chapters)' => 'Hero\'s Journey (3 Acts, 12 Chapters)',
 		'story_clock.txt' => 'story_clock.txt',
 		'Story Clock (4 Acts, 12 Chapters)' => 'Story Clock (4 Acts, 12 Chapters)',
 		'save_the_cat.txt' => 'save_the_cat.txt',
 		'Save The Cat (4 Acts, 15 Chapters)' => 'Save The Cat (4 Acts, 15 Chapters)',
 		'dan_harmons_story_circle.txt' => 'dan_harmons_story_circle.txt',
+		'Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)' => 'Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)',
 		'Content Type' => 'Content Type',
 		'Non-Adult' => 'Non-Adult',
 		'Adult' => 'Adult',
 		'Genre' => 'Genre',
 		'Please verify the title, blurb the back cover text of the book and the characters of the story.' => 'Please verify the title, blurb the back cover text of the book and the characters of the story.',
+		'After clicking the submit button, the AI will first write the book\'s title and blurb and characters. You\'ll need to confirm the characters before the AI writes the book.' => 'After clicking the submit button, the AI will first write the book\'s title and blurb and characters. You\'ll need to confirm the characters before the AI writes the book.',
 		'After clicking the submit button, The AI will start creating all the chapters for the book. This process may take a few minutes.' => 'After clicking the submit button, The AI will start creating all the chapters for the book. This process may take a few minutes.',
 		'Book Blurb' => 'Book Blurb',
 		'Submit' => 'Submit',
@@ -323,6 +327,34 @@
 
 		'Register' => 'Register',
 		'Showcase Library' => 'Showcase Library',
+
+		'All rights reserved.' => 'All rights reserved.',
+		'About' => 'About',
+		'Terms' => 'Terms',
+		'Privacy' => 'Privacy',
+		'Change Log' => 'Change Log',
+
+		'I can\'t believe it\'s free!' => 'I can\'t believe it\'s free!',
+
+		'Craft Your Novel and Short Stories' => 'Craft Your Novel and Short Stories',
+		'Within a few steps create your story by choosing genre, reviewing book and character details.' => 'Within a few steps create your story by choosing genre, reviewing book and character details.',
+
+		'Start Your Book' => 'Start Your Book',
+		'Write your book description and choose the structure, AI model, and language. Set up the genre, writing style, and narrative. Fill in author details, then click Submit to start.' => 'Write your book description and choose the structure, AI model, and language. Set up the genre, writing style, and narrative. Fill in author details, then click Submit to start.',
+
+		'Go over the AI\'s suggestions to your story.' => 'Go over the AI\'s suggestions to your story.',
+		'After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.' => 'After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.',
+
+		'Review the chapters.' => 'Review the chapters.',
+		'Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.' => 'Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.',
+
+		'Time the beats.' => 'Time the beats.',
+		'Chapters done, it\'s time to fill them up. Add as many beats as you want. Let the AI write short descriptions for each beat. Verify them and then fill them out together with the AI. Also don\'t forget to update the Codex along the way.' => 'Chapters done, it\'s time to fill them up. Add as many beats as you want. Let the AI write short descriptions for each beat. Verify them and then fill them out together with the AI. Also don\'t forget to update the Codex along the way.',
+
+		'Your book is ready to be read.' => 'Your book is ready to be read.',
+		'Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!' => 'Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!',
+
+		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.',
 
 
 	];

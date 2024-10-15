@@ -279,10 +279,10 @@
 
 // Found in: resources\views\user\start-writing.blade.php
 		'Add Book' => 'Kitap Ekle',
-		'Book Description' => 'Kitap Açıklaması',
+		'Book Description' => 'Kitap Tanıtımı',
 		'Language' => 'Dil',
 		'English' => 'İngilizce',
-		'Default Language' => 'Varsayılan Dil',
+		'Default Language' => 'Türkçe',
 		'Norwegian' => 'Norveççe',
 		'Turkish' => 'Türkçe',
 		'Book Structure' => 'Kitap Yapısı',
@@ -293,17 +293,21 @@
 		'fichtean_curve.txt' => 'fichtean_egrisi.txt',
 		'Fichtean Curve (3 Acts, 8 Chapters)' => 'Fichtean Eğrisi (3 Perde, 8 Bölüm)',
 		'freytags_pyramid.txt' => 'freytag_piramidi.txt',
+		'Freytag\'s Pyramid (5 Acts, 9 Chapters)' => 'Freytag\'ın Piramidi (5 Perde, 9 Bölüm)',
 		'heros_journey.txt' => 'kahramanin_yolculugu.txt',
+		'Hero\'s Journey (3 Acts, 12 Chapters)' => 'Kahramanın Yolculuğu (3 Perde, 12 Bölüm)',
 		'story_clock.txt' => 'hikaye_saati.txt',
 		'Story Clock (4 Acts, 12 Chapters)' => 'Hikaye Saati (4 Perde, 12 Bölüm)',
 		'save_the_cat.txt' => 'kediyi_kurtar.txt',
 		'Save The Cat (4 Acts, 15 Chapters)' => 'Kediyi Kurtar (4 Perde, 15 Bölüm)',
 		'dan_harmons_story_circle.txt' => 'dan_harmon_hikaye_cemberi.txt',
+		'Dan Harmon\'s Story Circle (8 Acts, 15 Chapters)' => 'Dan Harmon\'ın Hikaye Çemberi (8 Perde, 15 Bölüm)',
 		'Content Type' => 'İçerik Türü',
-		'Non-Adult' => 'Yetişkin Olmayan',
+		'Non-Adult' => 'Genel İçerik',
 		'Adult' => 'Yetişkin',
 		'Genre' => 'Tür',
 		'Please verify the title, blurb the back cover text of the book and the characters of the story.' => 'Lütfen kitabın başlığını, tanıtım yazısını, arka kapak metnini ve hikayenin karakterlerini doğrulayın.',
+		'After clicking the submit button, the AI will first write the book\'s title and blurb and characters. You\'ll need to confirm the characters before the AI writes the book.' => 'Gönder düğmesine tıkladıktan sonra, Yapay Zeka önce kitabın başlığını, tanıtım yazısını ve karakterlerini yazacak. Yapay Zeka kitabı yazmadan önce karakterleri onaylamanız gerekecek.',
 		'After clicking the submit button, The AI will start creating all the chapters for the book. This process may take a few minutes.' => 'Gönder düğmesine tıkladıktan sonra, Yapay Zeka kitabın tüm bölümlerini oluşturmaya başlayacak. Bu işlem birkaç dakika sürebilir.',
 		'Book Blurb' => 'Kitap Tanıtım Yazısı',
 		'Submit' => 'Gönder',
@@ -322,6 +326,42 @@
 
 		'Register' => 'Kaydol',
 		'Showcase Library' => 'Vitrin Kütüphanesi',
+
+		'All rights reserved.' => 'Tüm hakları saklıdır.',
+		'About' => 'Hakkımızda',
+		'Terms' => 'Şartlar',
+		'Privacy' => 'Gizlilik',
+		'Change Log' => 'Değişiklik Günlüğü',
+
+		'Craft Your Novel and Short Stories' => 'Roman ve Kısa Hikayelerinizi Oluşturun',
+
+		'I can\'t believe it\'s free!' => 'İnanamıyorum, ücretsiz!',
+
+
+		'Within a few steps create your story by choosing genre, reviewing book and character details.' => 'Birkaç adımda tür seçerek, kitap ve karakter detaylarını gözden geçirerek hikayenizi oluşturun.',
+
+'Start Your Book' => 'Kitabınıza Başlayın',
+
+'Write your book description and choose the structure, AI model, and language. Set up the genre, writing style, and narrative. Fill in author details, then click Submit to start.' => 'Kitap açıklamanızı yazın ve yapıyı, yapay zeka modelini ve dili seçin. Türü, yazı stilini ve anlatımı ayarlayın. Yazar detaylarını doldurun, sonra başlamak için Gönder\'e tıklayın . ',
+
+'Go over the AI\'s suggestions to your story.' => 'Yapay zekanın hikayeniz için önerilerini gözden geçirin.',
+
+'After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.' => 'İlk adımdan sonra yapay zeka sizin için kitap başlığı, kısa tanıtım yazısı ve arka kapak metni oluşturdu. Ayrıca kitap için karakter profilleri de hazırladı. Kitabınızın içeriğini yazmaya başlayacak olan bir sonraki adıma geçmeden önce bunları istediğiniz gibi düzenleyebilirsiniz.',
+
+'Review the chapters.' => 'Bölümleri gözden geçirin.',
+
+'Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.' => 'Şimdi her bölümün genel bakışı yazıldı. Hepsinin adı, açıklaması, olayı, kişileri, yerleri ve önceki veya sonraki bölüme nasıl bağlandıkları var. Sizin göreviniz metinleri gözden geçirmek, hikayenin akıcı bir yol izlediğini, olayların, kişilerin ve yerlerin olması gerektiği gibi olduğunu doğrulamaktır.',
+
+'Time the beats.' => 'Vuruşları zamanla.',
+
+'Chapters done, it\'s time to fill them up. Add as many beats as you want. Let the AI write short descriptions for each beat. Verify them and then fill them out together with the AI. Also don\'t forget to update the Codex along the way.' => 'Bölümler tamamlandı, şimdi onları doldurmak zamanı. İstediğiniz kadar vuruş ekleyin. Yapay zekanın her vuruş için kısa açıklamalar yazmasına izin verin. Bunları doğrulayın ve sonra yapay zeka ile birlikte doldurun. Ayrıca yol boyunca Kodeksi güncellemeyi unutmayın.',
+
+'Your book is ready to be read.' => 'Kitabınız okunmaya hazır.',
+
+'Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!' => 'Her şey tamamlandı, bölümleriniz ve vuruşlarınız var, güzel bir kitap kapağınız var. Kitabınızı dışa aktarmaya ve yayınlamaya hazırsınız!<br>Harika İş!',
+
+		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'kitabınızın hikayesini, insanlarını ve olaylarını tanımlayın. Sadece \'Bir Çocuk Dünyayla Tanışıyor\' diyebilirsiniz, ancak tanıtımınız ne kadar uzun ve ayrıntılı olursa yazı daha yaratıcı ve benzersiz olacaktır.',
+
 
 
 	];
