@@ -302,7 +302,7 @@
 									$bookData['author_avatar'] = '/assets/images/avatar/02.jpg';
 								}
 
-								if ($user->isAdmin()) {
+								if ($user && $user->isAdmin()) {
 									$bookData['id'] = $subDir;
 									$bookData['cover_filename'] = $coverFilename;
 									$bookData['file_time'] = filemtime($bookJsonPath);
@@ -351,7 +351,7 @@
 			$actsFile = "{$bookPath}/acts.json";
 
 			if (!File::exists($bookJsonPath) || !File::exists($actsFile)) {
-				return response()->json(['success' => false, 'message' => __('Book not found ' . $bookJsonPath)], 404);
+				return response()->json(['success' => false, 'message' => __('default.Book not found ' . $bookJsonPath)], 404);
 			}
 
 			$book = json_decode(File::get($bookJsonPath), true);

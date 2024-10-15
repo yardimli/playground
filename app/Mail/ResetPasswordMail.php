@@ -33,7 +33,7 @@
 				$subject = '【Write Books With AI】- Password Reset Request';
 				$email_view = 'emails.reset_password';
 			}
-			if ($locale == 'tr') {
+			if ($locale == 'tr_TR') {
 				$subject = '【Write Books With AI】- Şifre Sıfırlama İsteği';
 				$email_view = 'emails.reset_password_tr';
 			}

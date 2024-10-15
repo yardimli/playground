@@ -50,7 +50,7 @@
 				$subject = 'Please verify your Write Books With AI email address.';
 				$email_view = 'emails.verify-email';
 			}
-			if ($locale == 'tr') {
+			if ($locale == 'tr_TR') {
 				$subject = 'Lütfen Write Books With AI e-posta adresinizi doğrulayın.';
 				$email_view = 'emails.verify-email_tr';
 			}

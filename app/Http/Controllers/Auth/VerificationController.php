@@ -68,7 +68,7 @@
 					throw new AuthorizationException('You have already verified your email.');
 				} else if ($locale == 'zh_TW') {
 					throw new AuthorizationException('您已經驗證了您的電子郵件。');
-				} else if ($locale == 'tr') {
+				} else if ($locale == 'tr_TR') {
 					throw new AuthorizationException('E-postanızı zaten doğruladınız.');
 				} else {
 					throw new AuthorizationException('You have already verified your email.');
@@ -83,8 +83,8 @@
 				return redirect()->route('verify-thank-you');
 			} else if ($locale == 'zh_TW') {
 				return redirect()->route('verify-thank-you-zh_TW');
-			} else if ($locale == 'tr') {
-				return redirect()->route('verify-thank-you-tr');
+			} else if ($locale == 'tr_TR') {
+				return redirect()->route('verify-thank-you-tr_TR');
 			} else {
 				return redirect()->route('verify-thank-you-zh_TW');
 			}

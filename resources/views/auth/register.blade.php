@@ -81,7 +81,8 @@
 							<!-- SIGN UP FORM -->
 							<div class="col-md-6">
 								<div class="text-center mt-2">
-									<a href="/" class="logo-black"><img src="/images/logo.png" id="site_logo" alt="logo" style="max-height: 80px;"></a>
+									<a href="/" class="logo-black"><img src="/images/logo.png" id="site_logo" alt="logo"
+									                                    style="max-height: 80px;"></a>
 								</div>
 								<div class="register-page-form" style="margin-top: 5px; padding-top: 5px;">
 									
@@ -100,12 +101,12 @@
 										
 										<!-- Login Separator -->
 										<div class="col-md-12 text-center">
-											<div class="separator-line">Or Use Email</div>
+											<div class="separator-line">{{__('default.Or Use Email')}}</div>
 										</div>
 										
 										<!-- Form Input -->
 										<div class="col-md-12 {{ $errors->has('username') ? ' has-danger' : '' }}">
-											<p class="p-sm input-header">Author Name</p>
+											<p class="p-sm input-header">{{__('default.Author Name')}}</p>
 											<input class="form-control name" type="text" name="username"
 											       placeholder="{{__('default.Enter Username...') }}" value="{{ old('username') }}"
 											       autocomplete="username" autofocus required>
@@ -119,7 +120,7 @@
 										
 										<!-- Form Input -->
 										<div class="col-md-12 {{ $errors->has('email') ? ' has-danger' : '' }}">
-											<p class="p-sm input-header">Email<span
+											<p class="p-sm input-header">{{__('default.Email')}}<span
 													style="font-size: 12px; margin-left: 10px; color: gray">{{__('default.We\'ll never share your email with anyone else.')}}</span>
 											</p>
 											
@@ -141,7 +142,8 @@
 											<p class="p-sm input-header">{{__('default.Password')}}</p>
 											<div class="wrap-input">
 												<span class="btn-show-pass ico-20"><span class="flaticon-visibility eye-pass"></span></span>
-												<input class="form-control password" type="password" name="password" placeholder="at least 8 characters"
+												<input class="form-control password" type="password" name="password"
+												       placeholder="{{__('default.at least 8 characters')}}"
 												       autocomplete="new-password" required>
 											</div>
 										</div>
@@ -165,10 +167,7 @@
 												<input class="form-check-input" type="checkbox" name="policy" id="policy"
 												       style="float: left; margin-right: 5px;"
 												       value="1" {{ old('policy', 0) ? 'checked' : '' }}>
-												<span>I Agree with the
-															<a href="{{route('terms-page')}}">Terms</a> and
-															<a href="{{route('privacy-page')}}"> Privacy</a>
-														</span>
+												<span>{!! __('default.I Agree with', [ 'terms_url' => route('terms-page'), 'privacy_url' => route('privacy-page') ]) !!}</span>
 											</div>
 										</div>
 										@if ($errors->has('policy'))
@@ -187,7 +186,7 @@
 										<!-- Log In Link -->
 										<div class="col-md-12">
 											<p class="create-account text-center">
-												{!! __('default.Already Have Account Sign In', ['url' => route('login')]) !!}
+												{!! __('default.Already Have Account Sign In', ['login_url' => route('login')]) !!}
 											</p>
 										</div>
 									
@@ -200,17 +199,14 @@
 							<div class="col-md-6">
 								<div class="register-page-txt color--white">
 									
-									<!-- Title -->
-									<h2 class="s-40 w-700">immediately</h2>
-									<h2 class="s-30 w-700">Open an account</h2>
-									
 									<!-- Text -->
-									<p class="p-md mt-25">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}
+									<p
+										class="p-md mt-25">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}
 									</p>
 									
 									<!-- Copyright -->
 									<div class="register-page-copyright">
-										<p class="p-sm">&copy; 2024 writebookswithai.com <span>All rights reserved</span></p>
+										<p class="p-sm">{{__('default.&copy; 2024 writebookswithai.com All rights reserved.')}}</p>
 									</div>
 								
 								</div>

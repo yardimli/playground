@@ -91,11 +91,7 @@
 
 											<!-- Logo -->
 											<img class="img-fluid" src="/images/logo.png" id="site_logo" alt="logo-image">
-
-											<!-- Title -->
-											<h2 class="s-32 w-700">Welcome</h2>
-											<h2 class="s-42 w-700">Back</h2>
-
+											
 											<!-- Text -->
 											<p class="p-md mt-25">{{__('default.Your Story, Our AI - Write Books Faster, Smarter, Better with AI')}}
 											</p>
@@ -129,19 +125,19 @@
 
 												<!-- Login Separator -->
 												<div class="col-md-12 text-center">
-													<div class="separator-line">Or</div>
+													<div class="separator-line">{{__('default.Or')}}</div>
 												</div>
 
 												<!-- Form Input -->
 												<div class="col-md-12">
-													<p class="p-sm input-header">Email address</p>
+													<p class="p-sm input-header">{{__('default.Email address')}}</p>
 													<input class="form-control email" type="email" name="email" placeholder="example@example.com" value="{{ old('email', '') }}" required>
 													<span class="form-group email-error {{ $errors->has('email') ? ' has-danger' : '' }}"></span>
 												</div>
 
 												<!-- Form Input -->
 												<div class="col-md-12">
-													<p class="p-sm input-header">Password</p>
+													<p class="p-sm input-header">{{__('default.Password')}}</p>
 													<div class="wrap-input">
 														<span class="btn-show-pass ico-20"><span class="flaticon-visibility eye-pass"></span></span>
 														<input class="form-control password" type="password" name="password" placeholder="* * * * * * * * *" required>

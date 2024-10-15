@@ -32,7 +32,7 @@
 				$subject = 'Welcome to WBWAI! Your exciting journey to create songs begins here.';
 				$email_view = 'emails.welcome';
 			}
-			if ($locale == 'tr') {
+			if ($locale == 'tr_TR') {
 				$subject = 'Minik Dersler\'e Hoşgeldiniz! Eğlenceli öğrenme yolculuğunuz burada başlıyor.';
 				$email_view = 'emails.welcome_tr';
 			}
