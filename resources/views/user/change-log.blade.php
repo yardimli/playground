@@ -18,7 +18,7 @@
 						</div>
 						<div class="card-body p-3 mb-3">
 							<div style="text-align: center; ">
-								<img src="{{ asset('/images/logo.png') }}"
+								<img src="{{ asset('/images/logo-big.png') }}"
 								     style="max-width: 300px; width: 300px;" alt="Thank You" class="img-fluid">
 							</div>
 							
