@@ -365,4 +365,39 @@
 		'Read Book' => 'Kitabı Oku',
 		'Edit Book' => 'Kitabı Düzenle',
 
+
+		'Describe your book\'s story, characters, and events here. The more detailed your description, the more creative and unique the writing will be.' => 'Kitabınızın hikayesini, karakterlerini ve olaylarını burada anlatın. Açıklamanız ne kadar ayrıntılı olursa, yazı o kadar yaratıcı ve özgün olacaktır.',
+
+'Select the language for your book.' => 'Kitabınız için dil seçin.',
+
+'Choose the structure for your book. This determines the number of acts and chapters.' => 'Kitabınız için yapıyı seçin. Bu, perde ve bölüm sayısını belirler.',
+
+'Select the AI engine to use for generating your book.' => 'Kitabınızı oluşturmak için kullanılacak yapay zeka motorunu seçin.',
+
+'Specify whether your book contains adult content or not.' => 'Kitabınızın yetişkin içeriği içerip içermediğini belirtin.',
+
+'Choose the genre for your book.' => 'Kitabınız için tür seçin.',
+
+'Select the writing style for your book.' => 'Kitabınız için yazım tarzını seçin.',
+
+'Choose the narrative style for your book.' => 'Kitabınız için anlatım tarzını seçin.',
+
+'Click this button to generate the book\'s title, blurb, and characters.' => 'Kitabın başlığını, tanıtım yazısını ve karakterlerini oluşturmak için bu düğmeye tıklayın.',
+
+'This is the generated title for your book. You can edit it if needed.' => 'Bu, kitabınız için oluşturulan başlıktır. Gerekirse düzenleyebilirsiniz.',
+
+'This is the generated blurb for your book. Feel free to make adjustments.' => 'Bu, kitabınız için oluşturulan tanıtım yazısıdır. İsterseniz düzenlemeler yapabilirsiniz.',
+
+'This text will appear on the back cover of your book. You can modify it as needed.' => 'Bu metin kitabınızın arka kapağında yer alacaktır. Gerektiği gibi değiştirebilirsiniz.',
+
+'These are the generated character profiles for your book. Review and edit if necessary.' => 'Bunlar kitabınız için oluşturulan karakter profilleridir. Gerekirse gözden geçirin ve düzenleyin.',
+
+'Click this button to start generating the full content of your book.' => 'Kitabınızın tam içeriğini oluşturmaya başlamak için bu düğmeye tıklayın.',
+
+		'Next' => 'Sonraki',
+		'Prev' => 'Önceki',
+		'of' => ' - ',
+		'Done' => 'Bitti',
+
+
 	];

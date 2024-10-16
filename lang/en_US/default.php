@@ -359,5 +359,38 @@
 		'Read Book' => 'Read Book',
 		'Edit Book' => 'Edit Book',
 
+		'Describe your book\'s story, characters, and events here. The more detailed your description, the more creative and unique the writing will be.' => 'Describe your book\'s story, characters, and events here. The more detailed your description, the more creative and unique the writing will be.',
+
+		'Select the language for your book.' => 'Select the language for your book.',
+
+		'Choose the structure for your book. This determines the number of acts and chapters.' => 'Choose the structure for your book. This determines the number of acts and chapters.',
+
+		'Select the AI engine to use for generating your book.' => 'Select the AI engine to use for generating your book.',
+
+		'Specify whether your book contains adult content or not.' => 'Specify whether your book contains adult content or not.',
+
+		'Choose the genre for your book.' => 'Choose the genre for your book.',
+
+		'Select the writing style for your book.' => 'Select the writing style for your book.',
+
+		'Choose the narrative style for your book.' => 'Choose the narrative style for your book.',
+
+		'Click this button to generate the book\'s title, blurb, and characters.' => 'Click this button to generate the book\'s title, blurb, and characters.',
+
+		'This is the generated title for your book. You can edit it if needed.' => 'This is the generated title for your book. You can edit it if needed.',
+
+		'This is the generated blurb for your book. Feel free to make adjustments.' => 'This is the generated blurb for your book. Feel free to make adjustments.',
+
+		'This text will appear on the back cover of your book. You can modify it as needed.' => 'This text will appear on the back cover of your book. You can modify it as needed.',
+
+		'These are the generated character profiles for your book. Review and edit if necessary.' => 'These are the generated character profiles for your book. Review and edit if necessary.',
+
+		'Click this button to start generating the full content of your book.' => 'Click this button to start generating the full content of your book.',
+
+		'Next' => 'Next',
+		'Prev' => 'Prev',
+		'of' => 'of',
+		'Done' => 'Done',
+
 
 	];

@@ -39,11 +39,43 @@
 							<br>
 							- Allow users to insert empty beats after existing beats and at the beginning of the chapter.
 							
+							<br><br>
+							<strong>v0.1.3 - 10/01/2024</strong>
+							<br>
+							- Frontend UI improvements.<br>
+							- Add two new structures that are better for short stories.<br>
+							- Delete book feature.
 							
 							<br><br>
-							<strong>v0.1.5 - 10/05/2024</strong>
+							<strong>v0.1.4 - 10/05/2024</strong>
 							<br>
-							- Add option to change writing style and narrative style later in the writing process.
+							- Add option to change writing style and narrative style later in the writing process.<br>
+							- Anthropic system prompt bug fix.<br>
+							
+							
+							<br><br>
+							<strong>v0.1.5 - 10/10/2024</strong>
+							<br>
+							- Split lore into codex with four parts.<br>
+							- Add diff tool for comparing original and updated version of the codex.<br>
+							- Improve the UI for reading the books.<br>
+							- Start writing bug fix.<br>
+							- change to allow to use all models from openRouter<br>
+							- more error handling<br>
+							- add modals to preview and edit prompts before sending to the model<br>
+							
+							<br><br>
+							<strong>v0.1.6 - 10/12/2024</strong>
+							<br>
+							- Add intro.js for onboarding.<br>
+							- Bug fixes.<br>
+							- Allow users to input their own API key for OpenAI, Anthropic, and Open Router.<br>
+							
+							<br><br>
+							<strong>v0.1.7 - 10/17/2024</strong>
+							<br>
+							- Move all texts to lang files. For translation of UI.<br>
+							- Update the change log page. with all the changes since v0.1.2<br>
 						
 						</div>
 					</div>

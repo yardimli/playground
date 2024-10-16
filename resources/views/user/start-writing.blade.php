@@ -462,55 +462,52 @@
 				steps: [
 					{
 						element: '#user_blurb',
-						intro: "Describe your book's story, characters, and events here. The more detailed your description, the more creative and unique the writing will be."
+						intro: "{{__('default.Describe your book\'s story, characters, and events here. The more detailed your description, the more creative and unique the writing will be.')}}"
 					},
 					{
 						element: '#language',
-						intro: "Select the language for your book."
+						intro: "{{__('default.Select the language for your book.')}}"
 					},
 					{
 						element: '#bookStructure',
-						intro: "Choose the structure for your book. This determines the number of acts and chapters."
+						intro: "{{__('default.Choose the structure for your book. This determines the number of acts and chapters.')}}"
 					},
 					{
 						element: '#llmSelect',
-						intro: "Select the AI engine to use for generating your book."
+						intro: "{{__('default.Select the AI engine to use for generating your book.')}}"
 					},
 					{
 						element: '#adultContent',
-						intro: "Specify whether your book contains adult content or not."
+						intro: "{{__('default.Specify whether your book contains adult content or not.')}}"
 					},
 					{
 						element: '#genre',
-						intro: "Choose the genre for your book."
-					},
-					{
-						element: '#authorName',
-						intro: "Enter the author's name for the book."
-					},
-					{
-						element: '#publisherName',
-						intro: "Enter the publisher's name for the book."
+						intro: "{{__('default.Choose the genre for your book.')}}"
 					},
 					{
 						element: '#writingStyle',
-						intro: "Select the writing style for your book."
+						intro: "{{__('default.Select the writing style for your book.')}}"
 					},
 					{
 						element: '#narrativeStyle',
-						intro: "Choose the narrative style for your book."
+						intro: "{{__('default.Choose the narrative style for your book.')}}"
 					},
 					{
 						element: '#addBookStepOneBtn',
-						intro: "Click this button to generate the book's title, blurb, and characters.",
+						intro: "{{__('default.Click this button to generate the book\'s title, blurb, and characters.')}}",
 						position: 'top'
 					}
 				],
 				exitOnOverlayClick: false,
 				showStepNumbers: true,
-				disableInteraction: false,
 				showBullets: false,
-				showProgress: true
+				showProgress: true,
+				nextLabel: "{{__('default.Next')}}",
+				prevLabel: "{{__('default.Prev')}}",
+				stepNumbersOfLabel: "{{__('default.of')}}",
+				doneLabel: "{{__('default.Done')}}",
+				
+				
 			});
 			
 			
@@ -545,30 +542,34 @@
 				steps: [
 					{
 						element: '#book_title',
-						intro: "This is the generated title for your book. You can edit it if needed."
+						intro: "{{__('default.This is the generated title for your book. You can edit it if needed.')}}"
 					},
 					{
 						element: '#book_blurb',
-						intro: "This is the generated blurb for your book. Feel free to make adjustments."
+						intro: "{{__('default.This is the generated blurb for your book. Feel free to make adjustments.')}}"
 					},
 					{
 						element: '#back_cover_text',
-						intro: "This text will appear on the back cover of your book. You can modify it as needed."
+						intro: "{{__('default.This text will appear on the back cover of your book. You can modify it as needed.')}}"
 					},
 					{
 						element: '#character_profiles',
-						intro: "These are the generated character profiles for your book. Review and edit if necessary."
+						intro: "{{__('default.These are the generated character profiles for your book. Review and edit if necessary.')}}"
 					},
 					{
 						element: '#addBookStepTwoBtn',
-						intro: "Click this button to start generating the full content of your book.",
+						intro: "{{__('default.Click this button to start generating the full content of your book.')}}",
 						position: 'top'
 					}
 				],
 				exitOnOverlayClick: false,
 				showStepNumbers: true,
 				showBullets: false,
-				showProgress: true
+				showProgress: true,
+				nextLabel: "{{__('default.Next')}}",
+				prevLabel: "{{__('default.Prev')}}",
+				stepNumbersOfLabel: "{{__('default.of')}}",
+				doneLabel: "{{__('default.Done')}}",
 			});
 			
 			intro.oncomplete(function () {

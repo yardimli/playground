@@ -209,9 +209,14 @@
 				],
 				exitOnOverlayClick: false,
 				showStepNumbers: true,
-				disableInteraction: false,
 				showBullets: false,
-				showProgress: true
+				showProgress: true,
+				nextLabel: "{{__('default.Next')}}",
+				prevLabel: "{{__('default.Prev')}}",
+				stepNumbersOfLabel: "{{__('default.of')}}",
+				doneLabel: "{{__('default.Done')}}",
+				
+				
 			});
 			
 			
