@@ -21,11 +21,11 @@
 							<img src="{{$book['cover_filename']}}" alt="book" class="pb-4" style="min-height: 400px;" id="bookCover">
 							<br>
 							<a href="{{route('read-book',$book_slug)}}" id="readBookBtn"
-							   class="btn btn-primary-soft">{{__('Read Book')}}</a>
+							   class="btn btn-primary-soft">{{__('default.Read Book')}}</a>
 							
 							@if ( (Auth::user() && (($book['owner'] ?? '') === Auth::user()->email)) || (Auth::user() && Auth::user()->isAdmin()) )
 								<a href="{{route('edit-book',$book_slug)}}" id="editBookBtn"
-								   class="btn btn-danger-soft">{{__('Edit Book')}}</a>
+								   class="btn btn-danger-soft">{{__('default.Edit Book')}}</a>
 								
 								<button class="btn btn-primary-soft" title="{{__('default.Cover Image')}}" id="createCoverBtn">
 									<i class="bi bi-image"></i> {{__('default.Cover Image')}}

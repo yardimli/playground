@@ -233,7 +233,7 @@
 		'An error occurred while deleting the book.' => 'Kitap silinirken bir hata oluştu.',
 
 // Found in: resources\views\user\my-books.blade.php
-		'Your Private Library' => 'Özel Kütüphaneniz',
+		'Your Private Library' => 'Kitaplarım',
 		'Here are all the books both complete and in progress.' => 'İşte hem tamamlanmış hem de devam eden tüm kitaplar.',
 		'Click on the book cover to read or edit the full book.' => 'Tam kitabı okumak veya düzenlemek için kitap kapağına tıklayın.',
 
@@ -340,28 +340,29 @@
 
 		'Within a few steps create your story by choosing genre, reviewing book and character details.' => 'Birkaç adımda tür seçerek, kitap ve karakter detaylarını gözden geçirerek hikayenizi oluşturun.',
 
-'Start Your Book' => 'Kitabınıza Başlayın',
+		'Start Your Book' => 'Kitabınıza Başlayın',
 
-'Write your book description and choose the structure, AI model, and language. Set up the genre, writing style, and narrative. Fill in author details, then click Submit to start.' => 'Kitap açıklamanızı yazın ve yapıyı, yapay zeka modelini ve dili seçin. Türü, yazı stilini ve anlatımı ayarlayın. Yazar detaylarını doldurun, sonra başlamak için Gönder\'e tıklayın . ',
+		'Write your book description and choose the structure, AI model, and language. Set up the genre, writing style, and narrative. Fill in author details, then click Submit to start.' => 'Kitap açıklamanızı yazın ve yapıyı, yapay zeka modelini ve dili seçin. Türü, yazı stilini ve anlatımı ayarlayın. Yazar detaylarını doldurun, sonra başlamak için Gönder\'e tıklayın . ',
 
-'Go over the AI\'s suggestions to your story.' => 'Yapay zekanın hikayeniz için önerilerini gözden geçirin.',
+		'Go over the AI\'s suggestions to your story.' => 'Yapay zekanın hikayeniz için önerilerini gözden geçirin.',
 
-'After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.' => 'İlk adımdan sonra yapay zeka sizin için kitap başlığı, kısa tanıtım yazısı ve arka kapak metni oluşturdu. Ayrıca kitap için karakter profilleri de hazırladı. Kitabınızın içeriğini yazmaya başlayacak olan bir sonraki adıma geçmeden önce bunları istediğiniz gibi düzenleyebilirsiniz.',
+		'After the first step now the AI has the book title, a blurb and a back cover text written for you. It also has character profiles for the book. Here you can edit these to your liking before moving to the next step that will start writing the content of your book.' => 'İlk adımdan sonra yapay zeka sizin için kitap başlığı, kısa tanıtım yazısı ve arka kapak metni oluşturdu. Ayrıca kitap için karakter profilleri de hazırladı. Kitabınızın içeriğini yazmaya başlayacak olan bir sonraki adıma geçmeden önce bunları istediğiniz gibi düzenleyebilirsiniz.',
 
-'Review the chapters.' => 'Bölümleri gözden geçirin.',
+		'Review the chapters.' => 'Bölümleri gözden geçirin.',
 
-'Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.' => 'Şimdi her bölümün genel bakışı yazıldı. Hepsinin adı, açıklaması, olayı, kişileri, yerleri ve önceki veya sonraki bölüme nasıl bağlandıkları var. Sizin göreviniz metinleri gözden geçirmek, hikayenin akıcı bir yol izlediğini, olayların, kişilerin ve yerlerin olması gerektiği gibi olduğunu doğrulamaktır.',
+		'Now the overview of each chapter is written. They all have name, description, event, people, places as well as how they link to the previous or next chapter. Your job is to review the texts, verify that the story follows a smooth path, that events, people and places are as they should be.' => 'Şimdi her bölümün genel bakışı yazıldı. Hepsinin adı, açıklaması, olayı, kişileri, yerleri ve önceki veya sonraki bölüme nasıl bağlandıkları var. Sizin göreviniz metinleri gözden geçirmek, hikayenin akıcı bir yol izlediğini, olayların, kişilerin ve yerlerin olması gerektiği gibi olduğunu doğrulamaktır.',
 
-'Time the beats.' => 'Vuruşları zamanla.',
+		'Time the beats.' => 'Vuruşları zamanla.',
 
-'Chapters done, it\'s time to fill them up. Add as many beats as you want. Let the AI write short descriptions for each beat. Verify them and then fill them out together with the AI. Also don\'t forget to update the Codex along the way.' => 'Bölümler tamamlandı, şimdi onları doldurmak zamanı. İstediğiniz kadar vuruş ekleyin. Yapay zekanın her vuruş için kısa açıklamalar yazmasına izin verin. Bunları doğrulayın ve sonra yapay zeka ile birlikte doldurun. Ayrıca yol boyunca Kodeksi güncellemeyi unutmayın.',
+		'Chapters done, it\'s time to fill them up. Add as many beats as you want. Let the AI write short descriptions for each beat. Verify them and then fill them out together with the AI. Also don\'t forget to update the Codex along the way.' => 'Bölümler tamamlandı, şimdi onları doldurmak zamanı. İstediğiniz kadar vuruş ekleyin. Yapay zekanın her vuruş için kısa açıklamalar yazmasına izin verin. Bunları doğrulayın ve sonra yapay zeka ile birlikte doldurun. Ayrıca yol boyunca Kodeksi güncellemeyi unutmayın.',
 
-'Your book is ready to be read.' => 'Kitabınız okunmaya hazır.',
+		'Your book is ready to be read.' => 'Kitabınız okunmaya hazır.',
 
-'Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!' => 'Her şey tamamlandı, bölümleriniz ve vuruşlarınız var, güzel bir kitap kapağınız var. Kitabınızı dışa aktarmaya ve yayınlamaya hazırsınız!<br>Harika İş!',
+		'Everything is done, you have your chapters and beats, you have a good book cover. Ready to export and publish your book!<br>Good Job!' => 'Her şey tamamlandı, bölümleriniz ve vuruşlarınız var, güzel bir kitap kapağınız var. Kitabınızı dışa aktarmaya ve yayınlamaya hazırsınız!<br>Harika İş!',
 
 		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'kitabınızın hikayesini, insanlarını ve olaylarını tanımlayın. Sadece \'Bir Çocuk Dünyayla Tanışıyor\' diyebilirsiniz, ancak tanıtımınız ne kadar uzun ve ayrıntılı olursa yazı daha yaratıcı ve benzersiz olacaktır.',
 
-
+		'Read Book' => 'Kitabı Oku',
+		'Edit Book' => 'Kitabı Düzenle',
 
 	];

@@ -515,21 +515,21 @@
 			
 			
 			intro.onafterchange(function (targetElement) {
-				if (targetElement.tagName.toLowerCase() === 'textarea') {
-					var nextButton = document.querySelector('.introjs-nextbutton');
-					nextButton.classList.add('introjs-disabled');
-					nextButton.classList.add('custom-disabled'); // Add this line
-					
-					$(targetElement).on('input', function () {
-						if ($(this).val().trim() !== '') {
-							nextButton.classList.remove('introjs-disabled');
-							nextButton.classList.remove('custom-disabled'); // Add this line
-						} else {
-							nextButton.classList.add('introjs-disabled');
-							nextButton.classList.add('custom-disabled'); // Add this line
-						}
-					});
-				}
+				// if (targetElement.tagName.toLowerCase() === 'textarea') {
+				// 	var nextButton = document.querySelector('.introjs-nextbutton');
+				// 	nextButton.classList.add('introjs-disabled');
+				// 	nextButton.classList.add('custom-disabled'); // Add this line
+				//
+				// 	$(targetElement).on('input', function () {
+				// 		if ($(this).val().trim() !== '') {
+				// 			nextButton.classList.remove('introjs-disabled');
+				// 			nextButton.classList.remove('custom-disabled'); // Add this line
+				// 		} else {
+				// 			nextButton.classList.add('introjs-disabled');
+				// 			nextButton.classList.add('custom-disabled'); // Add this line
+				// 		}
+				// 	});
+				// }
 			});
 
 			intro.oncomplete(function () {

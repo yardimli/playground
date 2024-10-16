@@ -356,5 +356,8 @@
 
 		'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.' => 'describe your books story, people and events. While you can just say \'A Boy Meets World\' the longer and more detailed your blurb is the more creative and unique the writing will be.',
 
+		'Read Book' => 'Read Book',
+		'Edit Book' => 'Edit Book',
+
 
 	];
