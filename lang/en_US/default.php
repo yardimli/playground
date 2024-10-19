@@ -393,6 +393,7 @@
 		'Done' => 'Done',
 
 		'Don\'t show again' => 'Don\'t show again',
-
+		'act_with_number' => 'Act :id',
+		'chapter_with_number' => 'Chapter :order',
 
 	];

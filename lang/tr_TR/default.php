@@ -401,5 +401,6 @@
 
 		'Don\'t show again' => 'Tekrar gösterme',
 
-
+		'act_with_number' => ':id. Perde',
+		'chapter_with_number' => 'Bölüm :order',
 	];
