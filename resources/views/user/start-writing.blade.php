@@ -633,9 +633,18 @@
 					let promptPricePerMillion = ((model.pricing.prompt || 0) * 1000000).toFixed(2);
 					let completionPricePerMillion = ((model.pricing.completion || 0) * 1000000).toFixed(2);
 					
+					let model_score = ' - ' + model.score;
+					if (model.score === 0) {
+						model_score = '';
+					}
+					let model_ugi = ' - Uncensored Score: ' + model.ugi;
+					if (model.ugi === 0) {
+						model_ugi = '';
+					}
+					
 					llmSelect.append($('<option>', {
 						value: model.id,
-						text: model.name + ' - $' + promptPricePerMillion + ' / $' + completionPricePerMillion,
+						text: model.name + model_ugi + ' - $' + promptPricePerMillion + ' / $' + completionPricePerMillion,
 						'data-description': model.description,
 						'data-prompt-price': model.pricing.prompt || 0,
 						'data-completion-price': model.pricing.completion || 0,

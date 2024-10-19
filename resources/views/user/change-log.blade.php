@@ -76,6 +76,11 @@
 							<br>
 							- Move all texts to lang files. For translation of UI.<br>
 							- Update the change log page. with all the changes since v0.1.2<br>
+							
+							<br><br>
+							<strong>v0.1.8 - 10/19/2024</strong>
+							<br>
+							- Add UGI (Uncensored Index) and writing index to model list.<br>
 						
 						</div>
 					</div>

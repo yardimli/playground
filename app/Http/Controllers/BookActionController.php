@@ -56,14 +56,12 @@
 				$book['owner_name'] = $user->name;
 				if ($user->avatar) {
 					$book['author_avatar'] = Storage::url($user->avatar);
-				} else
-				{
+				} else {
 					$book['author_avatar'] = '/assets/images/avatar/03.jpg';
 				}
-			} else
-			{
+			} else {
 				$book['owner_name'] = 'admin';
-				$book['author_name'] = $book['author_name']  . '(anonymous)';
+				$book['author_name'] = $book['author_name'] . '(anonymous)';
 				$book['author_avatar'] = '/assets/images/avatar/02.jpg';
 			}
 
@@ -143,7 +141,7 @@
 			$writingStyles = MyHelper::$writingStyles;
 			$narrativeStyles = MyHelper::$narrativeStyles;
 
-			return view('user.edit-book', compact( 'book', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
+			return view('user.edit-book', compact('book', 'book_slug', 'colorOptions', 'genres_array', 'adult_genres_array', 'writingStyles', 'narrativeStyles'));
 		}
 
 		public function writeBookCharacterProfiles(Request $request)
@@ -264,8 +262,7 @@
 					'success' => true,
 					'rewrittenChapter' => $rewrittenChapter,
 				]);
-			} else
-			{
+			} else {
 				return response()->json([
 					'success' => false,
 					'message' => 'No user prompt provided',
@@ -733,6 +730,83 @@ Prompt:";
 			}
 		}
 
+		public function findClosestMatch($needle, $haystack)
+		{
+			$closest = null;
+			$highestScore = 0;
+
+			foreach ($haystack as $item) {
+				$score = 0;
+
+				// Levenshtein distance (inverted and normalized)
+				$levenScore = 1 - (levenshtein($needle, $item) / max(strlen($needle), strlen($item)));
+				$score += $levenScore * 0.2;
+
+				// Soundex similarity
+				$soundexScore = (soundex($needle) == soundex($item)) ? 1 : 0;
+				$score += $soundexScore * 0.3;
+
+				// Similar text
+				similar_text($needle, $item, $percent);
+				$score += ($percent / 100) * 0.5;
+
+				if ($score > $highestScore) {
+					$highestScore = $score;
+					$closest = $item;
+				}
+			}
+
+			return $closest;
+		}
+
+
+		public function stringSimilarity($s1, $s2)
+		{
+			$longer = $s1;
+			$shorter = $s2;
+			if (strlen($s1) < strlen($s2)) {
+				$longer = $s2;
+				$shorter = $s1;
+			}
+			$longerLength = strlen($longer);
+			if ($longerLength == 0) {
+				return 1.0;
+			}
+			return ($longerLength - $this->editDistance($longer, $shorter)) / (float)$longerLength;
+		}
+
+		public function editDistance($s1, $s2)
+		{
+			$s1 = strtolower($s1);
+			$s2 = strtolower($s2);
+
+			$m = strlen($s1);
+			$n = strlen($s2);
+
+			$costs = array_fill(0, $n + 1, 0);
+			for ($j = 0; $j <= $n; $j++) {
+				$costs[$j] = $j;
+			}
+
+			for ($i = 1; $i <= $m; $i++) {
+				$lastValue = $i;
+				for ($j = 1; $j <= $n; $j++) {
+					if (!isset($costs[$j])) {
+						$costs[$j] = $j;
+					} else {
+						$newValue = $costs[$j - 1];
+						if ($s1[$i - 1] != $s2[$j - 1]) {
+							$newValue = min(min($newValue, $lastValue), $costs[$j]) + 1;
+						}
+						$costs[$j - 1] = $lastValue;
+						$lastValue = $newValue;
+					}
+				}
+				$costs[$n] = $lastValue;
+			}
+			return $costs[$n];
+		}
+
 		public function checkLLMsJson()
 		{
 			$llmsJsonPath = Storage::disk('public')->path('llms.json');
@@ -749,92 +823,158 @@ Prompt:";
 				}
 			}
 
-			if ( (Auth::user() && Auth::user()->isAdmin()) ||
-				   (Auth::user() && !empty(Auth::user()->openrouter_key)) ) {
+			$openrouter_admin_or_key = false;
+			if ((Auth::user() && Auth::user()->isAdmin()) ||
+				(Auth::user() && !empty(Auth::user()->openrouter_key))) {
+				$openrouter_admin_or_key = true;
+			}
 //				return response()->json(json_decode(File::get($llmsJsonPath), true));
 
-				$llms = json_decode(File::get($llmsJsonPath), true);
+			if (1 === 2) {
+				// Read and parse the CSV file
+				$csvPath = resource_path('texts/ugi-leaderboard-data.csv');
+				$csvData = array_map('str_getcsv', file($csvPath));
+				$headers = array_shift($csvData);
+				$modelIndex = array_search('Model', $headers);
+				$writingIndex = array_search('UGI 🏆', $headers); //writing score
 
-				$filtered_llms = array_filter($llms, function($llm) {
-					if (isset($llm['id']) && (stripos($llm['id'], 'openrouter/auto') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'vision') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], '-3b-') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], '-1b-') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['pricing']['completion'])) {
-						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
-						return $price_per_million <= 20;
-					}
-					return true;
+				// Create a lookup array for quick access
+				$csvLookup = [];
+				foreach ($csvData as $row) {
+					$csvLookup[] = [
+						'model' => $row[$modelIndex],
+						'writing' => floatval($row[$writingIndex])
+					];
+				}
+				//sort the array by value in descending order
+				usort($csvLookup, function ($a, $b) {
+					return $b['writing'] <=> $a['writing'];
 				});
-
-				return response()->json(array_values($filtered_llms));
-
-
-			} else
-			{
-				$llms = json_decode(File::get($llmsJsonPath), true);
-
-				$filtered_llms = array_filter($llms, function($llm) {
-					if (isset($llm['id']) && (stripos($llm['id'], 'openrouter/auto') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'vision') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], '-3b-') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], '-1b-') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
-						return false;
-					}
-
-					if (isset($llm['pricing']['completion'])) {
-						$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
-						return $price_per_million <= 1.5;
-					}
-
-					if (!isset($llm['pricing']['completion'])) {
-						return false;
-					}
-
-						return true;
-				});
-
-				return response()->json(array_values($filtered_llms));
-
 			}
 
+			$llms_with_rank_path = resource_path('texts/llms_with_rank.json');
+			$llms_with_rank = json_decode(File::get($llms_with_rank_path), true);
+
+			$llms = json_decode(File::get($llmsJsonPath), true);
+			$filtered_llms = array_filter($llms, function ($llm) use ($openrouter_admin_or_key) {
+				if (isset($llm['id']) && (stripos($llm['id'], 'openrouter/auto') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['id']) && (stripos($llm['id'], 'vision') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['id']) && (stripos($llm['id'], '-3b-') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['id']) && (stripos($llm['id'], '-1b-') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['id']) && (stripos($llm['id'], 'online') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['id']) && (stripos($llm['id'], 'gpt-3.5') !== false)) {
+					return false;
+				}
+
+				if (isset($llm['pricing']['completion'])) {
+					$price_per_million = floatval($llm['pricing']['completion']) * 1000000;
+					if ($openrouter_admin_or_key) {
+						return $price_per_million <= 20;
+					} else {
+						return $price_per_million <= 1.5;
+					}
+				}
+
+				if (!isset($llm['pricing']['completion'])) {
+					return false;
+				}
+
+				return true;
+			});
+
+			if (1 === 2) {
+				$llm_just_ids = array_map(function ($llm) {
+					return $llm['id'];
+				}, $filtered_llms);
+
+				$llm_just_ids = array_values($llm_just_ids);
+
+
+				$updatedCsvLookup = array_map(function ($item) use ($llm_just_ids) {
+
+					$highest_similarity = 0;
+					$replacementModel = '';
+					$fontToReplace = $item['model'];
+					$fontToReplace_lcase = strtolower($fontToReplace);
+
+					for ($i3 = 0; $i3 < count($llm_just_ids); $i3++) {
+						$llm_just_id = strtolower($llm_just_ids[$i3]);
+						$i4 = $this->stringSimilarity($fontToReplace_lcase, $llm_just_id);
+						if ($i4 > $highest_similarity) {
+							$highest_similarity = $i4;
+							$replacementModel = $llm_just_ids[$i3];
+						}
+					}
+					if ($replacementModel !== '') {
+						$item['closest_match'] = $replacementModel;
+					} else {
+						$item['closest_match'] = '';
+					}
+					return $item;
+				}, $csvLookup);
+
+				foreach ($updatedCsvLookup as $WritingScore) {
+					//lool $llm match ['id'] to $writingScore['closest_match'] and add model and writing score to $llm
+					foreach ($filtered_llms as &$filtered_llm) {
+						if ($filtered_llm['id'] === $WritingScore['closest_match']) {
+							$filtered_llm['writing_score'] = $WritingScore['writing'];
+							$filtered_llm['writing_score_model'] = $WritingScore['model'];
+						}
+					}
+				}
+				foreach ($filtered_llms as &$filtered_llm) {
+					if (!isset($filtered_llm['writing_score'])) {
+						$filtered_llm['writing_score'] = 0;
+						$filtered_llm['writing_score_model'] = 'N/A';
+					}
+				}
+
+				//sort $filtered_llms by writing score
+				usort($filtered_llms, function ($a, $b) {
+					return $b['writing_score'] <=> $a['writing_score'];
+				});
+			}
+
+			foreach ($filtered_llms as &$filtered_llm) {
+				foreach ($llms_with_rank as $llm_with_rank) {
+					if ($filtered_llm['id'] === $llm_with_rank['id']) {
+						$filtered_llm['score'] = $llm_with_rank['score'] ?? 0;
+						$filtered_llm['ugi'] = $llm_with_rank['ugi'] ?? 0;
+					}
+				}
+			}
+			// Sort $filtered_llms by score, then alphabetically for score 0
+			usort($filtered_llms, function ($a, $b) {
+				// First, compare by score in descending order
+				$scoreComparison = $b['score'] <=> $a['score'];
+
+				// If scores are different, return this comparison
+				if ($scoreComparison !== 0) {
+					return $scoreComparison;
+				}
+
+				// If scores are the same (particularly both 0), sort alphabetically by name
+				return strcmp($a['name'], $b['name']);
+			});
+
+			//for each llm with score 0 sort them alphabetically
+
+			return response()->json(array_values($filtered_llms));
 		}
 
 	}
