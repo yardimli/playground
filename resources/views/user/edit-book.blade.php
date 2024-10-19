@@ -189,14 +189,14 @@
 			@foreach ($book['acts'] as $act)
 				<div class="card general-card mb-1">
 					<div class="card-header modal-header modal-header-color">
-						<div class="card-title">{{__('default.Act with Number', ['id' => $act['id']])}} — {{$act['title']}}</div>
+						<div class="card-title">{{__('default.act_with_number', ['id' => $act['id']])}} — {{$act['title']}}</div>
 					</div>
 				</div>
 				
 				@foreach ($act['chapters'] as $chapter)
 					<div class="card general-card">
 						<div class="card-header modal-header modal-header-color">
-							<div class="card-title">{{__('default.Chapter with Number', ['order' => $chapter['order']])}}
+							<div class="card-title">{{__('default.chapter_with_number', ['order' => $chapter['order']])}}
 								— {{$chapter['name']}}</div>
 						</div>
 						<div class="card-body modal-content modal-content-color">
