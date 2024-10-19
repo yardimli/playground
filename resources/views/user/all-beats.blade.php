@@ -572,7 +572,7 @@
 							.then(summary => {
 								// Show the summary edit modal
 								$('#editableBeatSummary').val(summary);
-								$('#beatSummaryEditModal').modal('show');
+								$('#beatSummaryEditModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 								
 								// Handle saving the edited summary
 								$('#saveBeatSummaryBtn').off('click').on('click', function () {
@@ -670,7 +670,7 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					$('#writeUserPrompt').val(response.prompt);
 					// Show the modal
-					modal.modal('show');
+					modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
@@ -700,7 +700,7 @@
 					$('#fullScreenOverlay').addClass('d-none');
 					$('#writeUserPrompt').val(response.prompt);
 					// Show the modal
-					modal.modal('show');
+					modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 				},
 				error: function () {
 					$('#fullScreenOverlay').addClass('d-none');
@@ -741,13 +741,13 @@
 							$('#acceptWriteBtn').show();
 						} else {
 							$("#alertModalContent").html('{{__('default.Failed to write beat:')}}' + response.message);
-							$("#alertModal").modal('show');
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						}
 						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
 					},
 					error: function () {
 						$("#alertModalContent").html('{{__('default.Error write beat')}}');
-						$("#alertModal").modal('show');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
 						
 						$('#fullScreenOverlay').addClass('d-none');
@@ -783,13 +783,13 @@
 							$('#acceptWriteBtn').show();
 						} else {
 							$("#alertModalContent").html('{{__('default.Failed to write beat:')}}' + response.message);
-							$("#alertModal").modal('show');
+							$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						}
 						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
 					},
 					error: function () {
 						$("#alertModalContent").html('{{__('default.Error write beat')}}');
-						$("#alertModal").modal('show');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 						$('#sendWritePromptBtn').prop('disabled', false).text('{{__('default.Write Beat')}}');
 						
 						$('#fullScreenOverlay').addClass('d-none');

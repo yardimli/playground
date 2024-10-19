@@ -637,7 +637,7 @@
 			$('#rewriteUserPrompt').val(template.trim());
 			
 			// Show the modal
-			modal.modal('show');
+			modal.modal({backdrop: 'static', keyboard: true}).modal('show');
 		});
 		
 		// Handle the rewrite button click
@@ -664,13 +664,13 @@
 						$('#acceptRewriteBtn').show();
 					} else {
 						$("#alertModalContent").html('{{__('default.Failed to rewrite chapter:')}}' + response.message);
-						$("#alertModal").modal('show');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 					$('#sendRewritePromptBtn').prop('disabled', false).text('{{__('default.Rewrite Chapter')}}');
 				},
 				error: function () {
 					$("#alertModalContent").html('{{__('default.Error rewriting chapter')}}');
-					$("#alertModal").modal('show');
+					$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					$('#sendRewritePromptBtn').prop('disabled', false).text('{{__('default.Rewrite Chapter')}}');
 				}
 			});
@@ -693,10 +693,10 @@
 					if (response.success) {
 						reload_window = true;
 						$("#alertModalContent").html('{{__('default.Chapter rewritten successfully!')}}');
-						$("#alertModal").modal('show');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					} else {
 						$("#alertModalContent").html('{{__('default.Failed to save rewritten chapter:')}}' + response.message);
-						$("#alertModal").modal('show');
+						$("#alertModal").modal({backdrop: 'static', keyboard: true}).modal('show');
 					}
 				},
 				error: function () {
@@ -967,7 +967,7 @@
 		$('.delete-book-btn').on('click', function (e) {
 			e.preventDefault();
 			bookToDelete = $(this).data('book-id');
-			$('#deleteConfirmModal').modal('show');
+			$('#deleteConfirmModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 		});
 		
 		$('#confirmDeleteBtn').on('click', function () {
@@ -1039,7 +1039,7 @@
 			$('#editCharacterProfiles').val(bookData.character_profiles);
 			$('#editAuthorName').val(bookData.author_name);
 			$('#editPublisherName').val(bookData.publisher_name);
-			$('#editBookDetailsModal').modal('show');
+			$('#editBookDetailsModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 		});
 		
 		
@@ -1095,7 +1095,7 @@
 		
 		// Open LLM Prompt Modal
 		$('#openLlmPromptModalBtn').on('click', function () {
-			$('#llmPromptModal').modal('show');
+			$('#llmPromptModal').modal({backdrop: 'static', keyboard: true}).modal('show');
 		});
 		
 		// Chat with AI
