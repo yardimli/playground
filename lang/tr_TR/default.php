@@ -403,4 +403,6 @@
 
 		'act_with_number' => ':id. Perde',
 		'chapter_with_number' => 'Bölüm :order',
+
+		'Output' => 'Çıktı',
 	];

@@ -380,7 +380,7 @@
 					<textarea class="form-control" id="writeUserPrompt" rows="10"></textarea>
 				</div>
 				<div class="mb-3">
-					<h6>{{__('default.Write Beat')}}:</h6>
+					<h6>{{__('default.Output')}}:</h6>
 					<textarea class="form-control" id="writeResult" rows="10"></textarea>
 				</div>
 			</div>
