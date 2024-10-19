@@ -399,5 +399,7 @@
 		'of' => ' - ',
 		'Done' => 'Bitti',
 
+		'Don\'t show again' => 'Tekrar gösterme',
+
 
 	];

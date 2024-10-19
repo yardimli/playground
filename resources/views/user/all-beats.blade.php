@@ -373,7 +373,7 @@
 					<p>{{__('default.The User Prompt you see here has been generated from the book details as well as current chapter and previous beats or chapters if they exist.')}}</p>
 					<p>{{__('default.It also contains the beat description that the AI will write out.')}}</p>
 					<p>{{__('You can modify the prompt to add specific details, change the tone, or provide additional context for the AI to consider when writing the beat.')}}</p>
-					<p><a href="#" id="hideWriteBeatHelp">{{__('default.Don\'t show this again')}}</a></p>
+					<p><a href="#" id="hideWriteBeatHelp">{{__('default.Don\'t show again')}}</a></p>
 				</div>
 				<div class="mb-3">
 					<label for="writeUserPrompt" class="form-label">{{__('default.User Prompt')}}</label>

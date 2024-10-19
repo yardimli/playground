@@ -392,5 +392,7 @@
 		'of' => 'of',
 		'Done' => 'Done',
 
+		'Don\'t show again' => 'Don\'t show again',
+
 
 	];
