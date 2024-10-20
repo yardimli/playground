@@ -30,6 +30,9 @@
 	
 	<div class="container mt-2">
 		<div class="mb-1 mt-1 w-100" style="text-align: right;">
+			<button class="btn btn-sm btn-info mb-1 mt-1 me-2" id="showBookDetailsBtn">
+				<i class="bi bi-info-circle"></i> {{__('default.Book Details')}}
+			</button>
 			<a href="{{route('edit-book', $book_slug)}}" class="btn btn-sm btn-primary mb-1 mt-1"
 			   title="{{__('default.Back to Chapters')}}"><i
 					class="bi bi-book"></i> {{__('default.Back to Chapters')}}</a>
@@ -43,28 +46,7 @@
 				<!-- Image Div -->
 				<div class="row">
 					<!-- Text Blocks Div -->
-					<div class="col-12 col-lg-6">
-						<div class=" darker-bg p-3 ">
-						<span><em>{{__('default.Blurb')}}</em>
-							<br>
-						<span id="bookBlurb">{{$book['blurb']}}</span>
-						<br><br>
-						
-						<span><em>{{__('default.Back Cover Text')}}</em>
-							<br>
-						<div><span id="backCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</span></div>
-						</div>
-					</div>
-					<div class="col-12 col-lg-6">
-						<div class=" darker-bg  p-3">
-						<div class="mb-3"><span id="bookPrompt"><em>{{__('default.Prompt For Book:')}}</em><br>
-								{{$book['prompt'] ?? 'no prompt'}}</span></div>
-						<div class="mb-3"><span id="bookCharacters"><em>{{__('default.Character Profiles:')}}</em><br>
-								{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</span></div>
-						</div>
-					</div>
-					<div class="col-12 mt-3">
-					</div>
+					
 					
 					<div class="col-12 col-xl-6">
 						<span for="llmSelect" class="form-label">{{__('default.AI Engines:')}}
@@ -354,6 +336,34 @@
 			<div class="modal-footer modal-footer-color justify-content-start">
 				<button type="button" class="btn btn-secondary alert-modal-close-button"
 				        data-bs-dismiss="modal">{{__('default.Close')}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Book Details Modal -->
+<div class="modal fade" id="bookDetailsModal" tabindex="-1" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-content-color">
+			<div class="modal-header modal-header-color">
+				<h5 class="modal-title" id="bookDetailsModalLabel">{{__('default.Book Details')}}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body modal-body-color">
+				<h6>{{__('default.Blurb')}}</h6>
+				<p id="modalBookBlurb">{{$book['blurb']}}</p>
+				
+				<h6>{{__('default.Back Cover Text')}}</h6>
+				<p id="modalBackCoverText">{!!str_replace("\n","<br>",$book['back_cover_text'])!!}</p>
+				
+				<h6>{{__('default.Prompt For Book')}}</h6>
+				<p id="modalBookPrompt">{{$book['prompt'] ?? 'no prompt'}}</p>
+				
+				<h6>{{__('default.Character Profiles')}}</h6>
+				<p id="modalBookCharacters">{!! str_replace("\n","<br>", $book['character_profiles'] ?? 'no characters')!!}</p>
+			</div>
+			<div class="modal-footer modal-footer-color">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('default.Close')}}</button>
 			</div>
 		</div>
 	</div>
@@ -959,6 +969,10 @@
 			if (localStorage.getItem('hideWriteBeatHelp') !== 'true') {
 				$('#writeBeatHelp').show();
 			}
+		});
+		
+		$('#showBookDetailsBtn').on('click', function() {
+			$('#bookDetailsModal').modal('show');
 		});
 		
 		getLLMsData().then(function (llmsData) {

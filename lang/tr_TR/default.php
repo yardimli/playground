@@ -59,8 +59,8 @@
 		'Back Cover Text' => 'Arka Kapak Metni',
 
 // Found in: resources\views\user\all-beats.blade.php, resources\views\user\edit-book.blade.php
-		'Prompt For Book:' => 'Kitap İçin İpucu:',
-		'Character Profiles:' => 'Karakter Profilleri:',
+		'Prompt For Book' => 'Kitap İçin İpucu',
+		'Character Profiles' => 'Karakter Profilleri',
 
 // Found in: resources\views\user\all-beats.blade.php, resources\views\user\codex.blade.php, resources\views\user\edit-book.blade.php, resources\views\user\start-writing.blade.php
 		'AI Engines:' => 'Yapay Zeka Motorları:',
@@ -405,4 +405,5 @@
 		'chapter_with_number' => 'Bölüm :order',
 
 		'Output' => 'Çıktı',
+		'Book Details' => 'Kitap Detayları',
 	];

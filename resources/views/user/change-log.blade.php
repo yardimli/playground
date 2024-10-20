@@ -81,7 +81,7 @@
 							<strong>v0.1.8 - 10/19/2024</strong>
 							<br>
 							- Add UGI (Uncensored Index) and writing index to model list.<br>
-						
+							- Move Blurb, Back Cover Text, Prompt and Character Profiles to modal.<br>
 						</div>
 					</div>
 					<!-- Card END -->

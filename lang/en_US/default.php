@@ -59,8 +59,8 @@
 		'Back Cover Text' => 'Back Cover Text',
 
 // Found in: resources\views\user\all-beats.blade.php, resources\views\user\edit-book.blade.php
-		'Prompt For Book:' => 'Prompt For Book:',
-		'Character Profiles:' => 'Character Profiles:',
+		'Prompt For Book' => 'Prompt For Book',
+		'Character Profiles' => 'Character Profiles',
 
 // Found in: resources\views\user\all-beats.blade.php, resources\views\user\codex.blade.php, resources\views\user\edit-book.blade.php, resources\views\user\start-writing.blade.php
 		'AI Engines:' => 'AI Engines:',
@@ -396,5 +396,6 @@
 		'act_with_number' => 'Act :id',
 		'chapter_with_number' => 'Chapter :order',
 		'Output' => 'Output',
+		'Book Details' => 'Book Details',
 
 	];
