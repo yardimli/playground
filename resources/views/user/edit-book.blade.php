@@ -135,7 +135,7 @@
 								class="bi bi-lightning-charge"></i> {{__('default.Write All Beats')}}
 						</button>
 						
-						<a class="btn bt-lg btn-primary w-100 editAllBeatsLink"
+						<a class="btn bt-lg btn-primary editAllBeatsLink"
 						   href="/book-beats/{{$book_slug}}/all-chapters">{{__('default.Edit All Beats')}}</a>
 						
 						<a href="{{route('book-codex',[$book_slug])}}" class="btn btn-secondary mb-1 mt-2" id="openCodexBtn">
