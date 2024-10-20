@@ -397,5 +397,6 @@
 		'chapter_with_number' => 'Chapter :order',
 		'Output' => 'Output',
 		'Book Details' => 'Book Details',
+		'Edit All Beats' => 'Edit All Beats',
 
 	];

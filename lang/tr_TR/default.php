@@ -406,4 +406,5 @@
 
 		'Output' => 'Çıktı',
 		'Book Details' => 'Kitap Detayları',
+		'Edit All Beats' => 'Tüm Vuruşları Düzenle',
 	];
