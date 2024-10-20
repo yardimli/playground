@@ -77,7 +77,7 @@
 						
 						<span class="form-label">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
-							<option value="2" selected>2</option>
+							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 				
-				<div class="mt-1 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
+				<div class="mt-1 small d-none" id="modelInfo" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
 					<div id="modelDescription"></div>
 					<div id="modelPricing"></div>
 				</div>
@@ -448,6 +448,8 @@
 	let selectedChapter = "{{$selected_chapter}}";
 	let selectedChapterIndex = "{{$selected_chapter_index}}";
 	let savedLlm = localStorage.getItem('beats-llm') || 'anthropic/claude-3-haiku:beta';
+	let beatsPerChapter = localStorage.getItem('beats-per-chapter') || 3;
+	$("#beatsPerChapter").val(beatsPerChapter);
 	
 	function recreateBeats(selectedChapter, beatsPerChapter = 3, writingStyle = 'Minimalist', narrativeStyle = 'Third Person - The narrator has a godlike perspective') {
 		$('#fullScreenOverlay').removeClass('d-none');
@@ -997,6 +999,10 @@
 				llmSelect.val(savedLlm);
 			}
 			
+			llmSelect.on('click', function() {
+				$('#modelInfo').removeClass('d-none');
+			});
+			
 			// Show description on change
 			llmSelect.change(function () {
 				const selectedOption = $(this).find('option:selected');
@@ -1190,6 +1196,11 @@
 			let beatDescription = $('#beatDescription_' + chapterIndex + '_' + beatIndex).val();
 			
 			writeBeat(chapterFilename, 'write_beat_text', beatIndex, chapterIndex, beatDescription + "\n" + beatText);
+		});
+		
+		$('#beatsPerChapter').on('change', function () {
+			localStorage.setItem('beats-per-chapter', $(this).val());
+			beatsPerChapter = $(this).val();
 		});
 		
 		$("#recreateBeats").on('click', function (e) {

@@ -82,6 +82,7 @@
 							<br>
 							- Add UGI (Uncensored Index) and writing index to model list.<br>
 							- Move Blurb, Back Cover Text, Prompt and Character Profiles to modal.<br>
+							- Remember beats per chapter setting.<br>
 						</div>
 					</div>
 					<!-- Card END -->

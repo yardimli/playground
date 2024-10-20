@@ -98,7 +98,7 @@
 
 
 
-		Route::get('/book-beats/{slug}/{selected_chapter}/{beats_per_chapter}', [BookBeatController::class, 'bookBeats'])->name('book-beats');
+		Route::get('/book-beats/{slug}/{selected_chapter}', [BookBeatController::class, 'bookBeats'])->name('book-beats');
 		Route::post('/book/add-empty-beat/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'addEmptyBeat'])->name('book-add-empty-beat');
 		Route::post('/book/write-beats/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'writeBeats'])->name('book-write-beats');
 		Route::post('/book/save-beats/{bookSlug}/{chapterFilename}', [BookBeatController::class, 'saveBeats'])->name('book-save-beats');

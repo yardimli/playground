@@ -83,7 +83,7 @@
 						
 						<span style="font-size: 18px;">{{__('default.Number of beats per chapter:')}}</span>
 						<select id="beatsPerChapter" class="form-select mx-auto mb-1">
-							<option value="2" selected>2</option>
+							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
@@ -121,7 +121,7 @@
 						</select>
 					</div>
 					
-					<div class="col-12">
+					<div class="col-12 d-none" id="modelInfo">
 						<div class="mt-1 small" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
 							<div id="modelDescription"></div>
 							<div id="modelPricing"></div>
@@ -243,7 +243,7 @@
 								</div>
 								<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
 									<a class="btn bt-lg btn-primary w-100 editBeatsLink"
-									   href="/book-beats/{{$book_slug}}/{{str_replace('.json','', $chapter['chapterFilename'])}}/2">{{__('default.Open Beats')}}</a>
+									   href="/book-beats/{{$book_slug}}/{{str_replace('.json','', $chapter['chapterFilename'])}}">{{__('default.Open Beats')}}</a>
 								</div>
 								<div class="col-12 col-xl-4 col-lg-4 mb-2 mt-1">
 									<div class="btn bt-lg btn-warning w-100 rewriteChapterBtn"
@@ -465,6 +465,8 @@
 	
 	let reload_window = false;
 	let savedLlm = localStorage.getItem('edit-book-llm') || 'anthropic/claude-3-haiku:beta';
+	let beatsPerChapter = localStorage.getItem('beats-per-chapter') || 3;
+	$("#beatsPerChapter").val(beatsPerChapter);
 	
 	function saveChapter(chapterData) {
 		$.ajax({
@@ -935,6 +937,10 @@
 				llmSelect.val(savedLlm);
 			}
 			
+			llmSelect.on('click', function() {
+				$('#modelInfo').removeClass('d-none');
+			});
+			
 			// Show description on change
 			llmSelect.change(function () {
 				const selectedOption = $(this).find('option:selected');
@@ -1037,13 +1043,8 @@
 		});
 		
 		$('#beatsPerChapter').on('change', function () {
-			let selectedBeats = $(this).val();
-			$('.editBeatsLink').each(function () {
-				let currentHref = $(this).attr('href');
-				console.log(currentHref);
-				let newHref = currentHref.replace(/\/\d+$/, '/' + selectedBeats);
-				$(this).attr('href', newHref);
-			});
+			localStorage.setItem('beats-per-chapter', $(this).val());
+			beatsPerChapter = $(this).val();
 		});
 		
 		// Open the edit book details modal
