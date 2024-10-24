@@ -150,23 +150,23 @@
 		}).setOrigin(0.5).setVisible(false);
 		
 		// Create Yes and No buttons (initially hidden)
-		yesNoBackgroundBox = this.add.rectangle(config.width / 2, config.height / 2 + 100, 700, 300, 0x808080)
+		yesNoBackgroundBox = this.add.rectangle(config.width / 2, config.height / 2 , 700, 300, 0x808080)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
 		
-		yesButtonBox = this.add.rectangle(config.width / 2 - 180, config.height / 2 + 100, 300, 160, 0x006400)
+		yesButtonBox = this.add.rectangle(config.width / 2 - 170, config.height / 2 , 300, 160, 0x006400)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
-		yesButton = this.add.rectangle(config.width / 2 - 180, config.height / 2 + 100, 300, 160, 0x00ff00)
+		yesButton = this.add.rectangle(config.width / 2 - 170, config.height / 2 , 300, 160, 0x00ff00)
 			.setInteractive({ useHandCursor: true }).setVisible(false);
-		yesButtonText = this.add.text(config.width / 2 - 180, config.height / 2 + 100, 'YES', {
+		yesButtonText = this.add.text(config.width / 2 - 170, config.height / 2 , 'YES', {
 			fontSize: '96px',
 			fill: '#000'
 		}).setOrigin(0.5).setVisible(false);
 		
-		noButtonBox = this.add.rectangle(config.width / 2 + 180, config.height / 2 + 100, 300, 160, 0x8b0000)
+		noButtonBox = this.add.rectangle(config.width / 2 + 170, config.height / 2 , 300, 160, 0x8b0000)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
-		noButton = this.add.rectangle(config.width / 2 + 180, config.height / 2 + 100, 300, 160, 0xff0000)
+		noButton = this.add.rectangle(config.width / 2 + 170, config.height / 2 , 300, 160, 0xff0000)
 			.setInteractive({ useHandCursor: true }).setVisible(false);
-		noButtonText = this.add.text(config.width / 2 + 180, config.height / 2 + 100, 'NO', {
+		noButtonText = this.add.text(config.width / 2 + 170, config.height / 2 , 'NO', {
 			fontSize: '96px',
 			fill: '#000'
 		}).setOrigin(0.5).setVisible(false);
@@ -181,6 +181,12 @@
 		
 		if (disableKeyboard) {
 			showYesNoButtons();
+			backspaceButton.setVisible(false);
+			backspaceText.setVisible(false);
+			answerText.setVisible(false);
+			answerBox.setVisible(false);
+			submitButtonText.setVisible(false);
+			submitButton.setVisible(false).disableInteractive();
 		}
 	}
 	
@@ -275,6 +281,8 @@
 			localStorage.setItem('disableKeyboard', JSON.stringify(disableKeyboard));
 			localStorage.setItem('maxFailedAttemptsBeforeYesNo', maxFailedAttemptsBeforeYesNo);
 			document.body.removeChild(editDiv);
+			location.reload();
+			location.reload();
 			currentQuestionIndex = 0;
 			questionText.setText(questions[currentQuestionIndex]);
 			// Re-enable Phaser buttons
@@ -440,7 +448,9 @@
 		questionText.setText(questions[currentQuestionIndex]);
 		answerText.text = '';
 		failedAttempts = 0;
-		hideYesNoButtons();
+		if (!disableKeyboard) {
+			hideYesNoButtons();
+		}
 	}
 	
 	function showTryAgainMessage() {
