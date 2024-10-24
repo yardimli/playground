@@ -33,41 +33,40 @@
 	let logTextarea;
 	let disableKeyboard = JSON.parse(localStorage.getItem('disableKeyboard')) || false;
 	let maxFailedAttemptsBeforeYesNo = parseInt(localStorage.getItem('maxFailedAttemptsBeforeYesNo')) || 3;
+	let questionFontSizeMultiplier = parseFloat(localStorage.getItem('questionFontSizeMultiplier')) || 1.0;
 	
 	function preload() {
 		// Load assets if needed (e.g., images, sounds, etc.)
-		this.load.audio('click', 'click.mp3');
-		this.load.audio('buzzer', 'wrong.wav');
-		this.load.audio('success', 'success.wav');
+		this.load.audio('click', 'https://playground.computer/yesno/click.mp3'); //https://playground.computer/yesno/click.mp3
+		this.load.audio('buzzer', 'https://playground.computer/yesno/wrong.wav'); //https://playground.computer/yesno/wrong.wav
+		this.load.audio('success', 'https://playground.computer/yesno/success.wav'); //https://playground.computer/yesno/success.wav
 		this.load.json('questions', 'questions.json');
 	}
 	
 	function create() {
-		// Load questions from local storage or initialize with default questions
+		const width = this.sys.game.config.width;
+		const height = this.sys.game.config.height;
+		
 		const storedQuestions = localStorage.getItem('questions');
 		questions = storedQuestions ? JSON.parse(storedQuestions) : this.cache.json.get('questions').questions;
 		
-		// Display the question
-		questionText = this.add.text(config.width / 2, 60, questions[currentQuestionIndex], {
-			fontSize: '48px',
+		questionText = this.add.text(width * 0.5, height * 0.1, questions[currentQuestionIndex], {
+			fontSize: `${height * 0.05 * questionFontSizeMultiplier}px`,
 			fill: '#fff',
-			wordWrap: { width: config.width * 0.8, useAdvancedWrap: true },
+			wordWrap: { width: width * 0.8, useAdvancedWrap: true },
 			align: 'center'
 		}).setOrigin(0.5);
 		
-		// Display the answer area inside a centered box
-		const answerBox = this.add.rectangle(config.width / 2, 160, config.width * 0.3, 80, 0xffffff).setStrokeStyle(4, 0x000000);
-		answerText = this.add.text(config.width / 2 - (config.width * 0.3) / 2 + 10, 140, '', { fontSize: '48px', fill: '#000' });
+		const answerBox = this.add.rectangle(width * 0.5, height * 0.2, width * 0.6, height * 0.08, 0xffffff).setStrokeStyle(4, 0x000000);
+		answerText = this.add.text(width * 0.22, height * 0.17, '', { fontSize: `${height * 0.05}px`, fill: '#000' });
 		
-		// Load sounds
 		clickSound = this.sound.add('click');
 		buzzerSound = this.sound.add('buzzer');
 		successSound = this.sound.add('success');
 		
-		// Create edit button in the top left corner
-		parentSettingsButton = this.add.rectangle(70, 50, 100, 50, 0x0000ff)
+		parentSettingsButton = this.add.rectangle(width * 0.09, height * 0.95, width * 0.15, height * 0.06, 0x0000ff)
 			.setInteractive({ useHandCursor: true });
-		this.add.text(70, 50, 'PARENT', { fontSize: '24px', fill: '#fff' }).setOrigin(0.5);
+		this.add.text(width * 0.09, height * 0.95, 'PARENT', { fontSize: `${height * 0.03}px`, fill: '#fff' }).setOrigin(0.5);
 		
 		parentSettingsButton.on('pointerdown', () => {
 			parentSettingsMode = true;
@@ -82,92 +81,87 @@
 			parentSettingsMode = false;
 		});
 		
-		// Create the on-screen keyboard (QWERTY layout)
 		if (!disableKeyboard) {
 			createKeyboard.call(this);
 		}
 		
-		// Add backspace button next to the input area
-		backspaceButton = this.add.rectangle(config.width / 2 + config.width * 0.2 + 40, 160, config.width * 0.1, 80, 0xffd700)
+		backspaceButton = this.add.rectangle(width * 0.85, height * 0.2, width * 0.15, height * 0.08, 0xffd700)
 			.setStrokeStyle(4, 0x000000)
 			.setInteractive({ useHandCursor: true });
-		backspaceText = this.add.text(config.width / 2 + config.width * 0.2 + 40, 160, '←', {
-			fontSize: '48px',
+		backspaceText = this.add.text(width * 0.85, height * 0.2, '←', {
+			fontSize: `${height * 0.05}px`,
 			fill: '#000'
 		}).setOrigin(0.5);
 		
 		backspaceButton.on('pointerdown', () => {
 			handleKeyInput('←');
 			clickSound.play();
-			backspaceButton.setFillStyle(0x888888); // Click effect
+			backspaceButton.setFillStyle(0x888888);
 		});
 		
 		backspaceButton.on('pointerover', () => {
-			backspaceButton.setStrokeStyle(4, 0xffff00); // Hover effect
+			backspaceButton.setStrokeStyle(4, 0xffff00);
 		});
 		
 		backspaceButton.on('pointerout', () => {
-			backspaceButton.setStrokeStyle(4, 0x000000); // Reset effect
+			backspaceButton.setStrokeStyle(4, 0x000000);
 		});
 		
 		backspaceButton.on('pointerup', () => {
-			backspaceButton.setFillStyle(0xffd700); // Reset click effect
+			backspaceButton.setFillStyle(0xffd700);
 		});
 		
-		// Add submit button at the bottom of the screen, as wide as the screen
-		submitButton = this.add.rectangle(config.width / 2, config.height - 100, config.width * 0.9, 100, 0xff0000)
+		submitButton = this.add.rectangle(width * 0.5, height * 0.9, width * 0.5, height * 0.1, 0xff0000)
 			.setInteractive({ useHandCursor: true })
 			.setStrokeStyle(4, 0xffffff);
-		submitButtonText = this.add.text(config.width / 2, config.height - 100, 'SUBMIT', {
-			fontSize: '56px',
+		submitButtonText = this.add.text(width * 0.5, height * 0.9, 'SUBMIT', {
+			fontSize: `${height * 0.06}px`,
 			fill: '#fff'
 		}).setOrigin(0.5);
 		
 		submitButton.on('pointerdown', () => {
 			handleSubmit();
-			submitButton.setFillStyle(0x888888); // Click effect
+			submitButton.setFillStyle(0x888888);
 		});
 		
 		submitButton.on('pointerover', () => {
-			submitButton.setStrokeStyle(4, 0xffff00); // Hover effect
+			submitButton.setStrokeStyle(4, 0xffff00);
 		});
 		
 		submitButton.on('pointerout', () => {
-			submitButton.setStrokeStyle(4, 0xffffff); // Reset effect
+			submitButton.setStrokeStyle(4, 0xffffff);
 		});
 		
 		submitButton.on('pointerup', () => {
-			submitButton.setFillStyle(0xff0000); // Reset click effect
+			submitButton.setFillStyle(0xff0000);
 		});
 		
-		// Create "Please try again" text (initially hidden)
-		tryAgainText = this.add.text(config.width / 2, config.height / 2, 'PLEASE TRY AGAIN', {
-			fontSize: '48px',
+		tryAgainText = this.add.text(width * 0.5, height * 0.5, 'PLEASE TRY AGAIN', {
+			fontSize: `${height * 0.05}px`,
 			fill: '#f00',
 			backgroundColor: '#fff',
-			padding: { x: 20, y: 20 },
+			padding: { x: width * 0.02, y: height * 0.02 },
 			align: 'center'
 		}).setOrigin(0.5).setVisible(false);
 		
-		// Create Yes and No buttons (initially hidden)
-		yesNoBackgroundBox = this.add.rectangle(config.width / 2, config.height / 2 , 700, 300, 0x808080)
+		yesNoBackgroundBox = this.add.rectangle(width * 0.5, height * 0.5, width * 0.8, height * 0.3, 0x808080)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
 		
-		yesButtonBox = this.add.rectangle(config.width / 2 - 170, config.height / 2 , 300, 160, 0x006400)
+		yesButtonBox = this.add.rectangle(width * 0.3, height * 0.5, width * 0.35, height * 0.2, 0x006400)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
-		yesButton = this.add.rectangle(config.width / 2 - 170, config.height / 2 , 300, 160, 0x00ff00)
+		yesButton = this.add.rectangle(width * 0.3, height * 0.5, width * 0.35, height * 0.2, 0x00ff00)
 			.setInteractive({ useHandCursor: true }).setVisible(false);
-		yesButtonText = this.add.text(config.width / 2 - 170, config.height / 2 , 'YES', {
-			fontSize: '96px',
+		yesButtonText = this.add.text(width * 0.3, height * 0.5, 'YES', {
+			fontSize: `${height * 0.1}px`,
 			fill: '#000'
 		}).setOrigin(0.5).setVisible(false);
 		
-		noButtonBox = this.add.rectangle(config.width / 2 + 170, config.height / 2 , 300, 160, 0x8b0000)
+		noButtonBox = this.add.rectangle(width * 0.7, height * 0.5, width * 0.35, height * 0.2, 0x8b0000)
 			.setStrokeStyle(4, 0x000000).setVisible(false);
-		noButton = this.add.rectangle(config.width / 2 + 170, config.height / 2 , 300, 160, 0xff0000)
+		noButton = this.add.rectangle(width * 0.7, height * 0.5, width * 0.35, height * 0.2, 0xff0000)
 			.setInteractive({ useHandCursor: true }).setVisible(false);
-		noButtonText = this.add.text(config.width / 2 + 170, config.height / 2 , 'NO', {
-			fontSize: '96px',
+		noButtonText = this.add.text(width * 0.7, height * 0.5, 'NO', {
+			fontSize: `${height * 0.1}px`,
 			fill: '#000'
 		}).setOrigin(0.5).setVisible(false);
 		
@@ -188,6 +182,59 @@
 			submitButtonText.setVisible(false);
 			submitButton.setVisible(false).disableInteractive();
 		}
+	}
+	
+	function createKeyboard() {
+		const width = this.sys.game.config.width;
+		const height = this.sys.game.config.height;
+		const rows = [
+			'qwertyuiop'.split(''),
+			'asdfghjkl'.split(''),
+			'zxcvbnm'.split('')
+		];
+		const startX = width * 0.05;
+		const startY = height * 0.35;
+		const keySpacingX = (width * 0.9) / 10;
+		const keySpacingY = (height * 0.4) / rows.length;
+		let currentY = startY;
+		
+		scene = this;
+		rows.forEach(row => {
+			let currentX = startX;
+			row.forEach(key => {
+				const keyButtonWidth = keySpacingX * 0.8;
+				const keyButtonHeight = keySpacingY * 0.8;
+				const keyButton = scene.add.rectangle(currentX + keyButtonWidth / 2, currentY + keyButtonHeight / 2, keyButtonWidth, keyButtonHeight, 0x000000)
+					.setStrokeStyle(4, 0xffffff)
+					.setInteractive({ useHandCursor: true });
+				const keyText = scene.add.text(currentX + keyButtonWidth / 2, currentY + keyButtonHeight / 2, key.toUpperCase(), {
+					fontSize: `${keyButtonHeight * 0.5}px`,
+					fill: '#0f0'
+				}).setOrigin(0.5);
+				
+				keyButton.on('pointerdown', () => {
+					handleKeyInput(key);
+					clickSound.play();
+					keyButton.setFillStyle(0x888888);
+				});
+				
+				keyButton.on('pointerover', () => {
+					keyButton.setStrokeStyle(4, 0xffff00);
+				});
+				
+				keyButton.on('pointerout', () => {
+					keyButton.setStrokeStyle(4, 0xffffff);
+				});
+				
+				keyButton.on('pointerup', () => {
+					keyButton.setFillStyle(0x000000);
+				});
+				
+				keyboardKeys.push({ keyButton, keyText });
+				currentX += keySpacingX;
+			});
+			currentY += keySpacingY;
+		});
 	}
 	
 	function openParentSettingsMode() {
@@ -212,6 +259,7 @@
 		editDiv.style.padding = '20px';
 		editDiv.style.color = '#fff';
 		editDiv.style.zIndex = '1000';
+		editDiv.style.overflowY = 'auto';
 		
 		const textarea = document.createElement('textarea');
 		textarea.style.width = '98%';
@@ -238,10 +286,13 @@
 		const disableKeyboardCheckbox = document.createElement('input');
 		disableKeyboardCheckbox.type = 'checkbox';
 		disableKeyboardCheckbox.checked = disableKeyboard;
+		disableKeyboardCheckbox.id = 'disableKeyboardCheckbox'; // Add an id to the checkbox
+		
 		const disableKeyboardLabel = document.createElement('label');
 		disableKeyboardLabel.style.marginLeft = '10px';
 		disableKeyboardLabel.style.color = '#fff';
 		disableKeyboardLabel.textContent = 'Disable Keyboard';
+		disableKeyboardLabel.htmlFor = 'disableKeyboardCheckbox'; // Associate label with checkbox using for attribute
 		
 		disableKeyboardCheckbox.onchange = () => {
 			disableKeyboard = disableKeyboardCheckbox.checked;
@@ -256,10 +307,35 @@
 		maxAttemptsLabel.style.marginLeft = '10px';
 		maxAttemptsLabel.style.color = '#fff';
 		maxAttemptsLabel.textContent = 'Max Failed Attempts Before Yes/No';
+		maxAttemptsLabel.style.marginRight = '10px';
 		
 		maxAttemptsInput.onchange = () => {
 			maxFailedAttemptsBeforeYesNo = parseInt(maxAttemptsInput.value);
 		};
+		
+		// Font size multiplier input
+		const fontSizeDiv = document.createElement('div');
+		fontSizeDiv.style.marginTop = '10px';
+		fontSizeDiv.style.display = 'inline-block';
+		
+		const fontSizeLabel = document.createElement('label');
+		fontSizeLabel.style.color = '#fff';
+		fontSizeLabel.textContent = 'Question Text Size (%) ';
+		
+		const fontSizeInput = document.createElement('input');
+		fontSizeInput.type = 'number';
+		fontSizeInput.min = '50';
+		fontSizeInput.max = '300';
+		fontSizeInput.value = Math.round(questionFontSizeMultiplier * 100);
+		fontSizeInput.style.width = '70px';
+		fontSizeInput.style.marginLeft = '10px';
+		
+		fontSizeInput.onchange = () => {
+			questionFontSizeMultiplier = parseInt(fontSizeInput.value) / 100;
+		};
+		
+		fontSizeDiv.appendChild(fontSizeLabel);
+		fontSizeDiv.appendChild(fontSizeInput);
 		
 		const buttonDiv = document.createElement('div');
 		buttonDiv.style.marginTop = '10px';
@@ -274,12 +350,15 @@
 		saveButton.style.border = 'none';
 		saveButton.style.cursor = 'pointer';
 		saveButton.style.fontSize = '22px';
+
 		saveButton.onclick = () => {
 			questions = textarea.value.split('\n').filter(line => line.trim() !== '');
 			localStorage.setItem('questions', JSON.stringify(questions));
 			localStorage.setItem('log', logTextarea.value);
 			localStorage.setItem('disableKeyboard', JSON.stringify(disableKeyboard));
 			localStorage.setItem('maxFailedAttemptsBeforeYesNo', maxFailedAttemptsBeforeYesNo);
+			localStorage.setItem('questionFontSizeMultiplier', questionFontSizeMultiplier);
+			
 			document.body.removeChild(editDiv);
 			location.reload();
 			location.reload();
@@ -338,63 +417,13 @@
 		editDiv.appendChild(disableKeyboardLabel);
 		editDiv.appendChild(maxAttemptsInput);
 		editDiv.appendChild(maxAttemptsLabel);
+		editDiv.appendChild(fontSizeDiv);
 		buttonDiv.appendChild(saveButton);
 		buttonDiv.appendChild(resetButton);
 		buttonDiv.appendChild(closeButton);
 		editDiv.appendChild(buttonDiv);
 		editDiv.appendChild(logTextarea);
 		document.body.appendChild(editDiv);
-	}
-	
-	function createKeyboard() {
-		const rows = [
-			'qwertyuiop'.split(''),
-			'asdfghjkl'.split(''),
-			'zxcvbnm'.split('')
-		];
-		const startX = config.width * 0.05;
-		const startY = config.height * 0.35;
-		const keySpacingX = (config.width - 2 * startX) / 10;
-		const keySpacingY = (config.height * 0.4) / rows.length;
-		let currentY = startY;
-		
-		scene = this;
-		rows.forEach(row => {
-			let currentX = startX;
-			row.forEach(key => {
-				const keyButtonWidth = keySpacingX * 0.8;
-				const keyButtonHeight = keySpacingY * 0.8;
-				const keyButton = scene.add.rectangle(currentX + keyButtonWidth / 2, currentY + keyButtonHeight / 2, keyButtonWidth, keyButtonHeight, 0x000000)
-					.setStrokeStyle(4, 0xffffff)
-					.setInteractive({ useHandCursor: true });
-				const keyText = scene.add.text(currentX + keyButtonWidth / 2, currentY + keyButtonHeight / 2, key.toUpperCase(), {
-					fontSize: `${keyButtonHeight / 1.5}px`,
-					fill: '#0f0'
-				}).setOrigin(0.5);
-				
-				keyButton.on('pointerdown', () => {
-					handleKeyInput(key);
-					clickSound.play();
-					keyButton.setFillStyle(0x888888); // Click effect
-				});
-				
-				keyButton.on('pointerover', () => {
-					keyButton.setStrokeStyle(4, 0xffff00); // Hover effect
-				});
-				
-				keyButton.on('pointerout', () => {
-					keyButton.setStrokeStyle(4, 0xffffff); // Reset effect
-				});
-				
-				keyButton.on('pointerup', () => {
-					keyButton.setFillStyle(0x000000); // Reset click effect
-				});
-				
-				keyboardKeys.push({ keyButton, keyText });
-				currentX += keySpacingX;
-			});
-			currentY += keySpacingY;
-		});
 	}
 	
 	function handleKeyInput(key) {
